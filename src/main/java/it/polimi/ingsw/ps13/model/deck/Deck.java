@@ -4,16 +4,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.io.Serializable;
 
 /**
  * This is an abstract class whose attributes and methods are in common
  * between the two types of Deck (PoliticsCardDeck and PermitTileDeck).
  * 
  */
-public abstract class Deck<E> {
+public abstract class Deck<E extends Serializable> implements Serializable {
 
+	private static final long serialVersionUID = 0L;
 	protected final Deque<E> drawPile;
-
+	
 	protected Deck(Collection<E> cards) {
 		
 		drawPile = new LinkedList<>();

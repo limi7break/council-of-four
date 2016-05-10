@@ -35,7 +35,6 @@ public class PermitTileDeck<E extends PermitTile> extends Deck<E> implements Ser
      */
 	public PermitTileDeck(Collection<E> cards) {
 		
-		// @TODO: throw Exception if number of cards is < VISIBLE_TILES
 		super(cards);
 		shuffleDeck();
 		placeTiles();
@@ -64,7 +63,10 @@ public class PermitTileDeck<E extends PermitTile> extends Deck<E> implements Ser
 	@Override
 	public void discardCard(E card) {
 		
-		if (card.isFacingUp()) { card.flip(); }
+		if (card.isFacingUp()) {
+			card.flip();
+		}
+		
 		drawPile.addLast(card);
 		
 	}
