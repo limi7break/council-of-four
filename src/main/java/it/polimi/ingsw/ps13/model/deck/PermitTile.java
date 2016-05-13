@@ -3,8 +3,9 @@ package it.polimi.ingsw.ps13.model.deck;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import it.polimi.ingsw.ps13.model.Bonus;
-import it.polimi.ingsw.ps13.model.City;
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.city.City;
+
 import java.io.Serializable;
 
 /**

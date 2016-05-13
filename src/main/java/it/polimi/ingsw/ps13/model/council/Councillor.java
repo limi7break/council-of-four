@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps13.model;
+package it.polimi.ingsw.ps13.model.council;
 
 import java.awt.Color;
 import java.io.Serializable;
