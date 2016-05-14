@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.io.Serializable;
 
 /**
- * A PoliticsCard is completely represented by its Color.
- * We decided to represent the multicolored card (jolly) with a NULL color value.
+ * A politics card is completely identified by its Color.
+ * We decided to represent the multicolored card (jolly) with a null color value.
  * This class is immutable.
  * 
  */

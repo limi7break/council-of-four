@@ -115,12 +115,12 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	/**
 	 * Takes a specific tile from the list of visible tiles.
 	 *
-	 * @param position the position of the tile in the visibleTiles list
+	 * @param position the position of the tile in the visibleTiles list. (from 0 to VISIBLE_TILES-1)
 	 * @return the selected permit tile
 	 */
 	public PermitTile takeTile(int position) {
 		
-		if ( (visibleTiles.size() > 0) && (visibleTiles.size() <= position) ) {
+		if ( !(visibleTiles.isEmpty()) && (visibleTiles.size() <= position) ) {
 			// If the draw pile is not empty, draw a new card from the
 			// top of the deck and put it in the list of visible tiles
 			if ( !(drawPile.isEmpty()) ) {

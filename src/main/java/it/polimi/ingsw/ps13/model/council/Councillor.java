@@ -5,18 +5,25 @@ import java.io.Serializable;
 
 /**
  * A councillor is completely identified by its color.
+ * This class is immutable.
+ * 
  */
-public class Councillor implements Serializable {
+public final class Councillor implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private final Color color;
 	
 	/**
 	 * Creates a councillor whose color is given as a parameter.
+	 * 
 	 */
-	public Councillor(Color color){
+	Councillor(Color color) {
 		
-		this.color = color;
+		if (color != null) {
+			this.color = color;
+		} else {
+			throw new IllegalStateException("The color of a councillor can not be null");
+		}
 		
 	}
 
@@ -24,7 +31,7 @@ public class Councillor implements Serializable {
 	 * 
 	 * @return the color of this councillor.
 	 */
-	public Color getColor(){
+	public Color getColor() {
 		
 		return color;
 		
