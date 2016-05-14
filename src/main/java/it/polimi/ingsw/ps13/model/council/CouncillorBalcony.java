@@ -1,8 +1,11 @@
 package it.polimi.ingsw.ps13.model.council;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 
@@ -15,11 +18,12 @@ import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
  * Whenever a councillor has to be inserted in the balcony, it's added in the
  * first position, and the one in the last position is dropped, effectively
  * causing a 'slide' of the councillors.
+ * 
  */
 public class CouncillorBalcony implements Serializable {
 
 	private static final int COUNCILLORS = 4;
-	private static final int[] coinsPerMissingCards = new int[] {0, 4, 7, 10};
+	private static final int[] coinsPerMissingCard = new int[] {0, 4, 7, 10};
 	private static final long serialVersionUID = 0L;
 	private final LinkedList<Councillor> councillorList;
 	
@@ -29,7 +33,7 @@ public class CouncillorBalcony implements Serializable {
 	 * 
 	 * @param councillors a collection of councillors to put in the balcony
 	 */
-	public CouncillorBalcony(Collection<Councillor> councillors){
+	protected CouncillorBalcony(Collection<Councillor> councillors){
 		
 		// Checks if the size of the collection of Councillor
 		// matches the intended number of councillors.
@@ -55,49 +59,12 @@ public class CouncillorBalcony implements Serializable {
 	 * 
 	 * @param councillor the councillor to be added in the first position
 	 * @return the last councillor of the balcony, which has been removed
+	 * 
 	 */
 	public Councillor insertCouncillor(Councillor councillor){
 		
 		councillorList.addFirst(councillor);
 		return councillorList.removeLast();
-		
-	}
-	
-	/**
-	 * Checks if the council can be satisfied with the passed collection
-	 * of cards and amount of coins.
-	 * 
-	 * Note that there is a multicolored politics card which matches every councillor.
-	 * 
-	 * @param cards the collection of politics cards selected to satisfy the council
-	 * @param playerCoins the amount of coins of the player
-	 * @return true, if the council is satisfiable with the given politics cards
-	 */
-	public boolean isSatisfiable(Collection<PoliticsCard> cards, int playerCoins) {
-		
-		// The number of cards passed should never be greater than the
-		// number of councillors in the balcony
-		if ((cards.isEmpty()) || (cards.size() > COUNCILLORS)) {
-			throw new IllegalArgumentException("Politics cards used to satisfy a balcony should be at least 1 and at most " + COUNCILLORS);
-		}
-				
-		int numberOfMulticoloredCards = calculateNumberOfMulticoloredCards(cards);
-		int numberOfMatches = calculateNumberOfMatches(cards);
-		
-		// A council is satisfiable if the collection of passed cards has
-		// at least one multicolored card OR one card whose color matches
-		// the color of one of the councillors...
-		if ( (numberOfMulticoloredCards == 0) && (numberOfMatches == 0) ) {
-			return false;
-		}
-		
-		// ...provided the player has enough coins to make up for the possibly
-		// missing cards
-		if ( (playerCoins - coinsToPay(numberOfMatches, numberOfMulticoloredCards)) < 0) {
-			return false;
-		}
-		
-		return true;
 		
 	}
 
@@ -109,27 +76,24 @@ public class CouncillorBalcony implements Serializable {
 	 */
 	public int calculateNumberOfMatches(Collection<PoliticsCard> cards) {
 		
+		List<PoliticsCard> cardsCopy = new ArrayList<>(cards);
+		
 		int numberOfMatches = 0;
-		int numberOfCards = cards.size();
-		boolean found = false;
+		boolean matchFound = false;
+		
 		for (Councillor councillor : councillorList) {
-			for (Iterator<PoliticsCard> it = cards.iterator(); it.hasNext() && !found;) {
+			for (Iterator<PoliticsCard> it = cardsCopy.iterator(); it.hasNext() && !matchFound;) {
 				PoliticsCard card = it.next();
 				if (councillor.getColor() == card.getColor()) {
-					found = true;
+					matchFound = true;
 					it.remove();
 					numberOfMatches++;
 				}
 			}
-			found = false;
+			matchFound = false;
 		}
 		
-		if (numberOfMatches != numberOfCards) {
-			// throw new CHECKED exception (declared in method)
-			return -1;
-		} else {
-			return numberOfMatches;
-		}
+		return numberOfMatches;
 		
 	}
 
@@ -145,7 +109,6 @@ public class CouncillorBalcony implements Serializable {
 		for (Iterator<PoliticsCard> it = cards.iterator(); it.hasNext();) {
 			PoliticsCard card = it.next();
 			if (card.isMultiColored()) {
-				it.remove();
 				numberOfMulticoloredCards++;
 			}
 		}
@@ -153,19 +116,69 @@ public class CouncillorBalcony implements Serializable {
 	}
 	
 	/**
+	 * Checks if the council can be satisfied with the passed collection
+	 * of cards and amount of coins.
+	 * 
+	 * Note that there is a multicolored politics card which matches every councillor.
+	 * 
+	 * @param cards the collection of politics cards selected to satisfy the council
+	 * @param playerCoins the amount of coins of the player
+	 * @return true, if the council is satisfiable with the given politics cards
+	 */
+	public boolean isSatisfiable(Collection<PoliticsCard> cards, int playerCoins) {
+		
+		boolean satisfiable = true;
+		int numberOfCards = cards.size();
+		
+		// The number of cards passed should never be greater than the
+		// number of councillors in the balcony
+		if ((numberOfCards <= 0) || (numberOfCards > COUNCILLORS)) {
+			throw new IllegalArgumentException("Politics cards used to satisfy a balcony should be at least 1 and at most " + COUNCILLORS);
+		}
+				
+		int numberOfMatches = calculateNumberOfMatches(cards);
+		int numberOfMulticoloredCards = calculateNumberOfMulticoloredCards(cards);
+		
+		// If the number of matches is less than the number of cards played (except
+		// for the multicolored cards), then the player has selected some extra card(s)
+		// that didn't match with any of the councillor's colors
+		if (numberOfMatches != numberOfCards - numberOfMulticoloredCards) {
+			satisfiable = false;
+			// @TODO: notify the user with the reason
+		}
+		
+		// A council is satisfiable if among the played cards there is
+		// at least one multicolored card, OR at least one card whose color
+		// matches the color of one of the councillors...
+		if ( (numberOfMulticoloredCards == 0) && (numberOfMatches == 0) ) {
+			satisfiable = false;
+			// @TODO: notify the user with the reason
+		}
+		
+		// ...provided the player has got enough coins to make up for
+		// the missing cards.
+		if ( satisfiable && (playerCoins - coinsToPay(cards)) < 0 ) {
+			satisfiable = false;
+			// @TODO: notify the user with the reason
+		}
+		
+		return satisfiable;
+		
+	}
+	
+	/**
 	 * This method returns the number of coins the player has to pay in order to satisfy
 	 * the council. The coins are paid to make up for any missing cards.
 	 * 
-	 * @param numberOfMatches the number of selected cards matching with a councillor color
-	 * @param numberOfMulticoloredCards the number of selected multicolored cards
+	 * @param cards the cards selected by the player
 	 * @return the number of coins the player has to pay in order to satisfy the council
 	 */
-	public int coinsToPay(int numberOfMatches, int numberOfMulticoloredCards) {
+	public int coinsToPay(Collection<PoliticsCard> cards) {
 		
-		if ((numberOfMatches == 0) && (numberOfMulticoloredCards == 0)) {
-			throw new IllegalArgumentException("Number of matches and number of multicolored cards cannot be both zero (council is not satisfiable)");
+		if (cards.isEmpty()) {
+			throw new IllegalArgumentException("You cannot satisfy a council without using at least a politics card");
 		} else {
-			return coinsPerMissingCards[COUNCILLORS - numberOfMatches - numberOfMulticoloredCards] + numberOfMulticoloredCards;
+			return coinsPerMissingCard[COUNCILLORS - cards.size()] + calculateNumberOfMulticoloredCards(cards);
 		}
 		
 	}
@@ -175,7 +188,7 @@ public class CouncillorBalcony implements Serializable {
 	 */
 	public Collection<Councillor> getCouncillors(){
 		
-		return councillorList;
+		return Collections.unmodifiableList(councillorList);
 		
 	}
 
