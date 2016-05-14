@@ -1,12 +1,11 @@
 package it.polimi.ingsw.ps13.model.deck;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
+import java.util.Set;
+import java.util.HashSet;
+import java.io.Serializable;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.city.City;
-
-import java.io.Serializable;
 
 /**
  * A PermitTile is used to build an Emporium on a City,
@@ -15,52 +14,27 @@ import java.io.Serializable;
  * Whenever a Player obtains a PermitTile, he/she will be
  * granted the corresponding Bonus.
  * 
- * After a PermitTile has been used once, it is turned face down
- * and can't be used anymore by the same Player.
+ * This class is immutable.
  * 
  */
-public class PermitTile implements Serializable {
+public final class PermitTile implements Serializable {
 	
 	private static final long serialVersionUID = 0L;
-	private boolean isFacingUp;
 	private final Bonus bonus;
-	private final List<City> cityList;
+	private final Set<City> citySet;
 	
 	/**
-	 * Constructs a new PermitTile, with a given Bonus
-	 * and a given Collection of cities.
+	 * Constructs a new PermitTile, with a given Bonus and a given Collection of cities.
 	 * 
 	 * @param bonus
 	 * @param cities
 	 */
-	public PermitTile(Bonus bonus, Collection<City> cities) {
-		
-		// a new PermitTile is facing down by default
-		isFacingUp = false;
+	PermitTile(Bonus bonus, Set<City> cities) {
 		
 		this.bonus = bonus;
 		
-		cityList = new ArrayList<>();
-		cityList.addAll(cities);
-		
-	}
-	
-	/**
-	 * 
-	 * @return true if the permit tile is facing up
-	 */
-	public boolean isFacingUp() {
-		
-		return isFacingUp;
-		
-	}
-	
-	/**
-	 * Turns the permit tile upside down, based on the current status.
-	 */
-	public void flip() {
-		
-		isFacingUp = !isFacingUp;
+		citySet = new HashSet<>();
+		citySet.addAll(cities);
 		
 	}
 	
@@ -78,9 +52,9 @@ public class PermitTile implements Serializable {
 	 * 
 	 * @return the list of cities associated with the permit tile
 	 */
-	public List<City> getCityList() {
+	public Set<City> getCitySet() {
 		
-		return cityList;
+		return Collections.unmodifiableSet(citySet);
 		
 	}
 }

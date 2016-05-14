@@ -5,11 +5,11 @@ import java.io.Serializable;
 
 /**
  * A PoliticsCard is completely represented by its Color.
- * 
  * We decided to represent the multicolored card (jolly) with a NULL color value.
+ * This class is immutable.
  * 
  */
-public class PoliticsCard implements Serializable {
+public final class PoliticsCard implements Serializable {
 	
 	private static final long serialVersionUID = 0L;
 	private final Color color;
@@ -19,7 +19,7 @@ public class PoliticsCard implements Serializable {
 	 * 
 	 * @param color
 	 */
-	public PoliticsCard(Color color) {
+	PoliticsCard(Color color) {
 		
 		this.color = color;
 	

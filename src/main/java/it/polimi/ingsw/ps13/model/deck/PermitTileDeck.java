@@ -1,9 +1,8 @@
 package it.polimi.ingsw.ps13.model.deck;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
+import java.util.List;
+import java.util.ArrayList;
 import java.io.Serializable;
 
 /**
@@ -13,23 +12,22 @@ import java.io.Serializable;
  * 
  * The tiles are drawn from the top of the Deck.
  * There is no discard pile: whenever the visible tiles need to be replaced,
- * they are put face down directly at the bottom of the Deck and the others
- * are drawn from the top.
+ * they are put directly at the bottom of the Deck and the others are drawn from the top.
  * 
- * The integers representing the position of the visible tiles start from 0.
+ * The currently visible permit tiles are put in a list.
  *
  */
 public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private static final int VISIBLE_TILES = 2;
-	private Map<Integer, PermitTile> visibleTiles = new HashMap<>();
+	private final List<PermitTile> visibleTiles;
 	
 	/**
      * Instantiates a new Deck populated with a Collection of permit tiles.
      * The tiles are shuffled when the deck is created.
      * Some permit tiles are then removed from the Deck and placed
-     * face up in the Map containing the visible permit tiles.
+     * in a list containing the currently visible permit tiles.
      *
      * @param cards a Collection of permit tiles to put inside the deck
      */
@@ -37,6 +35,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 		
 		super(cards);
 		shuffleDeck();
+		visibleTiles = new ArrayList<>();
 		placeTiles();
 		
 	}
@@ -56,25 +55,21 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	}
 	
 	/**
-	 * Puts a permit tile at the bottom of the deck, facing down. 
+	 * Puts a permit tile at the bottom of the deck. 
 	 * 
 	 * @param card the permit tile to discard
 	 */
 	@Override
 	public void discardCard(PermitTile card) {
 		
-		if (card.isFacingUp()) {
-			card.flip();
-		}
-		
 		drawPile.addLast(card);
 		
 	}
 	
 	/**
-     * Checks if both the draw pile and the ArrayList of visible permit tiles are empty.
+     * Checks if both the draw pile and the list of visible permit tiles are empty.
      *
-     * @return true, if the drawPile and the visiblePermitTiles are empty
+     * @return true, if drawPile and visibleTiles are both empty
      */
 	@Override
 	public boolean isEmpty() {
@@ -85,12 +80,13 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	
 	/**
 	 * 
+	 * 
 	 */
 	public void changeTiles() {
 		
 		if (!isDrawPileEmpty()) {
 		
-			for (Integer i : visibleTiles.keySet()) {
+			for (int i=0; i<visibleTiles.size(); i++) {
 				discardCard(visibleTiles.remove(i));
 			}
 			
@@ -101,9 +97,8 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	}
 	
 	/**
-	 * Initializes the map of visible tiles by populating it with random tiles from
-	 * the top of the deck, and associating each one with an incremental number from 0
-	 * to VISIBLE_TILES - 1.
+	 * Initializes the list of visible tiles by populating it with random tiles from
+	 * the top of the deck.
 	 *
 	 * Method is private because it is called only in the constructor when the deck is
 	 * created, and in the changeTiles() method.
@@ -112,34 +107,31 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	private void placeTiles() {
 		
 		for (int i=0; i<VISIBLE_TILES; i++) {
-			visibleTiles.put(i, drawCard());
+			visibleTiles.add(drawCard());
 		}
 		
 	}
 	
 	/**
-	 * Takes a specific tile from the Map of visible tiles.
+	 * Takes a specific tile from the list of visible tiles.
 	 *
-	 * @param position the position of the tile in the visibleTiles Map
+	 * @param position the position of the tile in the visibleTiles list
 	 * @return the selected permit tile
 	 */
 	public PermitTile takeTile(int position) {
 		
-		if (visibleTiles.containsKey(position)) {
-			// Remove tile from the Map 
-			PermitTile tile = visibleTiles.remove(position);
-			
-			// If the draw pile is not empty, Draw a new card from the
-			// top of the Deck and put it face up in the Map of visible tiles
+		if ( (visibleTiles.size() > 0) && (visibleTiles.size() <= position) ) {
+			// If the draw pile is not empty, draw a new card from the
+			// top of the deck and put it in the list of visible tiles
 			if ( !(drawPile.isEmpty()) ) {
-				visibleTiles.put(position, drawCard());
+				visibleTiles.add(drawCard());
 			}
 			
 			// Return the previously removed tile
-			return tile;
+			return visibleTiles.remove(position);
 			
 		} else {
-			throw new NoSuchElementException();
+			throw new ArrayIndexOutOfBoundsException("The selected tile does not exist");
 		}
 		
 	}
