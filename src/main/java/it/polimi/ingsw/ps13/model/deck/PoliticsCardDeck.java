@@ -12,10 +12,10 @@ import java.io.Serializable;
  * deck the discard pile (if not empty) is automatically shuffled and used.
  * 
  */
-public class PoliticsCardDeck<E extends PoliticsCard> extends Deck<E> implements Serializable {
+public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable {
 	
 	private static final long serialVersionUID = 0L;
-    private final List<E> discardPile;
+    private final List<PoliticsCard> discardPile;
     
     /**
      * Instantiates a new Deck populated with a Collection of politics cards.
@@ -23,7 +23,7 @@ public class PoliticsCardDeck<E extends PoliticsCard> extends Deck<E> implements
      *
      * @param cards a Collection of politics cards to put inside the deck
      */
-    public PoliticsCardDeck(Collection<E> cards) {
+    public PoliticsCardDeck(Collection<PoliticsCard> cards) {
 
         super(cards);
         discardPile = new ArrayList<>();
@@ -38,7 +38,7 @@ public class PoliticsCardDeck<E extends PoliticsCard> extends Deck<E> implements
      * the new deck and cards are automatically shuffled.
      */
     @Override
-    public E drawCard() {
+    public PoliticsCard drawCard() {
 
         if (this.isEmpty()) {
             // No more cards in the deck, nor in the discardPile
@@ -65,7 +65,7 @@ public class PoliticsCardDeck<E extends PoliticsCard> extends Deck<E> implements
      * @param card the politics card to discard
      */
     @Override
-    public void discardCard(E card) {
+    public void discardCard(PoliticsCard card) {
 
         discardPile.add(card);
 

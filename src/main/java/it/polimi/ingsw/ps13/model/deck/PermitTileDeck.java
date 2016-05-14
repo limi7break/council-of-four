@@ -19,11 +19,11 @@ import java.io.Serializable;
  * The integers representing the position of the visible tiles start from 0.
  *
  */
-public class PermitTileDeck<E extends PermitTile> extends Deck<E> implements Serializable {
+public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private static final int VISIBLE_TILES = 2;
-	private Map<Integer, E> visibleTiles = new HashMap<>();
+	private Map<Integer, PermitTile> visibleTiles = new HashMap<>();
 	
 	/**
      * Instantiates a new Deck populated with a Collection of permit tiles.
@@ -33,7 +33,7 @@ public class PermitTileDeck<E extends PermitTile> extends Deck<E> implements Ser
      *
      * @param cards a Collection of permit tiles to put inside the deck
      */
-	public PermitTileDeck(Collection<E> cards) {
+	public PermitTileDeck(Collection<PermitTile> cards) {
 		
 		super(cards);
 		shuffleDeck();
@@ -49,7 +49,7 @@ public class PermitTileDeck<E extends PermitTile> extends Deck<E> implements Ser
 	 * @return a permit tile from the top of the deck, removing it from the deck
 	 */
 	@Override
-	E drawCard() {
+	PermitTile drawCard() {
 		
 		return drawPile.removeFirst();
 		
@@ -61,7 +61,7 @@ public class PermitTileDeck<E extends PermitTile> extends Deck<E> implements Ser
 	 * @param card the permit tile to discard
 	 */
 	@Override
-	public void discardCard(E card) {
+	public void discardCard(PermitTile card) {
 		
 		if (card.isFacingUp()) {
 			card.flip();
@@ -123,11 +123,11 @@ public class PermitTileDeck<E extends PermitTile> extends Deck<E> implements Ser
 	 * @param position the position of the tile in the visibleTiles Map
 	 * @return the selected permit tile
 	 */
-	public E takeTile(int position) {
+	public PermitTile takeTile(int position) {
 		
 		if (visibleTiles.containsKey(position)) {
 			// Remove tile from the Map 
-			E tile = visibleTiles.remove(position);
+			PermitTile tile = visibleTiles.remove(position);
 			
 			// If the draw pile is not empty, Draw a new card from the
 			// top of the Deck and put it face up in the Map of visible tiles
