@@ -3,12 +3,13 @@ package it.polimi.ingsw.ps13.model.resource;
 import java.io.Serializable;
 
 import it.polimi.ingsw.ps13.model.player.Player;
+import it.polimi.ingsw.ps13.model.market.Marketable;
 
 /**
  * 
  *
  */
-public class Assistants extends Resource implements Serializable {
+public class Assistants extends Resource implements Marketable, Serializable {
 
 	private static final long serialVersionUID = 0L;
 

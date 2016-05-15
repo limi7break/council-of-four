@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.io.Serializable;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.city.City;
+import it.polimi.ingsw.ps13.model.player.Player;
+import it.polimi.ingsw.ps13.model.market.Marketable;
 
 /**
  * A PermitTile is used to build an Emporium on a City,
@@ -17,7 +19,7 @@ import it.polimi.ingsw.ps13.model.city.City;
  * This class is immutable.
  * 
  */
-public final class PermitTile implements Serializable {
+public final class PermitTile implements Marketable, Serializable {
 	
 	private static final long serialVersionUID = 0L;
 	private final Bonus bonus;
@@ -55,6 +57,18 @@ public final class PermitTile implements Serializable {
 	public Set<City> getCitySet() {
 		
 		return Collections.unmodifiableSet(citySet);
+		
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	public void giveTo(Player player) {
+		
+		// @TODO: implement this method
+		// remember: when this method is called, the tile has already been removed
+		// from the seller's hand. Only need to put the reference in the buyer's hand.
 		
 	}
 }

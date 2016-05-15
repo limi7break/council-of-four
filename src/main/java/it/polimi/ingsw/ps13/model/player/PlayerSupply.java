@@ -22,9 +22,9 @@ public class PlayerSupply implements Serializable  {
 
 	private static final long serialVersionUID = 0L;
 	
-	private final VictoryPoints victoryPoints; 
-	private final Coins coins; 
-	private final Assistants assistants; 
+	private final VictoryPoints victoryPoints;
+	private final Coins coins;
+	private final Assistants assistants;
 	private final Collection<Emporium> emporiums;
 	private final Collection<PoliticsCard> politicsCards;
 	private final Collection<PermitTile> permitTiles; 
@@ -35,7 +35,7 @@ public class PlayerSupply implements Serializable  {
 	 */
 	public PlayerSupply(int position) {
 		
-		if(position < 1) 
+		if(position < 1)
 			throw new IllegalArgumentException();
 		
 		else{
