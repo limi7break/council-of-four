@@ -33,7 +33,7 @@ public class CouncillorBalcony implements Serializable {
 	 * 
 	 * @param councillors a collection of councillors to put in the balcony
 	 */
-	protected CouncillorBalcony(Collection<Councillor> councillors){
+	public CouncillorBalcony(Collection<Councillor> councillors){
 		
 		// Checks if the size of the collection of Councillor
 		// matches the intended number of councillors.

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.ps13.model.resource;
 
 import java.io.Serializable;
-import it.polimi.ingsw.ps13.model.Player;
+
+import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
  * Resources that players have as they take part of a match.

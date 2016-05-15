@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
-import it.polimi.ingsw.ps13.model.Emporium;
-import it.polimi.ingsw.ps13.model.Player;
+
+import it.polimi.ingsw.ps13.model.board.Emporium;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
  * 

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.ps13.model.resource;
 
 import java.io.Serializable;
-import it.polimi.ingsw.ps13.model.Player;
+
+import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
  * 
@@ -20,7 +21,7 @@ public class Assistants extends Resource implements Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		// @TODO: implement this method
+		player.getSupply().addAssistants(this.getAmount());
 		
 	}
 }

@@ -3,7 +3,8 @@ package it.polimi.ingsw.ps13.model.bonus;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import it.polimi.ingsw.ps13.model.Player;
+
+import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.resource.Resource;
 
 /**
@@ -23,6 +24,17 @@ public class ResourceBonus implements Bonus {
 		
 		content = new ArrayList<>();
 		content.addAll(bonus);
+		
+	}
+	
+	/**
+	 * 
+	 * @param bonus
+	 */
+	public ResourceBonus(Resource bonus){
+		
+		content = new ArrayList<>();
+		content.add(bonus);
 		
 	}
 	

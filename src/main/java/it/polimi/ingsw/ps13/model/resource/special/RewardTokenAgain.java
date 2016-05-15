@@ -1,7 +1,8 @@
 package it.polimi.ingsw.ps13.model.resource.special;
 
 import java.io.Serializable;
-import it.polimi.ingsw.ps13.model.Player;
+
+import it.polimi.ingsw.ps13.model.player.Player;
 
 public class RewardTokenAgain extends SpecialResource implements Serializable {
 	

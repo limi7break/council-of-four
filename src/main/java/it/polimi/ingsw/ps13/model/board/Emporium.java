@@ -1,7 +1,9 @@
-package it.polimi.ingsw.ps13.model;
+package it.polimi.ingsw.ps13.model.board;
 
-import java.io.Serializable;
 import java.awt.Color;
+import java.io.Serializable;
+
+import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
  * An Emporium is identified with its owner, which in turn defines the emporium's color.
