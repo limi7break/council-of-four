@@ -1,0 +1,596 @@
+<?xml version="1.0"?>
+<!-- @author: Michele Ferri -->
+
+<config name="default">
+	
+	<colors>
+		<color r="000" g="000" b="000">black</color>
+		<color r="000" g="000" b="255">blue</color>
+		<color r="000" g="255" b="255">cyan</color>
+		<color r="064" g="064" b="064">darkGray</color>
+		<color r="128" g="128" b="128">gray</color>
+		<color r="000" g="255" b="000">green</color>
+		<color r="192" g="192" b="192">lightGray</color>
+		<color r="255" g="000" b="255">magenta</color>
+		<color r="255" g="200" b="000">orange</color>
+		<color r="255" g="175" b="175">pink</color>
+		<color r="255" g="000" b="000">red</color>
+		<color r="255" g="255" b="255">white</color>
+		<color r="255" g="255" b="000">yellow</color>
+	</colors>
+	
+	<politicscolors>
+		<color>blue</color>
+		<color>white</color>
+		<color>blue</color>
+		<color>magenta</color>
+		<color>orange</color>
+		<color>pink</color>
+	</politicscolors>
+	
+	<!-- different cities cannot have the same name -->
+	
+	<regions>
+		<region name="coast">
+			<city name="Arkon" color="blue">
+				<neighbor name="Burgen"/>
+				<neighbor name="Castrum"/>
+			</city>
+			<city name="Burgen" color="yellow">
+				<neighbor name="Arkon"/>
+				<neighbor name="Dorful"/>
+				<neighbor name="Esti"/>
+			</city>
+			<city name="Castrum" color="lightGray">
+				<neighbor name="Arkon"/>
+				<neighbor name="Framek"/>
+			</city>
+			<city name="Dorful" color="lightGray">
+				<neighbor name="Burgen"/>
+				<neighbor name="Graden"/>
+			</city>
+			<city name="Esti" color="orange">
+				<neighbor name="Burgen"/>
+				<neighbor name="Hellar"/>
+			</city>
+		</region>
+		<region name="hill">
+			<cities>
+				<city name="Framek" color="yellow">
+					<neighbor name="Castrum"/>
+					<neighbor name="Indur"/>
+				</city>
+				<city name="Graden" color="lightGray">
+					<neighbor name="Dorful"/>
+					<neighbor name="Juvelar"/>
+				</city>
+				<city name="Hellar" color="yellow">
+					<neighbor name="Esti"/>
+					<neighbor name="Juvelar"/>
+					<neighbor name="Merkatim"/>
+				</city>
+				<city name="Indur" color="orange">
+					<neighbor name="Framek"/>
+					<neighbor name="Juvelar"/>
+					<neighbor name="Kultos"/>
+				</city>
+				<city name="Juvelar" color="purple">
+					<neighbor name="Graden"/>
+					<neighbor name="Hellar"/>
+					<neighbor name="Indur"/>
+					<neighbor name="Lyram"/>
+				</city>
+			</cities>
+		</region>
+		<region name="mountain">
+			<cities>
+				<city name="Kultos" color="yellow">
+					<neighbor name="Indur"/>
+					<neighbor name="Naris"/>
+				</city>
+				<city name="Lyram" color="lightGray">
+					<neighbor name="Juvelar"/>
+					<neighbor name="Osium"/>
+				</city>
+				<city name="Merkatim" color="blue">
+					<neighbor name="Hellar"/>
+					<neighbor name="Osium"/>
+				</city>
+				<city name="Naris" color="orange">
+					<neighbor name="Kultos"/>
+					<neighbor name="Osium"/>
+				</city>
+				<city name="Osium" color="yellow">
+					<neighbor name="Lyram"/>
+					<neighbor name="Merkatim"/>
+					<neighbor name="Naris"/>
+				</city>
+			</cities>
+		</region>
+	</regions>
+		
+	<rewardtokens>
+		<rewardtoken>
+			<bonus type="coins">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="coins">2</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="coins">3</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="victorypoints">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="victorypoints">2</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="victorypoints">3</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="politicscards">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="nobilitypoints">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="nobilitypoints">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="assistants">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="assistants">2</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="assistants">1</bonus>
+			<bonus type="coins">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="assistants">1</bonus>
+			<bonus type="politicscards">1</bonus>
+		</rewardtoken>
+		<rewardtoken>
+			<bonus type="politicscards">1</bonus>
+			<bonus type="victorypoints">1</bonus>
+		</rewardtoken>
+	</rewardtokens>
+		
+	<nobility>
+		<position index="2">
+			<bonus>
+				<victorypoints>2</victorypoints>
+				<coins>2</coins>
+			</bonus>
+		</position>
+		<!-- REWARD TOKEN AGAIN, NO NOBILITY ADVANCE
+		<position index="4">
+			<bonus>
+
+			</bonus>
+		</position> -->
+		<position index="6">
+			<bonus>
+				<mainactions>1</mainactions>
+			</bonus>
+		</position>
+		<position index="8">
+			<bonus>
+				<victorypoints>3</victorypoints>
+				<politicscards>1</politicscards>
+			</bonus>
+		</position>
+		<!-- GET VISIBLE PERMIT TILE
+		<position index="10">
+			<bonus>
+
+			</bonus>
+		</position> -->
+		<position index="12">
+			<bonus>
+				<victorypoints>5</victorypoints>
+				<assistants>1</assistants>
+			</bonus>
+		</position>
+		<!-- PERMIT TILE BONUS AGAIN
+		<position index="14">
+			<bonus>
+
+			</bonus>
+		</position> -->
+		<!-- 2X REWARD TOKEN AGAIN, DIFFERENT CITIES, NO NOBILITY ADVANCE
+		<position index="16">
+			<bonus>
+
+			</bonus>
+		</position> -->
+		<position index="18">
+			<bonus>
+				<victorypoints>8</victorypoints>
+			</bonus>
+		</position>
+		<position index="19">
+			<bonus>
+				<victorypoints>2</victorypoints>
+			</bonus>
+		</position>
+		<position index="20">
+			<bonus>
+				<victorypoints>3</victorypoints>
+			</bonus>
+		</position>
+	</nobility>
+
+	<permittiles>
+		<tile>
+			<cities>
+				<city>Juvelar</city>
+			</cities>
+			<bonus>
+				<mainactions>1</mainactions>
+				<victorypoints>2</victorypoints>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Burgen</city>
+			</cities>
+			<bonus>
+				<politicscards>3</politicscards>
+				<assistants>1</assistants>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Castrum</city>
+			</cities>
+			<bonus>
+				<assistants>2</assistants>
+				<coins>3</coins>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Dorful</city>
+			</cities>
+			<bonus>
+				<victorypoints>7</victorypoints>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Esti</city>
+			</cities>
+			<bonus>
+				<mainactions>1</mainactions>
+				<coins>2</coins>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Framek</city>
+			</cities>
+			<bonus>
+				<politicscards>2</politicscards>
+				<coins>4</coins>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Graden</city>
+			</cities>
+			<bonus>
+				<assistants>2</assistants>
+				<victorypoints>2</victorypoints>
+				<nobilitypoints>1</nobilitypoints>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Hellar</city>
+			</cities>
+			<bonus>
+				<assistants>4</assistants>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Indur</city>
+			</cities>
+			<bonus>
+				<politicscards>2</politicscards>
+				<assistants>1</assistants>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city>Arkon</city>
+			</cities>
+			<bonus>
+				<victorypoints>4</victorypoints>
+				<coins>3</coins>
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+		<tile>
+			<cities>
+				<city></city>
+			</cities>
+			<bonus>
+			
+			</bonus>
+		</tile>
+	</permittiles>
+</config>

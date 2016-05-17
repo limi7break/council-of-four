@@ -1,18 +1,15 @@
-package it.polimi.ingsw.ps13.model.resource.special;
+package it.polimi.ingsw.ps13.model.bonus;
 
 import java.io.Serializable;
-
 import it.polimi.ingsw.ps13.model.player.Player;
 
-public class PoliticsCardsToDraw extends SpecialResource implements Serializable{
+public class PoliticsCardsBonus implements Bonus, Serializable {
 	
 	private static final long serialVersionUID = 0L;
-	
 	private int amount;
 	
-	public PoliticsCardsToDraw(int amount){
+	protected PoliticsCardsBonus(int amount){
 		
-		super();
 		this.amount = amount;
 		
 	}

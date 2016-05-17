@@ -3,12 +3,13 @@ package it.polimi.ingsw.ps13.model.resource;
 import java.io.Serializable;
 
 import it.polimi.ingsw.ps13.model.player.Player;
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
 
 /**
  * Resources that players have as they take part of a match.
  *
  */
-public abstract class Resource implements Serializable {
+public abstract class Resource implements Bonus, Serializable {
 	
 	public static final long serialVersionUID = 0L;
 	private int amount;

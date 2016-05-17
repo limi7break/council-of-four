@@ -106,10 +106,10 @@ public class City implements Serializable {
 	 * 
 	 * @param player the player to give the bonuses to
 	 */
-	public void getBonuses(Player player) {
+	public void giveBonuses(Player player) {
 		
 		Set<City> visited = new HashSet<>();
-		this.getBonuses(player, visited);
+		this.giveBonuses(player, visited);
 		
 	}
 	
@@ -122,7 +122,7 @@ public class City implements Serializable {
 	 * 
 	 * @param player
 	 */
-	private void getBonuses(Player player, Set<City> visited) {
+	private void giveBonuses(Player player, Set<City> visited) {
 		
 		visited.add(this);
 		
@@ -134,7 +134,7 @@ public class City implements Serializable {
 		for (City neighbor : neighborList) {
 			
 			if ( !(visited.contains(neighbor)) && (player.hasBuiltOn(neighbor)) ) {
-				neighbor.getBonuses(player, visited);
+				neighbor.giveBonuses(player, visited);
 			}
 			
 		}

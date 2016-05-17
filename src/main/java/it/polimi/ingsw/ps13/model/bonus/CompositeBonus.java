@@ -1,62 +1,62 @@
 package it.polimi.ingsw.ps13.model.bonus;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
 import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.model.resource.Resource;
-import it.polimi.ingsw.ps13.model.resource.special.SpecialResource;
 
 public class CompositeBonus implements Bonus {
 
 	private static final long serialVersionUID = 0L;
-
-	private final Collection<Resource> resources;
-	private final Collection<SpecialResource> specialResources;
+	private final List<Bonus> content;
 	
 	/**
+	 * Constructor for a single bonus.
 	 * 
-	 * @param resourceBonus
-	 * @param specialResourceBonus
+	 * @param bonus
 	 */
-	public CompositeBonus(Collection<Resource> resourceBonus, Collection<SpecialResource> specialResourceBonus){
+	protected CompositeBonus(Bonus bonus) {
 		
-		resources = new ArrayList<>();
-		specialResources = new ArrayList<>();
-		
-		resources.addAll(resourceBonus);
-		specialResources.addAll(specialResourceBonus);
+		content = new ArrayList<>();
+		content.add(bonus);
 		
 	}
 	
 	/**
+	 * Constructor for two bonuses.
 	 * 
-	 * @param resourceBonus
-	 * @param specialResourceBonus
+	 * @param bonusOne
+	 * @param bonusTwo
 	 */
-	public CompositeBonus(Resource resourceBonus, SpecialResource specialResourceBonus){
+	protected CompositeBonus(Bonus bonusOne, Bonus bonusTwo) {
 		
-		resources = new ArrayList<>();
-		specialResources = new ArrayList<>();
+		content = new ArrayList<>();
+		content.add(bonusOne);
+		content.add(bonusTwo);
 		
-		resources.add(resourceBonus);
-		specialResources.add(specialResourceBonus);
+	}
+	
+	/**
+	 * Constructor for multiple bonuses.
+	 * 
+	 * @param bonuses
+	 */
+	protected CompositeBonus(Collection<Bonus> bonusList){
+		
+		content = new ArrayList<>();
+		content.addAll(bonusList);
 		
 	}
 	
 	@Override
 	public void giveTo(Player player) {
 		
-		Iterator<Resource> itr = resources.iterator();
-		Iterator<SpecialResource> itsr = specialResources.iterator();
-		
-		while(itr.hasNext()){
-			itr.next().giveTo(player);
-		}
-		
-		while(itsr.hasNext()){
-			itsr.next().giveTo(player);
+		Iterator<Bonus> it = content.iterator();
+		while(it.hasNext()){
+			
+			it.next().giveTo(player);
+			
 		}
 
 	}

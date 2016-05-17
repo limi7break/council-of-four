@@ -1,17 +1,15 @@
-package it.polimi.ingsw.ps13.model.resource.special;
+package it.polimi.ingsw.ps13.model.bonus;
 
 import java.io.Serializable;
-
 import it.polimi.ingsw.ps13.model.player.Player;
 
-public class ExtraMainActions extends SpecialResource implements Serializable {
+public class MainActionsBonus implements Bonus, Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private final int amount;
 	
-	public ExtraMainActions(int amount){
+	protected MainActionsBonus(int amount){
 		
-		super();
 		this.amount = amount;
 		
 	}
@@ -23,6 +21,4 @@ public class ExtraMainActions extends SpecialResource implements Serializable {
 		
 	}
 	
-	
-
 }
