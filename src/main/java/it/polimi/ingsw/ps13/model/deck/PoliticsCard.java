@@ -49,6 +49,7 @@ public final class PoliticsCard implements Marketable, Serializable {
 	 * 
 	 * 
 	 */
+	@Override
 	public void giveTo(Player player) {
 		
 		// @TODO: implement this method

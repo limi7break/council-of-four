@@ -64,6 +64,7 @@ public final class PermitTile implements Marketable, Serializable {
 	 * 
 	 * 
 	 */
+	@Override
 	public void giveTo(Player player) {
 		
 		// @TODO: implement this method

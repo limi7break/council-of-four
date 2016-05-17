@@ -33,7 +33,7 @@ public final class ColorFactory {
 			int g = Integer.parseInt(currentColor.getAttribute("g"));
 			int b = Integer.parseInt(currentColor.getAttribute("b"));
 			
-			colors.put(colorName.toLowerCase(), new Color(r, g, b));
+			colors.put(colorName, new Color(r, g, b));
 		}
 		
 	}

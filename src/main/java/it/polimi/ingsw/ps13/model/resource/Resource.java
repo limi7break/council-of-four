@@ -60,6 +60,7 @@ public abstract class Resource implements Bonus, Serializable {
 	/**
 	 * Gives the resource to a player.
 	 */
+	@Override
 	public abstract void giveTo(Player player);
 	
 }

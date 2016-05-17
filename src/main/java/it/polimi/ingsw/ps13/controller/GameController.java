@@ -8,6 +8,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import it.polimi.ingsw.ps13.model.ColorFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controller for a single game.
@@ -15,9 +17,10 @@ import it.polimi.ingsw.ps13.model.ColorFactory;
  */
 public class GameController {
 
+	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private Document config;
 	private String configFilePath = "config.xml";		// ask user for config file path...
-	private final Map<String, Color> colors;			// name of the colors is stored in lowercase
+	private final Map<String, Color> colors;
 	
 	/**
 	 * 
@@ -43,7 +46,7 @@ public class GameController {
 			config = dBuilder.parse(configFile);
 			config.getDocumentElement().normalize();
 		} catch(Exception e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "There was a problem reading the configuration file.", e);
 		}
 		
 		ColorFactory.createColors(colors, config);

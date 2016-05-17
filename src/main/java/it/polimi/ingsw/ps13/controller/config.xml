@@ -2,34 +2,56 @@
 <!-- @author: Michele Ferri -->
 
 <config name="default">
-	
+
 	<colors>
-		<color r="000" g="000" b="000">black</color>
-		<color r="000" g="000" b="255">blue</color>
-		<color r="000" g="255" b="255">cyan</color>
-		<color r="064" g="064" b="064">darkGray</color>
-		<color r="128" g="128" b="128">gray</color>
-		<color r="000" g="255" b="000">green</color>
-		<color r="192" g="192" b="192">lightGray</color>
-		<color r="255" g="000" b="255">magenta</color>
-		<color r="255" g="200" b="000">orange</color>
-		<color r="255" g="175" b="175">pink</color>
-		<color r="255" g="000" b="000">red</color>
-		<color r="255" g="255" b="255">white</color>
-		<color r="255" g="255" b="000">yellow</color>
+		<color name="black" 		r="000" g="000" b="000"/>
+		<color name="blue" 			r="000" g="000" b="255"/>
+		<color name="cyan" 			r="000" g="255" b="255"/>
+		<color name="darkGray" 		r="064" g="064" b="064"/>
+		<color name="gray" 			r="128" g="128" b="128"/>
+		<color name="green" 		r="000" g="255" b="000"/>
+		<color name="lightGray" 	r="192" g="192" b="192"/>
+		<color name="magenta" 		r="255" g="000" b="255"/>
+		<color name="orange" 		r="255" g="200" b="000"/>
+		<color name="pink" 			r="255" g="175" b="175"/>
+		<color name="red" 			r="255" g="000" b="000"/>
+		<color name="white" 		r="255" g="255" b="255"/>
+		<color name="yellow" 		r="255" g="255" b="000"/>
 	</colors>
 	
 	<politicscolors>
-		<color>blue</color>
-		<color>white</color>
-		<color>blue</color>
-		<color>magenta</color>
-		<color>orange</color>
-		<color>pink</color>
+		<color name="blue"/>
+		<color name="white"/>
+		<color name="blue"/>
+		<color name="magenta"/>
+		<color name="orange"/>
+		<color name="pink"/>
 	</politicscolors>
 	
-	<!-- different cities cannot have the same name -->
+	<citycolors>
+		<color name="blue">
+			<bonus>
+				<victorypoints value="5"/>
+			</bonus>
+		</color>
+		<color name="orange">
+			<bonus>
+				<victorypoints value="8"/>
+			</bonus>
+		</color>
+		<color name="gray">
+			<bonus>
+				<victorypoints value="12"/>
+			</bonus>
+		</color>
+		<color name="yellow">
+			<bonus>
+				<victorypoints value="20"/>
+			</bonus>
+		</color>
+	</citycolors>
 	
+	<!-- different cities cannot have the same name -->
 	<regions>
 		<region name="coast">
 			<city name="Arkon" color="blue">
@@ -110,51 +132,51 @@
 	</regions>
 		
 	<rewardtokens>
-		<rewardtoken>
-			<bonus type="coins">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="coins">2</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="coins">3</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="victorypoints">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="victorypoints">2</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="victorypoints">3</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="politicscards">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="nobilitypoints">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="nobilitypoints">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="assistants">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="assistants">2</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="assistants">1</bonus>
-			<bonus type="coins">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="assistants">1</bonus>
-			<bonus type="politicscards">1</bonus>
-		</rewardtoken>
-		<rewardtoken>
-			<bonus type="politicscards">1</bonus>
-			<bonus type="victorypoints">1</bonus>
-		</rewardtoken>
+		<bonus>
+			<coins value="1"/>
+		</bonus>
+		<bonus>
+			<coins value="2"/>
+		</bonus>
+		<bonus>
+			<coins value="3"/>
+		</bonus>
+		<bonus>
+			<victorypoints value="1"/>
+		</bonus>
+		<bonus>
+			<victorypoints value="2"/>
+		</bonus>
+		<bonus>
+			<victorypoints value="3"/>
+		</bonus>
+		<bonus>
+			<politicscards value="1"/>
+		</bonus>
+		<bonus>
+			<nobility value="1"/>
+		</bonus>
+		<bonus>
+			<nobility value="1"/>
+		</bonus>
+		<bonus>
+			<assistants value="1"/>
+		</bonus>
+		<bonus>
+			<assistants value="2"/>
+		</bonus>
+		<bonus>
+			<assistants value="1"/>
+			<coins value="1"/>
+		</bonus>
+		<bonus>
+			<assistants value="1"/>
+			<politicscards value="1"/>
+		</bonus>
+		<bonus>
+			<politicscards value="1"/>
+			<victorypoints value="1"/>
+		</bonus>
 	</rewardtokens>
 		
 	<nobility>
