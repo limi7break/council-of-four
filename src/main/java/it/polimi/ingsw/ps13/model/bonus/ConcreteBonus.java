@@ -1,8 +1,10 @@
 package it.polimi.ingsw.ps13.model.bonus;
 
-import java.util.List;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
@@ -24,6 +26,16 @@ public class ConcreteBonus implements Bonus {
 	protected ConcreteBonus(List<Bonus> bonusList){
 		
 		contents = bonusList;
+		
+	}
+	
+	/**
+	 * No-arg constructor for an empty bonus.
+	 * 
+	 */
+	protected ConcreteBonus() {
+		
+		contents = new ArrayList<>();
 		
 	}
 	

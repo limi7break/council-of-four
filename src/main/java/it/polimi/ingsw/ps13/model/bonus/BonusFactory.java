@@ -84,4 +84,15 @@ public final class BonusFactory {
 		
 	}
 	
+	/**
+	 * Creates an empty bonus, useful for the king city
+	 * 
+	 * @return
+	 */
+	public static Bonus createEmptyBonus() {
+		
+		return new ConcreteBonus();
+		
+	}
+	
 }
