@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import it.polimi.ingsw.ps13.model.board.Emporium;
-import it.polimi.ingsw.ps13.model.city.City;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
+import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.resource.Assistants;
 import it.polimi.ingsw.ps13.model.resource.Coins;
 import it.polimi.ingsw.ps13.model.resource.VictoryPoints;

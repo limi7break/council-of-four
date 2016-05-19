@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import it.polimi.ingsw.ps13.model.city.City;
-import it.polimi.ingsw.ps13.model.city.CityColor;
-import it.polimi.ingsw.ps13.model.city.Region;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeck;
+import it.polimi.ingsw.ps13.model.region.City;
+import it.polimi.ingsw.ps13.model.region.CityColor;
+import it.polimi.ingsw.ps13.model.region.Region;
 
 public class Board implements Serializable {
 

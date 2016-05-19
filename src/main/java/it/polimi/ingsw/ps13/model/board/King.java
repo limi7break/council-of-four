@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps13.model.board;
 
 import java.io.Serializable;
 
-import it.polimi.ingsw.ps13.model.city.City;
+import it.polimi.ingsw.ps13.model.region.City;
 
 /**
  * 

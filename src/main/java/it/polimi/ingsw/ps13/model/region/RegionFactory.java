@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps13.model.city;
+package it.polimi.ingsw.ps13.model.region;
 
 import java.util.ArrayList;
 import java.util.Collections;

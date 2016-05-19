@@ -9,16 +9,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import it.polimi.ingsw.ps13.model.city.City;
-import it.polimi.ingsw.ps13.model.city.CityColor;
-import it.polimi.ingsw.ps13.model.city.CityColorFactory;
-import it.polimi.ingsw.ps13.model.city.Region;
-import it.polimi.ingsw.ps13.model.city.RegionFactory;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalconyFactory;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeck;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeckFactory;
+import it.polimi.ingsw.ps13.model.region.City;
+import it.polimi.ingsw.ps13.model.region.CityColor;
+import it.polimi.ingsw.ps13.model.region.CityColorFactory;
+import it.polimi.ingsw.ps13.model.region.Region;
+import it.polimi.ingsw.ps13.model.region.RegionFactory;
 
 /**
  * 

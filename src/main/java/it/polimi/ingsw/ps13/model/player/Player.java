@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import it.polimi.ingsw.ps13.model.board.Board;
-import it.polimi.ingsw.ps13.model.city.City;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
+import it.polimi.ingsw.ps13.model.region.City;
 
 /**
  * 

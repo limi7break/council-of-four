@@ -1,9 +1,10 @@
-package it.polimi.ingsw.ps13.model.city;
+package it.polimi.ingsw.ps13.model.region;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.awt.Color;
 
@@ -28,7 +29,7 @@ public class City implements Serializable {
 	/**
 	 * 
 	 */
-	public City(String name, Region region, CityColor color, Bonus bonus) { 
+	protected City(String name, Region region, CityColor color, Bonus bonus) { 
 		
 		this.name = name;
 		this.region = region;
@@ -85,16 +86,18 @@ public class City implements Serializable {
 	 */
 	public Set<City> getNeighbors() {
 		
-		return neighbors;
+		return Collections.unmodifiableSet(neighbors);
 		
 	}
 	
 	/**
 	 * Adds a neighbor to the set.
+	 * This method is only called by RegionFactory during the initialization
+	 * of the game from the XML configuration file.
 	 * 
 	 * @param city
 	 */
-	public void addNeighbor(City city) {
+	protected void addNeighbor(City city) {
 		
 		neighbors.add(city);
 		
@@ -106,7 +109,7 @@ public class City implements Serializable {
 	 */
 	public List<Emporium> getEmporiums() {
 		
-		return emporiums;
+		return Collections.unmodifiableList(emporiums);
 		
 	}
 	
