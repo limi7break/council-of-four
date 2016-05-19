@@ -30,6 +30,8 @@
 	</politicscolors>
 	
 	<citycolors>
+		<capitalcolor name="magenta"/>
+		
 		<color name="blue">
 			<bonus>
 				<victorypoints value="5"/>
@@ -200,7 +202,7 @@
 				<neighbor name="Juvelar"/>
 				<neighbor name="Kultos"/>
 			</city>
-			<city name="Juvelar" color="purple">
+			<city name="Juvelar" color="magenta" capital="true">
 				<neighbor name="Graden"/>
 				<neighbor name="Hellar"/>
 				<neighbor name="Indur"/>

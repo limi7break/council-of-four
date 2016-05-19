@@ -17,14 +17,14 @@ public class Board implements Serializable {
 	private final Map<String, Region> regions;
 	private final Map<String, CityColor> cityColors;
 	private final Map<String, City> cities;
+	private final King king;
 	//private final NobilityTrack nobilityTrack;		// created in the constructor
 	private final PoliticsCardDeck politicsCardDeck;	// created in the constructor
-	//private final King king;							// created here
 	private final CouncillorBalcony kingBalcony;		// created here
 	//private final Deque<Bonus> kingRewardTiles;
 	private final List<Councillor> councillors;			// modifiable
 	
-	private Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors) {
+	private Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, King king) {
 		
 		this.regions = regions;
 		this.cityColors = cityColors;
@@ -32,6 +32,7 @@ public class Board implements Serializable {
 		this.politicsCardDeck = politicsCardDeck;
 		this.kingBalcony = kingBalcony;
 		this.councillors = councillors;
+		this.king = king;
 		
 		// create nobility track
 		// create king
@@ -39,24 +40,13 @@ public class Board implements Serializable {
 		
 	}
 	
-	public static Board create(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors) {
+	public static Board create(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, King king) {
 		
-		return new Board(regions, cityColors, cities, politicsCardDeck, kingBalcony, councillors);
+		return new Board(regions, cityColors, cities, politicsCardDeck, kingBalcony, councillors, king);
 		
 	}
 	
 	// === GETTER METHODS ===
-	
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public City getCity(String name) {
-		
-		return cities.get(name);
-		
-	}
 	
 	/**
 	 * 
@@ -77,6 +67,27 @@ public class Board implements Serializable {
 	public CityColor getCityColor(String name) {
 		
 		return cityColors.get(name);
+		
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public City getCity(String name) {
+		
+		return cities.get(name);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public King getKing() {
+		
+		return king;
 		
 	}
 	

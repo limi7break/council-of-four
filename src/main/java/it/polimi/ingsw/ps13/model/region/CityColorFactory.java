@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import it.polimi.ingsw.ps13.controller.GameController;
@@ -25,17 +24,15 @@ public final class CityColorFactory {
 		Map<String, CityColor> cityColors = new HashMap<>();
 		
 		Element cityColorsElement = (Element) config.getElementsByTagName("citycolors").item(0);
-		NodeList cityColorsNodeList = cityColorsElement.getChildNodes(); 
-		for (int i=0; i<cityColorsNodeList.getLength(); i++) {
-			if (cityColorsNodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
-				Element currentColor = (Element) cityColorsNodeList.item(i);
-				
-				Element currentBonusElement = (Element) currentColor.getElementsByTagName("bonus").item(0);
-				Bonus currentBonus = BonusFactory.createBonus(currentBonusElement);
-				String currentColorName = currentColor.getAttribute("name");
-				
-				cityColors.put(currentColorName, new CityColor(GameController.getColors().get(currentColorName), currentBonus));
-			}
+		NodeList colorsElementList = cityColorsElement.getElementsByTagName("color"); 
+		for (int i=0; i<colorsElementList.getLength(); i++) {
+			Element currentColor = (Element) colorsElementList.item(i);
+			
+			Element currentBonusElement = (Element) currentColor.getElementsByTagName("bonus").item(0);
+			Bonus currentBonus = BonusFactory.createBonus(currentBonusElement);
+			String currentColorName = currentColor.getAttribute("name");
+			
+			cityColors.put(currentColorName, new CityColor(GameController.getColors().get(currentColorName), currentBonus));
 		}
 		
 		return cityColors;

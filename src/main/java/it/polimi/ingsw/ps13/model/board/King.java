@@ -19,11 +19,7 @@ public class King implements Serializable {
 	 * 
 	 * @param c
 	 */
-	public King(City c){
-		
-		city = c;
-		
-	}
+	protected King() { }
 	
 	/**
 	 * 

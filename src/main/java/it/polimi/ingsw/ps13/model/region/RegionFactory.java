@@ -10,6 +10,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import it.polimi.ingsw.ps13.controller.GameController;
+import it.polimi.ingsw.ps13.model.board.King;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
@@ -20,11 +22,16 @@ public final class RegionFactory {
 
 	private RegionFactory() { }
 	
-	public static Map<String, City> createCities(Map<String, Region> regions, List<CouncillorBalcony> councillorBalconies, Map<String, CityColor> cityColors, Document config) {
+	public static Map<String, City> createCities(Map<String, Region> regions, Map<String, CityColor> cityColors, List<CouncillorBalcony> councillorBalconies, King king, Document config) {
 		
 		Map<String, City> cities = new HashMap<>();
-		
 		List<Bonus> rewardTokens = createRewardTokens(config);
+		
+		// Create capital color with empty bonus
+		Element capitalColorElement = (Element) ((Element) config.getElementsByTagName("citycolors").item(0)).getElementsByTagName("capitalcolor").item(0);
+		String capitalColorName = capitalColorElement.getAttribute("name");
+		CityColor capitalColor = new CityColor(GameController.getColors().get(capitalColorName), BonusFactory.createEmptyBonus());
+		cityColors.put(capitalColorName, capitalColor);
 		
 		Element regionsElement = (Element) config.getElementsByTagName("regions").item(0);
 		NodeList regionElementList = regionsElement.getElementsByTagName("region");
@@ -44,9 +51,17 @@ public final class RegionFactory {
 			for (int j=0; j<cityElementList.getLength(); j++) {
 				Element currentCity = (Element) cityElementList.item(j); 
 				String cityName = currentCity.getAttribute("name");
-				CityColor cityColor = cityColors.get(currentCity.getAttribute("color"));
+				String cityColorName = currentCity.getAttribute("color");
+				CityColor cityColor = cityColors.get(cityColorName);
 				
-				cities.put(cityName, new City(cityName, region, cityColor, rewardTokens.remove(0)));
+				if (cityColorName.equals(capitalColorName)) {
+					City capitalCity = new City(cityName, region, cityColor, BonusFactory.createEmptyBonus());
+					cities.put(cityName, capitalCity);
+					king.setCity(capitalCity);
+				} else {
+					cities.put(cityName, new City(cityName, region, cityColor, rewardTokens.remove(0)));
+				}
+				
 				region.addCityName(cityName);
 				cityColors.get(cityColor).addCityName(cityName);
 			}

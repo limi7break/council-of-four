@@ -47,9 +47,10 @@ public class BoardFactory {
 		List<CouncillorBalcony> councillorBalconies = new ArrayList<>();
 		councillors = CouncillorBalconyFactory.createCouncillorBalconies(numberOfRegions+1, councillorBalconies, config);
 		
-		cities = RegionFactory.createCities(regions, councillorBalconies, cityColors, config);
+		King king = new King();
+		cities = RegionFactory.createCities(regions, cityColors, councillorBalconies, king, config);
 		
-		return Board.create(regions, cityColors, cities, politicsCardDeck, councillorBalconies.remove(0), councillors);
+		return Board.create(regions, cityColors, cities, politicsCardDeck, councillorBalconies.remove(0), councillors, king);
 		
 	}
 	
