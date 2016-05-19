@@ -50,7 +50,21 @@ public final class RegionFactory {
 				region.addCityName(cityName);
 				cityColors.get(cityColor).addCityName(cityName);
 			}
+		}
+		
+		// Now that every city is created, add neighbors
+		NodeList cityElementList = regionsElement.getElementsByTagName("city");
+		for (int i=0; i<cityElementList.getLength(); i++) {
+			Element currentCity = (Element) cityElementList.item(i);
+			String currentCityName = currentCity.getAttribute("name");
 			
+			NodeList neighborElementList = currentCity.getElementsByTagName("neighbor");
+			for (int j=0; j<neighborElementList.getLength(); j++) {
+				Element currentNeighbor = (Element) neighborElementList.item(j);
+				String currentNeighborName = currentNeighbor.getAttribute("name");
+				
+				cities.get(currentCityName).addNeighbor(cities.get(currentNeighborName));
+			}
 		}
 		
 		return cities;
