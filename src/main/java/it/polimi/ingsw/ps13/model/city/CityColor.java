@@ -1,0 +1,103 @@
+package it.polimi.ingsw.ps13.model.city;
+
+import java.awt.Color;
+import java.io.Serializable;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
+
+/**
+ * This class represents the color of the cities.
+ * The bonus relative to each color can be obtained only once.
+ */
+public class CityColor implements Serializable {
+
+	private static final long serialVersionUID = 0L;
+	private final Color color;
+	private final Set<String> cityNames;
+	private final Bonus bonus;
+	private boolean bonusAvailable;
+	
+	/**
+	 * Creates a CityColor object.
+	 * 
+	 * The field bonusAvailable is set to true by default.
+	 * The bonus will be granted to the first player who builds an emporium on every city
+	 * of a certain color, and the flag will be set to false.
+	 * 
+	 */
+	protected CityColor(Color color, Bonus bonus){
+		
+		this.color = color;
+		this.bonus = bonus;
+		bonusAvailable = true;
+		
+		cityNames = new HashSet<>();
+		
+	}
+	
+	/**
+	 * 
+	 * @return the color of this object
+	 */
+	public Color getColor(){
+		
+		return color;
+		
+	}
+	
+	/**
+	 * 
+	 * @return the bonus associated to this color
+	 */
+	public Bonus getBonus(){
+		
+		return bonus;
+		
+	}
+	
+	/**
+	 * 
+	 * @return the cities of this color
+	 */
+	public Set<String> getCityNames(){
+		
+		return Collections.unmodifiableSet(cityNames);
+		
+	}
+	
+	/**
+	 * 
+	 * @param city
+	 */
+	public void addCityName(String name) {
+		
+		cityNames.add(name);
+		
+	}
+	
+	/**
+	 * 
+	 * @return true if the bonus tile of this color can still be acquired.
+	 */
+	public boolean isBonusAvailable(){
+		
+		return bonusAvailable;
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void setBonusAvailable(boolean colorBonusAvailable) {
+		
+		if (!this.bonusAvailable && colorBonusAvailable) {
+			throw new IllegalArgumentException("Bonus relative to a city color cannot be reset to true");
+		} else {
+			this.bonusAvailable = colorBonusAvailable;
+		}
+		
+	}
+	
+}

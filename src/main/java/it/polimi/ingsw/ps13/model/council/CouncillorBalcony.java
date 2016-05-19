@@ -22,27 +22,25 @@ import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
  */
 public class CouncillorBalcony implements Serializable {
 
-	private static final int COUNCILLORS = 4;
+	protected static final int COUNCILLORS_PER_BALCONY = 4;
 	private static final int[] coinsPerMissingCard = new int[] {0, 4, 7, 10};
 	private static final long serialVersionUID = 0L;
 	private final LinkedList<Councillor> councillorList;
 	
 	/**
-	 * Creates a council balcony with a fixed number of councillors,
-	 * specified in the constant COUNCILLORS.
+	 * Creates a council balcony with a fixed number of councillors.
+	 * A shuffled list of councillors is passed, the constructor removes the first
+	 * COUNCILLORS_PER_BALCONY councillors and adds them to the balcony.
 	 * 
 	 * @param councillors a collection of councillors to put in the balcony
 	 */
-	public CouncillorBalcony(Collection<Councillor> councillors){
-		
-		// Checks if the size of the collection of Councillor
-		// matches the intended number of councillors.
-		if (councillors.size() != COUNCILLORS) {
-			throw new IllegalArgumentException("Number of councillors in a balcony should be " + COUNCILLORS);
-		}
+	public CouncillorBalcony(List<Councillor> councillors) {
 		
 		councillorList = new LinkedList<>();
-		councillorList.addAll(councillors);
+		
+		for (int i=0; i<COUNCILLORS_PER_BALCONY; i++) {
+			councillorList.add(councillors.remove(0));
+		}
 		
 	}
 
@@ -132,8 +130,8 @@ public class CouncillorBalcony implements Serializable {
 		
 		// The number of cards passed should never be greater than the
 		// number of councillors in the balcony
-		if ((numberOfCards <= 0) || (numberOfCards > COUNCILLORS)) {
-			throw new IllegalArgumentException("Politics cards used to satisfy a balcony should be at least 1 and at most " + COUNCILLORS);
+		if ((numberOfCards <= 0) || (numberOfCards > COUNCILLORS_PER_BALCONY)) {
+			throw new IllegalArgumentException("Politics cards used to satisfy a balcony should be at least 1 and at most " + COUNCILLORS_PER_BALCONY);
 		}
 				
 		int numberOfMatches = calculateNumberOfMatches(cards);
@@ -178,7 +176,7 @@ public class CouncillorBalcony implements Serializable {
 		if (cards.isEmpty()) {
 			throw new IllegalArgumentException("You cannot satisfy a council without using at least a politics card");
 		} else {
-			return coinsPerMissingCard[COUNCILLORS - cards.size()] + calculateNumberOfMulticoloredCards(cards);
+			return coinsPerMissingCard[COUNCILLORS_PER_BALCONY - cards.size()] + calculateNumberOfMulticoloredCards(cards);
 		}
 		
 	}

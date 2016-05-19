@@ -17,7 +17,7 @@ public final class Councillor implements Serializable {
 	 * Creates a councillor whose color is given as a parameter.
 	 * 
 	 */
-	Councillor(Color color) {
+	protected Councillor(Color color) {
 		
 		if (color != null) {
 			this.color = color;

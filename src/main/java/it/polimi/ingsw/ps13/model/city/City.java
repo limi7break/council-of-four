@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.awt.Color;
 
 import it.polimi.ingsw.ps13.model.board.Emporium;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
@@ -18,21 +19,23 @@ public class City implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private final String name;
-	private final CityMaterial material;
+	private final Region region;
+	private final CityColor color;
 	private final Bonus bonus;
-	private final List<Emporium> emporiumList;
-	private final List<City> neighborList;
+	private final List<Emporium> emporiums;
+	private final Set<City> neighbors;
 	
 	/**
 	 * 
 	 */
-	public City(String name, CityMaterial material, Bonus bonus) { 
+	public City(String name, Region region, CityColor color, Bonus bonus) { 
 		
 		this.name = name;
-		this.material = material;
+		this.region = region;
+		this.color = color;
 		this.bonus = bonus;
-		emporiumList = new ArrayList<>();
-		neighborList = new ArrayList<>();
+		emporiums = new ArrayList<>();
+		neighbors = new HashSet<>();
 		
 	}
 	
@@ -48,32 +51,52 @@ public class City implements Serializable {
 	
 	/**
 	 * 
-	 * @return the material of which the city is made
+	 * @return the region of the city
 	 */
-	public CityMaterial getMaterial() {
+	public Region getRegion() {
 		
-		return material;
+		return region;
 		
 	}
 	
 	/**
 	 * 
-	 * @return the list of cities adjacent to the city
+	 * @return the color of the city
 	 */
-	public List<City> getNeighborList() {
+	public Color getColor() {
 		
-		return neighborList;
+		return color.getColor();
 		
 	}
 	
 	/**
-	 * Adds a neighbor to the list.
+	 * 
+	 * 	@return the CityColor of the city
+	 */
+	public CityColor getCityColor() {
+		
+		return color;
+		
+	}
+	
+	/**
+	 * 
+	 * @return the set of cities adjacent to this city
+	 */
+	public Set<City> getNeighbors() {
+		
+		return neighbors;
+		
+	}
+	
+	/**
+	 * Adds a neighbor to the set.
 	 * 
 	 * @param city
 	 */
 	public void addNeighbor(City city) {
 		
-		neighborList.add(city);
+		neighbors.add(city);
 		
 	}
 	
@@ -81,9 +104,9 @@ public class City implements Serializable {
 	 * 
 	 * @return the list of emporiums that have been built on the city
 	 */
-	public List<Emporium> getEmporiumList() {
+	public List<Emporium> getEmporiums() {
 		
-		return emporiumList;
+		return emporiums;
 		
 	}
 	
@@ -94,7 +117,7 @@ public class City implements Serializable {
 	 */
 	public void addEmporium(Emporium emporium) {
 		
-		emporiumList.add(emporium);
+		emporiums.add(emporium);
 		
 	}
 	
@@ -131,7 +154,7 @@ public class City implements Serializable {
 		// So, the bonus of this city is given to the player.
 		bonus.giveTo(player);
 		
-		for (City neighbor : neighborList) {
+		for (City neighbor : neighbors) {
 			
 			if ( !(visited.contains(neighbor)) && (player.hasBuiltOn(neighbor)) ) {
 				neighbor.giveBonuses(player, visited);

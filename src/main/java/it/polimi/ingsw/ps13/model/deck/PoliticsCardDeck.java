@@ -23,7 +23,7 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
      *
      * @param cards a Collection of politics cards to put inside the deck
      */
-    public PoliticsCardDeck(Collection<PoliticsCard> cards) {
+    protected PoliticsCardDeck(Collection<PoliticsCard> cards) {
 
         super(cards);
         discardPile = new ArrayList<>();

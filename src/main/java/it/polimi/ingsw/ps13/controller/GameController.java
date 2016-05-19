@@ -1,15 +1,21 @@
 package it.polimi.ingsw.ps13.controller;
 
 import java.awt.Color;
-import java.util.Map;
-import java.util.HashMap;
 import java.io.File;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Document;
-import it.polimi.ingsw.ps13.model.ColorFactory;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+
+import it.polimi.ingsw.ps13.model.ColorFactory;
+import it.polimi.ingsw.ps13.model.board.Board;
+import it.polimi.ingsw.ps13.model.board.BoardFactory;
 
 /**
  * Controller for a single game.
@@ -18,9 +24,11 @@ import java.util.logging.Logger;
 public class GameController {
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
+	private static final Map<String, Color> colors = new HashMap<>();
 	private Document config;
 	private String configFilePath = "config.xml";		// ask user for config file path...
-	private final Map<String, Color> colors;
+	@SuppressWarnings("unused")
+	private Board board;
 	
 	/**
 	 * 
@@ -29,12 +37,11 @@ public class GameController {
 	public GameController(String configFilePath) {
 		
 		this.configFilePath = configFilePath;
-		colors = new HashMap<>();
 		
 	}
 	
 	/**
-	 * Parses the XML configuration file, initializes the game model and
+	 * Parses the XML configuration file, initializes the game model
 	 * 
 	 */
 	public void initGame() {
@@ -50,7 +57,17 @@ public class GameController {
 		}
 		
 		ColorFactory.createColors(colors, config);
+		board = BoardFactory.createBoard(config);
 		
+	}
+	
+	/**
+	 * 
+	 * @return a map with every color imported for the game
+	 */
+	public static Map<String, Color> getColors() {
+		
+		return Collections.unmodifiableMap(colors);
 		
 	}
 	

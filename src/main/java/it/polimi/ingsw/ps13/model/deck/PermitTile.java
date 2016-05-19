@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.HashSet;
 import java.io.Serializable;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
-import it.polimi.ingsw.ps13.model.city.City;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.market.Marketable;
 
@@ -23,20 +22,20 @@ public final class PermitTile implements Marketable, Serializable {
 	
 	private static final long serialVersionUID = 0L;
 	private final Bonus bonus;
-	private final Set<City> citySet;
+	private final Set<String> cityNames;
 	
 	/**
-	 * Constructs a new PermitTile, with a given Bonus and a given Collection of cities.
+	 * Constructs a new PermitTile, with a given Bonus and a given Collection of city names.
 	 * 
 	 * @param bonus
 	 * @param cities
 	 */
-	PermitTile(Bonus bonus, Set<City> cities) {
+	PermitTile(Bonus bonus, Set<String> cityNames) {
 		
 		this.bonus = bonus;
 		
-		citySet = new HashSet<>();
-		citySet.addAll(cities);
+		this.cityNames = new HashSet<>();
+		this.cityNames.addAll(cityNames);
 		
 	}
 	
@@ -54,9 +53,9 @@ public final class PermitTile implements Marketable, Serializable {
 	 * 
 	 * @return the list of cities associated with the permit tile
 	 */
-	public Set<City> getCitySet() {
+	public Set<String> getCityNames() {
 		
-		return Collections.unmodifiableSet(citySet);
+		return Collections.unmodifiableSet(cityNames);
 		
 	}
 	

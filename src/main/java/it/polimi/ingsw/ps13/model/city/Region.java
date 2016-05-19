@@ -1,20 +1,16 @@
-package it.polimi.ingsw.ps13.model.board;
+package it.polimi.ingsw.ps13.model.city;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
-import it.polimi.ingsw.ps13.model.city.City;
-import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
-import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 
 /**
  * 
- * @author alessiomongelluzzo
  *
  */
 public class Region implements Serializable{
@@ -22,8 +18,8 @@ public class Region implements Serializable{
 	private static final long serialVersionUID = 0L;
 	
 	private final String name;
-	private final Set<City> citySet;
-	private final Bonus bonusTile;
+	private final Set<String> cityNames;
+	private final Bonus bonus;
 	private boolean bonusAvailable;
 	private final CouncillorBalcony councillorBalcony;
 	private final PermitTileDeck permitTileDeck;
@@ -31,25 +27,17 @@ public class Region implements Serializable{
 	/**
 	 * 
 	 */
-	public Region(String n, Set<City> cs, Bonus bonus, Collection<Councillor> c, Collection<PermitTile> pt){
+	protected Region(String name, Bonus bonus, CouncillorBalcony councillorBalcony, PermitTileDeck permitTileDeck){
 		
-		name = n;
-		
-		citySet = new HashSet<>(); 
-		citySet.addAll(cs);
-		
-		bonusTile = bonus;
+		this.name = name;
+		this.bonus = bonus;
 		bonusAvailable = true;
+		this.councillorBalcony = councillorBalcony;
+		this.permitTileDeck = permitTileDeck;
 		
-		councillorBalcony = new CouncillorBalcony(c);
-		permitTileDeck = new PermitTileDeck(pt);
-		
+		cityNames = new HashSet<>(); 
 	}
 
-	
-	
-	
-	
 	/**
 	 * 
 	 * @return
@@ -64,19 +52,29 @@ public class Region implements Serializable{
 	 * 
 	 * @return
 	 */
-	public Set<City> getCitySet() {
+	public Bonus getBonus() {
 		
-		return citySet;
+		return bonus;
 		
 	}
 	
 	/**
 	 * 
-	 * @return
+	 * @return the cities of this region
 	 */
-	public Bonus getBonusTile() {
+	public Set<String> getCityNames() {
 		
-		return bonusTile;
+		return Collections.unmodifiableSet(cityNames);
+		
+	}
+	
+	/**
+	 * 
+	 * @param city
+	 */
+	public void addCityName(String name) {
+		
+		cityNames.add(name);
 		
 	}
 	
@@ -94,9 +92,13 @@ public class Region implements Serializable{
 	 * 
 	 * @param bonusAvailable
 	 */
-	public void setBonusAvailable(boolean bonusAvailable) {
+	public void setBonusAvailable(boolean regionBonusAvailable) {
 		
-		this.bonusAvailable = bonusAvailable;
+		if (!this.bonusAvailable && regionBonusAvailable) {
+			throw new IllegalArgumentException("Bonus relative to a region cannot be reset to true");
+		} else {
+			this.bonusAvailable = regionBonusAvailable;
+		}
 		
 	}
 	
@@ -119,8 +121,5 @@ public class Region implements Serializable{
 		return permitTileDeck;
 		
 	}
-	
-	
-	
 	
 }
