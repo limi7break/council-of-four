@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.model.board;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,17 @@ public class Board implements Serializable {
 	 * @param name
 	 * @return
 	 */
+	public Map<String, Region> getRegions() {
+		
+		return Collections.unmodifiableMap(regions);
+		
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public CityColor getCityColor(String name) {
 		
 		return cityColors.get(name);
@@ -75,9 +87,31 @@ public class Board implements Serializable {
 	 * @param name
 	 * @return
 	 */
+	public Map<String, CityColor> getCityColors() {
+		
+		return Collections.unmodifiableMap(cityColors);
+		
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public City getCity(String name) {
 		
 		return cities.get(name);
+		
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Map<String, City> getCities() {
+		
+		return Collections.unmodifiableMap(cities);
 		
 	}
 	
@@ -110,16 +144,6 @@ public class Board implements Serializable {
 		return politicsCardDeck;
 		
 	}
-	
-	/**
-	 * 
-	 * @return
-	 *
-	public King getKing() {
-		
-		return king;
-		
-	} IMPLEMENT */
 	
 	/**
 	 * 

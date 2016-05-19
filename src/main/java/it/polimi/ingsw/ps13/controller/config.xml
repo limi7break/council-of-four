@@ -42,7 +42,7 @@
 				<victorypoints value="8"/>
 			</bonus>
 		</color>
-		<color name="gray">
+		<color name="lightGray">
 			<bonus>
 				<victorypoints value="12"/>
 			</bonus>
@@ -63,117 +63,145 @@
 			</bonus>
 			
 			<!-- CITIES: different cities cannot have the same name-->
-			<city name="Arkon" color="blue">
-				<neighbor name="Burgen"/>
-				<neighbor name="Castrum"/>
-			</city>
-			<city name="Burgen" color="yellow">
-				<neighbor name="Arkon"/>
-				<neighbor name="Dorful"/>
-				<neighbor name="Esti"/>
-			</city>
-			<city name="Castrum" color="lightGray">
-				<neighbor name="Arkon"/>
-				<neighbor name="Framek"/>
-			</city>
-			<city name="Dorful" color="lightGray">
-				<neighbor name="Burgen"/>
-				<neighbor name="Graden"/>
-			</city>
-			<city name="Esti" color="orange">
-				<neighbor name="Burgen"/>
-				<neighbor name="Hellar"/>
-			</city>
-
+			<cities>
+				<city name="Arkon" color="blue">
+					<neighbor name="Burgen"/>
+					<neighbor name="Castrum"/>
+				</city>
+				<city name="Burgen" color="yellow">
+					<neighbor name="Arkon"/>
+					<neighbor name="Dorful"/>
+					<neighbor name="Esti"/>
+				</city>
+				<city name="Castrum" color="lightGray">
+					<neighbor name="Arkon"/>
+					<neighbor name="Framek"/>
+				</city>
+				<city name="Dorful" color="lightGray">
+					<neighbor name="Burgen"/>
+					<neighbor name="Graden"/>
+				</city>
+				<city name="Esti" color="orange">
+					<neighbor name="Burgen"/>
+					<neighbor name="Hellar"/>
+				</city>
+			</cities>
+				
 			<!-- PERMIT TILES -->
 			<permittile>
-				<city name=""/>
+				<city name="Arkon"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="4"/>
+					<coins value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Burgen"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="3"/>
+					<assistants value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Castrum"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="2"/>
+					<coins value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Dorful"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="7"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Esti"/>
 				<bonus>
-					<coins value=""/>
+					<mainactions value="1"/>
+					<coins value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Burgen"/>
+				<city name="Castrum"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="3"/>
+					<coins value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Castrum"/>
+				<city name="Dorful"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="3"/>
+					<assistants value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Arkon"/>
+				<city name="Esti"/>
 				<bonus>
-					<coins value=""/>
+					<nobilitypoints value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Arkon"/>
+				<city name="Burgen"/>
 				<bonus>
-					<coins value=""/>
+					<coins value="3"/>
+					<politicscards value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Dorful"/>
+				<city name="Esti"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="3"/>
+					<assistants value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Burgen"/>
+				<city name="Castrum"/>
+				<city name="Dorful"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="1"/>
+					<victorypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Arkon"/>
+				<city name="Burgen"/>
+				<city name="Castrum"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Arkon"/>
+				<city name="Burgen"/>
+				<city name="Esti"/>
 				<bonus>
-					<coins value=""/>
+					<coins value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Arkon"/>
+				<city name="Dorful"/>
+				<city name="Esti"/>
 				<bonus>
-					<coins value=""/>
+					<coins value="1"/>
+					<victorypoints value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Castrum"/>
+				<city name="Dorful"/>
+				<city name="Esti"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="1"/>
+					<nobilitypoints value="1"/>
 				</bonus>
 			</permittile>
 		</region>
@@ -184,120 +212,148 @@
 			</bonus>
 			
 			<!-- CITIES: different cities cannot have the same name-->
-			<city name="Framek" color="yellow">
-				<neighbor name="Castrum"/>
-				<neighbor name="Indur"/>
-			</city>
-			<city name="Graden" color="lightGray">
-				<neighbor name="Dorful"/>
-				<neighbor name="Juvelar"/>
-			</city>
-			<city name="Hellar" color="yellow">
-				<neighbor name="Esti"/>
-				<neighbor name="Juvelar"/>
-				<neighbor name="Merkatim"/>
-			</city>
-			<city name="Indur" color="orange">
-				<neighbor name="Framek"/>
-				<neighbor name="Juvelar"/>
-				<neighbor name="Kultos"/>
-			</city>
-			<city name="Juvelar" color="magenta" capital="true">
-				<neighbor name="Graden"/>
-				<neighbor name="Hellar"/>
-				<neighbor name="Indur"/>
-				<neighbor name="Lyram"/>
-			</city>
+			<cities>
+				<city name="Framek" color="yellow">
+					<neighbor name="Castrum"/>
+					<neighbor name="Indur"/>
+				</city>
+				<city name="Graden" color="lightGray">
+					<neighbor name="Dorful"/>
+					<neighbor name="Juvelar"/>
+				</city>
+				<city name="Hellar" color="yellow">
+					<neighbor name="Esti"/>
+					<neighbor name="Juvelar"/>
+					<neighbor name="Merkatim"/>
+				</city>
+				<city name="Indur" color="orange">
+					<neighbor name="Framek"/>
+					<neighbor name="Juvelar"/>
+					<neighbor name="Kultos"/>
+				</city>
+				<city name="Juvelar" color="magenta" capital="true">
+					<neighbor name="Graden"/>
+					<neighbor name="Hellar"/>
+					<neighbor name="Indur"/>
+					<neighbor name="Lyram"/>
+				</city>
+			</cities>
 
 			<!-- PERMIT TILES -->
 			<permittile>
-				<city name=""/>
+				<city name="Framek"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="2"/>
+					<coins value="4"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Graden"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="2"/>
+					<victorypoints value="2"/>
+					<nobilitypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Hellar"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="4"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Indur"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="2"/>
+					<assistants value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Juvelar"/>
 				<bonus>
-					<coins value=""/>
+					<mainactions value="1"/>
+					<victorypoints value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Framek"/>
+				<city name="Graden"/>
 				<bonus>
-					<coins value=""/>
+					<coins value="5"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Hellar"/>
+				<city name="Indur"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="5"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Hellar"/>
+				<city name="Graden"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Indur"/>
+				<city name="Juvelar"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="2"/>
+					<nobilitypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Framek"/>
+				<city name="Juvelar"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="2"/>
+					<coins value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Framek"/>
+				<city name="Graden"/>
+				<city name="Juvelar"/>
 				<bonus>
-					<coins value=""/>
+					<coins value="2"/>
+					<victorypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Framek"/>
+				<city name="Graden"/>
+				<city name="Hellar"/>
 				<bonus>
-					<coins value=""/>
+					<nobilitypoints value="1"/>
+					<coins value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Graden"/>
+				<city name="Hellar"/>
+				<city name="Indur"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="1"/>
+					<assistants value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Indur"/>
+				<city name="Juvelar"/>
+				<city name="Hellar"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Framek"/>
+				<city name="Indur"/>
+				<city name="Juvelar"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="1"/>
+					<nobilitypoints value="1"/>
 				</bonus>
 			</permittile>
 		</region>
@@ -308,117 +364,144 @@
 			</bonus>
 			
 			<!-- CITIES: different cities cannot have the same name-->
-			<city name="Kultos" color="yellow">
-				<neighbor name="Indur"/>
-				<neighbor name="Naris"/>
-			</city>
-			<city name="Lyram" color="lightGray">
-				<neighbor name="Juvelar"/>
-				<neighbor name="Osium"/>
-			</city>
-			<city name="Merkatim" color="blue">
-				<neighbor name="Hellar"/>
-				<neighbor name="Osium"/>
-			</city>
-			<city name="Naris" color="orange">
-				<neighbor name="Kultos"/>
-				<neighbor name="Osium"/>
-			</city>
-			<city name="Osium" color="yellow">
-				<neighbor name="Lyram"/>
-				<neighbor name="Merkatim"/>
-				<neighbor name="Naris"/>
-			</city>
+			<cities>
+				<city name="Kultos" color="yellow">
+					<neighbor name="Indur"/>
+					<neighbor name="Naris"/>
+				</city>
+				<city name="Lyram" color="lightGray">
+					<neighbor name="Juvelar"/>
+					<neighbor name="Osium"/>
+				</city>
+				<city name="Merkatim" color="blue">
+					<neighbor name="Hellar"/>
+					<neighbor name="Osium"/>
+				</city>
+				<city name="Naris" color="orange">
+					<neighbor name="Kultos"/>
+					<neighbor name="Osium"/>
+				</city>
+				<city name="Osium" color="yellow">
+					<neighbor name="Lyram"/>
+					<neighbor name="Merkatim"/>
+					<neighbor name="Naris"/>
+				</city>
+			</cities>
 
 			<!-- PERMIT TILES -->
 			<permittile>
-				<city name=""/>
+				<city name="Kultos"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="4"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Lyram"/>
 				<bonus>
-					<coins value=""/>
+					<coins value="1"/>
+					<assistants value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Merkatim"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="5"/>
+					<nobilitypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Naris"/>
 				<bonus>
-					<coins value=""/>
+					<coins value="7"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Osium"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="3"/>
+					<nobilitypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Osium"/>
+				<city name="Kultos"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="2"/>
+					<nobilitypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Merkatim"/>
+				<city name="Naris"/>
 				<bonus>
-					<coins value=""/>
+					<mainactions value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Merkatim"/>
+				<city name="Lyram"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Kultos"/>
+				<city name="Lyram"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="1"/>
+					<assistants value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Naris"/>
+				<city name="Osium"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="2"/>
+					<politicscards value="2"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Lyram"/>
+				<city name="Merkatim"/>
+				<city name="Naris"/>
 				<bonus>
-					<coins value=""/>
+					<victorypoints value="3"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Kultos"/>
+				<city name="Lyram"/>
+				<city name="Osium"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="1"/>
+					<coins value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Kultos"/>
+				<city name="Naris"/>
+				<city name="Osium"/>
 				<bonus>
-					<coins value=""/>
+					<politicscards value="1"/>
+					<victorypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Merkatim"/>
+				<city name="Naris"/>
+				<city name="Osium"/>
 				<bonus>
-					<coins value=""/>
+					<nobilitypoints value="1"/>
+					<victorypoints value="1"/>
 				</bonus>
 			</permittile>
 			<permittile>
-				<city name=""/>
+				<city name="Kultos"/>
+				<city name="Lyram"/>
+				<city name="Merkatim"/>
 				<bonus>
-					<coins value=""/>
+					<assistants value="1"/>
+					<coins value="1"/>
 				</bonus>
 			</permittile>
 		</region>

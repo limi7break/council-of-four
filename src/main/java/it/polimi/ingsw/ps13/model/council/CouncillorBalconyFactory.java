@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import it.polimi.ingsw.ps13.controller.GameController;
@@ -17,6 +16,8 @@ import it.polimi.ingsw.ps13.controller.GameController;
  */
 public final class CouncillorBalconyFactory {
 
+	private static final int COUNCILLORS_PER_COLOR = 4;
+	
 	private CouncillorBalconyFactory() { }
 	
 	public static List<Councillor> createCouncillorBalconies(int quantity, List<CouncillorBalcony> councillorBalconies, Document config) {
@@ -25,11 +26,11 @@ public final class CouncillorBalconyFactory {
 		List<Councillor> councillors = new ArrayList<>();
 		
 		Element politicsColorsElement = (Element) config.getElementsByTagName("politicscolors").item(0);
-		NodeList politicsColorsNodeList = politicsColorsElement.getChildNodes();
-		for (int i=0; i<politicsColorsNodeList.getLength(); i++) {
-			if (politicsColorsNodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
-				Element currentColor = (Element) politicsColorsNodeList.item(i);
-				String currentColorName = currentColor.getAttribute("name");
+		NodeList colorsElements = politicsColorsElement.getElementsByTagName("color");
+		for (int i=0; i<colorsElements.getLength(); i++) {
+			Element currentColor = (Element) colorsElements.item(i);
+			String currentColorName = currentColor.getAttribute("name");
+			for (int j=0; j<COUNCILLORS_PER_COLOR; j++) {
 				councillors.add(new Councillor(GameController.getColors().get(currentColorName)));
 			}
 		}

@@ -33,7 +33,7 @@ public class PermitTileDeckFactory {
 			Set<String> cityNames = new HashSet<>();
 			NodeList cityElementList = currentPermitTile.getElementsByTagName("city");
 			for (int j=0; j<cityElementList.getLength(); j++) {
-				Element currentCity = (Element) cityElementList.item(i);
+				Element currentCity = (Element) cityElementList.item(j);
 				String currentCityName = currentCity.getAttribute("name");
 				cityNames.add(currentCityName);
 			}

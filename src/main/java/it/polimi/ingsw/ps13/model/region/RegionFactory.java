@@ -47,7 +47,8 @@ public final class RegionFactory {
 			Region region = new Region(regionName, regionBonus, councillorBalconies.remove(0), regionPermitTileDeck);
 			regions.put(regionName, region);
 			
-			NodeList cityElementList = currentRegion.getElementsByTagName("city");
+			Element citiesElement = (Element) currentRegion.getElementsByTagName("cities").item(0);
+			NodeList cityElementList = citiesElement.getElementsByTagName("city");
 			for (int j=0; j<cityElementList.getLength(); j++) {
 				Element currentCity = (Element) cityElementList.item(j); 
 				String cityName = currentCity.getAttribute("name");
@@ -63,7 +64,7 @@ public final class RegionFactory {
 				}
 				
 				region.addCityName(cityName);
-				cityColors.get(cityColor).addCityName(cityName);
+				cityColor.addCityName(cityName);
 			}
 		}
 		
