@@ -12,7 +12,7 @@ import it.polimi.ingsw.ps13.model.bonus.Bonus;
 public abstract class Resource implements Bonus, Serializable {
 	
 	public static final long serialVersionUID = 0L;
-	private int amount;
+	protected int amount;
 	
 	/**
 	 * Constructs a resource given its amount.

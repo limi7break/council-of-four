@@ -231,7 +231,7 @@
 					<neighbor name="Juvelar"/>
 					<neighbor name="Kultos"/>
 				</city>
-				<city name="Juvelar" color="magenta" capital="true">
+				<city name="Juvelar" color="magenta">
 					<neighbor name="Graden"/>
 					<neighbor name="Hellar"/>
 					<neighbor name="Indur"/>
@@ -530,10 +530,10 @@
 			<politicscards value="1"/>
 		</bonus>
 		<bonus>
-			<nobility value="1"/>
+			<nobilitypoints value="1"/>
 		</bonus>
 		<bonus>
-			<nobility value="1"/>
+			<nobilitypoints value="1"/>
 		</bonus>
 		<bonus>
 			<assistants value="1"/>

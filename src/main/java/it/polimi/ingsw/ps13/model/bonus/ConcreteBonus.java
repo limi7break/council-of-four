@@ -40,6 +40,16 @@ public class ConcreteBonus implements Bonus {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public boolean isEmpty() {
+		
+		return contents.isEmpty();
+		
+	}
+	
+	/**
 	 * Iterates over a list of bonuses, and calls their specific
 	 * implementation of the method giveTo.
 	 * 
