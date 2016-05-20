@@ -21,7 +21,7 @@ public final class ColorFactory {
 	 * @param colors a map which associates a name to a color.
 	 * @param config the parsed configuration XML file
 	 */
-	public static void createColors(Map<String, Color> colors, Document config) {
+	public static void createColors(Document config, Map<String, Color> colors) {
 		
 		Element colorsElement = (Element) config.getElementsByTagName("colors").item(0);
 		NodeList colorsNodeList = colorsElement.getElementsByTagName("color");

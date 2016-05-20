@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps13.model.board;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,13 +32,13 @@ public class BoardFactory {
 	
 	private BoardFactory() { }
 	
-	public static Board createBoard(Document config) {
+	public static Board createBoard(Document config, Map<String, Color> colors) {
 		
-		Map<String, CityColor> cityColors = CityColorFactory.createCityColors(config);
+		Map<String, CityColor> cityColors = CityColorFactory.createCityColors(config, colors);
 		Map<String, Region> regions = new HashMap<>();
 		Map<String, City> cities;
 		
-		PoliticsCardDeck politicsCardDeck = PoliticsCardDeckFactory.createPoliticsCardDeck(config);
+		PoliticsCardDeck politicsCardDeck = PoliticsCardDeckFactory.createPoliticsCardDeck(config, colors);
 		
 		Element regionsElement = (Element) config.getElementsByTagName("regions").item(0);
 		NodeList regionElementList = regionsElement.getElementsByTagName("region");
@@ -45,10 +46,10 @@ public class BoardFactory {
 		int numberOfRegions = regionElementList.getLength();
 		List<Councillor> councillors;
 		List<CouncillorBalcony> councillorBalconies = new ArrayList<>();
-		councillors = CouncillorBalconyFactory.createCouncillorBalconies(numberOfRegions+1, councillorBalconies, config);
+		councillors = CouncillorBalconyFactory.createCouncillorBalconies(numberOfRegions+1, councillorBalconies, colors, config);
 		
 		King king = new King();
-		cities = RegionFactory.createCities(regions, cityColors, councillorBalconies, king, config);
+		cities = RegionFactory.createCities(regions, cityColors, councillorBalconies, king, colors, config);
 		
 		return Board.create(regions, cityColors, cities, politicsCardDeck, councillorBalconies.remove(0), councillors, king);
 		

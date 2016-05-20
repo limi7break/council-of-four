@@ -1,7 +1,7 @@
-package it.polimi.ingsw.ps13.controller;
+package it.polimi.ingsw.ps13.controller.actions;
 
 import java.io.Serializable;
-import it.polimi.ingsw.ps13.model.GameState;
+import it.polimi.ingsw.ps13.model.Game;
 
 /**
  * This class represents an atomic Action (like a command pattern) to be
@@ -16,11 +16,11 @@ public interface Action extends Serializable {
 	 * 
 	 * @return true if the atomic action is valid
 	 */
-	public abstract boolean isLegal(GameState g);
+	public abstract boolean isLegal(Game g);
 	
 	/**
 	 * Executes the action on the passed GameState, effectively modifying it.
 	 */
-	public abstract void apply(GameState g);
+	public abstract void apply(Game g);
 	
 }

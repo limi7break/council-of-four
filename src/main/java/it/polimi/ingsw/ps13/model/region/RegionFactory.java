@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps13.model.region;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,7 +11,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import it.polimi.ingsw.ps13.controller.GameController;
 import it.polimi.ingsw.ps13.model.board.King;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
@@ -22,7 +22,7 @@ public final class RegionFactory {
 
 	private RegionFactory() { }
 	
-	public static Map<String, City> createCities(Map<String, Region> regions, Map<String, CityColor> cityColors, List<CouncillorBalcony> councillorBalconies, King king, Document config) {
+	public static Map<String, City> createCities(Map<String, Region> regions, Map<String, CityColor> cityColors, List<CouncillorBalcony> councillorBalconies, King king, Map<String, Color> colors, Document config) {
 		
 		Map<String, City> cities = new HashMap<>();
 		List<Bonus> rewardTokens = createRewardTokens(config);
@@ -30,7 +30,7 @@ public final class RegionFactory {
 		// Create capital color with empty bonus
 		Element capitalColorElement = (Element) ((Element) config.getElementsByTagName("citycolors").item(0)).getElementsByTagName("capitalcolor").item(0);
 		String capitalColorName = capitalColorElement.getAttribute("name");
-		CityColor capitalColor = new CityColor(GameController.getColors().get(capitalColorName), BonusFactory.createEmptyBonus());
+		CityColor capitalColor = new CityColor(colors.get(capitalColorName), BonusFactory.createEmptyBonus());
 		cityColors.put(capitalColorName, capitalColor);
 		
 		Element regionsElement = (Element) config.getElementsByTagName("regions").item(0);

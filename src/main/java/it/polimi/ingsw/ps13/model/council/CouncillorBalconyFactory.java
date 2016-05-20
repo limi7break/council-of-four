@@ -1,14 +1,14 @@
 package it.polimi.ingsw.ps13.model.council;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import it.polimi.ingsw.ps13.controller.GameController;
 
 /**
  * 
@@ -20,7 +20,7 @@ public final class CouncillorBalconyFactory {
 	
 	private CouncillorBalconyFactory() { }
 	
-	public static List<Councillor> createCouncillorBalconies(int quantity, List<CouncillorBalcony> councillorBalconies, Document config) {
+	public static List<Councillor> createCouncillorBalconies(int quantity, List<CouncillorBalcony> councillorBalconies, Map<String, Color> colors, Document config) {
 		
 		// Create councillors
 		List<Councillor> councillors = new ArrayList<>();
@@ -31,7 +31,7 @@ public final class CouncillorBalconyFactory {
 			Element currentColor = (Element) colorsElements.item(i);
 			String currentColorName = currentColor.getAttribute("name");
 			for (int j=0; j<COUNCILLORS_PER_COLOR; j++) {
-				councillors.add(new Councillor(GameController.getColors().get(currentColorName)));
+				councillors.add(new Councillor(colors.get(currentColorName)));
 			}
 		}
 		

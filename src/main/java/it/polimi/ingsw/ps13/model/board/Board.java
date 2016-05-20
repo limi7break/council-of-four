@@ -20,8 +20,8 @@ public class Board implements Serializable {
 	private final Map<String, City> cities;
 	private final King king;
 	//private final NobilityTrack nobilityTrack;		// created in the constructor
-	private final PoliticsCardDeck politicsCardDeck;	// created in the constructor
-	private final CouncillorBalcony kingBalcony;		// created here
+	private final PoliticsCardDeck politicsCardDeck;
+	private final CouncillorBalcony kingBalcony;
 	//private final Deque<Bonus> kingRewardTiles;
 	private final List<Councillor> councillors;			// modifiable
 	

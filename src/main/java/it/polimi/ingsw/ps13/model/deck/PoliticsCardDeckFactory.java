@@ -1,14 +1,14 @@
 package it.polimi.ingsw.ps13.model.deck;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import it.polimi.ingsw.ps13.controller.GameController;
 
 /**
  * 
@@ -26,7 +26,7 @@ public class PoliticsCardDeckFactory {
 	 * @param config
 	 * @return
 	 */
-	public static PoliticsCardDeck createPoliticsCardDeck(Document config) {
+	public static PoliticsCardDeck createPoliticsCardDeck(Document config, Map<String, Color> colors) {
 		
 		List<PoliticsCard> cards = new ArrayList<>();
 		
@@ -37,7 +37,7 @@ public class PoliticsCardDeckFactory {
 				Element currentColor = (Element) politicsColorsNodeList.item(i);
 				String currentColorName = currentColor.getAttribute("name");
 				for (int j=0; j<CARDS_PER_COLOR; j++) {
-					cards.add(new PoliticsCard(GameController.getColors().get(currentColorName)));
+					cards.add(new PoliticsCard(colors.get(currentColorName)));
 				}
 			}
 		}

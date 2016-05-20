@@ -1,9 +1,6 @@
 package it.polimi.ingsw.ps13.controller;
 
-import java.awt.Color;
 import java.io.File;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,9 +10,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
-import it.polimi.ingsw.ps13.model.ColorFactory;
-import it.polimi.ingsw.ps13.model.board.Board;
-import it.polimi.ingsw.ps13.model.board.BoardFactory;
+import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
  * Controller for a single game.
@@ -24,19 +20,21 @@ import it.polimi.ingsw.ps13.model.board.BoardFactory;
 public class GameController {
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
-	private static final Map<String, Color> colors = new HashMap<>();
 	private Document config;
-	private String configFilePath = "config.xml";		// ask user for config file path...
+	private String configFilePath = "config.xml";		// default configuration file path
+	private final Map<String, Player> players;
 	@SuppressWarnings("unused")
-	private Board board;
+	private Game game;
 	
 	/**
 	 * 
 	 * @param configFilePath
 	 */
-	public GameController(String configFilePath) {
+	public GameController(String configFilePath, Map<String, Player> players) {
 		
+		// @TODO: ask user for configuration file path
 		this.configFilePath = configFilePath;
+		this.players = players;
 		
 	}
 	
@@ -56,18 +54,7 @@ public class GameController {
 			LOG.log(Level.SEVERE, "There was a problem reading the configuration file.", e);
 		}
 		
-		ColorFactory.createColors(colors, config);
-		board = BoardFactory.createBoard(config);
-		
-	}
-	
-	/**
-	 * 
-	 * @return a map with every color imported for the game
-	 */
-	public static Map<String, Color> getColors() {
-		
-		return Collections.unmodifiableMap(colors);
+		game = new Game(config, players);
 		
 	}
 	
