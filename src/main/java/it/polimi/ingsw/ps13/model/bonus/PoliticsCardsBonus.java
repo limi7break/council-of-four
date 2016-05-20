@@ -20,5 +20,17 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 		player.drawPoliticsCard(amount);
 		
 	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "PoliticsCardsBonus "
+				+ "x" + amount;
+		
+	}
 
 }

@@ -1,12 +1,13 @@
 package it.polimi.ingsw.ps13.model.deck;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
-import java.util.HashSet;
-import java.io.Serializable;
+import java.util.TreeSet;
+
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
-import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.market.Marketable;
+import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
  * A PermitTile is used to build an Emporium on a City,
@@ -34,7 +35,7 @@ public final class PermitTile implements Marketable, Serializable {
 		
 		this.bonus = bonus;
 		
-		this.cityNames = new HashSet<>();
+		this.cityNames = new TreeSet<>();
 		this.cityNames.addAll(cityNames);
 		
 	}
@@ -70,5 +71,21 @@ public final class PermitTile implements Marketable, Serializable {
 		// remember: when this method is called, the tile has already been removed
 		// from the seller's hand. Only need to put the reference in the buyer's hand.
 		
+	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[PermitTile]\n");
+		sb.append("Cities: ").append(cityNames.toString()).append("\n");
+		sb.append("Bonus:\n").append(bonus.toString()).append("\n");
+		
+		return sb.toString();
 	}
 }

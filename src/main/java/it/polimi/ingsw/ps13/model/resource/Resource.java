@@ -63,4 +63,16 @@ public abstract class Resource implements Bonus, Serializable {
 	@Override
 	public abstract void giveTo(Player player);
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return this.getClass().getSimpleName()
+				+ " x" + amount;
+		
+	}
+	
 }

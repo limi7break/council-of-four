@@ -1,12 +1,13 @@
 package it.polimi.ingsw.ps13.model.council;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 
 /**
@@ -187,6 +188,25 @@ public class CouncillorBalcony implements Serializable {
 	public Collection<Councillor> getCouncillors(){
 		
 		return Collections.unmodifiableList(councillorList);
+		
+	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[CouncillorBalcony]\n");
+		
+		for (Councillor councillor : councillorList) {
+			sb.append(councillor.toString()).append("\n");
+		}
+		
+		return sb.append("\n").toString();
 		
 	}
 

@@ -41,4 +41,16 @@ public class King implements Serializable {
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "[King]\n"
+				+ "King is on " + city.getName() + "\n\n";
+		
+	}
+	
 }

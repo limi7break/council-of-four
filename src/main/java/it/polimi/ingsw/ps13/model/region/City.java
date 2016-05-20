@@ -167,4 +167,28 @@ public class City implements Serializable {
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[City]\n")
+			.append("Name: ").append(name).append("\n")
+			.append("Region: ").append(region.getName()).append("\n")
+			.append("CityColor: (").append(color.getColor().getRed()).append(", ").append(color.getColor().getGreen()).append(", ").append(color.getColor().getBlue()).append(")\n")
+			.append("Bonus:\n").append(bonus.toString())
+			.append("Neighbors: ");
+			
+			for (City city : neighbors) {
+				sb.append(city.getName()).append(" ");
+			}
+			
+			sb.append("\n");
+			return sb.toString();
+	}
+	
 }

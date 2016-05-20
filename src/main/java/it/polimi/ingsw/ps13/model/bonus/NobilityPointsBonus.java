@@ -20,5 +20,17 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 		player.setNobilityPosition(player.getNobilityPosition() + amount);
 		
 	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "NobilityPointsBonus "
+				+ "x" + amount;
+		
+	}
 
 }

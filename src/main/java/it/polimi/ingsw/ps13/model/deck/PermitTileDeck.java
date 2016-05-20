@@ -1,9 +1,9 @@
 package it.polimi.ingsw.ps13.model.deck;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
-import java.io.Serializable;
 
 /**
  * This class models and manages a Deck of permit tiles (deck and an arbitrary
@@ -133,6 +133,38 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 		} else {
 			throw new ArrayIndexOutOfBoundsException("The selected tile does not exist");
 		}
+		
+	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[PermitTileDeck]\n\n");
+		
+		if (this.isEmpty()) {
+			sb.append("Empty as my wallet.\n");
+		} else {
+			sb.append("Draw Pile:\n");
+			if (this.isDrawPileEmpty()) {
+				sb.append("Empty as my brain right now.\n");
+			}
+			for (PermitTile permitTile : drawPile) {
+				sb.append(permitTile.toString()).append("\n");
+			}
+			
+			sb.append("\nVisible Tiles:\n");
+			for (PermitTile permitTile : visibleTiles) {
+				sb.append(permitTile.toString()).append("\n");
+			}
+		}
+		
+		return sb.toString();
 		
 	}
 }

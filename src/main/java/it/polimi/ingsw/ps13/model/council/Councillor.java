@@ -37,4 +37,16 @@ public final class Councillor implements Serializable {
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "[Councillor] "
+				+ "(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")";
+		
+	}
+	
 }

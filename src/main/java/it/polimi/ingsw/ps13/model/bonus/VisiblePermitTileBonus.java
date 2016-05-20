@@ -19,5 +19,16 @@ public class VisiblePermitTileBonus implements Bonus, Serializable {
 		// @TODO: notify view -> controller ?
 		
 	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "VisiblePermitTileBonus";
+		
+	}
 
 }

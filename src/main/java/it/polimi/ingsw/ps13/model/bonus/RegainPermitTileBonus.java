@@ -20,4 +20,15 @@ public class RegainPermitTileBonus implements Bonus, Serializable {
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "RegainPermitTileBonus";
+		
+	}
+	
 }

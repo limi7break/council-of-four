@@ -2,8 +2,8 @@ package it.polimi.ingsw.ps13.model.region;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
@@ -35,7 +35,7 @@ public class Region implements Serializable{
 		this.councillorBalcony = councillorBalcony;
 		this.permitTileDeck = permitTileDeck;
 		
-		cityNames = new HashSet<>(); 
+		cityNames = new TreeSet<>(); 
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class Region implements Serializable{
 	 * 
 	 * @param city
 	 */
-	public void addCityName(String name) {
+	protected void addCityName(String name) {
 		
 		cityNames.add(name);
 		
@@ -119,6 +119,26 @@ public class Region implements Serializable{
 	public PermitTileDeck getPermitTileDeck() {
 		
 		return permitTileDeck;
+		
+	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[Region]\n\n")
+			.append("Cities: ").append(cityNames.toString()).append("\n\n")
+			.append("Bonus:\n").append(bonus.toString())
+			.append("bonusAvailable = ").append(bonusAvailable).append("\n")
+			.append(councillorBalcony.toString()).append("\n")
+			.append(permitTileDeck.toString()).append("\n");
+		
+		return sb.toString();
 		
 	}
 	

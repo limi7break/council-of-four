@@ -2,9 +2,10 @@ package it.polimi.ingsw.ps13.model.region;
 
 import java.awt.Color;
 import java.io.Serializable;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
+
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 
 /**
@@ -33,7 +34,7 @@ public class CityColor implements Serializable {
 		this.bonus = bonus;
 		bonusAvailable = true;
 		
-		cityNames = new HashSet<>();
+		cityNames = new TreeSet<>();
 		
 	}
 	
@@ -71,7 +72,7 @@ public class CityColor implements Serializable {
 	 * 
 	 * @param city
 	 */
-	public void addCityName(String name) {
+	protected void addCityName(String name) {
 		
 		cityNames.add(name);
 		
@@ -97,6 +98,24 @@ public class CityColor implements Serializable {
 		} else {
 			this.bonusAvailable = colorBonusAvailable;
 		}
+		
+	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[CityColor] (").append(color.getRed()).append(", ").append(color.getGreen()).append(", ").append(color.getBlue()).append(")\n\n")
+			.append("Cities: ").append(cityNames.toString()).append("\n")
+			.append("Bonus:\n").append(bonus.toString())
+			.append("bonusAvailable = ").append(bonusAvailable).append("\n");
+		
+		return sb.toString();
 		
 	}
 	

@@ -21,4 +21,15 @@ public class MainActionsBonus implements Bonus, Serializable {
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "MainActionsBonus "
+				+ "x" + amount;
+		
+	}
 }

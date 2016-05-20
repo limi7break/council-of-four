@@ -57,4 +57,20 @@ public final class PoliticsCard implements Marketable, Serializable {
 		// from the seller's hand. Only need to put the reference in the buyer's hand.
 		
 	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		if (this.isMultiColored()) {
+			return "[PoliticsCard] (j, o, l, l, y)";
+		} else {
+			return "[PoliticsCard] "
+					+ "(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")";
+		}
+		
+	}
 }

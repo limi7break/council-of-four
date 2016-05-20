@@ -76,4 +76,24 @@ public class ConcreteBonus implements Bonus {
 		return Collections.unmodifiableList(contents);
 		
 	}
+	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if (this.isEmpty()) {
+			sb.append("Wow! It's fucking nothing!\n");
+		}
+		for (Bonus bonus : contents) {
+			sb.append(bonus.toString()).append("\n");
+		}
+		
+		return sb.toString();
+		
+	}
 }
