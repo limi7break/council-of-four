@@ -106,6 +106,11 @@ public class Player implements Serializable {
 		
 	}
 	
+	/**
+	 * Gives the player a permit tile: useful for market.
+	 * 
+	 * @param tile
+	 */
 	public void receivePermitTile(PermitTile tile) {
 		
 		supply.addPermitTile(tile);
