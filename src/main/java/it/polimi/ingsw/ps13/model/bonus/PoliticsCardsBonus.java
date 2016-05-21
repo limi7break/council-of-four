@@ -17,7 +17,8 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		player.drawPoliticsCard(amount);
+		// @TODO: think of a way to do this according to the fucking rules...
+		//player.drawPoliticsCard(amount);		[method doesn't exist anymore]
 		
 	}
 	

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.ps13.model.deck;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -30,7 +30,7 @@ public final class PermitTileDeckFactory {
 			Element currentPermitTile = (Element) permitTileElementList.item(i);
 			Element bonus = (Element) currentPermitTile.getElementsByTagName("bonus").item(0);
 			
-			Set<String> cityNames = new HashSet<>();
+			Set<String> cityNames = new TreeSet<>();
 			NodeList cityElementList = currentPermitTile.getElementsByTagName("city");
 			for (int j=0; j<cityElementList.getLength(); j++) {
 				Element currentCity = (Element) cityElementList.item(j);

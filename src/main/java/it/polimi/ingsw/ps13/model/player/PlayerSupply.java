@@ -3,13 +3,12 @@ package it.polimi.ingsw.ps13.model.player;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.List;
 
 import it.polimi.ingsw.ps13.model.board.Emporium;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
-import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.resource.Assistants;
 import it.polimi.ingsw.ps13.model.resource.Coins;
 import it.polimi.ingsw.ps13.model.resource.VictoryPoints;
@@ -25,28 +24,26 @@ public class PlayerSupply implements Serializable  {
 	private final VictoryPoints victoryPoints;
 	private final Coins coins;
 	private final Assistants assistants;
-	private final Collection<Emporium> emporiums;
-	private final Collection<PoliticsCard> politicsCards;
-	private final Collection<PermitTile> permitTiles; 
-	private final Set<City> citySet; 
+	private final List<Emporium> emporiums;
+	private final List<PoliticsCard> politicsCards;
+	private final List<PermitTile> permitTiles; 
 
 	/**
 	 * 
 	 */
 	public PlayerSupply(int position) {
 		
-		if(position < 1)
+		if(position < 0)
 			throw new IllegalArgumentException();
 		
 		else{
 			
 			victoryPoints = new VictoryPoints(0);
-			coins = new Coins(9 + position); 
-			assistants = new Assistants(position);
+			coins = new Coins(10 + position); 
+			assistants = new Assistants(position + 1);
 			emporiums = new ArrayList<>();
-			politicsCards = new ArrayList<>();	 // politicsCards are initialized together with Player  
+			politicsCards = new ArrayList<>();
 			permitTiles = new ArrayList<>();
-			citySet = new HashSet<>();
 			
 		}
 			
@@ -65,19 +62,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @param vp
 	 */
-	public void addVictoryPoints(int vp){
+	public void addVictoryPoints(int amount){
 		
-		victoryPoints.add(vp);
-		
-	}
-	
-	/**
-	 * 
-	 * @param vp
-	 */
-	public void consumeVictoryPoints(int vp){
-		
-		victoryPoints.consume(vp);
+		victoryPoints.add(amount);
 		
 	}
 	
@@ -96,9 +83,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @param c
 	 */
-	public void addCoins(int c){
+	public void addCoins(int amount){
 		
-		coins.add(c);
+		coins.add(amount);
 		
 	}
 	
@@ -106,9 +93,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @param c
 	 */
-	public void consumeCoins(int c){
+	public void consumeCoins(int amount){
 		
-		coins.consume(c);
+		coins.consume(amount);
 		
 	}
 	
@@ -126,9 +113,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @param a
 	 */
-	public void addAssistants(int a){
+	public void addAssistants(int amount){
 		
-		assistants.add(a);
+		assistants.add(amount);
 		
 	}
 	
@@ -136,30 +123,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @param a
 	 */
-	public void consumeAssistants(int a){
+	public void consumeAssistants(int amount){
 		
-		assistants.consume(a);
-		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Collection<PoliticsCard> getPoliticsCards(){
-		
-		return politicsCards;
-		
-	}
-	
-	/**
-	 * 
-	 * @param pc
-	 */
-	public void setPoliticsCards(Collection<PoliticsCard> pc){
-		
-		politicsCards.clear();
-		politicsCards.addAll(pc);
+		assistants.consume(amount);
 		
 	}
 	
@@ -167,20 +133,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @return
 	 */
-	public Collection<PermitTile> getPermitTiles(){
+	public List<Emporium> getEmporiums() {
 		
-		return permitTiles;
-		
-	}
-	
-	/**
-	 * 
-	 * @param pt
-	 */
-	public void setPermitTiles(Collection<PermitTile> pt){
-		
-		permitTiles.clear();
-		permitTiles.addAll(pt);
+		return Collections.unmodifiableList(emporiums);
 		
 	}
 	
@@ -188,20 +143,10 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @return
 	 */
-	public Collection<City> getCitySet(){
+	public Emporium removeEmporium() {
 		
-		return citySet;
-		
-	}
-	
-	/**
-	 * 
-	 * @param cl
-	 */
-	public void setCitySet(Collection<City> cl){
-		
-		citySet.clear();
-		citySet.addAll(cl);
+		return emporiums.remove(0);
+		// check for end game, not here though
 		
 	}
 	
@@ -209,9 +154,57 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @return
 	 */
-	public Collection<Emporium> getEmporiums() {
+	public List<PoliticsCard> getPoliticsCards(){
 		
-		return emporiums;
+		return Collections.unmodifiableList(politicsCards);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void addPoliticsCard(PoliticsCard card) {
+		
+		politicsCards.add(card);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void addPoliticsCards(Collection<PoliticsCard> cards) {
+		
+		politicsCards.addAll(cards);
+		
+	}
+	
+	/**
+	 * 
+	 * @param selectedCards
+	 */
+	public void removePoliticsCards(Collection<PoliticsCard> selectedCards) {
+		
+		politicsCards.removeAll(selectedCards);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<PermitTile> getPermitTiles(){
+		
+		return Collections.unmodifiableList(permitTiles);
+		
+	}
+	
+	/**
+	 * 
+	 * @param selectedPermitTiles
+	 */
+	public void removePermitTiles(Collection<PermitTile> selectedPermitTiles) {
+		
+		permitTiles.removeAll(selectedPermitTiles);
 		
 	}
 	

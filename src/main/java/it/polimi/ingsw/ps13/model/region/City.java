@@ -115,12 +115,17 @@ public class City implements Serializable {
 	
 	/**
 	 * Adds an emporium to the list.
+	 * The player who owns the emporium is given the bonus (reward token) of this city,
+	 * and the bonuses of every city connected to this on which the player has already
+	 * built an emporium.
 	 * 
 	 * @param emporium
 	 */
 	public void addEmporium(Emporium emporium) {
 		
 		emporiums.add(emporium);
+		this.giveBonuses(emporium.getOwner());
+		
 		
 	}
 	
@@ -169,7 +174,7 @@ public class City implements Serializable {
 		
 		for (City neighbor : neighbors) {
 			
-			if ( !(visited.contains(neighbor)) && (player.hasBuiltOn(neighbor)) ) {
+			if ( !(visited.contains(neighbor)) && (player.hasBuiltOn(neighbor.name)) ) {
 				neighbor.giveBonuses(player, visited);
 			}
 			
