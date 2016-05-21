@@ -97,7 +97,7 @@ public class City implements Serializable {
 	 * 
 	 * @param city
 	 */
-	protected void addNeighbor(City city) {
+	void addNeighbor(City city) {
 		
 		neighbors.add(city);
 		
@@ -121,6 +121,16 @@ public class City implements Serializable {
 	public void addEmporium(Emporium emporium) {
 		
 		emporiums.add(emporium);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Bonus getBonus() {
+		
+		return bonus;
 		
 	}
 	

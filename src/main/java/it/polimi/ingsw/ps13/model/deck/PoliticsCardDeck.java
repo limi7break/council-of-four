@@ -90,25 +90,13 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
 	@Override
 	public String toString() {
 		
-		StringBuilder sb = new StringBuilder();
+		String str = super.toString();
 		
-		sb.append("[PoliticsCardDeck]\n\n");
-		
-		if (this.isEmpty()) {
-			sb.append("Empty as my wallet.\n");
-		} else {
-			sb.append("Draw Pile:\n");
-			if (this.isDrawPileEmpty()) {
-				sb.append("Empty as my brain right now.\n");
-			}
-			for (PoliticsCard politicsCard : drawPile) {
-				sb.append(politicsCard.toString()).append("\n");
-			}
+		StringBuilder sb = new StringBuilder(str);
 			
-			sb.append("\nDiscard Pile:\n");
-			for (PoliticsCard politicsCard : discardPile) {
-				sb.append(politicsCard.toString()).append("\n");
-			}
+		sb.append("\nDiscard Pile:\n");
+		for (PoliticsCard politicsCard : discardPile) {
+			sb.append(politicsCard.toString()).append("\n");
 		}
 		
 		return sb.toString();

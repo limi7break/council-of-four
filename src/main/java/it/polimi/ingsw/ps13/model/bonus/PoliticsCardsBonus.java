@@ -22,6 +22,26 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public int getAmount() {
+		
+		return amount;
+		
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public boolean isEmpty() {
+		
+		return amount == 0;
+		
+	}
+	
+	/**
 	 * Useful for debug.
 	 * 
 	 */

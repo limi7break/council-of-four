@@ -4,6 +4,8 @@
 
 <config name="default">
 
+	<!-- every color used in this configuration file must be
+		defined here -->
 	<colors>
 		<color name="black" 		r="000" g="000" b="000"/>
 		<color name="blue" 			r="000" g="000" b="255"/>
@@ -29,6 +31,7 @@
 		<color name="pink"/>
 	</politicscolors>
 	
+	<!-- the capital is the city having the capitalcolor -->
 	<citycolors>
 		<capitalcolor name="magenta"/>
 		
@@ -231,6 +234,7 @@
 					<neighbor name="Juvelar"/>
 					<neighbor name="Kultos"/>
 				</city>
+				<!-- CAPITAL -->
 				<city name="Juvelar" color="magenta">
 					<neighbor name="Graden"/>
 					<neighbor name="Hellar"/>
@@ -506,7 +510,9 @@
 			</permittile>
 		</region>
 	</regions>
-		
+	
+	<!-- number of reward tokens must be at least equal to
+		the number of cities (minus the capital) -->
 	<rewardtokens>
 		<bonus>
 			<coins value="1"/>
@@ -555,68 +561,85 @@
 		</bonus>
 	</rewardtokens>
 		
-	<nobility>
-		<position index="2">
+	<nobilitytrack>
+		<position value="2">
 			<bonus>
-				<victorypoints>2</victorypoints>
-				<coins>2</coins>
+				<victorypoints value="2"/>
+				<coins value="2"/>
 			</bonus>
 		</position>
-		<!-- REWARD TOKEN AGAIN, NO NOBILITY ADVANCE
-		<position index="4">
+		<position value="4">
 			<bonus>
-
-			</bonus>
-		</position> -->
-		<position index="6">
-			<bonus>
-				<mainactions>1</mainactions>
+				<regainrewardtokenbonus/>
 			</bonus>
 		</position>
-		<position index="8">
+		<position value="6">
 			<bonus>
-				<victorypoints>3</victorypoints>
-				<politicscards>1</politicscards>
+				<mainactions value="1"/>
 			</bonus>
 		</position>
-		<!-- GET VISIBLE PERMIT TILE
-		<position index="10">
+		<position value="8">
 			<bonus>
-
-			</bonus>
-		</position> -->
-		<position index="12">
-			<bonus>
-				<victorypoints>5</victorypoints>
-				<assistants>1</assistants>
+				<victorypoints value="3"/>
+				<politicscards value="1"/>
 			</bonus>
 		</position>
-		<!-- PERMIT TILE BONUS AGAIN
-		<position index="14">
+		<position value="10">
 			<bonus>
-
-			</bonus>
-		</position> -->
-		<!-- 2X REWARD TOKEN AGAIN, DIFFERENT CITIES, NO NOBILITY ADVANCE
-		<position index="16">
-			<bonus>
-
-			</bonus>
-		</position> -->
-		<position index="18">
-			<bonus>
-				<victorypoints>8</victorypoints>
+				<visiblepermittile/>
 			</bonus>
 		</position>
-		<position index="19">
+		<position value="12">
 			<bonus>
-				<victorypoints>2</victorypoints>
+				<victorypoints value="5"/>
+				<assistants value="1"/>
 			</bonus>
 		</position>
-		<position index="20">
+		<position value="14">
 			<bonus>
-				<victorypoints>3</victorypoints>
+				<regainpermittilebonus/>
 			</bonus>
 		</position>
-	</nobility>
+		<!-- different cities? -->
+		<position value="16">
+			<bonus>
+				<regainrewardtokenbonus/>
+				<regainrewardtokenbonus/>
+			</bonus>
+		</position>
+		<position value="18">
+			<bonus>
+				<victorypoints value="8"/>
+			</bonus>
+		</position>
+		<position value="19">
+			<bonus>
+				<victorypoints value="2"/>
+			</bonus>
+		</position>
+		<position value="20">
+			<bonus>
+				<victorypoints value="3"/>
+			</bonus>
+		</position>
+	</nobilitytrack>
+	
+	<!-- king reward tiles are ordered from the first to the last -->
+	<kingrewardtiles>
+		<bonus>
+			<victorypoints value="25"/>
+		</bonus>
+		<bonus>
+			<victorypoints value="18"/>
+		</bonus>
+		<bonus>
+			<victorypoints value="12"/>
+		</bonus>
+		<bonus>
+			<victorypoints value="7"/>
+		</bonus>
+		<bonus>
+			<victorypoints value="3"/>
+		</bonus>
+	</kingrewardtiles>
 </config>

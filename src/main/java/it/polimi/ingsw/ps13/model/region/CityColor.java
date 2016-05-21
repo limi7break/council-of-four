@@ -72,7 +72,7 @@ public class CityColor implements Serializable {
 	 * 
 	 * @param city
 	 */
-	protected void addCityName(String name) {
+	void addCityName(String name) {
 		
 		cityNames.add(name);
 		

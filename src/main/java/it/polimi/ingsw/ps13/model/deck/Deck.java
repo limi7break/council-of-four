@@ -48,4 +48,31 @@ public abstract class Deck<E extends Serializable> implements Serializable {
         Collections.shuffle((LinkedList<?>) drawPile);
 
     }
+    
+    /**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[").append(this.getClass().getSimpleName()).append("]\n\n");
+		
+		if (this.isEmpty()) {
+			sb.append("Empty as my wallet.\n");
+		} else {
+			sb.append("Draw Pile:\n");
+			if (this.isDrawPileEmpty()) {
+				sb.append("Empty as my brain right now.\n");
+			}
+			for (E card : drawPile) {
+				sb.append(card.toString()).append("\n");
+			}
+		}
+		
+		return sb.toString();
+		
+	}
 }

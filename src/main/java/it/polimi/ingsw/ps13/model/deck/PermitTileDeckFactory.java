@@ -14,7 +14,7 @@ import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
  * 
  *
  */
-public class PermitTileDeckFactory {
+public final class PermitTileDeckFactory {
 
 	private PermitTileDeckFactory() { }
 	

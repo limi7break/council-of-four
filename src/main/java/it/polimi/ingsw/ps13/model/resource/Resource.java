@@ -64,6 +64,17 @@ public abstract class Resource implements Bonus, Serializable {
 	public abstract void giveTo(Player player);
 	
 	/**
+	 * 
+	 * @return
+	 */
+	@Override
+	public boolean isEmpty() {
+		
+		return amount == 0;
+		
+	}
+	
+	/**
 	 * Useful for debug.
 	 * 
 	 */

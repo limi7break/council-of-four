@@ -3,15 +3,14 @@ package it.polimi.ingsw.ps13.model.region;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import it.polimi.ingsw.ps13.model.board.King;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
@@ -22,9 +21,9 @@ public final class RegionFactory {
 
 	private RegionFactory() { }
 	
-	public static Map<String, City> createCities(Map<String, Region> regions, Map<String, CityColor> cityColors, List<CouncillorBalcony> councillorBalconies, King king, Map<String, Color> colors, Document config) {
+	public static Map<String, City> createCities(Map<String, Region> regions, Map<String, CityColor> cityColors, List<CouncillorBalcony> councillorBalconies, Map<String, Color> colors, Document config) {
 		
-		Map<String, City> cities = new HashMap<>();
+		Map<String, City> cities = new TreeMap<>();
 		List<Bonus> rewardTokens = createRewardTokens(config);
 		
 		// Create capital color with empty bonus
@@ -58,7 +57,6 @@ public final class RegionFactory {
 				if (cityColorName.equals(capitalColorName)) {
 					City capitalCity = new City(cityName, region, cityColor, BonusFactory.createEmptyBonus());
 					cities.put(cityName, capitalCity);
-					king.setCity(capitalCity);
 				} else {
 					cities.put(cityName, new City(cityName, region, cityColor, rewardTokens.remove(0)));
 				}

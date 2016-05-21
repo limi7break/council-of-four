@@ -43,6 +43,7 @@ public class ConcreteBonus implements Bonus {
 	 * 
 	 * @return
 	 */
+	@Override
 	public boolean isEmpty() {
 		
 		return contents.isEmpty();

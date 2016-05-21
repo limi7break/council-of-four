@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
  * 
  *
  */
-public class PoliticsCardDeckFactory {
+public final class PoliticsCardDeckFactory {
 
 	private static final int CARDS_PER_COLOR = 13;
 	private static final int MULTICOLORED_CARDS = 12;

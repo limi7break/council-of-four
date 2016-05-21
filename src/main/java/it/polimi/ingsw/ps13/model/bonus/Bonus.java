@@ -14,4 +14,8 @@ public interface Bonus extends Serializable {
 
 	abstract void giveTo(Player player);
 	
+	default boolean isEmpty() {
+		return false;
+	}
+	
 }

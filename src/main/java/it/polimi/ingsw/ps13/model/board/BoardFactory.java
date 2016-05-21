@@ -2,9 +2,9 @@ package it.polimi.ingsw.ps13.model.board;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,16 +26,14 @@ import it.polimi.ingsw.ps13.model.region.RegionFactory;
  * @author irons
  *
  */
-public class BoardFactory {
-
-	public static final int COUNCILLORS_PER_COLOR = 4;
+public final class BoardFactory {
 	
 	private BoardFactory() { }
 	
 	public static Board createBoard(Document config, Map<String, Color> colors) {
 		
 		Map<String, CityColor> cityColors = CityColorFactory.createCityColors(config, colors);
-		Map<String, Region> regions = new HashMap<>();
+		Map<String, Region> regions = new TreeMap<>();
 		Map<String, City> cities;
 		
 		PoliticsCardDeck politicsCardDeck = PoliticsCardDeckFactory.createPoliticsCardDeck(config, colors);
@@ -48,10 +46,9 @@ public class BoardFactory {
 		List<CouncillorBalcony> councillorBalconies = new ArrayList<>();
 		councillors = CouncillorBalconyFactory.createCouncillorBalconies(numberOfRegions+1, councillorBalconies, colors, config);
 		
-		King king = new King();
-		cities = RegionFactory.createCities(regions, cityColors, councillorBalconies, king, colors, config);
+		cities = RegionFactory.createCities(regions, cityColors, councillorBalconies, colors, config);
 		
-		return Board.create(regions, cityColors, cities, politicsCardDeck, councillorBalconies.remove(0), councillors, king);
+		return Board.create(regions, cityColors, cities, politicsCardDeck, councillorBalconies.remove(0), councillors, config);
 		
 	}
 	

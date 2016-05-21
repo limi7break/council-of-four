@@ -2,9 +2,18 @@ package it.polimi.ingsw.ps13.model.board;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeck;
@@ -19,13 +28,13 @@ public class Board implements Serializable {
 	private final Map<String, CityColor> cityColors;
 	private final Map<String, City> cities;
 	private final King king;
-	//private final NobilityTrack nobilityTrack;		// created in the constructor
+	private final NobilityTrack nobilityTrack;
 	private final PoliticsCardDeck politicsCardDeck;
 	private final CouncillorBalcony kingBalcony;
-	//private final Deque<Bonus> kingRewardTiles;
-	private final List<Councillor> councillors;			// modifiable
+	private final Deque<Bonus> kingRewardTiles;
+	private final List<Councillor> councillors;
 	
-	private Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, King king) {
+	private Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
 		
 		this.regions = regions;
 		this.cityColors = cityColors;
@@ -33,17 +42,26 @@ public class Board implements Serializable {
 		this.politicsCardDeck = politicsCardDeck;
 		this.kingBalcony = kingBalcony;
 		this.councillors = councillors;
-		this.king = king;
+		this.king = new King();
 		
-		// create nobility track
-		// create king
-		// create king reward tiles
+		// Set king city
+		for (City city : cities.values()) {
+			if (city.getBonus().isEmpty()) {
+				king.setCity(city);
+			}
+		}
+		
+		// Create nobility track
+		nobilityTrack = createNobilityTrack(config);
+		
+		// Create king reward tiles
+		kingRewardTiles = createKingRewardTiles(config);
 		
 	}
-	
-	public static Board create(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, King king) {
+
+	public static Board create(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
 		
-		return new Board(regions, cityColors, cities, politicsCardDeck, kingBalcony, councillors, king);
+		return new Board(regions, cityColors, cities, politicsCardDeck, kingBalcony, councillors, config);
 		
 	}
 	
@@ -128,12 +146,12 @@ public class Board implements Serializable {
 	/**
 	 * 
 	 * @return
-	 *
+	 */
 	public NobilityTrack getNobilityTrack() {
 		
 		return nobilityTrack;
 		
-	} IMPLEMENT */
+	}
 	
 	/**
 	 * 
@@ -159,12 +177,12 @@ public class Board implements Serializable {
 	 * Gets a king reward tile from the top of the list and removes it.
 	 * 
 	 * @return
-	 *
+	 */
 	public Bonus getKingRewardTile() {
 		
 		return kingRewardTiles.removeFirst();
 		
-	} IMPLEMENT */
+	}
 	
 	/**
 	 * 
@@ -173,6 +191,50 @@ public class Board implements Serializable {
 	public List<Councillor> getCouncillors() {
 		
 		return councillors;
+		
+	}
+	
+	/**
+	 * 
+	 * @param config
+	 * @return
+	 */
+	private Deque<Bonus> createKingRewardTiles(Document config) {
+		
+		Deque<Bonus> rewardTiles = new LinkedList<>();
+		
+		Element kingRewardTilesElement = (Element) config.getElementsByTagName("kingrewardtiles").item(0);
+		NodeList bonusElementList = kingRewardTilesElement.getElementsByTagName("bonus");
+		for (int i=0; i<bonusElementList.getLength(); i++) {
+			Element currentBonusElement = (Element) bonusElementList.item(i);
+			rewardTiles.addLast(BonusFactory.createBonus(currentBonusElement));
+		}
+		
+		return rewardTiles;
+		
+	}
+
+	/**
+	 * 
+	 * @param config
+	 * @return
+	 */
+	private NobilityTrack createNobilityTrack(Document config) {
+		
+		Map<Integer, Bonus> bonusMap = new TreeMap<>();
+		
+		Element nobilityTrackElement = (Element) config.getElementsByTagName("nobilitytrack").item(0);
+		NodeList positionElementList = nobilityTrackElement.getElementsByTagName("position");
+		for (int i=0; i<positionElementList.getLength(); i++) {
+			Element currentElement = (Element) positionElementList.item(i);
+			int position = Integer.parseInt(currentElement.getAttribute("value"));
+			Element bonusElement = (Element) currentElement.getElementsByTagName("bonus").item(0);
+			Bonus bonus = BonusFactory.createBonus(bonusElement);
+			
+			bonusMap.put(position, bonus);
+		}
+		
+		return new NobilityTrack(bonusMap);
 		
 	}
 	

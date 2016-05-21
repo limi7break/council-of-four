@@ -35,7 +35,7 @@ public class CouncillorBalcony implements Serializable {
 	 * 
 	 * @param councillors a collection of councillors to put in the balcony
 	 */
-	public CouncillorBalcony(List<Councillor> councillors) {
+	protected CouncillorBalcony(List<Councillor> councillors) {
 		
 		councillorList = new LinkedList<>();
 		
@@ -73,7 +73,7 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards a collection of politics cards
 	 * @return the number of cards that match with a councillor
 	 */
-	public int calculateNumberOfMatches(Collection<PoliticsCard> cards) {
+	protected int calculateNumberOfMatches(Collection<PoliticsCard> cards) {
 		
 		List<PoliticsCard> cardsCopy = new ArrayList<>(cards);
 		
@@ -102,7 +102,7 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards a collection of politics cards
 	 * @return the number of multicolored cards in the passed collection of cards
 	 */
-	public int calculateNumberOfMulticoloredCards(Collection<PoliticsCard> cards) {
+	protected int calculateNumberOfMulticoloredCards(Collection<PoliticsCard> cards) {
 		
 		int numberOfMulticoloredCards = 0;
 		for (Iterator<PoliticsCard> it = cards.iterator(); it.hasNext();) {

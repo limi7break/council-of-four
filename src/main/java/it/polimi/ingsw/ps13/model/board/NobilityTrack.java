@@ -1,21 +1,20 @@
 package it.polimi.ingsw.ps13.model.board;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
+import java.util.TreeMap;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 
 /**
  * 
- * @author alessiomongelluzzo
  *
  */
 public class NobilityTrack implements Serializable {
 
-    private Map<Integer, Bonus> bonusList;
-
     private static final long serialVersionUID = 0L;
+    private final Map<Integer, Bonus> bonusMap;
     
     /**
      * 
@@ -23,8 +22,8 @@ public class NobilityTrack implements Serializable {
      */
     public NobilityTrack (Map<Integer, Bonus> bonuses) {
     	
-        bonusList = new HashMap<>();
-        bonusList.putAll(bonuses);
+        bonusMap = new TreeMap<>();
+        bonusMap.putAll(bonuses);
         
     }
     
@@ -32,11 +31,40 @@ public class NobilityTrack implements Serializable {
      * 
      * @return
      */
-    public Map<Integer, Bonus> getBonusList() {
+    public Map<Integer, Bonus> getBonusMap() {
     	
-        return bonusList;
+        return Collections.unmodifiableMap(bonusMap);
         
     }
 
-
+    /**
+     * 
+     * @param position
+     * @return
+     */
+    public Bonus getBonus(int position) {
+    	
+    	return bonusMap.get(position);
+    	
+    }
+    
+    /*
+     * Useful for debug.
+     * 
+     */
+    @Override
+    public String toString() {
+    	
+    	StringBuilder sb = new StringBuilder();
+    	
+    	sb.append("[NobilityTrack]\n\n");
+    	
+    	for (Map.Entry<Integer, Bonus> entry : bonusMap.entrySet()) {
+    		sb.append("Position " + entry.getKey() + "\n");
+    		sb.append(entry.getValue().toString()).append("\n");
+    	}
+    	
+    	return sb.toString();
+    	
+    }
 }

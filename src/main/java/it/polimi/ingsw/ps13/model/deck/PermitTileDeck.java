@@ -143,25 +143,13 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	@Override
 	public String toString() {
 		
-		StringBuilder sb = new StringBuilder();
+		String str = super.toString();
 		
-		sb.append("[PermitTileDeck]\n\n");
-		
-		if (this.isEmpty()) {
-			sb.append("Empty as my wallet.\n");
-		} else {
-			sb.append("Draw Pile:\n");
-			if (this.isDrawPileEmpty()) {
-				sb.append("Empty as my brain right now.\n");
-			}
-			for (PermitTile permitTile : drawPile) {
-				sb.append(permitTile.toString()).append("\n");
-			}
+		StringBuilder sb = new StringBuilder(str);
 			
-			sb.append("\nVisible Tiles:\n");
-			for (PermitTile permitTile : visibleTiles) {
-				sb.append(permitTile.toString()).append("\n");
-			}
+		sb.append("\nVisible Tiles:\n");
+		for (PermitTile permitTile : visibleTiles) {
+			sb.append(permitTile.toString()).append("\n");
 		}
 		
 		return sb.toString();

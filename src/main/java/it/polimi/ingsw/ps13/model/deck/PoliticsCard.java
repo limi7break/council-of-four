@@ -21,7 +21,7 @@ public final class PoliticsCard implements Marketable, Serializable {
 	 * 
 	 * @param color
 	 */
-	PoliticsCard(Color color) {
+	protected PoliticsCard(Color color) {
 		
 		this.color = color;
 	
@@ -41,7 +41,7 @@ public final class PoliticsCard implements Marketable, Serializable {
 	 */
 	public boolean isMultiColored() {
 		
-		return (color == null) ? true : false;
+		return color == null;
 		
 	}
 	
