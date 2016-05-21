@@ -60,7 +60,7 @@ public class PlayerSupply implements Serializable  {
 	
 	/**
 	 * 
-	 * @param vp
+	 * @param amount
 	 */
 	public void addVictoryPoints(int amount){
 		
@@ -81,7 +81,7 @@ public class PlayerSupply implements Serializable  {
 	
 	/**
 	 * 
-	 * @param c
+	 * @param amount
 	 */
 	public void addCoins(int amount){
 		
@@ -91,7 +91,7 @@ public class PlayerSupply implements Serializable  {
 	
 	/**
 	 * 
-	 * @param c
+	 * @param amount
 	 */
 	public void consumeCoins(int amount){
 		
@@ -111,7 +111,7 @@ public class PlayerSupply implements Serializable  {
 	
 	/**
 	 * 
-	 * @param a
+	 * @param 
 	 */
 	public void addAssistants(int amount){
 		
@@ -121,7 +121,7 @@ public class PlayerSupply implements Serializable  {
 	
 	/**
 	 * 
-	 * @param a
+	 * @param 
 	 */
 	public void consumeAssistants(int amount){
 		
@@ -184,7 +184,13 @@ public class PlayerSupply implements Serializable  {
 	 */
 	public void removePoliticsCards(Collection<PoliticsCard> selectedCards) {
 		
-		politicsCards.removeAll(selectedCards);
+		if(politicsCards.containsAll(selectedCards) == true){
+			
+			politicsCards.removeAll(selectedCards);
+			
+		}
+		
+		else throw new IllegalArgumentException("Do not own all of these cards.");	
 		
 	}
 	
@@ -204,7 +210,23 @@ public class PlayerSupply implements Serializable  {
 	 */
 	public void removePermitTiles(Collection<PermitTile> selectedPermitTiles) {
 		
-		permitTiles.removeAll(selectedPermitTiles);
+		if(permitTiles.containsAll(selectedPermitTiles) == true){
+			
+			permitTiles.removeAll(selectedPermitTiles);
+			
+		}
+		
+		else throw new IllegalArgumentException("Do not own all of thes tiles.");
+		
+	}
+	
+	/**
+	 * 
+	 * @param obtained
+	 */
+	public void addPermitTile(PermitTile obtained) {
+		
+		permitTiles.add(obtained);
 		
 	}
 	

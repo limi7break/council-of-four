@@ -70,6 +70,17 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
         discardPile.add(card);
 
     }
+    
+    /**
+     * Adds cards to the discardPile.
+     * 
+     * @param cards
+     */
+    public void discardCard(Collection<PoliticsCard> cards) {
+    	
+    	discardPile.addAll(cards);
+    	
+    }
 
     /**
      * Checks if both the drawPile and the discardPile are empty.
