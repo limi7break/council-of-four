@@ -72,7 +72,7 @@ public class Player implements Serializable {
 	 */
 	public void discardPoliticsCard(Collection<PoliticsCard> usedCards, PoliticsCardDeck deck) {
 		
-		if(supply.getPoliticsCards().containsAll(usedCards) == true){
+		if(supply.getPoliticsCards().containsAll(usedCards)){
 			
 			supply.removePoliticsCards(usedCards);
 			deck.discardCard(usedCards);
