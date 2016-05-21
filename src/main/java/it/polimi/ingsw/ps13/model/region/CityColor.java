@@ -32,7 +32,12 @@ public class CityColor implements Serializable {
 		
 		this.color = color;
 		this.bonus = bonus;
-		bonusAvailable = true;
+		
+		if (bonus.isEmpty()) {
+			bonusAvailable = false;
+		} else {
+			bonusAvailable = true;
+		}
 		
 		cityNames = new TreeSet<>();
 		
