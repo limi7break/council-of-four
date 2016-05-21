@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
+import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeck;
@@ -51,6 +52,17 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Gives the player a politics card: useful for market.
+	 * 
+	 * @param card
+	 */
+	public void receivePoliticsCard(PoliticsCard card) {
+		
+		supply.addPoliticsCard(card);
+		
+	}
+	
+	/**
 	 * Adds a number of politics cards, drawn from a politics card deck, to the hand of the player.
 	 * 
 	 * @param amount
@@ -72,7 +84,7 @@ public class Player implements Serializable {
 	 */
 	public void discardPoliticsCard(Collection<PoliticsCard> usedCards, PoliticsCardDeck deck) {
 		
-		if(supply.getPoliticsCards().containsAll(usedCards) == true){
+		if(supply.getPoliticsCards().containsAll(usedCards)){
 			
 			supply.removePoliticsCards(usedCards);
 			deck.discardCard(usedCards);
@@ -91,6 +103,12 @@ public class Player implements Serializable {
 	public void takePermitTile(int position, PermitTileDeck regionDeck) {
 		
 		supply.addPermitTile(regionDeck.takeTile(position));
+		
+	}
+	
+	public void receivePermitTile(PermitTile tile) {
+		
+		supply.addPermitTile(tile);
 		
 	}
 	

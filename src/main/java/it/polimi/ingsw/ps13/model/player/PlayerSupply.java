@@ -184,7 +184,7 @@ public class PlayerSupply implements Serializable  {
 	 */
 	public void removePoliticsCards(Collection<PoliticsCard> selectedCards) {
 		
-		if(politicsCards.containsAll(selectedCards) == true){
+		if(politicsCards.containsAll(selectedCards)){
 			
 			politicsCards.removeAll(selectedCards);
 			
@@ -210,7 +210,7 @@ public class PlayerSupply implements Serializable  {
 	 */
 	public void removePermitTiles(Collection<PermitTile> selectedPermitTiles) {
 		
-		if(permitTiles.containsAll(selectedPermitTiles) == true){
+		if(permitTiles.containsAll(selectedPermitTiles)){
 			
 			permitTiles.removeAll(selectedPermitTiles);
 			

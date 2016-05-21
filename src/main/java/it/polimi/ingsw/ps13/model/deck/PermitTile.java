@@ -93,7 +93,7 @@ public final class PermitTile implements Marketable, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		// @TODO: implement this method
+		player.receivePermitTile(this);
 		// remember: when this method is called, the tile has already been removed
 		// from the seller's hand. Only need to put the reference in the buyer's hand.
 		

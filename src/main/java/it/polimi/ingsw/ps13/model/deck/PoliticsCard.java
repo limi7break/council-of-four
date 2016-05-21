@@ -52,7 +52,7 @@ public final class PoliticsCard implements Marketable, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		// @TODO: implement this method
+		player.receivePoliticsCard(this);
 		// remember: when this method is called, the card has already been removed
 		// from the seller's hand. Only need to put the reference in the buyer's hand.
 		
