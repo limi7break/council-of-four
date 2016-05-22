@@ -102,7 +102,10 @@ public class Player implements Serializable {
 	 */
 	public void takePermitTile(int position, PermitTileDeck regionDeck) {
 		
-		supply.addPermitTile(regionDeck.takeTile(position));
+		PermitTile tile = regionDeck.takeTile(position);
+		supply.addPermitTile(tile);
+		tile.getBonus().giveTo(this);
+		
 		
 	}
 	
@@ -114,6 +117,7 @@ public class Player implements Serializable {
 	public void receivePermitTile(PermitTile tile) {
 		
 		supply.addPermitTile(tile);
+		tile.getBonus().giveTo(this);
 		
 	}
 	
