@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.awt.Color;
 
-import it.polimi.ingsw.ps13.model.board.Emporium;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
@@ -124,8 +124,6 @@ public class City implements Serializable {
 	public void addEmporium(Emporium emporium) {
 		
 		emporiums.add(emporium);
-		this.giveBonuses(emporium.getOwner());
-		
 		
 	}
 	

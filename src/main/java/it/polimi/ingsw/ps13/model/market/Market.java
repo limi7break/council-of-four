@@ -55,8 +55,8 @@ public class Market implements Serializable {
 		
 		// Subtracts coins from the buyer and adds them to the seller
 		int price = entry.getPrice();
-		buyer.getSupply().consumeCoins(price);
-		entry.getSeller().getSupply().addCoins(price);
+		buyer.consumeCoins(price);
+		entry.getSeller().addCoins(price);
 		
 		// Gives the items to the buyer
 		List<Marketable> itemList = entry.getItemList();

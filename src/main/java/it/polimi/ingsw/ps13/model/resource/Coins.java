@@ -22,7 +22,7 @@ public class Coins extends Resource implements Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		player.getSupply().addCoins(getAmount());
+		player.addCoins(getAmount());
 		
 	}
 

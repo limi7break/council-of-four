@@ -22,7 +22,7 @@ public class Assistants extends Resource implements Marketable, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		player.getSupply().addAssistants(this.getAmount());
+		player.addAssistants(this.getAmount());
 		
 	}
 }

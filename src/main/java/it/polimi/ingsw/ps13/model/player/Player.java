@@ -7,9 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
-import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
-import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeck;
 
 /**
  * 
@@ -22,32 +20,142 @@ public class Player implements Serializable {
 	private final String name;
 	private final Color color;
 	private final PlayerSupply supply;
+	private final Set<String> cityNames;
 	private int nobilityPosition;
 	private int mainActions;
-	private boolean quickAction;
-	private final Set<String> cityNames;
+	private boolean quickActionAvailable;
 	
 	public Player(String name, Color color, int position) { 
 		
 		this.name = name;
 		this.color = color;
-		supply = new PlayerSupply(position);
+		supply = new PlayerSupply(position, color);
+		cityNames = new TreeSet<>();
 		
 		nobilityPosition = 0;
 		mainActions = 0;
-		quickAction = false;
-		cityNames = new TreeSet<>();
+		quickActionAvailable = false;
 		
 	}
 	
 	/**
-	 * Adds a politics card, drawn from a politics card deck, to the hand of the player.
 	 * 
-	 * @param deck
+	 * @return
 	 */
-	public void drawPoliticsCard(PoliticsCardDeck deck) {
+	public int getVictoryPoints(){
 		
-		supply.addPoliticsCard(deck.drawCard());
+		return supply.getVictoryPoints().getAmount();
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void addVictoryPoints(int amount){
+		
+		supply.getVictoryPoints().add(amount);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getCoins(){
+		
+		return supply.getCoins().getAmount();
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void addCoins(int amount){
+		
+		supply.getCoins().add(amount);
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void consumeCoins(int amount){
+		
+		supply.getCoins().consume(amount);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getAssistants(){
+		
+		return supply.getAssistants().getAmount();
+		
+	}
+	
+	/**
+	 * 
+	 * @param 
+	 */
+	public void addAssistants(int amount){
+		
+		supply.getAssistants().add(amount);
+		
+	}
+	
+	/**
+	 * 
+	 * @param 
+	 */
+	public void consumeAssistants(int amount){
+		
+		supply.getAssistants().consume(amount);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getNumberOfEmporiums() {
+		
+		return supply.getEmporiums().size();
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Emporium removeEmporium() {
+		
+		return supply.getEmporiums().remove(0);
+		
+	}
+	
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public PoliticsCard selectPoliticsCard(int index) {
+		
+		return supply.getPoliticsCards().get(index);
+		
+	}
+	
+	/**
+	 * 
+	 * @param cards
+	 */
+	public void discardPoliticsCards(Collection<PoliticsCard> cards) {
+		
+		supply.getPoliticsCards().removeAll(cards);
 		
 	}
 	
@@ -58,40 +166,18 @@ public class Player implements Serializable {
 	 */
 	public void receivePoliticsCard(PoliticsCard card) {
 		
-		supply.addPoliticsCard(card);
-		
-	}
-	
-	/**
-	 * Adds a number of politics cards, drawn from a politics card deck, to the hand of the player.
-	 * 
-	 * @param amount
-	 * @param deck
-	 */
-	public void drawPoliticsCards(int number, PoliticsCardDeck deck) {
-		 
-		for(int i=0; i<number; i++){
-			
-			supply.addPoliticsCard(deck.drawCard());
-			
-		}
+		supply.getPoliticsCards().add(card);
 		
 	}
 	
 	/**
 	 * 
-	 * @param usedCards
+	 * @param index
+	 * @return
 	 */
-	public void discardPoliticsCard(Collection<PoliticsCard> usedCards, PoliticsCardDeck deck) {
+	public PermitTile selectPermitTile(int index) {
 		
-		if(supply.getPoliticsCards().containsAll(usedCards)){
-			
-			supply.removePoliticsCards(usedCards);
-			deck.discardCard(usedCards);
-			
-		}
-		
-		else throw new IllegalArgumentException("This player cannot use these cards.");
+		return supply.getPermitTiles().get(index);
 		
 	}
 	
@@ -100,9 +186,9 @@ public class Player implements Serializable {
 	 * @param position
 	 * @param regionDeck
 	 */
-	public void takePermitTile(int position, PermitTileDeck regionDeck) {
+	public void givePermitTile(PermitTile tile) {
 		
-		supply.addPermitTile(regionDeck.takeTile(position));
+		supply.getPermitTiles().remove(tile);
 		
 	}
 	
@@ -113,17 +199,7 @@ public class Player implements Serializable {
 	 */
 	public void receivePermitTile(PermitTile tile) {
 		
-		supply.addPermitTile(tile);
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void removeEmporium() {
-		
-		supply.removeEmporium();
-		//N.B. end of the game to be checked.
+		supply.getPermitTiles().add(tile);
 		
 	}
 	
@@ -161,31 +237,35 @@ public class Player implements Serializable {
 	
 	/**
 	 * 
+	 * @param amount
 	 * @return
 	 */
-	public PlayerSupply getSupply() {
+	public void addMainActions(int amount) {
 		
-		return supply;
-		
-	}
-	
-	/**
-	 * 
-	 * @param mainActions
-	 */
-	public void setMainActions(int mainActions) {
-		
-		this.mainActions = mainActions;
+		mainActions += amount;
 		
 	}
 	
 	/**
 	 * 
-	 * @param quickAction
 	 */
-	public void setQuickAction(boolean quickAction) {
+	public void consumeMainAction() {
 		
-		this.quickAction = quickAction;
+		mainActions--;
+		
+	}
+	
+	/**
+	 * 
+	 * @param quickActionAvailable
+	 */
+	public void setQuickActionAvailable(boolean quickActionAvailable) {
+		
+		if (!this.quickActionAvailable && quickActionAvailable) {
+			throw new IllegalArgumentException("The possibility to perform a quick action cannot be regained in the same turn");
+		} else {
+			this.quickActionAvailable = quickActionAvailable;
+		}
 		
 	}
 	
@@ -193,9 +273,9 @@ public class Player implements Serializable {
 	 * 
 	 * @return
 	 */
-	public boolean isQuickAction() {
+	public boolean isQuickActionAvailable() {
 		
-		return quickAction;
+		return quickActionAvailable;
 		
 	}
 	

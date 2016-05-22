@@ -1,16 +1,15 @@
 package it.polimi.ingsw.ps13.model.player;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-import it.polimi.ingsw.ps13.model.board.Emporium;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import it.polimi.ingsw.ps13.model.resource.Assistants;
 import it.polimi.ingsw.ps13.model.resource.Coins;
+import it.polimi.ingsw.ps13.model.resource.Resource;
 import it.polimi.ingsw.ps13.model.resource.VictoryPoints;
 
 /**
@@ -20,6 +19,7 @@ import it.polimi.ingsw.ps13.model.resource.VictoryPoints;
 public class PlayerSupply implements Serializable  {
 
 	private static final long serialVersionUID = 0L;
+	private static final int NUMBER_OF_EMPORIUMS = 10;
 	
 	private final VictoryPoints victoryPoints;
 	private final Coins coins;
@@ -31,20 +31,21 @@ public class PlayerSupply implements Serializable  {
 	/**
 	 * 
 	 */
-	public PlayerSupply(int position) {
+	protected PlayerSupply(int position, Color color) {
 		
-		if(position < 0)
+		if(position < 0) {
 			throw new IllegalArgumentException();
-		
-		else{
-			
+		} else {
 			victoryPoints = new VictoryPoints(0);
 			coins = new Coins(10 + position); 
 			assistants = new Assistants(position + 1);
 			emporiums = new ArrayList<>();
 			politicsCards = new ArrayList<>();
 			permitTiles = new ArrayList<>();
-			
+		}
+		
+		for (int i=0; i<NUMBER_OF_EMPORIUMS; i++) {
+			emporiums.add(new Emporium(color));
 		}
 			
 	}
@@ -52,50 +53,18 @@ public class PlayerSupply implements Serializable  {
 	/**
 	 * 
 	 */
-	public int getVictoryPoints(){
+	protected Resource getVictoryPoints() {
 		
-		return victoryPoints.getAmount();
-		
+		return victoryPoints;
+	
 	}
 	
 	/**
 	 * 
-	 * @param amount
 	 */
-	public void addVictoryPoints(int amount){
+	protected Resource getCoins(){
 		
-		victoryPoints.add(amount);
-		
-	}
-	
-	/**
-	 * 
-	 * 
-	 * @return
-	 */
-	public int getCoins(){
-		
-		return coins.getAmount();
-		
-	}
-	
-	/**
-	 * 
-	 * @param amount
-	 */
-	public void addCoins(int amount){
-		
-		coins.add(amount);
-		
-	}
-	
-	/**
-	 * 
-	 * @param amount
-	 */
-	public void consumeCoins(int amount){
-		
-		coins.consume(amount);
+		return coins;
 		
 	}
 	
@@ -103,29 +72,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @return
 	 */
-	public int getAssistants(){
+	protected Resource getAssistants(){
 		
-		return assistants.getAmount();
-		
-	}
-	
-	/**
-	 * 
-	 * @param 
-	 */
-	public void addAssistants(int amount){
-		
-		assistants.add(amount);
-		
-	}
-	
-	/**
-	 * 
-	 * @param 
-	 */
-	public void consumeAssistants(int amount){
-		
-		assistants.consume(amount);
+		return assistants;
 		
 	}
 	
@@ -133,20 +82,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @return
 	 */
-	public List<Emporium> getEmporiums() {
+	protected List<Emporium> getEmporiums() {
 		
-		return Collections.unmodifiableList(emporiums);
-		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Emporium removeEmporium() {
-		
-		return emporiums.remove(0);
-		// check for end game, not here though
+		return emporiums;
 		
 	}
 	
@@ -154,43 +92,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @return
 	 */
-	public List<PoliticsCard> getPoliticsCards(){
+	protected List<PoliticsCard> getPoliticsCards(){
 		
-		return Collections.unmodifiableList(politicsCards);
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void addPoliticsCard(PoliticsCard card) {
-		
-		politicsCards.add(card);
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void addPoliticsCards(Collection<PoliticsCard> cards) {
-		
-		politicsCards.addAll(cards);
-		
-	}
-	
-	/**
-	 * 
-	 * @param selectedCards
-	 */
-	public void removePoliticsCards(Collection<PoliticsCard> selectedCards) {
-		
-		if(politicsCards.containsAll(selectedCards)){
-			
-			politicsCards.removeAll(selectedCards);
-			
-		}
-		
-		else throw new IllegalArgumentException("Do not own all of these cards.");	
+		return politicsCards;
 		
 	}
 	
@@ -198,35 +102,9 @@ public class PlayerSupply implements Serializable  {
 	 * 
 	 * @return
 	 */
-	public List<PermitTile> getPermitTiles(){
+	protected List<PermitTile> getPermitTiles(){
 		
-		return Collections.unmodifiableList(permitTiles);
-		
-	}
-	
-	/**
-	 * 
-	 * @param selectedPermitTiles
-	 */
-	public void removePermitTiles(Collection<PermitTile> selectedPermitTiles) {
-		
-		if(permitTiles.containsAll(selectedPermitTiles)){
-			
-			permitTiles.removeAll(selectedPermitTiles);
-			
-		}
-		
-		else throw new IllegalArgumentException("Do not own all of thes tiles.");
-		
-	}
-	
-	/**
-	 * 
-	 * @param obtained
-	 */
-	public void addPermitTile(PermitTile obtained) {
-		
-		permitTiles.add(obtained);
+		return permitTiles;
 		
 	}
 	

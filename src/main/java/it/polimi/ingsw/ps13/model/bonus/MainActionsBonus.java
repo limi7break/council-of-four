@@ -17,7 +17,7 @@ public class MainActionsBonus implements Bonus, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		player.setMainActions(player.getMainActions() + amount);
+		player.addMainActions(amount);
 		
 	}
 	

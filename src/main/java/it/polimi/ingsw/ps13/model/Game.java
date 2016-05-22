@@ -33,8 +33,8 @@ public class Game implements Serializable {
 	private final Board board;
 	private final Map<Integer, Player> players;
 	private final int numberOfPlayers;
-	private int currentPlayerID;							// number of the player in the players map
 	private final Market market;
+	private int currentPlayerID;							// number of the player in the players map
 	
 	public Game(Document config, List<String> players) { 
 		
@@ -105,6 +105,10 @@ public class Game implements Serializable {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public Player getCurrentPlayer() {
 		
 		return players.get(currentPlayerID);

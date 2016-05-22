@@ -17,7 +17,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		player.setNobilityPosition(player.getNobilityPosition() + amount);
+		// @TODO: come politics cards, non vedo la NobilityTrack, deve farlo il controller?
 		
 	}
 	

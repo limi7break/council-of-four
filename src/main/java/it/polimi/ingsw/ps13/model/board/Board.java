@@ -221,7 +221,7 @@ public class Board implements Serializable {
 	 */
 	private NobilityTrack createNobilityTrack(Document config) {
 		
-		Map<Integer, Bonus> bonusMap = new TreeMap<>();
+		TreeMap<Integer, Bonus> bonusMap = new TreeMap<>();
 		
 		Element nobilityTrackElement = (Element) config.getElementsByTagName("nobilitytrack").item(0);
 		NodeList positionElementList = nobilityTrackElement.getElementsByTagName("position");
@@ -232,6 +232,12 @@ public class Board implements Serializable {
 			Bonus bonus = BonusFactory.createBonus(bonusElement);
 			
 			bonusMap.put(position, bonus);
+		}
+		
+		for (int i=0; i<bonusMap.lastKey(); i++) {
+			if (!bonusMap.keySet().contains(i)) {
+				bonusMap.put(i, BonusFactory.createEmptyBonus());
+			}
 		}
 		
 		return new NobilityTrack(bonusMap);

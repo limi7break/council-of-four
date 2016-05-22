@@ -21,7 +21,7 @@ public class VictoryPoints extends Resource implements Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		player.getSupply().addVictoryPoints(getAmount());
+		player.addVictoryPoints(getAmount());
 		
 	}
 	
