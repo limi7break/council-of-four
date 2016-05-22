@@ -310,4 +310,27 @@ public class Player implements Serializable {
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[Player]\n")
+			.append("Name: ").append(name).append("\n")
+			.append("Color: ").append("(").append(color.getRed()).append(", ").append(color.getGreen()).append(", ").append(color.getBlue()).append(")\n")
+			.append(supply.toString()).append("\n")
+			.append("Nobility position: ").append(nobilityPosition).append("\n")
+			.append("Main actions: ").append(mainActions).append("\n")
+			.append("Quick action available: ").append(quickActionAvailable).append("\n")
+			.append("Cities: ").append(cityNames.toString()).append("\n");
+			
+			sb.append("\n");
+			return sb.toString();
+	
+	}
+	
 }

@@ -34,4 +34,16 @@ public final class Emporium implements Serializable{
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "[Emporium] "
+				+ "(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")";
+		
+	}
+	
 }

@@ -132,11 +132,11 @@ public class Region implements Serializable{
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("[Region]\n\n")
-			.append("Cities: ").append(cityNames.toString()).append("\n\n")
-			.append("Bonus:\n").append(bonus.toString())
-			.append("bonusAvailable = ").append(bonusAvailable).append("\n")
-			.append(councillorBalcony.toString()).append("\n")
-			.append(permitTileDeck.toString()).append("\n");
+		  .append("Cities: ").append(cityNames.toString()).append("\n\n")
+		  .append("Bonus:\n").append(bonus.toString())
+		  .append("bonusAvailable = ").append(bonusAvailable).append("\n")
+		  .append(councillorBalcony.toString()).append("\n")
+		  .append(permitTileDeck.toString()).append("\n");
 		
 		return sb.toString();
 		

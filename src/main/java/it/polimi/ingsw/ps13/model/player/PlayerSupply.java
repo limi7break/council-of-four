@@ -108,4 +108,24 @@ public class PlayerSupply implements Serializable  {
 		
 	}
 	
+	/**
+	 * Useful for debug.
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Victory Points: ").append(victoryPoints.getAmount()).append("\n")
+		  .append("Coins: ").append(coins.getAmount()).append("\n")
+		  .append("Assistants: ").append(assistants.getAmount()).append("\n")
+		  .append("Emporiums:\n").append(emporiums.size()).append("\n")
+		  .append("Politics cards:\n").append(politicsCards.toString()).append("\n")
+		  .append("Permit tiles:\n").append(permitTiles.toString()).append("\n");
+		
+		return sb.toString();
+		
+	}
+	
 }
