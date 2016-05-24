@@ -120,7 +120,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	 */
 	public PermitTile takeTile(int position) {
 		
-		if ( !(visibleTiles.isEmpty()) && (visibleTiles.size() <= position) ) {
+		if ( !(visibleTiles.isEmpty()) && (position <= visibleTiles.size()-1) ) {
 			// If the draw pile is not empty, draw a new card from the
 			// top of the deck and put it in the list of visible tiles
 			if ( !(getDrawPile().isEmpty()) ) {
