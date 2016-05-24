@@ -10,7 +10,7 @@ public class QuickElectCouncillorAction implements Action {
 	private static final long serialVersionUID = 0L;
 
 	private final int player; 
-	private final Councillor councillor; //has to be removed from the board councillors.
+	private final Councillor councillor;
 	private final String region; 
 	
 	/**
@@ -57,6 +57,8 @@ public class QuickElectCouncillorAction implements Action {
 	 */
 	@Override
 	public void apply(Game g) {
+		
+		g.getBoard().removeCouncillor(councillor);
 		
 		CouncillorBalcony balcony = g.getBoard().getRegion(region).getCouncillorBalcony();
 		
