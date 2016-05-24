@@ -19,7 +19,7 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
     
     /**
      * Instantiates a new Deck populated with a Collection of politics cards.
-     * The cards are shuffled when the deck is created.
+     * The cards are not shuffled when the deck is created.
      *
      * @param cards a Collection of politics cards to put inside the deck
      */
@@ -27,7 +27,6 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
 
         super(cards);
         discardPile = new ArrayList<>();
-        this.shuffleDeck();
         
     }
     

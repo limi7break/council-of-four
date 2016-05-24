@@ -41,7 +41,11 @@ public final class PermitTileDeckFactory {
 			permitTiles.add(new PermitTile(BonusFactory.createBonus(bonus), cityNames));
 		}
 		
-		return new PermitTileDeck(permitTiles);
+		PermitTileDeck permitTileDeck = new PermitTileDeck(permitTiles);
+		permitTileDeck.shuffleDeck();
+		permitTileDeck.changeTiles();
+		
+		return permitTileDeck;
 		
 	}
 	

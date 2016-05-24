@@ -46,7 +46,10 @@ public final class PoliticsCardDeckFactory {
 			cards.add(new PoliticsCard(null));
 		}
 		
-		return new PoliticsCardDeck(cards);
+		PoliticsCardDeck politicsCardDeck = new PoliticsCardDeck(cards);
+		politicsCardDeck.shuffleDeck();
+		
+		return politicsCardDeck;
 		
 	}
 	

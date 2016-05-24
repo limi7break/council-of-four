@@ -25,18 +25,16 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	
 	/**
      * Instantiates a new Deck populated with a Collection of permit tiles.
-     * The tiles are shuffled when the deck is created.
-     * Some permit tiles are then removed from the Deck and placed
-     * in a list containing the currently visible permit tiles.
+     * The tiles are not shuffled when the deck is created.
+     * The list of visible permit tiles is empty when the deck is created, so
+     * the method changeTiles() needs to be called.
      *
      * @param cards a Collection of permit tiles to put inside the deck
      */
 	protected PermitTileDeck(Collection<PermitTile> cards) {
 		
 		super(cards);
-		shuffleDeck();
 		visibleTiles = new ArrayList<>();
-		placeTiles();
 		
 	}
 	
