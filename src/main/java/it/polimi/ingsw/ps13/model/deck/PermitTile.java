@@ -30,7 +30,7 @@ public final class PermitTile implements Marketable, Serializable {
 	 * Constructs a new PermitTile, with a given Bonus and a given Collection of city names.
 	 * 
 	 * @param bonus
-	 * @param cities
+	 * @param cityNames
 	 */
 	protected PermitTile(Bonus bonus, Set<String> cityNames) {
 		

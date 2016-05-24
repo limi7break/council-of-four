@@ -83,9 +83,11 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	public void changeTiles() {
 		
 		if (!isDrawPileEmpty()) {
-		
-			for (int i=0; i<visibleTiles.size(); i++) {
-				discardCard(visibleTiles.remove(i));
+
+			int numberOfVisibleTiles = visibleTiles.size();
+
+			for (int i=0; i<numberOfVisibleTiles; i++) {
+				discardCard(visibleTiles.remove(0));
 			}
 			
 			placeTiles();
