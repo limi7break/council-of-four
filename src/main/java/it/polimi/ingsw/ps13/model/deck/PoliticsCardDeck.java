@@ -45,14 +45,14 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
         } else {
             if (this.isDrawPileEmpty()) {
                 // Move the cards from the discardPile into the empty deck.
-                drawPile.addAll(discardPile);
+            	getDrawPile().addAll(discardPile);
                 discardPile.clear();
                 // Shuffle the deck
                 this.shuffleDeck();
                 // Pop a card and return it
-                return drawPile.removeFirst();
+                return getDrawPile().removeFirst();
             } else {
-                return drawPile.removeFirst();
+                return getDrawPile().removeFirst();
             }
         }
 
@@ -89,7 +89,7 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
     @Override
     public boolean isEmpty() {
 
-        return drawPile.isEmpty() && discardPile.isEmpty();
+        return getDrawPile().isEmpty() && discardPile.isEmpty();
 
     }
     

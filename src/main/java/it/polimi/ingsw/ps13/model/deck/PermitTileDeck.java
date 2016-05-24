@@ -48,7 +48,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	@Override
 	PermitTile drawCard() {
 		
-		return drawPile.removeFirst();
+		return getDrawPile().removeFirst();
 		
 	}
 	
@@ -60,7 +60,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	@Override
 	public void discardCard(PermitTile card) {
 		
-		drawPile.addLast(card);
+		getDrawPile().addLast(card);
 		
 	}
 	
@@ -72,7 +72,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	@Override
 	public boolean isEmpty() {
 		
-		return drawPile.isEmpty() && visibleTiles.isEmpty();
+		return getDrawPile().isEmpty() && visibleTiles.isEmpty();
 		
 	}
 	
@@ -121,7 +121,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 		if ( !(visibleTiles.isEmpty()) && (visibleTiles.size() <= position) ) {
 			// If the draw pile is not empty, draw a new card from the
 			// top of the deck and put it in the list of visible tiles
-			if ( !(drawPile.isEmpty()) ) {
+			if ( !(getDrawPile().isEmpty()) ) {
 				visibleTiles.add(drawCard());
 			}
 			

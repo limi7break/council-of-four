@@ -14,7 +14,7 @@ import java.io.Serializable;
 public abstract class Deck<E extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 0L;
-	protected final Deque<E> drawPile;
+	private final Deque<E> drawPile;
 	
 	protected Deck(Collection<E> cards) {
 		
@@ -28,6 +28,16 @@ public abstract class Deck<E extends Serializable> implements Serializable {
 	abstract void discardCard(E card);
 	
 	abstract boolean isEmpty();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected Deque<E> getDrawPile() {
+		
+		return drawPile;
+		
+	}
 	
 	/**
      * Checks if the drawPile of the deck is empty.
