@@ -2,7 +2,6 @@ package it.polimi.ingsw.ps13.model.resource;
 
 import java.io.Serializable;
 
-import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 
 /**
@@ -56,12 +55,6 @@ public abstract class Resource implements Bonus, Serializable {
 		return amount;
 		
 	}
-	
-	/**
-	 * Gives the resource to a player.
-	 */
-	@Override
-	public abstract void giveTo(Player player);
 	
 	/**
 	 * 

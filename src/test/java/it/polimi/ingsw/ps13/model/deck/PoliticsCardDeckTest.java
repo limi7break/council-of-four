@@ -1,9 +1,8 @@
- package it.polimi.ingsw.ps13.model.deck;
- import org.junit.After;
- import org.junit.Test;
+package it.polimi.ingsw.ps13.model.deck;
+import org.junit.After;
+import org.junit.Test;
 import java.awt.Color;
 import java.util.*;
-
 
 import static org.junit.Assert.*;
 
@@ -96,8 +95,7 @@ public class PoliticsCardDeckTest  {
 
     }
 
-
-
+    @SuppressWarnings("unused")
     private void createDeck() {                                 //unused for now
 
         PoliticsCard r1;
