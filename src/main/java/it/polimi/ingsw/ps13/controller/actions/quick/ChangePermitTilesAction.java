@@ -2,20 +2,19 @@ package it.polimi.ingsw.ps13.controller.actions.quick;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 
-public class EngageAssistantAction implements Action {
+public class ChangePermitTilesAction implements Action {
 
 	private static final long serialVersionUID = 0L;
-
-	private final int player;
 	
-	/**
-	 * 
-	 * @param player
-	 */
-	public EngageAssistantAction(int player) {
+	private final int player;
+	private final String region;
+
+	public ChangePermitTilesAction(int player, String region) {
 		
 		this.player = player;
+		this.region = region;
 		
 	}
 	
@@ -32,29 +31,32 @@ public class EngageAssistantAction implements Action {
 		//checks if it's the player's turn
 		if(g.getCurrentPlayerID() != player)
 			legal = false;
-				
+		
 		//checks if player can do a quick action
 		if(!g.getPlayers().get(player).isQuickActionAvailable())
 			legal = false; 
 		
 		//checks if conditions are satisfied
-		if(g.getPlayers().get(player).getCoins() < 3)
+		int playerAssistants = g.getPlayers().get(player).getAssistants();
+		
+		if(playerAssistants < 1)
 			legal = false;
-					
+		
 		return legal;
 		
 	}
 
-	/**
-	 * 
-	 * @param g
-	 */
 	@Override
 	public void apply(Game g) {
 		
-		g.getPlayers().get(player).consumeCoins(3);
-		g.getPlayers().get(player).addAssistants(1);
+		g.getPlayers().get(player).consumeAssistants(1);
+		
+		PermitTileDeck selected = g.getBoard().getRegion(region).getPermitTileDeck();
+		selected.changeTiles();
+		
 		
 	}
+
+	
 	
 }

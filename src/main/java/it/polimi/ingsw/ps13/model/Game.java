@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -14,6 +15,7 @@ import org.w3c.dom.Document;
 
 import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
+import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.market.Market;
 import it.polimi.ingsw.ps13.model.player.Player;
 
@@ -119,6 +121,16 @@ public class Game implements Serializable {
 	 * 
 	 * @return
 	 */
+	public int getCurrentPlayerID() {
+		
+		return currentPlayerID;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public void passTurn() {
 		
 		if (currentPlayerID == numberOfPlayers-1) {
@@ -126,6 +138,72 @@ public class Game implements Serializable {
 		} else {
 			currentPlayerID++;
 		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public boolean isCouncillorAvailable(Councillor councillor){
+		
+		for(Councillor c: board.getCouncillors()){
+			
+			if(c.equals(councillor)) 
+				return true;
+
+		}
+		
+		return false;
+		
+	}
+	
+	/**
+	 * This method assumes there are no duplicate keys in the colors map.
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public String getColorName(Color color) {
+		
+		for (Map.Entry<String, Color> entry : colors.entrySet()) {
+			
+			if (color.equals(entry.getValue())) {
+				return entry.getKey();
+			}
+			
+		}
+		
+		return null;
+		
+	}
+	
+	/**
+	 * Removes and returns the first councillor with the given color belonging to the free councillors of the board.
+	 * If there are none, returns null.
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public Councillor getCouncillor(Color color) {
+		
+		Councillor councillor = null;
+		
+		Iterator<Councillor> it = board.getCouncillors().iterator();
+		
+		while(it.hasNext() && councillor == null) {
+			
+			if(it.next().getColor().equals(color)) {
+				
+				councillor = it.next();
+				board.getCouncillors().remove(it.next());
+				
+			}
+			
+		}
+		
+		return councillor;
 		
 	}
 	

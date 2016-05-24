@@ -155,4 +155,15 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 		return sb.toString();
 		
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<PermitTile> getVisibleTiles() {
+		
+		return visibleTiles;
+		
+	}
+	
 }

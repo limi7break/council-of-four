@@ -26,6 +26,7 @@ public final class PermitTile implements Marketable, Serializable {
 	private final Set<String> cityNames;
 	private boolean used;
 	
+	
 	/**
 	 * Constructs a new PermitTile, with a given Bonus and a given Collection of city names.
 	 * 
@@ -115,4 +116,5 @@ public final class PermitTile implements Marketable, Serializable {
 		
 		return sb.toString();
 	}
+	
 }

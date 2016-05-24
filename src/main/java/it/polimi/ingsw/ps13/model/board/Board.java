@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps13.model.board;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -241,6 +242,43 @@ public class Board implements Serializable {
 		}
 		
 		return new NobilityTrack(bonusMap);
+		
+	}
+	
+	/**
+	 * 
+	 * @param councillor
+	 */
+	public void insertCouncillor(Councillor councillor){
+		
+		councillors.add(councillor);
+		
+	}
+	
+	/**
+	 * Removes and returns a councillor from the free councillor list.
+	 * 
+	 * @param councillor
+	 * @return
+	 */
+	public Councillor removeCouncillor(Councillor councillor){
+		
+		Councillor removed = null;
+		
+		Iterator<Councillor> it = councillors.iterator();
+		
+		while(it.hasNext() && removed == null){
+			
+			if(it.next().equals(councillor)){
+				
+				removed = it.next();
+				councillors.remove(it.next());
+				
+			}
+			
+		}
+		
+		return removed;
 		
 	}
 	
