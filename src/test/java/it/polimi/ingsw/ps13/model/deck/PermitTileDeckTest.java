@@ -34,9 +34,9 @@ public class PermitTileDeckTest {
     @Test (expected = NoSuchElementException.class)
     public void drawCardFromEmptyDeck() throws NoSuchElementException {
 
-        createEmpityDeck();
+        createEmptyDeck();
         //TEST CASE: empty deck
-        //it shlould throw NoSuchElementException
+        //it should throw NoSuchElementException
         assertTrue(emptyDeck.drawCard() == null);
 
     }
@@ -68,7 +68,7 @@ public class PermitTileDeckTest {
         PermitTile t = new PermitTile(bonus,cityNames);
 
         //TEST CASE: discard a card to an empty deck
-        createEmpityDeck();
+        createEmptyDeck();
         emptyDeck.discardCard(t);
         assertEquals(emptyDeck.toString(),"[PermitTileDeck]\n" +
                 "\n" +
@@ -83,7 +83,7 @@ public class PermitTileDeckTest {
                 "\n" +
                 "Visible Tiles:\n");
 
-        //TEST CASE: dicard a card to a full deck
+        //TEST CASE: discard a card to a full deck
 
         deck.discardCard(t);
         System.out.println(deck.toString());
@@ -135,7 +135,7 @@ public class PermitTileDeckTest {
     public void isEmpty() throws Exception {
 
         assertFalse(deck.isEmpty());
-        createEmpityDeck();
+        createEmptyDeck();
         assertTrue(emptyDeck.isEmpty());
 
     }
@@ -227,8 +227,8 @@ public class PermitTileDeckTest {
     @Test
     public void takeTile() throws Exception {
 
-        //TEST CASE: drow pile 2, visible pile 2
-        //NOTE: it should never happen that this function is called when the draw pile is full and the visible pile is empity
+        //TEST CASE: draw pile 2, visible pile 2
+        //NOTE: it should never happen that this function is called when the draw pile is full and the visible pile is empty
         deck.changeTiles();
         deck.takeTile(0);
         assertEquals(deck.toString(),"[PermitTileDeck]\n" +
@@ -258,7 +258,7 @@ public class PermitTileDeckTest {
                 "used = false\n" +
                 "\n");
 
-        //TEST CASE: drow pile 0, visible pile 2
+        //TEST CASE: draw pile 0, visible pile 2
         deck.takeTile(0);
         deck.takeTile(0);
         assertEquals(deck.toString(),"[PermitTileDeck]\n" +
@@ -275,7 +275,7 @@ public class PermitTileDeckTest {
                 "used = false\n" +
                 "\n");
 
-        //TEST CASE: drow pile 0, visible pile 1
+        //TEST CASE: draw pile 0, visible pile 1
         deck.takeTile(0);
         assertEquals(deck.toString(),"[PermitTileDeck]\n" +
                 "\n" +
@@ -290,7 +290,7 @@ public class PermitTileDeckTest {
     @Test (expected = ArrayIndexOutOfBoundsException.class)
     public void takeTileFromEmptyDeck() throws Exception {
 
-        createEmpityDeck();
+        createEmptyDeck();
         assertTrue(emptyDeck.takeTile(0) == null);
 
     }
@@ -318,7 +318,7 @@ public class PermitTileDeckTest {
         deck = new PermitTileDeck(cards);
     }
 
-    private void createEmpityDeck(){
+    private void createEmptyDeck(){
 
         Collection<PermitTile> cards = new ArrayList<>();
         emptyDeck = new PermitTileDeck(cards);
