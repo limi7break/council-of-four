@@ -4,21 +4,24 @@ import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
+import it.polimi.ingsw.ps13.model.player.Player;
+import it.polimi.ingsw.ps13.model.region.Region;
 
 public class QuickElectCouncillorAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 
-	private final int player; 
+	private final Player player; 
 	private final Councillor councillor;
-	private final String region; 
+	private final Region region; 
 	
 	/**
+	 * Current player and isQuickActionAvailable are to checked.
 	 * 
 	 * @param player
 	 * @param councillor
 	 */
-	public QuickElectCouncillorAction(int player, Councillor councillor, String region) {
+	public QuickElectCouncillorAction(Player player, Councillor councillor, Region region) {
 		
 		this.player = player;
 		this.councillor = councillor;
@@ -35,16 +38,8 @@ public class QuickElectCouncillorAction implements Action {
 		
 		boolean legal = true;
 		
-		//checks if it's the player's turn
-		if(g.getCurrentPlayerID() != player)	
-			legal = false;
-				
-		//checks if player can do a quick action
-		if(!g.getPlayers().get(player).isQuickActionAvailable())				
-			legal = false; 
-		
 		//checks if conditions are satisfied
-		if(g.getPlayers().get(player).getAssistants() < 1 || !g.isCouncillorAvailable(councillor))
+		if(player.getAssistants() < 1 || !g.isCouncillorAvailable(councillor))
 			legal = false;
 		
 		return legal;
@@ -58,15 +53,15 @@ public class QuickElectCouncillorAction implements Action {
 	@Override
 	public void apply(Game g) {
 		
+		player.consumeAssistants(1);
+		
 		g.getBoard().removeCouncillor(councillor);
 		
-		CouncillorBalcony balcony = g.getBoard().getRegion(region).getCouncillorBalcony();
+		CouncillorBalcony balcony = region.getCouncillorBalcony();
 		
 		Councillor droppedCouncillor = balcony.insertCouncillor(councillor);
 		
 		g.getBoard().insertCouncillor(droppedCouncillor);
-		
-		g.getPlayers().get(player).consumeAssistants(1);
 		
 	}	
 	

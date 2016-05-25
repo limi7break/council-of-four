@@ -3,15 +3,17 @@ package it.polimi.ingsw.ps13.controller.actions.quick;
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
+import it.polimi.ingsw.ps13.model.player.Player;
+import it.polimi.ingsw.ps13.model.region.Region;
 
 public class ChangePermitTilesAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 	
-	private final int player;
-	private final String region;
+	private final Player player;
+	private final Region region;
 
-	public ChangePermitTilesAction(int player, String region) {
+	public ChangePermitTilesAction(Player player, Region region) {
 		
 		this.player = player;
 		this.region = region;
@@ -28,16 +30,8 @@ public class ChangePermitTilesAction implements Action {
 		
 		boolean legal = true;
 		
-		//checks if it's the player's turn
-		if(g.getCurrentPlayerID() != player)
-			legal = false;
-		
-		//checks if player can do a quick action
-		if(!g.getPlayers().get(player).isQuickActionAvailable())
-			legal = false; 
-		
 		//checks if conditions are satisfied
-		int playerAssistants = g.getPlayers().get(player).getAssistants();
+		int playerAssistants = player.getAssistants();
 		
 		if(playerAssistants < 1)
 			legal = false;
@@ -49,9 +43,9 @@ public class ChangePermitTilesAction implements Action {
 	@Override
 	public void apply(Game g) {
 		
-		g.getPlayers().get(player).consumeAssistants(1);
+		player.consumeAssistants(1);
 		
-		PermitTileDeck selected = g.getBoard().getRegion(region).getPermitTileDeck();
+		PermitTileDeck selected = region.getPermitTileDeck();
 		selected.changeTiles();
 		
 		
