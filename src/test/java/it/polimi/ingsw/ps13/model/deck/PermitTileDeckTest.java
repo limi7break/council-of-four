@@ -2,12 +2,10 @@ package it.polimi.ingsw.ps13.model.deck;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
-import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.smartcardio.Card;
 import java.util.*;
 
 import static org.junit.Assert.*;
