@@ -15,6 +15,8 @@ public class GameClient {
 	@SuppressWarnings("unused")
 	private static final Logger LOG = Logger.getLogger(GameClient.class.getSimpleName());
 	
+	private GameClient() { }
+	
 	/**
 	 * Starts the right client based on user choice.
 	 */

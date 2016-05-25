@@ -9,7 +9,7 @@ public abstract class Observable<C> {
 	
 	public Observable(){
 		
-		this.observers=new ArrayList<Observer<C>>();
+		this.observers=new ArrayList<>();
 	
 	}
 	
@@ -27,7 +27,6 @@ public abstract class Observable<C> {
 	
 	public void notifyObserver(C c){
 		
-		System.out.println("I am the "+this.getClass().getSimpleName());
 		for(Observer<C> o: this.observers){
 			o.update(c);
 		}

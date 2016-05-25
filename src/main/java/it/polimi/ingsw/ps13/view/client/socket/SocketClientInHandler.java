@@ -37,12 +37,9 @@ public class SocketClientInHandler implements Runnable {
 				Object o = ois.readObject();
 				
 				// handle received object (Game, Msg)
-			} catch(IOException e) {
-				LOG.log(Level.WARNING, "There was a problem receiving data from the server.", e);
-			} catch(ClassNotFoundException e) {
+			} catch(IOException | ClassNotFoundException e) {
 				LOG.log(Level.WARNING, "There was a problem receiving data from the server.", e);
 			}
-			
 			
 		}
 		
