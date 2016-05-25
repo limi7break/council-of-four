@@ -1,100 +1,98 @@
 package it.polimi.ingsw.ps13.controller;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * This controller handles multiple games.
- * 
+ * When two players join the waiting game, a countdown is started to start the game.
+ * If in the meantime someone else tries to connect the timer resets and starts over.
+ * If the number of waiting players reaches 8 the game starts instantly.
  * 
  */
 public class GamesController {
 	
-	private static final Logger LOG = Logger.getLogger(GamesController.class.getName());
-	
-	public static final int PORT = 1337;
-	private boolean stopped = false;
+	private static final Logger LOG = Logger.getLogger(GamesController.class.getSimpleName());
+	private static final int COUNTDOWN = 5;
 	
 	private final Set<GameController> games;
 	
-	private GameController waitingGame;
-	// @TODO: ask user for config file path, choosing among a list of different ones available on the server
-	private String configFilePath = "config.xml";
+	private Timer timer;
+	private TimerTask timerTask;
 	
+	private final List<String> waitingPlayers;
+	private GameController waitingGame;
+	
+	/**
+	 * Initializes the timer, the set 
+	 * 
+	 */
 	public GamesController() { 
 	
+		timer = new Timer();
 		games = new HashSet<>();
-		createNewGame();
-	
-	}
-	
-	/**
-	 * @TODO: This method will be removed: this class is not the entry point for the
-	 * server side, it's here for initial testing.
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
-		
-		GamesController server = new GamesController();
-		LOG.log(Level.INFO, "Welcome to the Council of Four!");
-		
-		try {
-			server.acceptConnections();
-		} catch (IOException e) {
-			LOG.log(Level.SEVERE, "Unexpected exception while initializing the server.", e);
-		}
-		
-	}
-	
-	/**
-	 * @TODO: create dedicated thread for this, with a new Runnable class.
-	 * 
-	 * @throws IOException
-	 */
-	public void acceptConnections() throws IOException {
-		
-		ServerSocket ssock = new ServerSocket(PORT);
-		
-		LOG.log(Level.INFO, "Accepting connections on port 1337...");
-		
-		while (!stopped) {
-			Socket sock = ssock.accept();
-			LOG.log(Level.INFO, "Connection accepted.");
-			ClientHandler handler = new ClientHandler(sock, waitingGame);
-			new Thread(handler).start();
-		}
-		
-		ssock.close();
-		
-	}
-	
-	/**
-	 * Creates a new waiting game and adds it to the set.
-	 * 
-	 */
-	public void createNewGame() {
-		
-		waitingGame = new GameController(configFilePath, this);
+		waitingPlayers = new ArrayList<>();
+		waitingGame = new GameController();
 		games.add(waitingGame);
-		LOG.log(Level.INFO, "New game created.");
+	
+	}
+	
+	/**
+	 * 
+	 */
+	public void addPlayer(String name) {
+		
+		waitingPlayers.add(name);
+		waitingGame.addPlayer(name);
+        LOG.log(Level.INFO, "New player added to waiting game.");
+
+        if ((waitingPlayers.size() >= 2) && (waitingPlayers.size() <= 7)) {
+
+            timer.cancel();
+
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+
+                        new Thread(waitingGame).start();
+                        waitingGame = new GameController();
+                        games.add(waitingGame);
+
+                    } catch (Exception e) {
+                        LOG.log(Level.SEVERE, "Unexpected exception while creating a new game.", e);
+                    }
+                }
+            };
+
+            timer = new Timer();
+
+            timer.schedule(timerTask, (long) COUNTDOWN * 1000);
+
+        } else if (waitingPlayers.size() == 8) {
+
+            timerTask.cancel();
+            timer.cancel();
+            // Start game instantly
+            timer.schedule(timerTask, 0);
+
+        }
 		
 	}
 	
 	/**
-	 * Stops the server.
-	 * This method will be moved to the "connection acceptor"
 	 * 
+	 * @return
 	 */
-	public void stop() {
+	public GameController getWaitingGame() {
 		
-		stopped = true;
+		return waitingGame;
 		
 	}
 	
