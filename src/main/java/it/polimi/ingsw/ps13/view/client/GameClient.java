@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.view.client;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import it.polimi.ingsw.ps13.view.client.rmi.RMIClient;
 import it.polimi.ingsw.ps13.view.client.socket.SocketClient;
@@ -10,6 +11,9 @@ import it.polimi.ingsw.ps13.view.client.socket.SocketClient;
  *
  */
 public class GameClient {
+	
+	@SuppressWarnings("unused")
+	private static final Logger LOG = Logger.getLogger(GameClient.class.getSimpleName());
 	
 	/**
 	 * Starts the right client based on user choice.

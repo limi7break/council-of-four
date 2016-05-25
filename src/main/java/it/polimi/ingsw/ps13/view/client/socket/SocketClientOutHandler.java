@@ -11,7 +11,9 @@ import java.util.logging.Logger;
  */
 public class SocketClientOutHandler implements Runnable {
 	
+	@SuppressWarnings("unused")
 	private static final Logger LOG = Logger.getLogger(SocketClientOutHandler.class.getSimpleName());
+	@SuppressWarnings("unused")
 	private final ObjectOutputStream oos;
 	
 	protected SocketClientOutHandler(ObjectOutputStream oos) {
@@ -31,6 +33,7 @@ public class SocketClientOutHandler implements Runnable {
 		
 		while (true) {
 			
+			@SuppressWarnings("unused")
 			String input = scanner.nextLine();
 			
 			// handle user input, define commands

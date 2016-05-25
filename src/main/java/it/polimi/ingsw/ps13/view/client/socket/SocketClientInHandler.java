@@ -33,6 +33,7 @@ public class SocketClientInHandler implements Runnable {
 		while (true) {
 			
 			try {
+				@SuppressWarnings("unused")
 				Object o = ois.readObject();
 				
 				// handle received object (Game, Msg)

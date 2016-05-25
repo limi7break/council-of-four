@@ -13,10 +13,9 @@ import java.util.logging.Logger;
  */
 public class SocketClient implements Runnable {
 	
+	private static final Logger LOG = Logger.getLogger(SocketClient.class.getSimpleName());
 	public static final String HOST = "localhost";
 	public static final int PORT = 1337;
-
-	private static final Logger LOG = Logger.getLogger(SocketClient.class.getSimpleName());
 	
 	/**
 	 * Socket connection is created and two threads are started:
