@@ -282,4 +282,35 @@ public class Board implements Serializable {
 		
 	}
 	
+	/**
+	 * 
+	 * @param city
+	 * @return
+	 */
+	public int priceToMoveKing(City city) {
+		
+		City kingCity = king.getCity();
+		int price = 0;
+		
+		while(!kingCity.equals(city)){
+			
+			//TODO: implement this method
+			
+			price = price + 2;
+		}
+		
+		return price;
+		
+	}
+	
+	/**
+	 * 
+	 * @param c
+	 */
+	public void setKingCity(City c) {
+		
+		king.setCity(c);
+		
+	}
+	
 }

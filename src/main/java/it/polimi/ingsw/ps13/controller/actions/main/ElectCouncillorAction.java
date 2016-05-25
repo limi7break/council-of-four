@@ -15,7 +15,7 @@ public class ElectCouncillorAction implements Action{
 	private final Region region; //whose council is to be satisfied by player
 
 	/**
-	 * As with all actions, if current player is player and if player has main actions available has to be checked.
+	 * As with all actions, has to be checked if current player is player and if player has main actions available.
 	 * 
 	 * @param player
 	 * @param councillor

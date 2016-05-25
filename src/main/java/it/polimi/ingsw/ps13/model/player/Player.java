@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps13.model.player;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -309,6 +310,35 @@ public class Player implements Serializable {
 		return cityNames.contains(cityName);
 		
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<PermitTile> getPermitTiles() {
+		
+		return supply.getPermitTiles();
+		
+	}
+	
+	/**
+	 * 
+	 * @param cityName
+	 * @return
+	 */
+	public boolean canBuildOn(String cityName) {
+		
+		for(PermitTile p: getPermitTiles()) {
+			
+			if(p.getCityNames().contains(cityName) && !p.isUsed())
+				return true;
+			
+		}
+		
+		return false;
+		
+	}
+	
 	
 	/**
 	 * Useful for debug.
