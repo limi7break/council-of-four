@@ -49,17 +49,24 @@ public class GameServer {
 		try {
 			ServerSocket serverSocket = new ServerSocket(PORT);
 	
-			LOG.log(Level.INFO, "SERVER SOCKET READY ON PORT" + PORT);
+			LOG.log(Level.INFO, "SERVER SOCKET READY ON PORT " + PORT);
 	
+			// player number should reset when current game starts and a new game is created
+			int playerNumber=0;
+			
 			while (running) {
 				Socket socket = serverSocket.accept();
 	
-				SocketHandler handler = new SocketHandler(socket);
+				playerNumber++;
+				String playerName = "Giocatore " + playerNumber;
 				
-				// Apple style MVC!
+				SocketHandler handler = new SocketHandler(socket, playerName);
+				
+				// Apple style MVC?
 				mainController.getWaitingGame().registerObserver(handler);
 				handler.registerObserver(mainController.getWaitingGame());
 				
+				mainController.addPlayer(playerName);
 				new Thread(handler).start();
 			}
 			

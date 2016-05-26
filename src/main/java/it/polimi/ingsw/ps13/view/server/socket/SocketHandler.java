@@ -25,12 +25,17 @@ public class SocketHandler extends Handler implements Runnable {
 	private final ObjectInputStream ois;
 	private final ObjectOutputStream oos;
 	
+	private final String playerName;
+	
 	private boolean running;
 	
-	public SocketHandler(Socket socket) throws IOException {
+	public SocketHandler(Socket socket, String playerName) throws IOException {
 		
-		ois = new ObjectInputStream(socket.getInputStream());
 		oos = new ObjectOutputStream(socket.getOutputStream());
+		oos.flush();
+		ois = new ObjectInputStream(socket.getInputStream());
+		
+		this.playerName = playerName;
 		
 	}
 	
@@ -52,6 +57,15 @@ public class SocketHandler extends Handler implements Runnable {
 	}
 	
 	/**
+	 * 
+	 */
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
 	 * Request msg is received and passed to the game controller via notify.
 	 * 
 	 */
@@ -63,6 +77,7 @@ public class SocketHandler extends Handler implements Runnable {
 		while (running) {
 			try {
 				RequestMsg msg = (RequestMsg) ois.readObject();
+				msg.setPlayerName(playerName);
 				
 				this.notifyObserver(msg);
 
@@ -70,15 +85,6 @@ public class SocketHandler extends Handler implements Runnable {
 				LOG.log(Level.WARNING, "A problem was encountered while reading data from the client.", e);
 			}
 		}
-		
-	}
-	
-	/**
-	 * 
-	 */
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
 		
 	}
 	
