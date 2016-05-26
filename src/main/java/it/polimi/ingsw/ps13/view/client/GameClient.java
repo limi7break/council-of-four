@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps13.view.client;
 
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import it.polimi.ingsw.ps13.view.client.rmi.RMIClient;
@@ -12,7 +14,6 @@ import it.polimi.ingsw.ps13.view.client.socket.SocketClient;
  */
 public class GameClient {
 	
-	@SuppressWarnings("unused")
 	private static final Logger LOG = Logger.getLogger(GameClient.class.getSimpleName());
 	
 	private GameClient() { }
@@ -32,10 +33,18 @@ public class GameClient {
             connectionType = scanner.nextLine();
         } while (!connectionType.matches("^(RMI|SOCKET)$"));
 
-        if (connectionType.matches("^(RMI)$")) {
-        	new Thread(new RMIClient()).start();
-        } else {
-        	new Thread(new SocketClient()).start();
+        try {
+	        if (connectionType.matches("^(RMI)$")) {
+	        	
+	        	new Thread(new RMIClient()).start();
+	        	
+	        } else {
+	        	
+	        	new Thread(new SocketClient()).start();
+	        	
+	        }
+        } catch(IOException e) {
+        	LOG.log(Level.SEVERE, "There was a problem while establishing a connection to the server.", e);
         }
         
 	}

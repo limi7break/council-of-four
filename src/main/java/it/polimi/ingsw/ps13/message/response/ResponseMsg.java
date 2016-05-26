@@ -6,6 +6,8 @@ public abstract class ResponseMsg implements Serializable {
 
 	public static final long serialVersionUID = 0L;
 	
+	private ResponseMsg() { }
+	
 	// visitor?
 	
 }

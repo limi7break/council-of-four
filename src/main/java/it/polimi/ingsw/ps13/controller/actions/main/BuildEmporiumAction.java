@@ -22,7 +22,7 @@ public class BuildEmporiumAction implements Action {
 	 * @param tile
 	 * @param city
 	 */
-	public BuildEmporiumAction(Player player, Emporium emporium, PermitTile tile, City city) {
+	public BuildEmporiumAction(Player player, PermitTile tile, City city) {
 		
 		this.player = player;
 		this.tile = tile;

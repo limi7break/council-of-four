@@ -17,25 +17,35 @@ public class SocketClient implements Runnable {
 	public static final String HOST = "localhost";
 	public static final int PORT = 1337;
 	
+	private final Socket socket;
+	
 	/**
-	 * Socket connection is created and two threads are started:
-	 * one for creating messages towards the server and one for
-	 * receiving and handling messages from the server.
+	 * A new socket connection is created.
+	 * 
+	 * @throws IOException
+	 */
+	public SocketClient() throws IOException {
+		
+		socket = new Socket(HOST, PORT);
+		
+		LOG.log(Level.INFO, "Connection established @ " + HOST + ":" + PORT + ".");
+		
+	}
+	
+	/**
+	 * Two threads are started: one handles response messages received from the server
+	 * while the other converts user input into appropriate request messages to be sent
+	 * to the server.
 	 * 
 	 */
 	@Override
 	public void run() {
 		
 		try {
-			@SuppressWarnings("resource")
-			Socket socket = new Socket(HOST, PORT);
-			
-			LOG.log(Level.INFO, "Connection established @ " + HOST + ":" + PORT + ".");
-			
 			new Thread(new SocketClientInHandler(new ObjectInputStream(socket.getInputStream()))).start();
 			new Thread(new SocketClientOutHandler(new ObjectOutputStream(socket.getOutputStream()))).start();
 		} catch(IOException e) {
-			LOG.log(Level.SEVERE, "There was a problem while establishing a connection to the server.", e);
+			LOG.log(Level.SEVERE, "There was a problem while creating I/O client handlers.", e);
 		}
 		
 	}

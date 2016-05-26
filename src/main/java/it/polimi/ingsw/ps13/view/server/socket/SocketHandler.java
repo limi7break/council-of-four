@@ -25,6 +25,8 @@ public class SocketHandler extends Handler implements Runnable {
 	private final ObjectInputStream ois;
 	private final ObjectOutputStream oos;
 	
+	private boolean running;
+	
 	public SocketHandler(Socket socket) throws IOException {
 		
 		ois = new ObjectInputStream(socket.getInputStream());
@@ -56,7 +58,9 @@ public class SocketHandler extends Handler implements Runnable {
 	@Override
 	public void run() {
 		
-		while (true) {
+		running = true;
+		
+		while (running) {
 			try {
 				RequestMsg msg = (RequestMsg) ois.readObject();
 				
@@ -75,6 +79,12 @@ public class SocketHandler extends Handler implements Runnable {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void stop() {
+		
+		running = false;
 		
 	}
 	
