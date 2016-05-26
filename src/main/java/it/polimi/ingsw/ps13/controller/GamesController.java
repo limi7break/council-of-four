@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class GamesController {
 	
 	private static final Logger LOG = Logger.getLogger(GamesController.class.getSimpleName());
-	private static final int COUNTDOWN = 5;
+	private static final int COUNTDOWN = 10;
 	
 	private final Set<GameController> games;
 	
@@ -30,7 +30,7 @@ public class GamesController {
 	private GameController waitingGame;
 	
 	/**
-	 * Initializes the timer, the set 
+	 * Initializes the timer and creates the controller for the first waiting game.
 	 * 
 	 */
 	public GamesController() { 
@@ -63,6 +63,7 @@ public class GamesController {
 
                         new Thread(waitingGame).start();
                         waitingGame = new GameController();
+                        waitingPlayers.clear();
                         games.add(waitingGame);
 
                     } catch (Exception e) {
