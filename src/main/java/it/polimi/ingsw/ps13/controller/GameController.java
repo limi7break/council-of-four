@@ -12,14 +12,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
+import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.util.observer.Observable;
 import it.polimi.ingsw.ps13.util.observer.Observer;
 
 /**
  * Controller for a single game.
  *
  */
-public class GameController implements Runnable, Observer<RequestMsg> {
+public class GameController extends Observable<ResponseMsg> implements Observer<RequestMsg>, Runnable {
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
@@ -78,7 +80,7 @@ public class GameController implements Runnable, Observer<RequestMsg> {
 	 * 
 	 * @param name
 	 */
-	public void addPlayer(String name) {
+	protected void addPlayer(String name) {
 		
 		if (game == null) {
 			players.add(name);

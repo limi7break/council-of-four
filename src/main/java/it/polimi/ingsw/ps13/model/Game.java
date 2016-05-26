@@ -13,24 +13,22 @@ import java.util.TreeMap;
 
 import org.w3c.dom.Document;
 
-import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.market.Market;
 import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.util.observer.Observable;
 
 /**
  * This class encapsulates the entire status of a game.
  * 
  * It's serializable so that it can be easily sent over a network:
  * for example the Server broadcasts a new updated Game whenever
- * a player successfully performs an action.
+ * a player successfully performs an action that modifies the game state.
  * 
  */
 
-public class Game extends Observable<ResponseMsg> implements Serializable {
+public class Game implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private final Map<String, Color> colors;

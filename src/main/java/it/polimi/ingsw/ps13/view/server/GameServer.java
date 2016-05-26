@@ -56,10 +56,8 @@ public class GameServer {
 	
 				SocketHandler handler = new SocketHandler(socket);
 				
-				// this.gioco.registerObserver(handler); ???
-				// @TODO: model.registerObserver(handler)
-				// does it mean I have to create the model by now?
-				// player list not final...
+				// Apple style MVC!
+				mainController.getWaitingGame().registerObserver(handler);
 				handler.registerObserver(mainController.getWaitingGame());
 				
 				new Thread(handler).start();
