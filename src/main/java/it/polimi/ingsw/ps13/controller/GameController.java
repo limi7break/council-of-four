@@ -11,8 +11,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import it.polimi.ingsw.ps13.message.request.ChatMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
+import it.polimi.ingsw.ps13.message.response.ChatBroadcastMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
+import it.polimi.ingsw.ps13.message.response.WelcomeMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.util.observer.Observable;
 import it.polimi.ingsw.ps13.util.observer.Observer;
@@ -84,6 +87,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		if (game == null) {
 			players.add(name);
+			notifyObserver(new WelcomeMsg(name));
 		}
 		
 	}
@@ -106,6 +110,11 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	public void update(RequestMsg msg) {
 		
 		// handle request
+		
+		if (msg instanceof ChatMsg) {
+			ChatMsg chatMsg = (ChatMsg) msg;
+			notifyObserver(new ChatBroadcastMsg(chatMsg.getPlayerName(), chatMsg.getMessage()));
+		}
 		
 	}
 
