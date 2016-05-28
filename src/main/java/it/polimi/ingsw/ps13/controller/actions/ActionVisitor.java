@@ -22,32 +22,32 @@ import it.polimi.ingsw.ps13.message.request.action.VisiblePermitTileRequestMsg;
  */
 public interface ActionVisitor {
 
-	public void visit(PassTurnRequestMsg pass);
+	public Action visit(PassTurnRequestMsg pass);
 	
-	public void visit(AcquirePermitTileRequestMsg acquireTile);
+	public Action visit(AcquirePermitTileRequestMsg acquireTile);
 	
-	public void visit(BuildEmporiumRequestMsg build);
+	public Action visit(BuildEmporiumRequestMsg build);
 	
-	public void visit(ElectCouncillorRequestMsg elect);
+	public Action visit(ElectCouncillorRequestMsg elect);
 	
-	public void visit(KingActionRequestMsg king);
+	public Action visit(KingActionRequestMsg king);
 	
-	public void visit(OfferSelectionRequestMsg buy);
+	public Action visit(OfferSelectionRequestMsg buy);
 	
-	public void visit(TradeProposalRequestMsg sell);
+	public Action visit(TradeProposalRequestMsg sell);
 	
-	public void visit(ChangePermitTilesRequestMsg changeTiles);
+	public Action visit(ChangePermitTilesRequestMsg changeTiles);
 	
-	public void visit(EngageAssistantRequestMsg engageAssistant);
+	public Action visit(EngageAssistantRequestMsg engageAssistant);
 	
-	public void visit(GainMainActionRequestMsg gainMain);
+	public Action visit(GainMainActionRequestMsg gainMain);
 	
-	public void visit(QuickElectCouncillorRequestMsg quickElect);
+	public Action visit(QuickElectCouncillorRequestMsg quickElect);
 	
-	public void visit(RegainPermitTileBonusRequestMsg tileBonus);
+	public Action visit(RegainPermitTileBonusRequestMsg tileBonus);
 	
-	public void visit(RegainRewardTokenRequestMsg rewardToken);
+	public Action visit(RegainRewardTokenRequestMsg rewardToken);
 	
-	public void visit(VisiblePermitTileRequestMsg takeTile);
+	public Action visit(VisiblePermitTileRequestMsg takeTile);
 	
 }
