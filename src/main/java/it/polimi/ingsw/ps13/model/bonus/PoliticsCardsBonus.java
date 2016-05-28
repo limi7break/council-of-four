@@ -17,8 +17,8 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		// @TODO: come gli altri: chiamare controller per pescare da deck di board del game con player?
-		
+		player.drawPoliticsCards(amount);
+	
 	}
 	
 	/**

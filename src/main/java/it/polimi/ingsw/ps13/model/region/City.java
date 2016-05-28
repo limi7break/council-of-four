@@ -181,6 +181,51 @@ public class City implements Serializable {
 	}
 	
 	/**
+	 * 
+	 * @param destination
+	 * @return
+	 */
+	public int calculateShortestPath(City destination) {
+		
+		int depth = 0;
+		Set<City> visited = new HashSet<>();
+		return calculateShortestPath(destination, visited, depth);
+		
+	}
+	
+	/**
+	 * 
+	 * @param destination
+	 * @param visited
+	 * @param depth
+	 * @return
+	 */
+	private int calculateShortestPath(City destination, Set<City> visited, int depth) {
+		//TODO
+		int finalDepth = 0;
+		
+		if(this.equals(destination)) {
+			return depth;
+		}
+		
+		visited.add(this);
+		
+		for (City neighbor : neighbors) {
+			
+			if (!visited.contains(neighbor)) {
+				
+				depth++;
+				finalDepth = neighbor.calculateShortestPath(destination, visited, depth);
+				
+			}
+			
+		}
+		
+		return finalDepth;
+		
+	}
+	
+	/**
 	 * Useful for debug.
 	 * 
 	 */

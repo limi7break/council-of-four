@@ -63,6 +63,7 @@ public class BuildEmporiumAction implements Action {
 		Emporium emporium = player.removeEmporium();
 		
 		city.addEmporium(emporium);
+		city.getBonus().giveTo(player);
 		
 	}
 	

@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
+import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeck;
 
 /**
  * 
@@ -23,10 +25,12 @@ public class Player implements Serializable {
 	private final PlayerSupply supply;
 	private final Set<String> cityNames;
 	private int nobilityPosition;
-	private int mainActions;
-	private boolean quickActionAvailable;
+	private final ActionTokens tokens;
 	
-	public Player(String name, Color color, int position) { 
+	private final Board board;
+	
+	
+	public Player(String name, Color color, int position, Board board) { 
 		
 		this.name = name;
 		this.color = color;
@@ -34,9 +38,10 @@ public class Player implements Serializable {
 		cityNames = new TreeSet<>();
 		
 		nobilityPosition = 0;
-		mainActions = 0;
-		quickActionAvailable = false;
 		
+		tokens = new ActionTokens();
+		
+		this.board = board;
 	}
 	
 	/**
@@ -230,60 +235,6 @@ public class Player implements Serializable {
 	 * 
 	 * @return
 	 */
-	public int getMainActions() {
-		
-		return mainActions;
-		
-	}
-	
-	/**
-	 * 
-	 * @param amount
-	 * @return
-	 */
-	public void addMainActions(int amount) {
-		
-		mainActions += amount;
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void consumeMainAction() {
-		
-		mainActions--;
-		
-	}
-	
-	/**
-	 * 
-	 * @param quickActionAvailable
-	 */
-	public void setQuickActionAvailable(boolean quickActionAvailable) {
-		
-		if (!this.quickActionAvailable && quickActionAvailable) {
-			throw new IllegalArgumentException("The possibility to perform a quick action cannot be regained in the same turn");
-		} else {
-			this.quickActionAvailable = quickActionAvailable;
-		}
-		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isQuickActionAvailable() {
-		
-		return quickActionAvailable;
-		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
 	public int getNobilityPosition() {
 		
 		return nobilityPosition;
@@ -339,6 +290,151 @@ public class Player implements Serializable {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public ActionTokens getTokens() {
+		
+		return tokens;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Board getBoard() {
+		
+		return board;
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void addMainActions(int amount){
+		
+		tokens.setMain(tokens.getMain() + amount);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void consumeMainAction(){
+		
+		if(tokens.getMain() < 1) 
+			throw new IndexOutOfBoundsException();
+		else
+			tokens.setMain(tokens.getMain() - 1);
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void addQuickActions(int amount){
+		
+		tokens.setQuick(tokens.getQuick() + amount);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void consumeQuickAction(){
+		
+		if(tokens.getQuick() < 1) 
+			throw new IndexOutOfBoundsException();
+		else
+			tokens.setQuick(tokens.getQuick() - 1);
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void addTileBonusToken(int amount){
+		
+		tokens.setTileBonus(tokens.getTileBonus() + amount);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void consumeTileBonusToken(){
+		
+		if(tokens.getTileBonus() < 1) 
+			throw new IndexOutOfBoundsException();
+		else
+			tokens.setTileBonus(tokens.getTileBonus() - 1);
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void addRewardTokenToken(int amount){
+		
+		tokens.setRewardToken(tokens.getRewardToken() + amount);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void consumeRewardTokenToken(){
+		
+		if(tokens.getRewardToken() < 1) 
+			throw new IndexOutOfBoundsException();
+		else
+			tokens.setRewardToken(tokens.getRewardToken() - 1);
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void addTakeTileToken(int amount){
+		
+		tokens.setTakeTile(tokens.getTakeTile() + amount);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void consumeTakeTileToken(){
+		
+		if(tokens.getTakeTile() < 1) 
+			throw new IndexOutOfBoundsException();
+		else
+			tokens.setTakeTile(tokens.getTakeTile() - 1);
+		
+	}
+	
+	/**
+	 * 
+	 * @param amount
+	 */
+	public void drawPoliticsCards(int amount) {
+		
+		PoliticsCardDeck deck = board.getPoliticsCardDeck();
+		
+		for(int i = 0; i<amount; i++) {
+			
+			this.receivePoliticsCard(deck.drawCard());
+			
+		}
+		
+	}
 	
 	/**
 	 * Useful for debug.
@@ -354,8 +450,6 @@ public class Player implements Serializable {
 			.append("Color: ").append("(").append(color.getRed()).append(", ").append(color.getGreen()).append(", ").append(color.getBlue()).append(")\n")
 			.append(supply.toString()).append("\n")
 			.append("Nobility position: ").append(nobilityPosition).append("\n")
-			.append("Main actions: ").append(mainActions).append("\n")
-			.append("Quick action available: ").append(quickActionAvailable).append("\n")
 			.append("Cities: ").append(cityNames.toString()).append("\n");
 			
 			sb.append("\n");

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.model.bonus;
 
 import java.io.Serializable;
+import it.polimi.ingsw.ps13.model.board.NobilityTrack;
 import it.polimi.ingsw.ps13.model.player.Player;
 
 public class NobilityPointsBonus implements Bonus, Serializable {
@@ -14,10 +15,24 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 		
 	}
 	
+	/**
+	 * The first position of the nobility track is supposed to have no bonus. If so, then should be 
+	 * part of the setup configuration.
+	 * 
+	 */
 	@Override
 	public void giveTo(Player player) {
 		
-		// @TODO: come politics cards, non vedo la NobilityTrack, deve farlo il controller?
+		NobilityTrack nobilityTrack = player.getBoard().getNobilityTrack();
+		
+		for(int i=0; i<amount; i++){
+			
+			player.setNobilityPosition(player.getNobilityPosition() + 1);
+			
+			Bonus bonus = nobilityTrack.getBonus(player.getNobilityPosition());
+			bonus.giveTo(player);
+			
+		}
 		
 	}
 	

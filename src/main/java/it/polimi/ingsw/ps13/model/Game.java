@@ -59,7 +59,7 @@ public class Game implements Serializable {
 			String randomKey = keys.get(random.nextInt(keys.size()));
 			Color randomColor = colors.get(randomKey);
 			
-			this.players.put(i, new Player(playerName, randomColor, i));
+			this.players.put(i, new Player(playerName, randomColor, i, board));
 		}
 		
 		currentPlayerID = 0;
@@ -204,6 +204,26 @@ public class Game implements Serializable {
 		}
 		
 		return councillor;
+		
+	}
+	
+	/**
+	 * 
+	 * @param currentPlayerID
+	 */
+	public void setCurrentPlayerID(int currentPlayerID) {
+		
+		this.currentPlayerID = currentPlayerID;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getNumberOfPlayers() {
+		
+		return numberOfPlayers;
 		
 	}
 	

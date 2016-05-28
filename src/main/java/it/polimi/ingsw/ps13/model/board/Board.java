@@ -289,17 +289,7 @@ public class Board implements Serializable {
 	 */
 	public int priceToMoveKing(City city) {
 		
-		City kingCity = king.getCity();
-		int price = 0;
-		
-		while(!kingCity.equals(city)){
-			
-			//TODO: implement this method
-			
-			price = price + 2;
-		}
-		
-		return price;
+		return 2*king.getCity().calculateShortestPath(city);
 		
 	}
 	

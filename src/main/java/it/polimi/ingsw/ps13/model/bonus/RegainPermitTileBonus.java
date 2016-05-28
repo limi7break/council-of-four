@@ -16,7 +16,7 @@ public class RegainPermitTileBonus implements Bonus, Serializable {
 	@Override
 	public void giveTo(Player player) {
 	
-		// @TODO: notify view -> controller ?
+		player.addTileBonusToken(1);
 		
 	}
 	

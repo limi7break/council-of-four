@@ -16,7 +16,7 @@ public class VisiblePermitTileBonus implements Bonus, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		// @TODO: notify view -> controller ?
+		player.addTakeTileToken(1);
 		
 	}
 	

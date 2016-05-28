@@ -16,7 +16,7 @@ public class RegainRewardTokenBonus implements Bonus, Serializable {
 	@Override
 	public void giveTo(Player player) {
 		
-		// @TODO: implement this method
+		player.addRewardTokenToken(1);
 		
 	}
 	
