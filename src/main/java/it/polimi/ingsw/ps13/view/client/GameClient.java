@@ -19,58 +19,66 @@ public class GameClient {
 	private static final Logger LOG = Logger.getLogger(GameClient.class.getSimpleName());
 	private static final Scanner scanner = new Scanner(System.in);
 	
-	private GameClient() { }
-	
-	ClientView view;
-	ClientConnection connection;
+	private final ClientView view;
+	private final ClientConnection connection;
 	
 	/**
-	 * Starts the right client based on user choice.
+	 * Asks user to choose desired UI and connection.
+	 * 
+	 */
+	private GameClient() { 
+		
+		view = chooseUserInterface();
+		connection = chooseConnection();
+		
+	}
+	
+	/**
+	 * Starts the client based on user choice.
+	 * 
 	 */
 	public static void main(String[] args) {
 		
 		GameClient client = new GameClient();
-		
-		try {
-			client.startConnection();
-		} catch(IOException e) {
-			LOG.log(Level.SEVERE, "There was a problem while trying to establish a connection with the server.", e);
-		}
-			
-		//client.startUserInterface();
-        client.startCLI();
+		client.init();
         
 	}
 	
-	private void startCLI() {
-		
-		view = new ClientCLI(connection);
-    	new Thread(view).start();
-		
-	}
-	
-	public void startConnection() throws IOException {
+	/**
+	 * Makes user choose between RMI and SOCKET and tries to establish a connection with the server.
+	 * 
+	 * @return the initialized chosen connection
+	 */
+	public ClientConnection chooseConnection() {
 
         String connectionType;
+        ClientConnection conn = null;
 
         do {
             System.out.println("Enter RMI or SOCKET to choose the connection type:");
             connectionType = scanner.nextLine();
         } while (!connectionType.matches("^(RMI|SOCKET)$"));
 
-        if (connectionType.matches("^(RMI)$")) {
-        	
-        	connection = new ClientRMI();
-        	
-        } else {
-        	
-        	connection = new ClientSocket();
-        	
+        try {
+	        if (connectionType.matches("^(RMI)$")) {
+	        	conn = new ClientRMI();
+	        } else {
+	        	conn = new ClientSocket();
+	        }
+        } catch(IOException e) {
+			LOG.log(Level.SEVERE, "There was a problem while trying to establish a connection with the server.", e);
         }
+        
+        return conn;
 		
 	}
 	
-	public void startUserInterface() {
+	/**
+	 * Makes user choose between CLI and GUI and creates a runnable view object. 
+	 * 
+	 * @return the runnable created view object
+	 */
+	public ClientView chooseUserInterface() {
 		
 		String interfaceType;
 
@@ -80,16 +88,21 @@ public class GameClient {
         } while (!interfaceType.matches("^(CLI|GUI)$"));
 
         if (interfaceType.matches("^(GUI)$")) {
-        	
-        	view = new ClientGUI(connection);
-        	new Thread(view).start();
-        	
+        	return new ClientGUI();
         } else {
-        	
-        	view = new ClientCLI(connection);
-        	new Thread(view).start();
-        	
+        	return new ClientCLI();
         }
+		
+	}
+	
+	/**
+	 * Passes the connection to the view and starts it.
+	 * 
+	 */
+	public void init() {
+		
+		view.setConnection(connection);
+		new Thread(view).start();
 		
 	}
 

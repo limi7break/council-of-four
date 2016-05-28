@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps13.view.client.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import it.polimi.ingsw.ps13.view.client.ClientView;
 
@@ -10,13 +11,9 @@ public class ClientGUI implements ClientView {
 	
 	private static final Logger LOG = Logger.getLogger(ClientGUI.class.getSimpleName());
 	
-	ClientConnection connection;
-	
-	public ClientGUI(ClientConnection connection) {
-		
-		this.connection = connection;
-		
-	}
+	private ClientConnection connection;
+
+	private Game game;
 
 	@Override
 	public void run() {
@@ -25,7 +22,6 @@ public class ClientGUI implements ClientView {
 		LOG.log(Level.WARNING, "GUI has not been implemented yet.");
 		
 		startHandlers();
-		showModel();
 		
 	}
 	
@@ -51,6 +47,13 @@ public class ClientGUI implements ClientView {
 	public void startHandlers() {
 		
 		// implement this method
+		
+	}
+
+	@Override
+	public void setConnection(ClientConnection connection) {
+		 
+		this.connection = connection;
 		
 	}
 	

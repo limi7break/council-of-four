@@ -4,4 +4,6 @@ public interface ClientView extends Runnable {
 	
 	public void showModel();
 	
+	public void setConnection(ClientConnection connection);
+	
 }
