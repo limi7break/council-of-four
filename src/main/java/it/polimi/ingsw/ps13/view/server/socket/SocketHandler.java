@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
+import it.polimi.ingsw.ps13.message.response.broadcast.ChatBroadcastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.view.server.Handler;
 
 /**
@@ -46,12 +48,19 @@ public class SocketHandler extends Handler implements Runnable {
 	@Override
 	public void update(ResponseMsg msg) {
 		
-		try {
-			oos.writeObject(msg);
-			oos.flush();
-
-		} catch (IOException e) {
-			LOG.log(Level.WARNING, "A problem was encountered while sending data to the client.", e);
+		// The sender of a ChatRequestMsg does not receive the broadcast message
+		// Only the recipient of a UnicastMsg receives it
+		if (!( (msg instanceof ChatBroadcastMsg && ((ChatBroadcastMsg)msg).getPlayerName() == playerName)
+			|| (msg instanceof UnicastMsg && ((UnicastMsg)msg).getPlayerName() != playerName))) {
+		
+			try {
+				oos.writeObject(msg);
+				oos.flush();
+	
+			} catch (IOException e) {
+				LOG.log(Level.WARNING, "A problem was encountered while sending data to the client.", e);
+			}
+			
 		}
 		
 	}
