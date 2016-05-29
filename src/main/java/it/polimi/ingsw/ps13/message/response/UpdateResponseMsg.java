@@ -1,6 +1,5 @@
-package it.polimi.ingsw.ps13.message.response.broadcast;
+package it.polimi.ingsw.ps13.message.response;
 
-import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.model.Game;
 
 /**
@@ -9,13 +8,13 @@ import it.polimi.ingsw.ps13.model.Game;
  * When a client receives this message, it updates the local model with the updated version.
  *
  */
-public class UpdateBroadcastMsg extends ResponseMsg {
+public class UpdateResponseMsg extends ResponseMsg {
 
 	private static final long serialVersionUID = 0L;
 	
 	private final Game game;
 	
-	public UpdateBroadcastMsg(String message, Game game) {
+	public UpdateResponseMsg(String message, Game game) {
 		
 		super(message);
 		this.game = game;

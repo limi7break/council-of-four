@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
-import it.polimi.ingsw.ps13.message.response.broadcast.ChatBroadcastMsg;
+import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.view.server.Handler;
 
@@ -44,14 +44,18 @@ public class SocketHandler extends Handler implements Runnable {
 	/**
 	 * Response msg coming from the game controller is sent to the client.
 	 * 
+	 * If it is an unicast response msg and this IS NOT the recipient's handler, the message is not sent.
+	 * If it is a multicast response msg and this IS the handler of the player name written on the message,
+	 * the message is not sent.
+	 * 
 	 */
 	@Override
 	public void update(ResponseMsg msg) {
 		
-		// The sender of a ChatRequestMsg does not receive the broadcast message
+		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
 		// Only the recipient of a UnicastMsg receives it
-		if (!( (msg instanceof ChatBroadcastMsg && ((ChatBroadcastMsg)msg).getPlayerName() == playerName)
-			|| (msg instanceof UnicastMsg && ((UnicastMsg)msg).getPlayerName() != playerName))) {
+		if (!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
+			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
 		
 			try {
 				oos.writeObject(msg);

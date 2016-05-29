@@ -14,9 +14,9 @@ import org.w3c.dom.Document;
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
-import it.polimi.ingsw.ps13.message.response.broadcast.ChatBroadcastMsg;
-import it.polimi.ingsw.ps13.message.response.broadcast.UpdateBroadcastMsg;
-import it.polimi.ingsw.ps13.message.response.broadcast.WelcomeBroadcastMsg;
+import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
+import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
+import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.util.observer.Observable;
 import it.polimi.ingsw.ps13.util.observer.Observer;
@@ -78,7 +78,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		game = new Game(config, players);
 		
 		// Send created game to every client
-		notifyObserver(new UpdateBroadcastMsg("Initial game broadcast.", game));
+		notifyObserver(new UpdateResponseMsg("Initial game broadcast.", game));
 		
 	}
 	
@@ -91,7 +91,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		if (game == null) {
 			players.add(name);
-			notifyObserver(new WelcomeBroadcastMsg(name));
+			notifyObserver(new MulticastMsg(name + " entered the room." ,name));
 		}
 		
 	}
@@ -117,7 +117,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		if (msg instanceof ChatRequestMsg) {
 			ChatRequestMsg chatMsg = (ChatRequestMsg) msg;
-			notifyObserver(new ChatBroadcastMsg(chatMsg.getPlayerName(), chatMsg.getMessage()));
+			notifyObserver(new ChatMulticastMsg(chatMsg.getMessage(), chatMsg.getPlayerName()));
 		}
 		
 	}

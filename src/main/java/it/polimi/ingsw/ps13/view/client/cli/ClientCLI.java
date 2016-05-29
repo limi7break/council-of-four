@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
-import it.polimi.ingsw.ps13.message.response.broadcast.ChatBroadcastMsg;
-import it.polimi.ingsw.ps13.message.response.broadcast.UpdateBroadcastMsg;
+import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
+import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.player.Player;
@@ -77,7 +77,7 @@ public class ClientCLI implements ClientView {
 					System.out.print(city + " ");
 				}
 				String inputCity = scanner.nextLine();
-				System.out.println(game.getBoard().getCity(inputCity.toLowerCase()).toString());
+				System.out.println(game.getBoard().getCity(inputCity).toString());
 				break;
 			case "king":
 				System.out.println(game.getBoard().getKing().toString());
@@ -115,14 +115,14 @@ public class ClientCLI implements ClientView {
 	 */
 	public void handleMessage(ResponseMsg msg) {
 		
-		if (msg instanceof UpdateBroadcastMsg) {
-			UpdateBroadcastMsg updateMsg = (UpdateBroadcastMsg)msg;
+		if (msg instanceof UpdateResponseMsg) {
+			UpdateResponseMsg updateMsg = (UpdateResponseMsg)msg;
 			this.game = updateMsg.getGame();
 			showModel();
 			System.out.println(updateMsg.getMessage());
 		}
-		else if (msg instanceof ChatBroadcastMsg) {
-			ChatBroadcastMsg chatMsg = (ChatBroadcastMsg) msg;
+		else if (msg instanceof ChatMulticastMsg) {
+			ChatMulticastMsg chatMsg = (ChatMulticastMsg) msg;
 			System.out.println("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
 		}
 		else {
