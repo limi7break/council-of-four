@@ -7,7 +7,7 @@ import java.awt.*;
  */
 final class PoliticsCard extends it.polimi.ingsw.ps13.model.deck.PoliticsCard {
 
-
+	private final static long serialVersionUID = 0L;
 
 	protected PoliticsCard(Color color) {
 		

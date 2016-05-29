@@ -1,16 +1,16 @@
 package it.polimi.ingsw.ps13.model.board;
 
-import it.polimi.ingsw.ps13.model.bonus.Bonus;
-import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.TreeMap;
-
-import static org.junit.Assert.*;
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 
 /**
  * Created by Tommy on 26/05/16.

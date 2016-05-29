@@ -234,6 +234,7 @@ public class CouncillorBalconyTest {
     public void isSatisfiableWrongNumberOfCards() throws IllegalArgumentException {
 
         //create some politics cards for the testing
+    	@SuppressWarnings("unused")
         PoliticsCard b = new PoliticsCard(Color.BLUE);
 
         Collection<PoliticsCard> c = new ArrayList<>();
@@ -253,6 +254,7 @@ public class CouncillorBalconyTest {
         PoliticsCard b = new PoliticsCard(Color.BLUE);
         PoliticsCard black = new PoliticsCard(Color.BLACK);
         PoliticsCard w = new PoliticsCard(Color.WHITE);
+        @SuppressWarnings("unused")
         PoliticsCard p = new PoliticsCard(Color.PINK);
         PoliticsCard g = new PoliticsCard(Color.GREEN);
         PoliticsCard multi = new PoliticsCard(null);
@@ -306,7 +308,7 @@ public class CouncillorBalconyTest {
 
     }
 
-
+    @SuppressWarnings("unused")
     private void createEmptyCouncillorBalcony(){                                    //unused for now
 
         List<Councillor> councillors = new LinkedList<>();
