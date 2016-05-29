@@ -57,6 +57,8 @@ public class AcquirePermitTileAction implements Action {
 		player.discardPoliticsCards(cards);
 		player.receivePermitTile(tile);
 		
+		tile.getBonus().giveTo(player);
+		
 	}
 
 	
