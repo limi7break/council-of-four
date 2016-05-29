@@ -58,6 +58,7 @@ public class SocketHandler extends Handler implements Runnable {
 			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
 		
 			try {
+				oos.reset();
 				oos.writeObject(msg);
 				oos.flush();
 	

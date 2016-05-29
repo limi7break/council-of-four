@@ -62,8 +62,9 @@ public class ClientSocket implements ClientConnection {
 	public void sendMessage(RequestMsg msg) {
 		
 		try {
-			
+			oos.reset();
 			oos.writeObject(msg);
+			oos.flush();
 			
 		} catch(IOException e) {
 			LOG.log(Level.WARNING, "A problem was encountered while sending data to the server.", e);
