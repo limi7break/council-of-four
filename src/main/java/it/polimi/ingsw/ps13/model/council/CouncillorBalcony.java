@@ -73,7 +73,7 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards a collection of politics cards
 	 * @return the number of cards that match with a councillor
 	 */
-	protected int calculateNumberOfMatches(Collection<PoliticsCard> cards) {
+	protected int calculateNumberOfMatches(Collection<? extends PoliticsCard> cards) {
 		
 		List<PoliticsCard> cardsCopy = new ArrayList<>(cards);
 		
@@ -102,10 +102,10 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards a collection of politics cards
 	 * @return the number of multicolored cards in the passed collection of cards
 	 */
-	protected int calculateNumberOfMulticoloredCards(Collection<PoliticsCard> cards) {
+	protected int calculateNumberOfMulticoloredCards(Collection<? extends PoliticsCard> cards) {
 		
 		int numberOfMulticoloredCards = 0;
-		for (Iterator<PoliticsCard> it = cards.iterator(); it.hasNext();) {
+		for (Iterator<? extends PoliticsCard> it = cards.iterator(); it.hasNext();) {
 			PoliticsCard card = it.next();
 			if (card.isMultiColored()) {
 				numberOfMulticoloredCards++;
@@ -124,7 +124,7 @@ public class CouncillorBalcony implements Serializable {
 	 * @param playerCoins the amount of coins of the player
 	 * @return true, if the council is satisfiable with the given politics cards
 	 */
-	public boolean isSatisfiable(Collection<PoliticsCard> cards, int playerCoins) {
+	public boolean isSatisfiable(Collection<? extends PoliticsCard> cards, int playerCoins) {
 		
 		boolean satisfiable = true;
 		int numberOfCards = cards.size();
@@ -172,7 +172,7 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards the cards selected by the player
 	 * @return the number of coins the player has to pay in order to satisfy the council
 	 */
-	public int coinsToPay(Collection<PoliticsCard> cards) {
+	public int coinsToPay(Collection<? extends PoliticsCard> cards) {
 		
 		if (cards.isEmpty()) {
 			throw new IllegalArgumentException("You cannot satisfy a council without using at least a politics card");

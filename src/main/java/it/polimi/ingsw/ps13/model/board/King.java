@@ -15,7 +15,7 @@ public class King implements Serializable {
 	
 	/**
 	 * 
-	 * @param c
+	 * @param
 	 */
 	protected King() { }
 	

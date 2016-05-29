@@ -11,7 +11,7 @@ import it.polimi.ingsw.ps13.model.player.Player;
  * This class is immutable.
  * 
  */
-public final class PoliticsCard implements Marketable, Serializable {
+public class PoliticsCard implements Marketable, Serializable {
 	
 	private static final long serialVersionUID = 0L;
 	private final Color color;
