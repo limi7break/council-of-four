@@ -11,15 +11,15 @@ public class PassTurnAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 	
-	private final Player player;
+	private final String playerName;
 	
 	/**
 	 * 
 	 * @param player
 	 */
-	public PassTurnAction(Player player) {
+	public PassTurnAction(String playerName) {
 
-		this.player = player;
+		this.playerName = playerName;
 	
 	}
 
@@ -28,6 +28,8 @@ public class PassTurnAction implements Action {
 	 */
 	@Override
 	public boolean isLegal(Game g) {
+		
+		Player player = g.getPlayer(playerName);
 		
 		boolean legal = true;
 		
@@ -44,6 +46,7 @@ public class PassTurnAction implements Action {
 			legal = false;
 		
 		return legal;
+		
 	}
 	
 	/**
@@ -52,18 +55,7 @@ public class PassTurnAction implements Action {
 	@Override
 	public void apply(Game g) {
 		
-		//Resets all of this player's tokens.
-		player.getTokens().setZeros();
-		
-		//Updates currentPlayerID
-		if(g.getCurrentPlayerID() == (g.getNumberOfPlayers() - 1))
-			g.setCurrentPlayerID(0);
-		else
-			g.setCurrentPlayerID(g.getCurrentPlayerID() + 1);
-		
-		//Sets the standard tokens for the next player(1 main action, 1 quick action)
-		Player next = g.getCurrentPlayer();
-		next.getTokens().setInitial();
+		g.passTurn();
 		
 	}
 	

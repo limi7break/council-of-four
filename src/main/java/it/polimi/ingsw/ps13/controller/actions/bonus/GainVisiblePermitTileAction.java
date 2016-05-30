@@ -9,12 +9,14 @@ public class GainVisiblePermitTileAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Player player;
-	private final PermitTile tile;
+	private final String playerName;
+	private final String region;
+	private final int tile;
 	
-	public GainVisiblePermitTileAction(Player player, PermitTile tile) {
+	public GainVisiblePermitTileAction(String playerName, String region, int tile) {
 		
-		this.player = player;
+		this.playerName = playerName;
+		this.region = region;
 		this.tile = tile;
 		
 	}
@@ -22,17 +24,33 @@ public class GainVisiblePermitTileAction implements Action {
 	@Override
 	public boolean isLegal(Game g) {
 		
-		return true;	// Once checked the player's turn is correct and token is available, 
-						// (GameController's task) this action is legal.
+		// Check if player has token
+		if (g.getPlayer(playerName).getTokens().getTakeTile() == 0)
+			return false;
+		
+		// Check if region is a valid region
+		if (!g.getBoard().getRegions().containsKey(region))
+			return false;
+		
+		// Check if tile is a valid visible permit tile number
+		if ( (tile > g.getBoard().getRegion(region).getPermitTileDeck().getVisibleTiles().size()-1)
+				|| (tile < 0) )
+			return false;
+		
+		return true;
 		
 	}
 
 	@Override
 	public void apply(Game g) {
 		
-		player.receivePermitTile(tile);
+		PermitTile selected = g.getBoard().getRegion(region).getPermitTileDeck().takeTile(tile);
+		Player player = g.getPlayer(playerName);
+		player.receivePermitTile(selected);
 		
-		tile.getBonus().giveTo(player);
+		selected.getBonus().giveTo(player);
+		
+		player.consumeTakeTileToken();
 		
 	}
 

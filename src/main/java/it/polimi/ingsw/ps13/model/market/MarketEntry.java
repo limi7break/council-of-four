@@ -60,5 +60,25 @@ public class MarketEntry implements Serializable {
 		return price;
 		
 	}
-
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("\nSELLER: ").append(seller.getName()).append("\n");
+		
+		for (int i=0; i<itemList.size(); i++) {
+			sb.append(itemList.get(i).toString()).append("\n");
+		}
+		
+		sb.append("PRICE: " + price);
+		
+		return sb.toString();
+		
+	}
+	
 }

@@ -98,4 +98,27 @@ public class Market implements Serializable {
 		
 	}
 	
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[Market]\n");
+		
+		if (entryList.isEmpty()) {
+			sb.append("empty\n");
+		} else {
+			for (int i=0; i<entryList.size(); i++) {
+				sb.append("[" + i + "]");
+				sb.append(entryList.get(i).toString());
+			}
+		}
+		
+		return sb.toString();
+		
+	}
+	
 }

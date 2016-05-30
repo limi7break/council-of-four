@@ -63,8 +63,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	@Override
 	public String toString() {
 		
-		return "NobilityPointsBonus "
-				+ "x" + amount;
+		return "NPx" + amount;
 		
 	}
 

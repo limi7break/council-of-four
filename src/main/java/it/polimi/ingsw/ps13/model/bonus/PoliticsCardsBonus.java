@@ -48,8 +48,7 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	@Override
 	public String toString() {
 		
-		return "PoliticsCardsBonus "
-				+ "x" + amount;
+		return "PCx" + amount;
 		
 	}
 

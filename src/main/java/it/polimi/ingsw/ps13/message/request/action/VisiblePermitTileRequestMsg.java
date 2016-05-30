@@ -2,16 +2,17 @@ package it.polimi.ingsw.ps13.message.request.action;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
-import it.polimi.ingsw.ps13.model.deck.PermitTile;
 
 public class VisiblePermitTileRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 
-	private final PermitTile tile;
+	private final String region;
+	private final int tile;
 	
-	public VisiblePermitTileRequestMsg(PermitTile tile) {
+	public VisiblePermitTileRequestMsg(String region, int tile) {
 		
+		this.region = region;
 		this.tile = tile;
 		
 	}
@@ -23,7 +24,11 @@ public class VisiblePermitTileRequestMsg extends ActionRequestMsg {
 		
 	}
 	
-	public PermitTile getTile() {
+	public String getRegion() {
+		return region;
+	}
+	
+	public int getTile() {
 		return tile;
 	}
 

@@ -2,11 +2,13 @@ package it.polimi.ingsw.ps13.model.region;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
+import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 
 /**
@@ -131,12 +133,20 @@ public class Region implements Serializable{
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("[Region]\n\n")
-		  .append("Cities: ").append(cityNames.toString()).append("\n\n")
-		  .append("Bonus:\n").append(bonus.toString())
-		  .append("bonusAvailable = ").append(bonusAvailable).append("\n")
-		  .append(councillorBalcony.toString()).append("\n")
-		  .append(permitTileDeck.toString()).append("\n");
+		sb.append("\n[Region]\n\n")
+		  .append("NAME: ").append(name).append("\n")
+		  .append("CITIES: ").append(cityNames.toString()).append("\n")
+		  .append("BONUS: ").append(bonus.toString())
+		  .append("\navailable = ").append(bonusAvailable).append("\n\n")
+		  .append("BALCONY: ").append(councillorBalcony.toString()).append("\n\n")
+		  .append("PERMIT TILES:\n");
+
+		List<PermitTile> visibleTiles = permitTileDeck.getVisibleTiles();
+		  
+		for (int i=0; i<visibleTiles.size(); i++) {
+			sb.append("[" + i + "]")
+			  .append(visibleTiles.get(i).toString()).append("\n");
+		}
 		
 		return sb.toString();
 		

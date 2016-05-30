@@ -7,7 +7,11 @@ public class GainMainActionRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 	
-	public GainMainActionRequestMsg() { }
+	public GainMainActionRequestMsg() { 
+		
+		// This action request message has no arguments		
+		
+	}
 	
 	@Override
 	public Action accept(ActionVisitor av) {

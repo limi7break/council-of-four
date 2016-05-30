@@ -287,7 +287,9 @@ public class Board implements Serializable {
 	 * @param city
 	 * @return
 	 */
-	public int priceToMoveKing(City city) {
+	public int priceToMoveKing(String cityName) {
+		
+		City city = getCity(cityName);
 		
 		return 2*king.getCity().calculateShortestPath(city);
 		

@@ -1,18 +1,25 @@
 package it.polimi.ingsw.ps13.model.council;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 
 /**
  * Created by Tommy on 26/05/16.
  */
+@SuppressWarnings("all")
 public class CouncillorBalconyTest {
 
     CouncillorBalcony councillorBalcony;
@@ -20,10 +27,10 @@ public class CouncillorBalconyTest {
     @Before
     public void setUp() throws Exception {
 
-        Councillor councillorBlack = new Councillor(Color.BLACK);
-        Councillor councillorWhite = new Councillor(Color.WHITE);
-        Councillor councillorPink = new Councillor(Color.PINK);
-        Councillor councillorGreen = new Councillor(Color.GREEN);
+        Councillor councillorBlack = new Councillor(Color.BLACK, "black");
+        Councillor councillorWhite = new Councillor(Color.WHITE, "white");
+        Councillor councillorPink = new Councillor(Color.PINK, "pink");
+        Councillor councillorGreen = new Councillor(Color.GREEN, "green");
         List<Councillor> councillors = new LinkedList<>();
         councillors.add(councillorBlack);
         councillors.add(councillorWhite);
@@ -40,13 +47,13 @@ public class CouncillorBalconyTest {
     @Test
     public void insertCouncillor() throws Exception {
 
-        councillorBalcony.insertCouncillor(new Councillor(Color.BLUE));
+        councillorBalcony.insertCouncillor(new Councillor(Color.BLUE, "blue"));
 
         //creating expected result
-        Councillor councillorBlue = new Councillor(Color.BLUE);
-        Councillor councillorBlack = new Councillor(Color.BLACK);
-        Councillor councillorWhite = new Councillor(Color.WHITE);
-        Councillor councillorPink = new Councillor(Color.PINK);
+        Councillor councillorBlue = new Councillor(Color.BLUE, "blue");
+        Councillor councillorBlack = new Councillor(Color.BLACK, "black");
+        Councillor councillorWhite = new Councillor(Color.WHITE, "white");
+        Councillor councillorPink = new Councillor(Color.PINK, "pink");
         List<Councillor> councillors = new LinkedList<>();
         councillors.add(councillorBlue);
         councillors.add(councillorBlack);
@@ -61,15 +68,15 @@ public class CouncillorBalconyTest {
     public void calculateNumberOfMatches() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCard b = new PoliticsCard(Color.BLUE);
-        PoliticsCard black = new PoliticsCard(Color.BLACK);
-        PoliticsCard w = new PoliticsCard(Color.WHITE);
-        PoliticsCard p = new PoliticsCard(Color.PINK);
-        PoliticsCard g = new PoliticsCard(Color.GREEN);
-        PoliticsCard multi = new PoliticsCard(null);
+        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
+        PoliticsCardTest black = new PoliticsCardTest(Color.BLACK, "black");
+        PoliticsCardTest w = new PoliticsCardTest(Color.WHITE, "white");
+        PoliticsCardTest p = new PoliticsCardTest(Color.PINK, "pink");
+        PoliticsCardTest g = new PoliticsCardTest(Color.GREEN, "green");
+        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCardTest.jollyColor, "JOLLY");
 
-        Collection<PoliticsCard> c = new ArrayList<>();
-
+        List<PoliticsCardTest> c = new ArrayList<>();
+        
         //TEST CASE: 0 cards
         assertEquals(councillorBalcony.calculateNumberOfMatches(c),0);
 
@@ -120,8 +127,8 @@ public class CouncillorBalconyTest {
 
 
         //creating an alternative councillorBalcony that has the same color councillor 3 times
-        Councillor councillorBlack = new Councillor(Color.BLACK);
-        Councillor councillorWhite = new Councillor(Color.WHITE);
+        Councillor councillorBlack = new Councillor(Color.BLACK, "black");
+        Councillor councillorWhite = new Councillor(Color.WHITE, "white");
         List<Councillor> councillors = new LinkedList<>();
         councillors.add(councillorBlack);
         councillors.add(councillorWhite);
@@ -145,10 +152,10 @@ public class CouncillorBalconyTest {
     public void calculateNumberOfMulticoloredCards() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCard b = new PoliticsCard(Color.BLUE);
-        PoliticsCard multi = new PoliticsCard(null);
+        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
+        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCard.jollyColor, "JOLLY");
 
-        Collection<PoliticsCard> c = new ArrayList<>();
+        List<PoliticsCardTest> c = new ArrayList<>();
 
         //TEST CASE: 0 cards
         assertEquals(councillorBalcony.calculateNumberOfMulticoloredCards(c),0);
@@ -176,14 +183,14 @@ public class CouncillorBalconyTest {
     public void isSatisfiable() {
 
         //create some politics cards for the testing
-        PoliticsCard b = new PoliticsCard(Color.BLUE);
-        PoliticsCard black = new PoliticsCard(Color.BLACK);
-        PoliticsCard w = new PoliticsCard(Color.WHITE);
-        PoliticsCard p = new PoliticsCard(Color.PINK);
-        PoliticsCard g = new PoliticsCard(Color.GREEN);
-        PoliticsCard multi = new PoliticsCard(null);
+        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
+        PoliticsCardTest black = new PoliticsCardTest(Color.BLACK, "black");
+        PoliticsCardTest w = new PoliticsCardTest(Color.WHITE, "white");
+        PoliticsCardTest p = new PoliticsCardTest(Color.PINK, "pink");
+        PoliticsCardTest g = new PoliticsCardTest(Color.GREEN, "green");
+        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCard.jollyColor, "JOLLY");
 
-        Collection<PoliticsCard> c = new ArrayList<>();
+        List<PoliticsCardTest> c = new ArrayList<>();
 
         c.add(b);
         //TEST CASE: 0 matching cards 0 coins
@@ -235,9 +242,9 @@ public class CouncillorBalconyTest {
 
         //create some politics cards for the testing
     	@SuppressWarnings("unused")
-        PoliticsCard b = new PoliticsCard(Color.BLUE);
+        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
 
-        Collection<PoliticsCard> c = new ArrayList<>();
+        List<PoliticsCardTest> c = new ArrayList<>();
 
         //TEST CASE: 0 cards
         assertFalse(councillorBalcony.isSatisfiable(c,0));
@@ -251,15 +258,15 @@ public class CouncillorBalconyTest {
     public void coinsToPay() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCard b = new PoliticsCard(Color.BLUE);
-        PoliticsCard black = new PoliticsCard(Color.BLACK);
-        PoliticsCard w = new PoliticsCard(Color.WHITE);
+        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
+        PoliticsCardTest black = new PoliticsCardTest(Color.BLACK, "black");
+        PoliticsCardTest w = new PoliticsCardTest(Color.WHITE, "white");
         @SuppressWarnings("unused")
-        PoliticsCard p = new PoliticsCard(Color.PINK);
-        PoliticsCard g = new PoliticsCard(Color.GREEN);
-        PoliticsCard multi = new PoliticsCard(null);
+        PoliticsCardTest p = new PoliticsCardTest(Color.PINK, "pink");
+        PoliticsCardTest g = new PoliticsCardTest(Color.GREEN, "green");
+        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCard.jollyColor, "JOLLY");
 
-        Collection<PoliticsCard> c = new ArrayList<>();
+        List<PoliticsCardTest> c = new ArrayList<>();
 
         c.add(g);
         //TEST CASE: 1 matching card
@@ -294,10 +301,10 @@ public class CouncillorBalconyTest {
     public void getCouncillors() throws Exception {
 
         //creating the expected list of councillors
-        Councillor councillorBlack = new Councillor(Color.BLACK);
-        Councillor councillorWhite = new Councillor(Color.WHITE);
-        Councillor councillorPink = new Councillor(Color.PINK);
-        Councillor councillorGreen = new Councillor(Color.GREEN);
+        Councillor councillorBlack = new Councillor(Color.BLACK, "black");
+        Councillor councillorWhite = new Councillor(Color.WHITE, "white");
+        Councillor councillorPink = new Councillor(Color.PINK, "pink");
+        Councillor councillorGreen = new Councillor(Color.GREEN, "green");
         List<Councillor> c = new LinkedList<>();
         c.add(councillorBlack);
         c.add(councillorWhite);

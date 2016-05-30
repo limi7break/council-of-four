@@ -29,13 +29,6 @@ import it.polimi.ingsw.ps13.message.request.action.RegainPermitTileBonusRequestM
 import it.polimi.ingsw.ps13.message.request.action.RegainRewardTokenRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.TradeProposalRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.VisiblePermitTileRequestMsg;
-import it.polimi.ingsw.ps13.model.council.Councillor;
-import it.polimi.ingsw.ps13.model.deck.PermitTile;
-import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
-import it.polimi.ingsw.ps13.model.market.MarketEntry;
-import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.model.region.City;
-import it.polimi.ingsw.ps13.model.region.Region;
 
 
 /**
@@ -49,7 +42,7 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(PassTurnRequestMsg pass) {
 		
-		return new PassTurnAction(pass.getPlayer());
+		return new PassTurnAction(pass.getPlayerName());
 		
 	}
 
@@ -57,12 +50,12 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(AcquirePermitTileRequestMsg acquireTile) {
 		
-		Player player = acquireTile.getPlayer();
-		Collection<PoliticsCard> cards = acquireTile.getCards();
-		Region region = acquireTile.getRegion();
-		PermitTile tile = acquireTile.getTile();
+		String playerName = acquireTile.getPlayerName();
+		String region = acquireTile.getRegion();
+		int tile = acquireTile.getTile();
+		Collection<String> cards = acquireTile.getCards();
 		
-		return new AcquirePermitTileAction(player, cards, region, tile);
+		return new AcquirePermitTileAction(playerName, region, tile, cards);
 		
 	}
 
@@ -70,11 +63,11 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(BuildEmporiumRequestMsg build) {
 		
-		Player player = build.getPlayer();
-		PermitTile tile = build.getTile();
-		City city = build.getCity();
+		String playerName = build.getPlayerName();
+		int tile = build.getTile();
+		String city = build.getCity();
 		
-		return new BuildEmporiumAction(player, tile, city);
+		return new BuildEmporiumAction(playerName, tile, city);
 		
 	}
 
@@ -82,11 +75,11 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(ElectCouncillorRequestMsg elect) {
 		
-		Player player = elect.getPlayer();
-		Councillor councillor = elect.getCouncillor();
-		Region region = elect.getRegion();
+		String playerName = elect.getPlayerName();
+		String region = elect.getRegion();
+		String councillor = elect.getCouncillor();
 		
-		return new ElectCouncillorAction(player, councillor, region);
+		return new ElectCouncillorAction(playerName, region, councillor);
 		
 	}
 
@@ -94,11 +87,11 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(KingActionRequestMsg king) {
 		
-		Player player = king.getPlayer();
-		Collection<PoliticsCard> cards = king.getCards();
-		City city = king.getCity();
+		String playerName = king.getPlayerName();
+		String city = king.getCity();
+		Collection<String> cards = king.getCards();
 		
-		return new KingAction(player, cards, city);
+		return new KingAction(playerName, city, cards);
 		
 	}
 
@@ -106,10 +99,10 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(OfferSelectionRequestMsg buy) {
 		
-		Player player = buy.getPlayer();
+		String playerName = buy.getPlayerName();
 		int entry = buy.getEntry();
 		
-		return new OfferSelectionAction(player, entry);
+		return new OfferSelectionAction(playerName, entry);
 		
 	}
 
@@ -117,10 +110,13 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(TradeProposalRequestMsg sell) {
 		
-		Player player = sell.getPlayer();
-		MarketEntry entry = sell.getEntry();
+		String playerName = sell.getPlayerName();
+		int assistants = sell.getAssistants();
+		Collection<Integer> tiles = sell.getTiles();
+		Collection<String> cards = sell.getCards();
+		int price = sell.getPrice();
 		
-		return new TradeProposalAction(player, entry);
+		return new TradeProposalAction(playerName, assistants, tiles, cards, price);
 		
 	}
 
@@ -128,10 +124,10 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(ChangePermitTilesRequestMsg changeTiles) {
 		
-		Player player = changeTiles.getPlayer();
-		Region region = changeTiles.getRegion();
+		String playerName = changeTiles.getPlayerName();
+		String region = changeTiles.getRegion();
 		
-		return new ChangePermitTilesAction(player, region);
+		return new ChangePermitTilesAction(playerName, region);
 		
 	}
 
@@ -139,7 +135,7 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(EngageAssistantRequestMsg engageAssistant) {
 		
-		return new EngageAssistantAction(engageAssistant.getPlayer());
+		return new EngageAssistantAction(engageAssistant.getPlayerName());
 		
 	}
 
@@ -147,7 +143,7 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(GainMainActionRequestMsg gainMain) {
 		
-		return new GainMainActionAction(gainMain.getPlayer());
+		return new GainMainActionAction(gainMain.getPlayerName());
 		
 	}
 
@@ -155,11 +151,11 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(QuickElectCouncillorRequestMsg quickElect) {
 		
-		Player player = quickElect.getPlayer();
-		Councillor councillor = quickElect.getCouncillor();
-		Region region = quickElect.getRegion();
+		String playerName = quickElect.getPlayerName();
+		String region = quickElect.getRegion();
+		String councillor = quickElect.getCouncillor();
 		
-		return new QuickElectCouncillorAction(player, councillor, region);
+		return new QuickElectCouncillorAction(playerName, region, councillor);
 		
 	}
 
@@ -167,10 +163,10 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(RegainPermitTileBonusRequestMsg tileBonus) {
 		
-		Player player = tileBonus.getPlayer();
-		PermitTile tile = tileBonus.getTile();
+		String playerName = tileBonus.getPlayerName();
+		int tile = tileBonus.getTile();
 		
-		return new RegainPermitTileBonusAction(player, tile);
+		return new RegainPermitTileBonusAction(playerName, tile);
 		
 	}
 
@@ -178,20 +174,21 @@ public class ActionFactory implements ActionVisitor {
 	@Override
 	public Action visit(RegainRewardTokenRequestMsg rewardToken) {
 		
-		Player player = rewardToken.getPlayer();
-		City city = rewardToken.getCity();
+		String playerName = rewardToken.getPlayerName();
+		String city = rewardToken.getCity();
 		
-		return new RegainRewardTokenAction(player, city);		
+		return new RegainRewardTokenAction(playerName, city);		
 	}
 
 	//Take a visible permit tile bonus action
 	@Override
 	public Action visit(VisiblePermitTileRequestMsg takeTile) {
 		
-		Player player = takeTile.getPlayer();
-		PermitTile tile = takeTile.getTile();
+		String playerName = takeTile.getPlayerName();
+		String region = takeTile.getRegion();
+		int tile = takeTile.getTile();
 		
-		return new GainVisiblePermitTileAction(player, tile);
+		return new GainVisiblePermitTileAction(playerName, region, tile);
 		
 	}
 	

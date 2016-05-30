@@ -8,15 +8,15 @@ public class GainMainActionAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Player player;
+	private final String playerName;
 	
 	/**
 	 * 
 	 * @param player
 	 */
-	public GainMainActionAction(Player player) {
+	public GainMainActionAction(String playerName) {
 		
-		this.player = player;
+		this.playerName = playerName;
 		
 	}
 	
@@ -28,13 +28,17 @@ public class GainMainActionAction implements Action {
 	@Override
 	public boolean isLegal(Game g) {
 		
-		boolean legal = true;
+		Player player = g.getPlayer(playerName);
 		
-		//checks if conditions are satisfied
+		// Check if player has token
+		if (player.getTokens().getQuick() == 0)
+			return false;
+		
+		// Check if player has at least 3 assistants
 		if(player.getAssistants() < 3)
-			legal = false; 
+			return false; 
 		
-		return legal;
+		return true;
 		
 	}
 
@@ -45,8 +49,12 @@ public class GainMainActionAction implements Action {
 	@Override
 	public void apply(Game g) {
 		
+		Player player = g.getPlayer(playerName);
+		
 		player.consumeAssistants(3);
 		player.addMainActions(1);
+		
+		player.consumeQuickAction();
 		
 	}
 	

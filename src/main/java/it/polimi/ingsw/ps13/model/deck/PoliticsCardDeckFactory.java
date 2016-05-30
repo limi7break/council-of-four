@@ -37,13 +37,13 @@ public final class PoliticsCardDeckFactory {
 				Element currentColor = (Element) politicsColorsNodeList.item(i);
 				String currentColorName = currentColor.getAttribute("name");
 				for (int j=0; j<CARDS_PER_COLOR; j++) {
-					cards.add(new PoliticsCard(colors.get(currentColorName)));
+					cards.add(new PoliticsCard(colors.get(currentColorName), currentColorName));
 				}
 			}
 		}
 		
 		for (int i=0; i<MULTICOLORED_CARDS; i++) {
-			cards.add(new PoliticsCard(null));
+			cards.add(new PoliticsCard(PoliticsCard.jollyColor, "JOLLY"));
 		}
 		
 		PoliticsCardDeck politicsCardDeck = new PoliticsCardDeck(cards);

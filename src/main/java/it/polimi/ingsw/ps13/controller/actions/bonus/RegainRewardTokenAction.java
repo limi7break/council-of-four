@@ -2,20 +2,21 @@ package it.polimi.ingsw.ps13.controller.actions.bonus;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.bonus.NobilityPointsBonus;
 import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.model.region.City;
 
 public class RegainRewardTokenAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Player player;
-	private final City city; //The city whose token wants to be acquired again
+	private final String playerName;
+	private final String city;
 	
-	public RegainRewardTokenAction(Player player, City city) {
+	public RegainRewardTokenAction(String playerName, String city) {
 		
-		this.player = player;
+		this.playerName = playerName;
 		this.city = city;
 		
 	}
@@ -23,22 +24,38 @@ public class RegainRewardTokenAction implements Action {
 	@Override
 	public boolean isLegal(Game g) {
 		
-		boolean legal = true;
+		Player player = g.getPlayer(playerName);
 		
-		if(city.getBonus() instanceof NobilityPointsBonus)
-			legal = false;
+		// Check if player has token
+		if (g.getPlayer(playerName).getTokens().getRewardToken() == 0)
+			return false;
 		
-		if(!player.hasBuiltOn(city.getName()))
-			legal = false;
+		// Check if city is a valid city
+		if (!g.getBoard().getCities().containsKey(city))
+			return false;
 		
-		return legal;
+		// Check if player has built an emporium on the city
+		if(!player.hasBuiltOn(city))
+			return false;
+		
+		// Check if the city's bonus contains a nobility points bonus
+		ConcreteBonus bonus = (ConcreteBonus) g.getBoard().getCity(city).getBonus();
+		for (Bonus b : bonus.getContents()) {
+			if (b instanceof NobilityPointsBonus)
+				return false;
+		}
+		
+		return true;
 		
 	}
 
 	@Override
 	public void apply(Game g) {
 		
-		city.getBonus().giveTo(player);
+		Player player = g.getPlayer(playerName);
+		
+		g.getBoard().getCity(city).getBonus().giveTo(player);
+		player.consumeRewardTokenToken();
 		
 	}
 	

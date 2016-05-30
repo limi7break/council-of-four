@@ -16,6 +16,7 @@ public class CityColor implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private final Color color;
+	private final String colorName;
 	private final Set<String> cityNames;
 	private final Bonus bonus;
 	private boolean bonusAvailable;
@@ -28,9 +29,10 @@ public class CityColor implements Serializable {
 	 * of a certain color, and the flag will be set to false.
 	 * 
 	 */
-	protected CityColor(Color color, Bonus bonus){
+	protected CityColor(Color color, String colorName, Bonus bonus){
 		
 		this.color = color;
+		this.colorName = colorName;
 		this.bonus = bonus;
 		
 		if (bonus.isEmpty()) {
@@ -50,6 +52,16 @@ public class CityColor implements Serializable {
 	public Color getColor(){
 		
 		return color;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getColorName() {
+		
+		return colorName;
 		
 	}
 	
@@ -115,10 +127,11 @@ public class CityColor implements Serializable {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("[CityColor] (").append(color.getRed()).append(", ").append(color.getGreen()).append(", ").append(color.getBlue()).append(")\n\n")
-			.append("Cities: ").append(cityNames.toString()).append("\n")
-			.append("Bonus:\n").append(bonus.toString())
-			.append("bonusAvailable = ").append(bonusAvailable).append("\n");
+		sb.append("\n[CityColor]\n")
+		  .append("COLOR: ").append(colorName).append("\n")
+		  .append("CITIES: ").append(cityNames.toString()).append("\n")
+		  .append("BONUS: ").append(bonus.toString())
+		  .append("\navailable = ").append(bonusAvailable).append("\n");
 		
 		return sb.toString();
 		

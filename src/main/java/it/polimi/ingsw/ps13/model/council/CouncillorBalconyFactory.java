@@ -31,7 +31,7 @@ public final class CouncillorBalconyFactory {
 			Element currentColor = (Element) colorsElements.item(i);
 			String currentColorName = currentColor.getAttribute("name");
 			for (int j=0; j<COUNCILLORS_PER_COLOR; j++) {
-				councillors.add(new Councillor(colors.get(currentColorName)));
+				councillors.add(new Councillor(colors.get(currentColorName), currentColorName));
 			}
 		}
 		

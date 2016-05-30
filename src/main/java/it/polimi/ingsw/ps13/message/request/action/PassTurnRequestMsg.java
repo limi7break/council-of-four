@@ -7,7 +7,11 @@ public class PassTurnRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 	
-	public PassTurnRequestMsg() { }
+	public PassTurnRequestMsg() { 
+		
+		// This action request message has no arguments		
+		
+	}
 	
 	@Override
 	public Action accept(ActionVisitor av) {

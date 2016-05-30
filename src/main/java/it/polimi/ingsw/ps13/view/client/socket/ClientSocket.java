@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,8 +33,13 @@ public class ClientSocket implements ClientConnection {
 	 */
 	public ClientSocket() throws IOException {
 		
-		socket = new Socket(HOST, PORT);
-		LOG.log(Level.INFO, "Connection established @ " + HOST + ":" + PORT + ".");
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("IP Address: ");
+		String host = scanner.nextLine();
+		
+		socket = new Socket(host, PORT);
+		LOG.log(Level.INFO, "Connection established @ " + host + ":" + PORT + ".");
 		
 		oos = new ObjectOutputStream(socket.getOutputStream());
 		oos.flush();

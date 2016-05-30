@@ -3,16 +3,16 @@ package it.polimi.ingsw.ps13.controller.actions.main;
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.council.Councillor;
+import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.model.region.Region;
 
 public class ElectCouncillorAction implements Action{
 
 	private static final long serialVersionUID = 0L;
 
-	private final Player player;
-	private final Councillor councillor;
-	private final Region region; //whose council is to be satisfied by player
+	private final String playerName;
+	private final String region;
+	private final String color;
 
 	/**
 	 * As with all actions, has to be checked if current player is player and if player has main actions available.
@@ -23,10 +23,10 @@ public class ElectCouncillorAction implements Action{
 	 * @param cards
 	 * @param tile
 	 */
-	public ElectCouncillorAction(Player player, Councillor councillor, Region region) {
+	public ElectCouncillorAction(String playerName, String region, String color) {
 		
-		this.player = player;
-		this.councillor = councillor;
+		this.playerName = playerName;
+		this.color = color;
 		this.region = region;
 		
 	}
@@ -34,22 +34,49 @@ public class ElectCouncillorAction implements Action{
 	@Override
 	public boolean isLegal(Game g) {
 		
-		boolean legal = true;
+		Player player = g.getPlayer(playerName);
 		
-		if(!g.getBoard().getCouncillors().contains(councillor))
-			legal = false;
+		// Check if player has token
+		if (player.getTokens().getMain() == 0)
+			return false;
 		
-		return legal;
+		// Check if region is a valid region
+		if (!g.getBoard().getRegions().containsKey(region) && !"king".equals(region))
+			return false;
+		
+		// Check if color is a valid color
+		if (!g.getColors().containsKey(color))
+			return false;
+		
+		// Check if a councillor with the desired color is available
+		if (!g.isCouncillorAvailable(g.getColors().get(color)))
+			return false;
+		
+		return true;
 		
 	}
 
 	@Override
 	public void apply(Game g) {
 		
-		Councillor removed = region.getCouncillorBalcony().insertCouncillor(councillor);
-		g.getBoard().insertCouncillor(removed);
+		Player player = g.getPlayer(playerName);
+		
+		Councillor chosen = g.getCouncillor(g.getColors().get(color));
+		
+		CouncillorBalcony balcony;
+		if ("king".equals(region)) {
+			balcony = g.getBoard().getKingBalcony();
+		} else {
+			balcony = g.getBoard().getRegion(region).getCouncillorBalcony();
+		}
+		Councillor toBeDiscarded = balcony.insertCouncillor(chosen);
+		g.getBoard().insertCouncillor(toBeDiscarded);
+		
 		
 		player.addCoins(4);
+		
+		player.consumeMainAction();
+		
 	}
 
 	

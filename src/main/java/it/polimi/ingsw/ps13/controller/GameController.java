@@ -11,12 +11,19 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.ActionFactory;
+import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
+import it.polimi.ingsw.ps13.controller.actions.PassTurnAction;
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
+import it.polimi.ingsw.ps13.message.request.action.ActionRequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.util.observer.Observable;
 import it.polimi.ingsw.ps13.util.observer.Observer;
@@ -35,6 +42,8 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	private Game game;
 	private final String configFilePath;
 	
+	private final ActionVisitor actionFactory;
+	
 	private final List<String> players;
 	
 	/**
@@ -46,6 +55,8 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		this.configFilePath = DEFAULT_CONFIG;
 		players = new ArrayList<>();
+		
+		actionFactory = new ActionFactory();
 		
 	}
 	
@@ -80,6 +91,10 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		// Send created game to every client
 		notifyObserver(new UpdateResponseMsg("Initial game broadcast.", game));
 		
+		// Notify current player that it's time to play
+		notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
+		notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
+		
 	}
 	
 	/**
@@ -91,7 +106,8 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		if (game == null) {
 			players.add(name);
-			notifyObserver(new MulticastMsg(name + " entered the room." ,name));
+			notifyObserver(new MulticastMsg(name + " entered the room." , name));
+			notifyObserver(new ConnectionUnicastMsg("Welcome " + name + "! Have fun.", name));
 		}
 		
 	}
@@ -120,11 +136,43 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			notifyObserver(new ChatMulticastMsg(chatMsg.getMessage(), chatMsg.getPlayerName()));
 		}
 		
+		if (msg instanceof ActionRequestMsg) {
+			ActionRequestMsg actionMsg = (ActionRequestMsg) msg;
+			handleActionMsg(actionMsg);
+			
+		}
+		
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	private void handleActionMsg(ActionRequestMsg msg) {
+		
+		if (msg.getPlayerName() == game.getCurrentPlayerName()) {
+			
+			Action action = msg.accept(actionFactory);
+			
+			if (action.isLegal(game)) {
+				
+				action.apply(game);
+				notifyObserver(new UpdateResponseMsg(msg.getPlayerName() + " successfully performed " + action.getClass().getSimpleName() + ". Model updated.", game));
+				
+				if (action instanceof PassTurnAction) {
+					notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
+					notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
+				}
+				
+			} else {
+				notifyObserver(new UnicastMsg("ERROR: action is not legal :(", msg.getPlayerName()));
+			}
+				
+		} else {
+			notifyObserver(new UnicastMsg("ERROR: it\'s not your turn.", msg.getPlayerName()));
+		}
 		
 	}
 	

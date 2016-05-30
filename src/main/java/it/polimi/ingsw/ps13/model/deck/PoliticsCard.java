@@ -14,16 +14,19 @@ import it.polimi.ingsw.ps13.model.player.Player;
 public class PoliticsCard implements Marketable, Serializable {
 	
 	private static final long serialVersionUID = 0L;
+	public static final Color jollyColor = new Color(6, 6, 6);
 	private final Color color;
+	private final String colorName;
 	
 	/**
 	 * Constructs the PoliticsCard using the passed Color.
 	 * 
 	 * @param color
 	 */
-	protected PoliticsCard(Color color) {
+	protected PoliticsCard(Color color, String colorName) {
 		
 		this.color = color;
+		this.colorName = colorName;
 	
 	}
 	
@@ -41,7 +44,7 @@ public class PoliticsCard implements Marketable, Serializable {
 	 */
 	public boolean isMultiColored() {
 		
-		return color == null;
+		return color.equals(jollyColor);
 		
 	}
 	
@@ -64,13 +67,7 @@ public class PoliticsCard implements Marketable, Serializable {
 	 */
 	@Override
 	public String toString() {
-		
-		if (this.isMultiColored()) {
-			return "[PoliticsCard] (j, o, l, l, y)";
-		} else {
-			return "[PoliticsCard] "
-					+ "(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")";
-		}
-		
+
+		return colorName.toUpperCase();
 	}
 }

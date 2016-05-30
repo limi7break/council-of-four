@@ -79,7 +79,7 @@ public final class PermitTile implements Marketable, Serializable {
 	 */
 	public void setUsed(boolean used) {
 		
-		if (!this.used && used) {
+		if (this.used && !used) {
 			throw new IllegalArgumentException("An used permit tile cannot be reset to unused");
 		} else {
 			this.used = used;
@@ -109,10 +109,8 @@ public final class PermitTile implements Marketable, Serializable {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("[PermitTile]\n");
-		sb.append("Cities: ").append(cityNames.toString()).append("\n");
-		sb.append("Bonus:\n").append(bonus.toString()).append("\n");
-		sb.append("used = ").append(used).append("\n");
+		sb.append("\nCITIES: ").append(cityNames.toString()).append("\n");
+		sb.append("BONUS: ").append(bonus.toString());
 		
 		return sb.toString();
 	}

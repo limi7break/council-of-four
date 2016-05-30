@@ -12,7 +12,7 @@ public class OfferSelectionAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Player player;
+	private final String playerName;
 	private final int entry;
 	
 	/**
@@ -20,9 +20,9 @@ public class OfferSelectionAction implements Action {
 	 * @param player
 	 * @param entry
 	 */
-	public OfferSelectionAction(Player player, int entry) {
+	public OfferSelectionAction(String playerName, int entry) {
 		
-		this.player = player;
+		this.playerName = playerName;
 		this.entry = entry;
 		
 	}
@@ -33,13 +33,17 @@ public class OfferSelectionAction implements Action {
 	@Override
 	public boolean isLegal(Game g) {
 		
-		boolean legal = true;
+		Player player = g.getPlayer(playerName);
+		
+		// Check if player has token
+		if (player.getTokens().getBuy() == 0)
+			return false;
 		
 		int price = g.getMarket().getEntryList().get(entry).getPrice();
 		if(player.getCoins() < price)
-			legal = false;
+			return false;
 		
-		return legal;
+		return true;
 		
 	}
 
@@ -49,7 +53,11 @@ public class OfferSelectionAction implements Action {
 	@Override
 	public void apply(Game g) {
 		
+		Player player = g.getPlayer(playerName);
+		
 		g.getMarket().manageTransaction(player, entry);
+		
+		player.consumeBuyAction();
 		
 	}
 

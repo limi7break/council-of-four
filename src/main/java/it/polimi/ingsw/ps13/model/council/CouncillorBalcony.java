@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps13.model.council;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,17 +74,17 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards a collection of politics cards
 	 * @return the number of cards that match with a councillor
 	 */
-	protected int calculateNumberOfMatches(Collection<? extends PoliticsCard> cards) {
+	protected int calculateNumberOfMatches(Collection<Color> colors) {
 		
-		List<PoliticsCard> cardsCopy = new ArrayList<>(cards);
+		List<Color> colorsCopy = new ArrayList<>(colors);
 		
 		int numberOfMatches = 0;
 		boolean matchFound = false;
 		
 		for (Councillor councillor : councillorList) {
-			for (Iterator<PoliticsCard> it = cardsCopy.iterator(); it.hasNext() && !matchFound;) {
-				PoliticsCard card = it.next();
-				if (councillor.getColor() == card.getColor()) {
+			for (Iterator<Color> it = colorsCopy.iterator(); it.hasNext() && !matchFound;) {
+				Color color = it.next();
+				if (councillor.getColor().equals(color)) {
 					matchFound = true;
 					it.remove();
 					numberOfMatches++;
@@ -102,12 +103,12 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards a collection of politics cards
 	 * @return the number of multicolored cards in the passed collection of cards
 	 */
-	protected int calculateNumberOfMulticoloredCards(Collection<? extends PoliticsCard> cards) {
+	protected int calculateNumberOfMulticoloredCards(Collection<Color> colors) {
 		
 		int numberOfMulticoloredCards = 0;
-		for (Iterator<? extends PoliticsCard> it = cards.iterator(); it.hasNext();) {
-			PoliticsCard card = it.next();
-			if (card.isMultiColored()) {
+		for (Iterator<Color> it = colors.iterator(); it.hasNext();) {
+			Color color = it.next();
+			if (color.equals(PoliticsCard.jollyColor)) {
 				numberOfMulticoloredCards++;
 			}
 		}
@@ -124,26 +125,25 @@ public class CouncillorBalcony implements Serializable {
 	 * @param playerCoins the amount of coins of the player
 	 * @return true, if the council is satisfiable with the given politics cards
 	 */
-	public boolean isSatisfiable(Collection<? extends PoliticsCard> cards, int playerCoins) {
+	public boolean isSatisfiable(Collection<Color> colors, int playerCoins) {
 		
 		boolean satisfiable = true;
-		int numberOfCards = cards.size();
+		int numberOfColors = colors.size();
 		
 		// The number of cards passed should never be greater than the
 		// number of councillors in the balcony
-		if ((numberOfCards <= 0) || (numberOfCards > COUNCILLORS_PER_BALCONY)) {
+		if ((numberOfColors <= 0) || (numberOfColors > COUNCILLORS_PER_BALCONY)) {
 			throw new IllegalArgumentException("Politics cards used to satisfy a balcony should be at least 1 and at most " + COUNCILLORS_PER_BALCONY);
 		}
 				
-		int numberOfMatches = calculateNumberOfMatches(cards);
-		int numberOfMulticoloredCards = calculateNumberOfMulticoloredCards(cards);
+		int numberOfMatches = calculateNumberOfMatches(colors);
+		int numberOfMulticoloredCards = calculateNumberOfMulticoloredCards(colors);
 		
 		// If the number of matches is less than the number of cards played (except
 		// for the multicolored cards), then the player has selected some extra card(s)
 		// that didn't match with any of the councillor's colors
-		if (numberOfMatches != numberOfCards - numberOfMulticoloredCards) {
+		if (numberOfMatches != numberOfColors - numberOfMulticoloredCards) {
 			satisfiable = false;
-			// @TODO: notify the user with the reason
 		}
 		
 		// A council is satisfiable if among the played cards there is
@@ -151,14 +151,12 @@ public class CouncillorBalcony implements Serializable {
 		// matches the color of one of the councillors...
 		if ( (numberOfMulticoloredCards == 0) && (numberOfMatches == 0) ) {
 			satisfiable = false;
-			// @TODO: notify the user with the reason
 		}
 		
 		// ...provided the player has got enough coins to make up for
 		// the missing cards.
-		if ( satisfiable && (playerCoins - coinsToPay(cards)) < 0 ) {
+		if ( satisfiable && (playerCoins - coinsToPay(colors)) < 0 ) {
 			satisfiable = false;
-			// @TODO: notify the user with the reason
 		}
 		
 		return satisfiable;
@@ -172,12 +170,12 @@ public class CouncillorBalcony implements Serializable {
 	 * @param cards the cards selected by the player
 	 * @return the number of coins the player has to pay in order to satisfy the council
 	 */
-	public int coinsToPay(Collection<? extends PoliticsCard> cards) {
+	public int coinsToPay(Collection<Color> colors) {
 		
-		if (cards.isEmpty()) {
+		if (colors.isEmpty()) {
 			throw new IllegalArgumentException("You cannot satisfy a council without using at least a politics card");
 		} else {
-			return coinsPerMissingCard[COUNCILLORS_PER_BALCONY - cards.size()] + calculateNumberOfMulticoloredCards(cards);
+			return coinsPerMissingCard[COUNCILLORS_PER_BALCONY - colors.size()] + calculateNumberOfMulticoloredCards(colors);
 		}
 		
 	}
@@ -198,15 +196,60 @@ public class CouncillorBalcony implements Serializable {
 	@Override
 	public String toString() {
 		
-		StringBuilder sb = new StringBuilder();
+		return councillorList.toString();
 		
-		sb.append("[CouncillorBalcony]\n");
+	}
+	
+	/**
+	 * 
+	 * THESE METHODS ARE HERE ONLY TO AVOID ERRORS IN TEST CLASSES AND SHOULD BE
+	 * REMOVED, SOONER OR LATER.
+	 * 
+	 * 
+	 * 
+	 */
+	
+	protected int calculateNumberOfMatches(List<? extends PoliticsCard> cards) {
 		
-		for (Councillor councillor : councillorList) {
-			sb.append(councillor.toString()).append("\n");
+		Collection<Color> colors = cardsToColors(cards);
+		
+		return calculateNumberOfMatches(colors);
+		
+	}
+	
+	protected int calculateNumberOfMulticoloredCards(List<? extends PoliticsCard> cards) {
+		
+		Collection<Color> colors = cardsToColors(cards);
+		
+		return calculateNumberOfMulticoloredCards(colors);
+		
+	}
+	
+	public int coinsToPay(List<? extends PoliticsCard> cards) {
+		
+		Collection<Color> colors = cardsToColors(cards);
+		
+		return coinsToPay(colors);
+		
+	}
+	
+	public boolean isSatisfiable(List<? extends PoliticsCard> cards, int playerCoins) {
+		
+		Collection<Color> colors = cardsToColors(cards);
+		
+		return isSatisfiable(colors, playerCoins);
+		
+	}
+	
+	private Collection<Color> cardsToColors(List<? extends PoliticsCard> cards) {
+		
+		Collection<Color> colors = new ArrayList<>();
+		
+		for (PoliticsCard card : cards) {
+			colors.add(card.getColor());
 		}
 		
-		return sb.append("\n").toString();
+		return colors;
 		
 	}
 

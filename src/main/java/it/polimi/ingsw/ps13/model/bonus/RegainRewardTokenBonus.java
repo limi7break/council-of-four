@@ -27,7 +27,7 @@ public class RegainRewardTokenBonus implements Bonus, Serializable {
 	@Override
 	public String toString() {
 		
-		return "RegainRewardTokenBonus";
+		return "Regain Reward Token Bonus";
 		
 	}
 	

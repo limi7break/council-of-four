@@ -105,11 +105,11 @@ public class City implements Serializable {
 	
 	/**
 	 * 
-	 * @return the list of emporiums that have been built on the city
+	 * @return the number of emporiums that have been built on the city
 	 */
-	public List<Emporium> getEmporiums() {
+	public int getNumberOfEmporiums() {
 		
-		return Collections.unmodifiableList(emporiums);
+		return emporiums.size();
 		
 	}
 	
@@ -234,12 +234,12 @@ public class City implements Serializable {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("[City]\n")
-			.append("Name: ").append(name).append("\n")
-			.append("Region: ").append(region.getName()).append("\n")
-			.append("CityColor: (").append(color.getColor().getRed()).append(", ").append(color.getColor().getGreen()).append(", ").append(color.getColor().getBlue()).append(")\n")
-			.append("Bonus:\n").append(bonus.toString())
-			.append("Neighbors: ");
+		sb.append("\n[City]\n")
+			.append("NAME: ").append(name).append("\n")
+			.append("REGION: ").append(region.getName()).append("\n")
+			.append("COLOR: ").append(color.getColorName()).append("\n")
+			.append("BONUS: ").append(bonus.toString()).append("\n")
+			.append("NEIGHBORS: ");
 			
 			for (City city : neighbors) {
 				sb.append(city.getName()).append(" ");

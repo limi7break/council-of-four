@@ -31,12 +31,15 @@ import it.polimi.ingsw.ps13.model.player.Player;
 public class Game implements Serializable {
 
 	private static final long serialVersionUID = 0L;
+	private static final int INITIAL_POLITICS_CARDS = 6;
 	private final Map<String, Color> colors;
 	private final Board board;
 	private final Map<Integer, Player> players;
 	private final int numberOfPlayers;
 	private final Market market;
 	private int currentPlayerID;							// number of the player in the players map
+	private boolean sellMarketPhase;
+	private boolean buyMarketPhase;
 	
 	public Game(Document config, List<String> players) { 
 		
@@ -59,12 +62,17 @@ public class Game implements Serializable {
 			String randomKey = keys.get(random.nextInt(keys.size()));
 			Color randomColor = colors.get(randomKey);
 			
-			this.players.put(i, new Player(playerName, randomColor, i, board));
+			this.players.put(i, new Player(playerName, randomColor, randomKey, i, board));
 		}
 		
 		currentPlayerID = 0;
 		
-		// start game maybe?
+		sellMarketPhase = false;
+		buyMarketPhase = false;
+		
+		for (Player p : this.players.values()) {
+			p.drawPoliticsCards(INITIAL_POLITICS_CARDS);
+		}
 	}
 	
 	/**
@@ -73,7 +81,7 @@ public class Game implements Serializable {
 	 */
 	public Map<String, Color> getColors() {
 		
-		return Collections.unmodifiableMap(colors);
+		return colors;
 		
 	}
 	
@@ -94,6 +102,24 @@ public class Game implements Serializable {
 	public Map<Integer, Player> getPlayers() {
 		
 		return Collections.unmodifiableMap(players);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Player getPlayer(String playerName) {
+		
+		Player player = null;
+		
+		for (Player p : players.values()) {
+			if (p.getName().equals(playerName)) {
+				player = p;
+			}
+		}
+		
+		return player;
 		
 	}
 	
@@ -131,12 +157,60 @@ public class Game implements Serializable {
 	 * 
 	 * @return
 	 */
+	public String getCurrentPlayerName() {
+
+		return getCurrentPlayer().getName();
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public void passTurn() {
 		
 		if (currentPlayerID == numberOfPlayers-1) {
-			currentPlayerID = 0;
+			if (!sellMarketPhase && !buyMarketPhase) {
+				sellMarketPhase = true;
+				
+				getCurrentPlayer().getTokens().setZeros();
+				currentPlayerID = 0;
+				getCurrentPlayer().getTokens().setSell();
+			}
+			else if (sellMarketPhase) {
+				sellMarketPhase = false;
+				buyMarketPhase = true;
+				
+				getCurrentPlayer().getTokens().setZeros();
+				currentPlayerID = 0;
+				getCurrentPlayer().getTokens().setBuy();
+			}
+			else {
+				buyMarketPhase = false;
+				
+				getCurrentPlayer().getTokens().setZeros();
+				currentPlayerID = 0;
+				getCurrentPlayer().drawPoliticsCards(1);
+				getCurrentPlayer().getTokens().setInitial();
+			}
 		} else {
-			currentPlayerID++;
+			if (!sellMarketPhase && !buyMarketPhase) {
+				getCurrentPlayer().getTokens().setZeros();
+				currentPlayerID++;
+				getCurrentPlayer().getTokens().setInitial();
+				getCurrentPlayer().drawPoliticsCards(1);
+			}
+			else if (sellMarketPhase) {
+				getCurrentPlayer().getTokens().setZeros();
+				currentPlayerID++;
+				getCurrentPlayer().getTokens().setSell();
+			}
+			else {
+				getCurrentPlayer().getTokens().setZeros();
+				currentPlayerID++;
+				getCurrentPlayer().getTokens().setBuy();
+			}
+			
 		}
 		
 	}
@@ -146,11 +220,11 @@ public class Game implements Serializable {
 	 * @param color
 	 * @return
 	 */
-	public boolean isCouncillorAvailable(Councillor councillor){
+	public boolean isCouncillorAvailable(Color color){
 		
 		for(Councillor c: board.getCouncillors()){
 			
-			if(c.equals(councillor)) 
+			if(c.getColor().equals(color)) 
 				return true;
 
 		}
@@ -188,22 +262,18 @@ public class Game implements Serializable {
 	 */
 	public Councillor getCouncillor(Color color) {
 		
-		Councillor councillor = null;
-		
 		Iterator<Councillor> it = board.getCouncillors().iterator();
 		
-		while(it.hasNext() && councillor == null) {
+		while(it.hasNext()) {
+			Councillor current = it.next();
 			
-			if(it.next().getColor().equals(color)) {
-				
-				councillor = it.next();
-				board.getCouncillors().remove(it.next());
-				
+			if(current.getColor().equals(color)) {
+				it.remove();
+				return current;
 			}
-			
 		}
 		
-		return councillor;
+		return null;
 		
 	}
 	
@@ -224,6 +294,26 @@ public class Game implements Serializable {
 	public int getNumberOfPlayers() {
 		
 		return numberOfPlayers;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSellMarketPhase() {
+		
+		return sellMarketPhase;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isBuyMarketPhase() {
+		
+		return buyMarketPhase;
 		
 	}
 	

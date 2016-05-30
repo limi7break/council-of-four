@@ -29,7 +29,7 @@ public final class RegionFactory {
 		// Create capital color with empty bonus
 		Element capitalColorElement = (Element) ((Element) config.getElementsByTagName("citycolors").item(0)).getElementsByTagName("capitalcolor").item(0);
 		String capitalColorName = capitalColorElement.getAttribute("name");
-		CityColor capitalColor = new CityColor(colors.get(capitalColorName), BonusFactory.createEmptyBonus());
+		CityColor capitalColor = new CityColor(colors.get(capitalColorName), capitalColorName, BonusFactory.createEmptyBonus());
 		cityColors.put(capitalColorName, capitalColor);
 		
 		Element regionsElement = (Element) config.getElementsByTagName("regions").item(0);

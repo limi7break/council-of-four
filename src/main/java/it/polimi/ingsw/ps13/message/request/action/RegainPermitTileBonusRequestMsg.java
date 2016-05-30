@@ -2,15 +2,14 @@ package it.polimi.ingsw.ps13.message.request.action;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
-import it.polimi.ingsw.ps13.model.deck.PermitTile;
 
 public class RegainPermitTileBonusRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 
-	private final PermitTile tile;
+	private final int tile;
 	
-	public RegainPermitTileBonusRequestMsg(PermitTile tile) {
+	public RegainPermitTileBonusRequestMsg(int tile) {
 		
 		this.tile = tile;
 		
@@ -23,7 +22,7 @@ public class RegainPermitTileBonusRequestMsg extends ActionRequestMsg {
 		
 	}
 	
-	public PermitTile getTile() {
+	public int getTile() {
 		return tile;
 	}
 	

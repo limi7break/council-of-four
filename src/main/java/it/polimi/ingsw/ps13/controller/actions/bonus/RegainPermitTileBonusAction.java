@@ -2,20 +2,18 @@ package it.polimi.ingsw.ps13.controller.actions.bonus;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
-import it.polimi.ingsw.ps13.model.bonus.Bonus;
-import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.player.Player;
 
 public class RegainPermitTileBonusAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Player player;
-	private final PermitTile tile;
+	private final String playerName;
+	private final int tile;
 	
-	public RegainPermitTileBonusAction(Player player, PermitTile tile) {
+	public RegainPermitTileBonusAction(String playerName, int tile) {
 		
-		this.player = player;
+		this.playerName = playerName;
 		this.tile = tile;
 		
 	}
@@ -23,23 +21,28 @@ public class RegainPermitTileBonusAction implements Action {
 	@Override
 	public boolean isLegal(Game g) {
 		
-		boolean legal = true;
+		Player player = g.getPlayer(playerName);
 		
-		if(player.getPermitTiles().isEmpty())
-			legal = false;
+		// Check if player has token
+		if (g.getPlayer(playerName).getTokens().getTileBonus() == 0)
+			return false;
 		
-		if(!player.getPermitTiles().contains(tile))
-			legal = false;
+		// Check if tile is a valid permit tile number
+		if ( (tile > player.getPermitTiles().size()-1)
+			|| (tile < 0) )
+			return false;
 		
-		return legal;
+		return true;
 		
 	}
 
 	@Override
 	public void apply(Game g) {
 		
-		Bonus bonus = tile.getBonus();
-		bonus.giveTo(player);
+		Player player = g.getPlayer(playerName);
+		
+		player.getPermitTiles().get(tile).getBonus().giveTo(player);
+		player.consumeTileBonusToken();
 		
 	}
 

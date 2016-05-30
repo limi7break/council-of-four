@@ -4,17 +4,15 @@ import java.util.Collection;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
-import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
-import it.polimi.ingsw.ps13.model.region.City;
 
 public class KingActionRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Collection<PoliticsCard> cards;
-	private final City city;
+	private final String city;
+	private final Collection<String> cards;
 	
-	public KingActionRequestMsg(Collection<PoliticsCard> cards, City city) {
+	public KingActionRequestMsg(String city, Collection<String> cards) {
 		
 		this.cards = cards;
 		this.city = city;
@@ -28,11 +26,11 @@ public class KingActionRequestMsg extends ActionRequestMsg {
 		
 	}
 	
-	public Collection<PoliticsCard> getCards() {
+	public Collection<String> getCards() {
 		return cards;
 	}
 	
-	public City getCity() {
+	public String getCity() {
 		return city;
 	}
 	

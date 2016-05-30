@@ -12,18 +12,16 @@ public final class Councillor implements Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private final Color color;
+	private final String colorName;
 	
 	/**
 	 * Creates a councillor whose color is given as a parameter.
 	 * 
 	 */
-	protected Councillor(Color color) {
+	protected Councillor(Color color, String colorName) {
 		
-		if (color != null) {
-			this.color = color;
-		} else {
-			throw new IllegalStateException("The color of a councillor can not be null");
-		}
+		this.color = color;
+		this.colorName = colorName;
 		
 	}
 
@@ -44,8 +42,7 @@ public final class Councillor implements Serializable {
 	@Override
 	public String toString() {
 		
-		return "[Councillor] "
-				+ "(" + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ")";
+		return colorName.toUpperCase();
 		
 	}
 	

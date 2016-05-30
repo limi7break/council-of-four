@@ -91,7 +91,7 @@ public class ConcreteBonus implements Bonus {
 			sb.append("Wow! It's fucking nothing!\n");
 		}
 		for (Bonus bonus : contents) {
-			sb.append(bonus.toString()).append("\n");
+			sb.append(bonus.toString()).append(" ");
 		}
 		
 		return sb.toString();

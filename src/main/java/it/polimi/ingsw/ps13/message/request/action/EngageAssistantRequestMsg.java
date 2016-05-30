@@ -7,7 +7,11 @@ public class EngageAssistantRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 	
-	public EngageAssistantRequestMsg() { }
+	public EngageAssistantRequestMsg() { 
+		
+		// This action request message has no arguments
+		
+	}
 	
 	@Override
 	public Action accept(ActionVisitor av) {

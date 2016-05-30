@@ -25,4 +25,14 @@ public class Assistants extends Resource implements Marketable, Serializable {
 		player.addAssistants(this.getAmount());
 		
 	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "Ax" + amount;
+		
+	}
 }

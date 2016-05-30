@@ -8,6 +8,8 @@ public class ActionTokens implements Serializable {
 	
 	private int main;
 	private int quick;
+	private int sell;
+	private int buy;
 	private int tileBonus;
 	private int rewardToken;
 	private int takeTile;
@@ -56,6 +58,46 @@ public class ActionTokens implements Serializable {
 	public void setQuick(int quick) {
 		
 		this.quick = quick;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getSell() {
+		
+		return sell;
+		
+	}
+	
+	/**
+	 * 
+	 * @param sell
+	 */
+	public void setSell(int sell) {
+		
+		this.sell = sell;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getBuy() {
+		
+		return buy;
+		
+	}
+	
+	/**
+	 * 
+	 * @param buy
+	 */
+	public void setBuy(int buy) {
+		
+		this.buy = buy;
 		
 	}
 	
@@ -126,6 +168,8 @@ public class ActionTokens implements Serializable {
 		
 		main = 0;
 		quick = 0;
+		sell = 0;
+		buy = 0;
 		tileBonus = 0;
 		rewardToken = 0;
 		takeTile = 0;
@@ -139,9 +183,51 @@ public class ActionTokens implements Serializable {
 		
 		main = 1;
 		quick = 1;
+		sell = 0;
+		buy = 0;
 		tileBonus = 0;
 		rewardToken = 0;
 		takeTile = 0;
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void setSell() {
+		
+		main = 0;
+		quick = 0;
+		sell = 1;
+		buy = 0;
+		tileBonus = 0;
+		rewardToken = 0;
+		takeTile = 0;
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void setBuy() {
+		
+		main = 0;
+		quick = 0;
+		sell = 0;
+		buy = 1;
+		tileBonus = 0;
+		rewardToken = 0;
+		takeTile = 0;
+		
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return main + " Main " + quick + " Quick " + sell + " Sell " + buy + " Buy " + tileBonus + " TileBonus " + rewardToken + " RewTok " + takeTile + " GetVisibleTile";
 		
 	}
 	

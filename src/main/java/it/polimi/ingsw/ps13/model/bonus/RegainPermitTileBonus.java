@@ -27,7 +27,7 @@ public class RegainPermitTileBonus implements Bonus, Serializable {
 	@Override
 	public String toString() {
 		
-		return "RegainPermitTileBonus";
+		return "Regain Permit Tile Bonus";
 		
 	}
 	

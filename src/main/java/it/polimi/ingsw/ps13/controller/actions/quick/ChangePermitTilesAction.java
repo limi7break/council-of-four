@@ -4,18 +4,17 @@ import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.model.region.Region;
 
 public class ChangePermitTilesAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 	
-	private final Player player;
-	private final Region region;
+	private final String playerName;
+	private final String region;
 
-	public ChangePermitTilesAction(Player player, Region region) {
+	public ChangePermitTilesAction(String playerName, String region) {
 		
-		this.player = player;
+		this.playerName = playerName;
 		this.region = region;
 		
 	}
@@ -28,26 +27,35 @@ public class ChangePermitTilesAction implements Action {
 	@Override
 	public boolean isLegal(Game g) {
 		
-		boolean legal = true;
+		Player player = g.getPlayer(playerName);
 		
-		//checks if conditions are satisfied
-		int playerAssistants = player.getAssistants();
+		// Check if player has token
+		if (player.getTokens().getQuick() == 0)
+			return false;
 		
-		if(playerAssistants < 1)
-			legal = false;
+		// Check if region is a valid region
+		if (!g.getBoard().getRegions().containsKey(region))
+			return false;
 		
-		return legal;
+		// Check if player has at least one assistant
+		if (player.getAssistants() < 1)
+			return false;
+		
+		return true;
 		
 	}
 
 	@Override
 	public void apply(Game g) {
 		
+		Player player = g.getPlayer(playerName);
+		
 		player.consumeAssistants(1);
 		
-		PermitTileDeck selected = region.getPermitTileDeck();
+		PermitTileDeck selected = g.getBoard().getRegion(region).getPermitTileDeck();
 		selected.changeTiles();
 		
+		player.consumeQuickAction();
 		
 	}
 

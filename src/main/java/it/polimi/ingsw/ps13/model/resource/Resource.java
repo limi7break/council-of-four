@@ -67,16 +67,4 @@ public abstract class Resource implements Bonus, Serializable {
 		
 	}
 	
-	/**
-	 * Useful for debug.
-	 * 
-	 */
-	@Override
-	public String toString() {
-		
-		return this.getClass().getSimpleName()
-				+ " x" + amount;
-		
-	}
-	
 }

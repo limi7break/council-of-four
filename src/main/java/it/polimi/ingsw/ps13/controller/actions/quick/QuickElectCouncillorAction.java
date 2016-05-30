@@ -5,15 +5,14 @@ import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.model.region.Region;
 
 public class QuickElectCouncillorAction implements Action {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Player player; 
-	private final Councillor councillor;
-	private final Region region; 
+	private final String playerName; 
+	private final String region;
+	private final String color; 
 	
 	/**
 	 * Current player and isQuickActionAvailable are to checked.
@@ -21,11 +20,12 @@ public class QuickElectCouncillorAction implements Action {
 	 * @param player
 	 * @param councillor
 	 */
-	public QuickElectCouncillorAction(Player player, Councillor councillor, Region region) {
+	public QuickElectCouncillorAction(String playerName, String region, String color) {
 		
-		this.player = player;
-		this.councillor = councillor;
+		this.playerName = playerName;
 		this.region = region;
+		this.color = color;
+		
 	}
 	
 	/**
@@ -37,9 +37,22 @@ public class QuickElectCouncillorAction implements Action {
 	public boolean isLegal(Game g) {
 		
 		boolean legal = true;
+		Player player = g.getPlayer(playerName);
 		
-		//checks if conditions are satisfied
-		if(player.getAssistants() < 1 || !g.isCouncillorAvailable(councillor))
+		// Check if player has token
+		if (player.getTokens().getQuick() == 0)
+			legal = false;
+		
+		// Check if region is a valid region
+		if (!g.getBoard().getRegions().containsKey(region) && !"king".equals(region))
+			return false;
+		
+		// Check if color is a valid color
+		if (!g.getColors().containsKey(color))
+			return false;
+		
+		// Check if player has at least 1 assistant and a councillor with the desired color is available 
+		if(player.getAssistants() < 1 || !g.isCouncillorAvailable(g.getColors().get(color)))
 			legal = false;
 		
 		return legal;
@@ -53,15 +66,22 @@ public class QuickElectCouncillorAction implements Action {
 	@Override
 	public void apply(Game g) {
 		
+		Player player = g.getPlayer(playerName);
+		
 		player.consumeAssistants(1);
 		
-		g.getBoard().removeCouncillor(councillor);
+		Councillor chosen = g.getCouncillor(g.getColors().get(color));
 		
-		CouncillorBalcony balcony = region.getCouncillorBalcony();
+		CouncillorBalcony balcony;
+		if ("king".equals(region)) {
+			balcony = g.getBoard().getKingBalcony();
+		} else {
+			balcony = g.getBoard().getRegion(region).getCouncillorBalcony();
+		}
+		Councillor toBeDiscarded = balcony.insertCouncillor(chosen);
+		g.getBoard().insertCouncillor(toBeDiscarded);
 		
-		Councillor droppedCouncillor = balcony.insertCouncillor(councillor);
-		
-		g.getBoard().insertCouncillor(droppedCouncillor);
+		player.consumeQuickAction();
 		
 	}	
 	

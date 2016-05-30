@@ -25,5 +25,14 @@ public class VictoryPoints extends Resource implements Serializable {
 		
 	}
 	
-
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "VPx" + amount;
+		
+	}
+	
 }

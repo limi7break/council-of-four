@@ -2,20 +2,18 @@ package it.polimi.ingsw.ps13.message.request.action;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
-import it.polimi.ingsw.ps13.model.council.Councillor;
-import it.polimi.ingsw.ps13.model.region.Region;
 
 public class ElectCouncillorRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 
-	private final Councillor councillor;
-	private final Region region;
+	private final String region;
+	private final String councillor;
 	
-	public ElectCouncillorRequestMsg(Councillor councillor, Region region) {
+	public ElectCouncillorRequestMsg(String region, String councillor) {
 		
-		this.councillor = councillor;
 		this.region = region;
+		this.councillor = councillor;
 		
 	}
 	
@@ -26,11 +24,11 @@ public class ElectCouncillorRequestMsg extends ActionRequestMsg {
 		
 	}
 	
-	public Councillor getCouncillor() {
+	public String getCouncillor() {
 		return councillor;
 	}
 	
-	public Region getRegion() {
+	public String getRegion() {
 		return region;
 	}
 	

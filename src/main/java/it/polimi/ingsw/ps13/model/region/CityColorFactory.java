@@ -32,7 +32,7 @@ public final class CityColorFactory {
 			Bonus currentBonus = BonusFactory.createBonus(currentBonusElement);
 			String currentColorName = currentColor.getAttribute("name");
 			
-			cityColors.put(currentColorName, new CityColor(colors.get(currentColorName), currentBonus));
+			cityColors.put(currentColorName, new CityColor(colors.get(currentColorName), currentColorName, currentBonus));
 		}
 		
 		return cityColors;

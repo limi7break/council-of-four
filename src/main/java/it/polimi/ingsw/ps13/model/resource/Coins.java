@@ -26,4 +26,14 @@ public class Coins extends Resource implements Serializable {
 		
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		
+		return "Cx" + amount;
+		
+	}
+	
 }

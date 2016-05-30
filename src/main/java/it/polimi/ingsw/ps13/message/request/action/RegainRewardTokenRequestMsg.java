@@ -2,15 +2,14 @@ package it.polimi.ingsw.ps13.message.request.action;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
-import it.polimi.ingsw.ps13.model.region.City;
 
 public class RegainRewardTokenRequestMsg extends ActionRequestMsg {
 
 	private static final long serialVersionUID = 0L;
 
-	private final City city; //The city whose token wants to be acquired again
+	private final String city; //The city whose token wants to be acquired again
 	
-	public RegainRewardTokenRequestMsg(City city) {
+	public RegainRewardTokenRequestMsg(String city) {
 		
 		this.city = city;
 		
@@ -23,7 +22,7 @@ public class RegainRewardTokenRequestMsg extends ActionRequestMsg {
 		
 	}
 	
-	public City getCity() {
+	public String getCity() {
 		return city;
 	}
 	

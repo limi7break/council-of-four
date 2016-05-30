@@ -22,6 +22,7 @@ public class Player implements Serializable {
 	
 	private final String name;
 	private final Color color;
+	private final String colorName;
 	private final PlayerSupply supply;
 	private final Set<String> cityNames;
 	private int nobilityPosition;
@@ -30,10 +31,11 @@ public class Player implements Serializable {
 	private final Board board;
 	
 	
-	public Player(String name, Color color, int position, Board board) { 
+	public Player(String name, Color color, String colorName, int position, Board board) { 
 		
 		this.name = name;
 		this.color = color;
+		this.colorName = colorName;
 		supply = new PlayerSupply(position, color);
 		cityNames = new TreeSet<>();
 		
@@ -141,6 +143,16 @@ public class Player implements Serializable {
 	public Emporium removeEmporium() {
 		
 		return supply.getEmporiums().remove(0);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<PoliticsCard> getPoliticsCards() {
+		
+		return supply.getPoliticsCards();
 		
 	}
 	
@@ -264,6 +276,16 @@ public class Player implements Serializable {
 	
 	/**
 	 * 
+	 * @param cityName
+	 */
+	public void addCity(String cityName) {
+		
+		cityNames.add(cityName);
+		
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public List<PermitTile> getPermitTiles() {
@@ -352,6 +374,30 @@ public class Player implements Serializable {
 		else
 			tokens.setQuick(tokens.getQuick() - 1);
 		
+	}
+	
+	/**
+	 * 
+	 */
+	public void consumeSellAction() {
+		
+		if(tokens.getSell() < 1) 
+			throw new IndexOutOfBoundsException();
+		else
+			tokens.setSell(tokens.getSell() - 1);
+			
+	}
+	
+	/**
+	 * 
+	 */
+	public void consumeBuyAction() {
+		
+		if(tokens.getBuy() < 1) 
+			throw new IndexOutOfBoundsException();
+		else
+			tokens.setBuy(tokens.getBuy() - 1);
+			
 	}
 	
 	/**
@@ -445,15 +491,14 @@ public class Player implements Serializable {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("[Player]\n")
-			.append("Name: ").append(name).append("\n")
-			.append("Color: ").append("(").append(color.getRed()).append(", ").append(color.getGreen()).append(", ").append(color.getBlue()).append(")\n")
-			.append(supply.toString()).append("\n")
-			.append("Nobility position: ").append(nobilityPosition).append("\n")
-			.append("Cities: ").append(cityNames.toString()).append("\n");
+		sb.append("\nMy name is ").append(name).append("\n")
+		  .append("COLOR: ").append(colorName).append("\n")
+		  .append(supply.toString()).append("\n")
+		  .append("NOBILITY POSITION: ").append(nobilityPosition).append("\n")
+		  .append("CITIES: ").append(cityNames.toString()).append("\n")
+		  .append("ACTIONS: ").append(tokens.toString()).append("\n\n");
 			
-			sb.append("\n");
-			return sb.toString();
+		return sb.toString();
 	
 	}
 	

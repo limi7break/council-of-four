@@ -48,8 +48,7 @@ public class MainActionsBonus implements Bonus, Serializable {
 	@Override
 	public String toString() {
 		
-		return "MainActionsBonus "
-				+ "x" + amount;
+		return "MAx" + amount;
 		
 	}
 }

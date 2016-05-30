@@ -117,12 +117,18 @@ public class PlayerSupply implements Serializable  {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("Victory Points: ").append(victoryPoints.getAmount()).append("\n")
-		  .append("Coins: ").append(coins.getAmount()).append("\n")
-		  .append("Assistants: ").append(assistants.getAmount()).append("\n")
-		  .append("Emporiums:\n").append(emporiums.size()).append("\n")
-		  .append("Politics cards:\n").append(politicsCards.toString()).append("\n")
-		  .append("Permit tiles:\n").append(permitTiles.toString()).append("\n");
+		sb.append("VP: ").append(victoryPoints.getAmount()).append(" ")
+		  .append("COINS: ").append(coins.getAmount()).append(" ")
+		  .append("ASSISTANTS: ").append(assistants.getAmount()).append(" ")
+		  .append("EMPORIUMS: ").append(emporiums.size()).append("\n")
+		  .append("POLITICS CARDS: ").append(politicsCards.toString()).append("\n")
+		  .append("PERMIT TILES:\n");
+		
+		for (int i=0; i<permitTiles.size(); i++) {
+			sb.append("[" + i + "]")
+			  .append(permitTiles.get(i).toString()).append("\n")
+			  .append("used = " + permitTiles.get(i).isUsed()).append("\n\n");
+		}
 		
 		return sb.toString();
 		

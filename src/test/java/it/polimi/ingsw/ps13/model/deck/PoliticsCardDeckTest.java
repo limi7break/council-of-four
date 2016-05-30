@@ -35,8 +35,8 @@ public class PoliticsCardDeckTest  {
         assertTrue(emptyDeck.drawCard() == null);
 
         //it should put the 2 discarded cards in the draw pile again: draw one then 1 left in the drawPile
-        PoliticsCard r1 = new PoliticsCard(Color.red);
-        PoliticsCard r2 = new PoliticsCard(Color.red);
+        PoliticsCard r1 = new PoliticsCard(Color.red, "red");
+        PoliticsCard r2 = new PoliticsCard(Color.red, "red");
         deck.discardCard(r1);
         deck.discardCard(r2);
         assertFalse(deck.drawCard() == null);
@@ -48,8 +48,8 @@ public class PoliticsCardDeckTest  {
     public void discardCard() throws Exception {
 
         createSmallDeck();
-        PoliticsCard y1 = new PoliticsCard(Color.yellow);
-        PoliticsCard o1 = new PoliticsCard(Color.orange);
+        PoliticsCard y1 = new PoliticsCard(Color.yellow, "yellow");
+        PoliticsCard o1 = new PoliticsCard(Color.orange, "orange");
         System.out.println(deck.toString());
         assertEquals(deck.toString(),"[PoliticsCardDeck]\n\nDraw Pile:\n[PoliticsCard] (255, 0, 0)\n[PoliticsCard] (0, 0, 255)\n\nDiscard Pile:\n");
         deck.discardCard(y1);
@@ -74,8 +74,8 @@ public class PoliticsCardDeckTest  {
 
     private void createSmallDeck() {
 
-         PoliticsCard r1 = new PoliticsCard(Color.red);
-         PoliticsCard b1 = new PoliticsCard(Color.blue);
+         PoliticsCard r1 = new PoliticsCard(Color.red, "red");
+         PoliticsCard b1 = new PoliticsCard(Color.blue, "blue");
 
         cards = new ArrayList<>();
 
@@ -117,24 +117,24 @@ public class PoliticsCardDeckTest  {
         PoliticsCard g2;
         PoliticsCard g3;
 
-        r1 = new PoliticsCard(Color.red);
-        r2 = new PoliticsCard(Color.red);
-        r3 = new PoliticsCard(Color.red);
-        b1 = new PoliticsCard(Color.blue);
-        b2 = new PoliticsCard(Color.blue);
-        b3 = new PoliticsCard(Color.blue);
-        y1 = new PoliticsCard(Color.yellow);
-        y2 = new PoliticsCard(Color.yellow);
-        y3 = new PoliticsCard(Color.yellow);
-        p1 = new PoliticsCard(Color.pink);
-        p2 = new PoliticsCard(Color.pink);
-        p3 = new PoliticsCard(Color.pink);
-        o1 = new PoliticsCard(Color.orange);
-        o2 = new PoliticsCard(Color.orange);
-        o3 = new PoliticsCard(Color.orange);
-        g1 = new PoliticsCard(Color.green);
-        g2 = new PoliticsCard(Color.green);
-        g3 = new PoliticsCard(Color.green);
+        r1 = new PoliticsCard(Color.red, "red");
+        r2 = new PoliticsCard(Color.red, "red");
+        r3 = new PoliticsCard(Color.red, "red");
+        b1 = new PoliticsCard(Color.blue, "blue");
+        b2 = new PoliticsCard(Color.blue, "blue");
+        b3 = new PoliticsCard(Color.blue, "blue");
+        y1 = new PoliticsCard(Color.yellow, "yellow");
+        y2 = new PoliticsCard(Color.yellow, "yellow");
+        y3 = new PoliticsCard(Color.yellow, "yellow");
+        p1 = new PoliticsCard(Color.pink, "pink");
+        p2 = new PoliticsCard(Color.pink, "pink");
+        p3 = new PoliticsCard(Color.pink, "pink");
+        o1 = new PoliticsCard(Color.orange, "orange");
+        o2 = new PoliticsCard(Color.orange, "orange");
+        o3 = new PoliticsCard(Color.orange, "orange");
+        g1 = new PoliticsCard(Color.green, "green");
+        g2 = new PoliticsCard(Color.green, "green");
+        g3 = new PoliticsCard(Color.green, "green");
 
         cards = new ArrayList<>();
 
