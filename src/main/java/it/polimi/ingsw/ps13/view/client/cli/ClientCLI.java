@@ -1,22 +1,10 @@
 package it.polimi.ingsw.ps13.view.client.cli;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.AcquirePermitTileRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.BuildEmporiumRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.ChangePermitTilesRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.ElectCouncillorRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.EngageAssistantRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.GainMainActionRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.OfferSelectionRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.PassTurnRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.QuickElectCouncillorRequestMsg;
-import it.polimi.ingsw.ps13.message.request.action.TradeProposalRequestMsg;
+import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
@@ -197,114 +185,9 @@ public class ClientCLI implements ClientView {
 				
 				String cmd = scanner.nextLine();
 				
-				// Chat command
-				if (cmd.matches("^chat\\s(.+)$")) {
-		            String param = cmd.replaceFirst("chat ", "");
-		            connection.sendMessage(new ChatRequestMsg(param));
-				}
-				
-				// Main actions
-				else if (cmd.matches("^elect\\s([a-z]+)\\s([a-z]+)$")) {
-		            String param = cmd.replaceFirst("elect ", "");
-		            String[] params = param.split(" ");
-		            
-		            connection.sendMessage(new ElectCouncillorRequestMsg(params[0], params[1]));
-				}
-				else if (cmd.matches("^corrupt\\s([a-z]+)\\s([0-9]{1})(\\s([a-z]+))+$")) {
-		            String param = cmd.replaceFirst("corrupt ", "");
-		            String[] params = param.split(" ");
-		            
-		            String region = params[0];
-		            int tile = Integer.parseInt(params[1]);
-		            List<String> cards = new ArrayList<>();
-		            for (int i=2; i<params.length; i++) {
-		            	cards.add(params[i]);
-		            }
-		            
-		            connection.sendMessage(new AcquirePermitTileRequestMsg(region, tile, cards));
-				}
-				else if (cmd.matches("^build\\s([0-9]{1})\\s([a-z]+)$")) {
-		            String param = cmd.replaceFirst("build ", "");
-		            String[] params = param.split(" ");
-		            
-		            int tile = Integer.parseInt(params[0]);
-		            String city = params[1];
-		            
-		            connection.sendMessage(new BuildEmporiumRequestMsg(tile, city));
-				}
-				
-				// Quick actions
-				else if (cmd.matches("^changetiles\\s([a-z]+)$")) {
-		            String param = cmd.replaceFirst("changetiles ", "");
-		            
-		            connection.sendMessage(new ChangePermitTilesRequestMsg(param));
-				}
-				else if (cmd.matches("^engageassistant$")) {
-		            connection.sendMessage(new EngageAssistantRequestMsg());
-				}
-				else if (cmd.matches("^gainmainaction$")) {
-		            connection.sendMessage(new GainMainActionRequestMsg());
-				}
-				else if (cmd.matches("^qelect\\s([a-z]+)\\s([a-z]+)$")) {
-		            String param = cmd.replaceFirst("qelect ", "");
-		            String[] params = param.split(" ");
-		            
-		            connection.sendMessage(new QuickElectCouncillorRequestMsg(params[0], params[1]));
-				}
-				
-				// Sell action
-				else if (cmd.matches("^sell$")) {
-					String input = null;
-					do {
-						System.out.print("assistants? ");
-						input = scanner.nextLine();
-					} while(!input.matches("[0-9]+"));
-					int assistants = Integer.parseInt(input);
-					
-					do {
-						System.out.print("cards? (enter \"no\" for none) ");
-						input = scanner.nextLine();
-					} while(!input.matches("^[a-zA-Z]+(\\s{1}[a-zA-Z]+)*$") && !input.matches("no"));
-					List<String> cards = new ArrayList<>();
-					if (!"no".equals(input)) {
-						String[] cardParams = input.split(" ");
-						for (int i=0; i<cardParams.length; i++) {
-							cards.add(cardParams[i]);
-						}
-					}
-					
-					do {
-						System.out.print("tiles? (enter \"no\" for none) ");
-						input = scanner.nextLine();
-					} while(!input.matches("^[0-9]+(\\s{1}[0-9]+)*$") && !input.matches("no"));
-					List<Integer> tiles = new ArrayList<>();
-					if (!"no".equals(input)) {
-						String[] tileParams = input.split(" ");
-						for (int i=0; i<tileParams.length; i++) {
-							tiles.add(Integer.parseInt(tileParams[i]));
-						}
-					}
-					
-					do {
-						System.out.print("price? ");
-						input = scanner.nextLine();
-					} while(!input.matches("[0-9]+"));
-					int price = Integer.parseInt(input);
-					
-					connection.sendMessage(new TradeProposalRequestMsg(assistants, tiles, cards, price));
-				}
-				
-				// Buy action
-				else if (cmd.matches("^buy\\s([0-9]{1})$")) {
-		            String param = cmd.replaceFirst("buy ", "");
-		            int entry = Integer.parseInt(param);
-		            
-		            connection.sendMessage(new OfferSelectionRequestMsg(entry));
-				}
-				
-				// Pass action
-				else if (cmd.matches("^pass$")) {
-		            connection.sendMessage(new PassTurnRequestMsg());
+				RequestMsg msg = CmdInterpreter.parseCommand(cmd);
+				if (msg != null) {
+					connection.sendMessage(msg);
 				}
 				
 				// Some commands are elaborated locally

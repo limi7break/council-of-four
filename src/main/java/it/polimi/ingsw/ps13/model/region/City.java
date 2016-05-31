@@ -239,6 +239,7 @@ public class City implements Serializable {
 			.append("REGION: ").append(region.getName()).append("\n")
 			.append("COLOR: ").append(color.getColorName()).append("\n")
 			.append("BONUS: ").append(bonus.toString()).append("\n")
+			.append("EMPORIUMS: ").append(emporiums.size()).append("\n")
 			.append("NEIGHBORS: ");
 			
 			for (City city : neighbors) {

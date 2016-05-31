@@ -117,7 +117,7 @@ public class PlayerSupply implements Serializable  {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("VP: ").append(victoryPoints.getAmount()).append(" ")
+		sb.append("VICTORY POINTS: ").append(victoryPoints.getAmount()).append(" ")
 		  .append("COINS: ").append(coins.getAmount()).append(" ")
 		  .append("ASSISTANTS: ").append(assistants.getAmount()).append(" ")
 		  .append("EMPORIUMS: ").append(emporiums.size()).append("\n")

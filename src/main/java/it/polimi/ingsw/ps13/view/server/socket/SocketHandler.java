@@ -38,6 +38,7 @@ public class SocketHandler extends Handler implements Runnable {
 		ois = new ObjectInputStream(socket.getInputStream());
 		
 		this.playerName = playerName;
+		running = true;
 		
 	}
 	
@@ -52,20 +53,22 @@ public class SocketHandler extends Handler implements Runnable {
 	@Override
 	public void update(ResponseMsg msg) {
 		
-		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
-		// Only the recipient of a UnicastMsg receives it
-		if (!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
-			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
+		if (running) {
+			// A MulticastMsg is sent to everyone except to the player whose name is written on the message
+			// Only the recipient of a UnicastMsg receives it
+			if (!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
+				|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
+				
+				try {
+					oos.reset();
+					oos.writeObject(msg);
+					oos.flush();
 		
-			try {
-				oos.reset();
-				oos.writeObject(msg);
-				oos.flush();
-	
-			} catch (IOException e) {
-				LOG.log(Level.WARNING, "A problem was encountered while sending data to the client.", e);
+				} catch (IOException e) {
+					LOG.log(Level.WARNING, "A problem was encountered while sending data to the client. (" + playerName + ")", e);
+				}
+				
 			}
-			
 		}
 		
 	}
@@ -96,7 +99,8 @@ public class SocketHandler extends Handler implements Runnable {
 				this.notifyObserver(msg);
 
 			} catch (IOException | ClassNotFoundException e) {
-				LOG.log(Level.WARNING, "A problem was encountered while reading data from the client.", e);
+				LOG.log(Level.WARNING, "A problem was encountered while reading data from the client. (" + playerName + ")", e);
+				stop();
 			}
 		}
 		
