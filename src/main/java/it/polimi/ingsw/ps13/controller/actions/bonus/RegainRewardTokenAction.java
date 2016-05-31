@@ -17,7 +17,7 @@ public class RegainRewardTokenAction implements Action {
 	public RegainRewardTokenAction(String playerName, String city) {
 		
 		this.playerName = playerName;
-		this.city = city;
+		this.city = capitalizeFirstLetter(city);
 		
 	}
 	
@@ -57,6 +57,13 @@ public class RegainRewardTokenAction implements Action {
 		g.getBoard().getCity(city).getBonus().giveTo(player);
 		player.consumeRewardTokenToken();
 		
+	}
+	
+	private String capitalizeFirstLetter(String original) {
+	    if (original == null || original.length() == 0) {
+	        return original;
+	    }
+	    return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
 	
 }

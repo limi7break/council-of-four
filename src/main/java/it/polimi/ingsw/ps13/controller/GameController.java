@@ -25,6 +25,7 @@ import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.util.observer.Observable;
 import it.polimi.ingsw.ps13.util.observer.Observer;
 
@@ -164,6 +165,10 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 				if (action instanceof PassTurnAction) {
 					notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
 					notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
+					
+					if (game.isFinished()) {
+						notifyObserver(new ResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!"));
+					}
 				}
 				
 			} else {
@@ -173,6 +178,20 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		} else {
 			notifyObserver(new UnicastMsg("ERROR: it\'s not your turn.", msg.getPlayerName()));
 		}
+		
+	}
+	
+	private String calculateWinner() {
+		
+		String winner = "";
+		
+		int maxVictoryPoints = 0;
+		for (Player p : game.getPlayers().values()) {
+			if (p.getVictoryPoints() > maxVictoryPoints)
+				winner = p.getName();
+		}
+		
+		return winner;
 		
 	}
 	

@@ -144,6 +144,12 @@ public class ClientCLI implements ClientView {
 				System.out.println("BUY ACTION");
 				System.out.println("buy <entry number>");
 				System.out.println();
+				
+				System.out.println("BONUS ACTIONS");
+				System.out.println("get tile <region> <visible tile number>");
+				System.out.println("get rt <city>");
+				System.out.println("get tb <tile number>");
+				System.out.println();
 				break;
 			default:
 				System.out.println("Command not recognized.");

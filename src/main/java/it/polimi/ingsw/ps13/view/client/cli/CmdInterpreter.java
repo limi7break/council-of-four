@@ -15,7 +15,10 @@ import it.polimi.ingsw.ps13.message.request.action.GainMainActionRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.OfferSelectionRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.PassTurnRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.QuickElectCouncillorRequestMsg;
+import it.polimi.ingsw.ps13.message.request.action.RegainPermitTileBonusRequestMsg;
+import it.polimi.ingsw.ps13.message.request.action.RegainRewardTokenRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.TradeProposalRequestMsg;
+import it.polimi.ingsw.ps13.message.request.action.VisiblePermitTileRequestMsg;
 
 /**
  * This class converts command line input into request messages.
@@ -49,7 +52,7 @@ public class CmdInterpreter {
             
             msg = new ElectCouncillorRequestMsg(params[0], params[1]);
 		}
-		else if (cmd.matches("^corrupt\\s([a-z]+)\\s([0-9]{1})(\\s([a-z]+))+$")) {
+		else if (cmd.matches("^corrupt\\s([a-z]+)\\s([0-9]+)(\\s([a-z]+))+$")) {
             String param = cmd.replaceFirst("corrupt ", "");
             String[] params = param.split(" ");
             
@@ -62,7 +65,7 @@ public class CmdInterpreter {
             
             msg = new AcquirePermitTileRequestMsg(region, tile, cards);
 		}
-		else if (cmd.matches("^build\\s([0-9]{1})\\s([a-z]+)$")) {
+		else if (cmd.matches("^build\\s([0-9]+)\\s([a-z]+)$")) {
             String param = cmd.replaceFirst("build ", "");
             String[] params = param.split(" ");
             
@@ -134,11 +137,37 @@ public class CmdInterpreter {
 		}
 		
 		// Buy action
-		else if (cmd.matches("^buy\\s([0-9]{1})$")) {
+		else if (cmd.matches("^buy\\s([0-9]+)$")) {
             String param = cmd.replaceFirst("buy ", "");
             int entry = Integer.parseInt(param);
             
             msg = new OfferSelectionRequestMsg(entry);
+		}
+		
+		// Get visible tile bonus action
+		else if (cmd.matches("^get\\stile\\s([a-z]+)\\s([0-9]+)$")) {
+			String param = cmd.replaceFirst("get tile ", "");
+			String[] params = param.split(" ");
+            
+            String region = params[0];
+            int tile = Integer.parseInt(params[1]);
+			
+			msg = new VisiblePermitTileRequestMsg(region, tile);
+		}
+		
+		// Regain reward token action
+		else if (cmd.matches("^get\\srt\\s([a-z]+)$")) {
+			String param = cmd.replaceFirst("get rt ", "");
+			
+			msg = new RegainRewardTokenRequestMsg(param);
+		}
+		
+		// Regain tile bonus action
+		else if (cmd.matches("^get\\stb\\s([0-9]+)$")) {
+			String param = cmd.replaceFirst("get tb ", "");
+			int tile = Integer.parseInt(param);
+			
+			msg = new RegainPermitTileBonusRequestMsg(tile);
 		}
 		
 		// Pass action

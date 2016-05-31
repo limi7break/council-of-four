@@ -40,6 +40,8 @@ public class Game implements Serializable {
 	private int currentPlayerID;							// number of the player in the players map
 	private boolean sellMarketPhase;
 	private boolean buyMarketPhase;
+	private int playerWhoBuiltLastEmporium;
+	private boolean finished;
 	
 	public Game(Document config, List<String> players) { 
 		
@@ -73,6 +75,8 @@ public class Game implements Serializable {
 		for (Player p : this.players.values()) {
 			p.drawPoliticsCards(INITIAL_POLITICS_CARDS);
 		}
+		
+		playerWhoBuiltLastEmporium = -1;
 	}
 	
 	/**
@@ -169,48 +173,64 @@ public class Game implements Serializable {
 	 */
 	public void passTurn() {
 		
-		if (currentPlayerID == numberOfPlayers-1) {
-			if (!sellMarketPhase && !buyMarketPhase) {
-				sellMarketPhase = true;
-				
+		if (playerWhoBuiltLastEmporium != -1) {
+			if (currentPlayerID == playerWhoBuiltLastEmporium-1) {
+				finished = true;
+			} else if (currentPlayerID == numberOfPlayers-1) {
 				getCurrentPlayer().getTokens().setZeros();
 				currentPlayerID = 0;
-				getCurrentPlayer().getTokens().setSell();
-			}
-			else if (sellMarketPhase) {
-				sellMarketPhase = false;
-				buyMarketPhase = true;
-				
-				getCurrentPlayer().getTokens().setZeros();
-				currentPlayerID = 0;
-				getCurrentPlayer().getTokens().setBuy();
-			}
-			else {
-				buyMarketPhase = false;
-				
-				getCurrentPlayer().getTokens().setZeros();
-				currentPlayerID = 0;
-				getCurrentPlayer().drawPoliticsCards(1);
 				getCurrentPlayer().getTokens().setInitial();
+				getCurrentPlayer().drawPoliticsCards(1);
+			} else {
+				getCurrentPlayer().getTokens().setZeros();
+				currentPlayerID++;
+				getCurrentPlayer().getTokens().setInitial();
+				getCurrentPlayer().drawPoliticsCards(1);
 			}
 		} else {
-			if (!sellMarketPhase && !buyMarketPhase) {
-				getCurrentPlayer().getTokens().setZeros();
-				currentPlayerID++;
-				getCurrentPlayer().getTokens().setInitial();
-				getCurrentPlayer().drawPoliticsCards(1);
+			if (currentPlayerID == numberOfPlayers-1) {
+				if (!sellMarketPhase && !buyMarketPhase) {
+					sellMarketPhase = true;
+					
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID = 0;
+					getCurrentPlayer().getTokens().setSell();
+				}
+				else if (sellMarketPhase) {
+					sellMarketPhase = false;
+					buyMarketPhase = true;
+					
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID = 0;
+					getCurrentPlayer().getTokens().setBuy();
+				}
+				else {
+					buyMarketPhase = false;
+					market.closeMarket();
+					
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID = 0;
+					getCurrentPlayer().drawPoliticsCards(1);
+					getCurrentPlayer().getTokens().setInitial();
+				}
+			} else {
+				if (!sellMarketPhase && !buyMarketPhase) {
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID++;
+					getCurrentPlayer().getTokens().setInitial();
+					getCurrentPlayer().drawPoliticsCards(1);
+				}
+				else if (sellMarketPhase) {
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID++;
+					getCurrentPlayer().getTokens().setSell();
+				}
+				else {
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID++;
+					getCurrentPlayer().getTokens().setBuy();
+				}
 			}
-			else if (sellMarketPhase) {
-				getCurrentPlayer().getTokens().setZeros();
-				currentPlayerID++;
-				getCurrentPlayer().getTokens().setSell();
-			}
-			else {
-				getCurrentPlayer().getTokens().setZeros();
-				currentPlayerID++;
-				getCurrentPlayer().getTokens().setBuy();
-			}
-			
 		}
 		
 	}
@@ -314,6 +334,26 @@ public class Game implements Serializable {
 	public boolean isBuyMarketPhase() {
 		
 		return buyMarketPhase;
+		
+	}
+
+	/**
+	 * 
+	 * @param playerWhoBuiltLastEmporium
+	 */
+	public void setPlayerWhoBuiltLastEmporium(int playerWhoBuiltLastEmporium) {
+		
+		this.playerWhoBuiltLastEmporium = playerWhoBuiltLastEmporium;
+		
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isFinished() {
+		
+		return finished;
 		
 	}
 	

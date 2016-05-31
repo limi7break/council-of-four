@@ -61,6 +61,7 @@ public class BuildEmporiumAction implements Action {
 		if(!permitTile.getCityNames().contains(city))
 			legal = false;
 		
+		// Check if player has enough assistants (one for every emporium already built on the city)
 		if(player.getAssistants() < g.getBoard().getCity(city).getNumberOfEmporiums())
 			legal = false;
 		
@@ -88,11 +89,16 @@ public class BuildEmporiumAction implements Action {
 		
 		g.getBoard().getCity(city).giveBonuses(player);
 		
+		if (player.getNumberOfEmporiums() == 0) {
+			g.setPlayerWhoBuiltLastEmporium(player.getID());
+			player.addVictoryPoints(3);
+		}
+		
 		player.consumeMainAction();
 		
 	}
 	
-	public String capitalizeFirstLetter(String original) {
+	private String capitalizeFirstLetter(String original) {
 	    if (original == null || original.length() == 0) {
 	        return original;
 	    }
