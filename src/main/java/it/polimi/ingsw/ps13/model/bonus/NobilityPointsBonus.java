@@ -27,7 +27,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 		
 		for(int i=0; i<amount; i++){
 			
-			player.setNobilityPosition(player.getNobilityPosition() + 1);
+			player.nobilityAdvance();
 			
 			Bonus bonus = nobilityTrack.getBonus(player.getNobilityPosition());
 			bonus.giveTo(player);

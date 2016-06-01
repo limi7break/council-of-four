@@ -2,7 +2,7 @@ package it.polimi.ingsw.ps13.model.player;
 
 import java.awt.Color;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -160,27 +160,6 @@ public class Player implements Serializable {
 	}
 	
 	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public PoliticsCard selectPoliticsCard(int index) {
-		
-		return supply.getPoliticsCards().get(index);
-		
-	}
-	
-	/**
-	 * 
-	 * @param cards
-	 */
-	public void discardPoliticsCards(Collection<PoliticsCard> cards) {
-		
-		supply.getPoliticsCards().removeAll(cards);
-		
-	}
-	
-	/**
 	 * Gives the player a politics card: useful for market.
 	 * 
 	 * @param card
@@ -188,28 +167,6 @@ public class Player implements Serializable {
 	public void receivePoliticsCard(PoliticsCard card) {
 		
 		supply.getPoliticsCards().add(card);
-		
-	}
-	
-	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public PermitTile selectPermitTile(int index) {
-		
-		return supply.getPermitTiles().get(index);
-		
-	}
-	
-	/**
-	 * 
-	 * @param position
-	 * @param regionDeck
-	 */
-	public void givePermitTile(PermitTile tile) {
-		
-		supply.getPermitTiles().remove(tile);
 		
 	}
 	
@@ -270,9 +227,19 @@ public class Player implements Serializable {
 	 * 
 	 * @param nobilityPosition
 	 */
-	public void setNobilityPosition(int nobilityPosition) {
+	public void nobilityAdvance() {
 		
-		this.nobilityPosition = nobilityPosition;
+		this.nobilityPosition += 1;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Set<String> getCityNames() {
+		
+		return Collections.unmodifiableSet(cityNames);
 		
 	}
 	
@@ -304,24 +271,6 @@ public class Player implements Serializable {
 	public List<PermitTile> getPermitTiles() {
 		
 		return supply.getPermitTiles();
-		
-	}
-	
-	/**
-	 * 
-	 * @param cityName
-	 * @return
-	 */
-	public boolean canBuildOn(String cityName) {
-		
-		for(PermitTile p: getPermitTiles()) {
-			
-			if(p.getCityNames().contains(cityName) && !p.isUsed())
-				return true;
-			
-		}
-		
-		return false;
 		
 	}
 	
@@ -364,16 +313,6 @@ public class Player implements Serializable {
 			throw new IndexOutOfBoundsException();
 		else
 			tokens.setMain(tokens.getMain() - 1);
-		
-	}
-	
-	/**
-	 * 
-	 * @param amount
-	 */
-	public void addQuickActions(int amount){
-		
-		tokens.setQuick(tokens.getQuick() + amount);
 		
 	}
 	

@@ -5,6 +5,7 @@ import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
+import it.polimi.ingsw.ps13.model.region.City;
 
 public class BuildEmporiumAction implements Action {
 
@@ -76,18 +77,29 @@ public class BuildEmporiumAction implements Action {
 	public void apply(Game g) {
 		
 		Player player = g.getPlayer(playerName);
+		City realCity = g.getBoard().getCity(city);
+		player.consumeAssistants(realCity.getNumberOfEmporiums());
 		
 		PermitTile permitTile = player.getPermitTiles().get(tile);
-		
 		permitTile.setUsed(true);
 		
-		player.consumeAssistants(g.getBoard().getCity(city).getNumberOfEmporiums());
-		
 		Emporium emporium = player.removeEmporium();
-		g.getBoard().getCity(city).addEmporium(emporium);
+		realCity.addEmporium(emporium);
 		player.addCity(city);
 		
-		g.getBoard().getCity(city).giveBonuses(player);
+		realCity.giveBonuses(player);
+		
+		// Give the player the region bonus, if he has completed the region and if it's available
+		if (realCity.getRegion().isBonusAvailable() && player.getCityNames().containsAll(realCity.getRegion().getCityNames())) {
+			realCity.getRegion().setBonusAvailable(false);
+			realCity.getRegion().getBonus().giveTo(player);
+		}
+		
+		// Give the player the color bonus, if he has completed the color and if it's available
+		if (realCity.getCityColor().isBonusAvailable() && player.getCityNames().containsAll(realCity.getCityColor().getCityNames())) {
+			realCity.getCityColor().setBonusAvailable(false);
+			realCity.getCityColor().getBonus().giveTo(player);
+		}
 		
 		if (player.getNumberOfEmporiums() == 0) {
 			g.setPlayerWhoBuiltLastEmporium(player.getID());
