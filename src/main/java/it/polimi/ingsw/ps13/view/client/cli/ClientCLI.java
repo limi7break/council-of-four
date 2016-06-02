@@ -127,7 +127,7 @@ public class ClientCLI implements ClientView {
 				System.out.println("elect <region> <color>");
 				System.out.println("corrupt <region> <visible tile number> <card color> <card color> ...");
 				System.out.println("build <tile number> <city>");
-				System.out.println("king COMING SOON!!");
+				System.out.println("king <city> <card color> <card color> ...");
 				System.out.println();
 				
 				System.out.println("QUICK ACTIONS");

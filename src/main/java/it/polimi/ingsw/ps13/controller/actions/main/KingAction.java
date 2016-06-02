@@ -57,7 +57,7 @@ public class KingAction implements Action {
 		if (!g.getBoard().getCities().containsKey(city))
 			return false;
 		
-		// Check if player has already build on the city
+		// Check if player has already built on the city
 		if(player.hasBuiltOn(city))
 			legal = false;
 		
@@ -83,9 +83,13 @@ public class KingAction implements Action {
 			legal = false;
 		
 		int corruptionPrice = g.getBoard().getKingBalcony().coinsToPay(cardColors);
-		int kingMovementPrice = g.getBoard().priceToMoveKing(city);
+		int kingMovementPrice = g.getBoard().priceToMoveKing(g.getBoard().getCity(city));
 		
 		if(player.getCoins() < (corruptionPrice + kingMovementPrice))
+			legal = false;
+		
+		// Check if player has enough assistants (one for every emporium already built on the city)
+		if(player.getAssistants() < g.getBoard().getCity(city).getNumberOfEmporiums())
 			legal = false;
 			
 		return legal;
@@ -99,14 +103,14 @@ public class KingAction implements Action {
 	public void apply(Game g) {
 		
 		Player player = g.getPlayer(playerName);
+		City realCity = g.getBoard().getCity(city);
 		
 		int corruptionPrice = g.getBoard().getKingBalcony().coinsToPay(cardColors);
-		int kingMovementPrice = g.getBoard().priceToMoveKing(city);
+		int kingMovementPrice = g.getBoard().priceToMoveKing(realCity);
 		int price = corruptionPrice + kingMovementPrice;
 		
 		player.consumeCoins(price);
-		
-		City realCity = g.getBoard().getCity(city);
+		player.consumeAssistants(g.getBoard().getCity(city).getNumberOfEmporiums());
 		
 		g.getBoard().setKingCity(realCity);
 		

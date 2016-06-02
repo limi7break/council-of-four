@@ -12,6 +12,7 @@ import it.polimi.ingsw.ps13.message.request.action.ChangePermitTilesRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.ElectCouncillorRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.EngageAssistantRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.GainMainActionRequestMsg;
+import it.polimi.ingsw.ps13.message.request.action.KingActionRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.OfferSelectionRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.PassTurnRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.QuickElectCouncillorRequestMsg;
@@ -46,40 +47,52 @@ public class CmdInterpreter {
 		}
 		
 		// Main actions
-		else if (cmd.matches("^elect\\s([a-z]+)\\s([a-z]+)$")) {
+		else if (cmd.matches("^elect\\s([A-Za-z]+)\\s([A-Za-z]+)$")) {
             String param = cmd.replaceFirst("elect ", "");
             String[] params = param.split(" ");
             
-            msg = new ElectCouncillorRequestMsg(params[0], params[1]);
+            msg = new ElectCouncillorRequestMsg(params[0].toLowerCase(), params[1].toLowerCase());
 		}
-		else if (cmd.matches("^corrupt\\s([a-z]+)\\s([0-9]+)(\\s([a-z]+))+$")) {
+		else if (cmd.matches("^corrupt\\s([A-Za-z]+)\\s([0-9]+)(\\s([A-Za-z]+))+$")) {
             String param = cmd.replaceFirst("corrupt ", "");
             String[] params = param.split(" ");
             
-            String region = params[0];
+            String region = params[0].toLowerCase();
             int tile = Integer.parseInt(params[1]);
             List<String> cards = new ArrayList<>();
             for (int i=2; i<params.length; i++) {
-            	cards.add(params[i]);
+            	cards.add(params[i].toLowerCase());
             }
             
             msg = new AcquirePermitTileRequestMsg(region, tile, cards);
 		}
-		else if (cmd.matches("^build\\s([0-9]+)\\s([a-z]+)$")) {
+		else if (cmd.matches("^build\\s([0-9]+)\\s([A-Za-z]+)$")) {
             String param = cmd.replaceFirst("build ", "");
             String[] params = param.split(" ");
             
             int tile = Integer.parseInt(params[0]);
-            String city = params[1];
+            String city = params[1].toLowerCase();
             
             msg = new BuildEmporiumRequestMsg(tile, city);
 		}
+		else if (cmd.matches("^king\\s([A-Za-z]+)(\\s([A-Za-z]+))+$")) {
+            String param = cmd.replaceFirst("king ", "");
+            String[] params = param.split(" ");
+            
+            String region = params[0].toLowerCase();
+            List<String> cards = new ArrayList<>();
+            for (int i=1; i<params.length; i++) {
+            	cards.add(params[i].toLowerCase());
+            }
+            
+            msg = new KingActionRequestMsg(region, cards);
+		}
 		
 		// Quick actions
-		else if (cmd.matches("^changetiles\\s([a-z]+)$")) {
+		else if (cmd.matches("^changetiles\\s([A-Za-z]+)$")) {
             String param = cmd.replaceFirst("changetiles ", "");
             
-            msg = new ChangePermitTilesRequestMsg(param);
+            msg = new ChangePermitTilesRequestMsg(param.toLowerCase());
 		}
 		else if (cmd.matches("^engageassistant$")) {
             msg = new EngageAssistantRequestMsg();
@@ -87,11 +100,11 @@ public class CmdInterpreter {
 		else if (cmd.matches("^gainmainaction$")) {
             msg = new GainMainActionRequestMsg();
 		}
-		else if (cmd.matches("^qelect\\s([a-z]+)\\s([a-z]+)$")) {
+		else if (cmd.matches("^qelect\\s([A-Za-z]+)\\s([A-Za-z]+)$")) {
             String param = cmd.replaceFirst("qelect ", "");
             String[] params = param.split(" ");
             
-            msg = new QuickElectCouncillorRequestMsg(params[0], params[1]);
+            msg = new QuickElectCouncillorRequestMsg(params[0].toLowerCase(), params[1].toLowerCase());
 		}
 		
 		// Sell action
@@ -106,12 +119,12 @@ public class CmdInterpreter {
 			do {
 				System.out.print("cards? (enter \"no\" for none) ");
 				input = scanner.nextLine();
-			} while(!input.matches("^[a-zA-Z]+(\\s{1}[a-zA-Z]+)*$") && !input.matches("no"));
+			} while(!input.matches("^[A-Za-z]+(\\s{1}[A-Za-z]+)*$") && !input.matches("no"));
 			List<String> cards = new ArrayList<>();
 			if (!"no".equals(input)) {
 				String[] cardParams = input.split(" ");
 				for (int i=0; i<cardParams.length; i++) {
-					cards.add(cardParams[i]);
+					cards.add(cardParams[i].toLowerCase());
 				}
 			}
 			
@@ -145,21 +158,21 @@ public class CmdInterpreter {
 		}
 		
 		// Get visible tile bonus action
-		else if (cmd.matches("^get\\stile\\s([a-z]+)\\s([0-9]+)$")) {
+		else if (cmd.matches("^get\\stile\\s([A-Za-z]+)\\s([0-9]+)$")) {
 			String param = cmd.replaceFirst("get tile ", "");
 			String[] params = param.split(" ");
             
-            String region = params[0];
+            String region = params[0].toLowerCase();
             int tile = Integer.parseInt(params[1]);
 			
 			msg = new VisiblePermitTileRequestMsg(region, tile);
 		}
 		
 		// Regain reward token action
-		else if (cmd.matches("^get\\srt\\s([a-z]+)$")) {
+		else if (cmd.matches("^get\\srt\\s([A-Za-z]+)$")) {
 			String param = cmd.replaceFirst("get rt ", "");
 			
-			msg = new RegainRewardTokenRequestMsg(param);
+			msg = new RegainRewardTokenRequestMsg(param.toLowerCase());
 		}
 		
 		// Regain tile bonus action

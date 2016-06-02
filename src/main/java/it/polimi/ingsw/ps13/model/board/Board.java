@@ -3,11 +3,14 @@ package it.polimi.ingsw.ps13.model.board;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,6 +28,7 @@ import it.polimi.ingsw.ps13.model.region.Region;
 public class Board implements Serializable {
 
 	private static final long serialVersionUID = 0L;
+	private static final int PRICE_FOR_KING_STEP = 2;
 	private final Map<String, Region> regions;
 	private final Map<String, CityColor> cityColors;
 	private final Map<String, City> cities;
@@ -57,6 +61,13 @@ public class Board implements Serializable {
 		
 		// Create king reward tiles
 		kingRewardTiles = createKingRewardTiles(config);
+		
+		System.out.println("J to C (3) is " + calculateDistance(cities.get("Juvelar"), cities.get("Castrum")));
+		System.out.println("J to L (1) is " + calculateDistance(cities.get("Juvelar"), cities.get("Lyram")));
+		System.out.println("J to J (0) is " + calculateDistance(cities.get("Juvelar"), cities.get("Juvelar")));
+		System.out.println("A to O (5) is " + calculateDistance(cities.get("Arkon"), cities.get("Osium")));
+		System.out.println("L to N (2) is " + calculateDistance(cities.get("Lyram"), cities.get("Naris")));
+		System.out.println("E to I (3) is " + calculateDistance(cities.get("Esti"), cities.get("Indur")));
 		
 	}
 
@@ -284,14 +295,46 @@ public class Board implements Serializable {
 	
 	/**
 	 * 
+	 * @param start
+	 * @param destination
+	 * @return
+	 */
+	private int calculateDistance(City start, City destination) {
+		
+		Map<City, AtomicInteger> distances = new HashMap<>();
+		
+		for (City c : cities.values()) {
+			distances.put(c, new AtomicInteger(-1));
+		}
+		
+		Queue<City> queue = new LinkedList<>();
+		
+		distances.get(start).set(0);
+		queue.add(start);
+		
+		while (!queue.isEmpty()) {
+			City current = queue.remove();
+			
+			for (City neighbor : current.getNeighbors()) {
+				if (distances.get(neighbor).intValue() == -1) {
+					distances.get(neighbor).set(distances.get(current).intValue()+1);
+					queue.add(neighbor);
+				}
+			}
+		}
+		
+		return distances.get(destination).intValue();
+		
+	}
+	
+	/**
+	 * 
 	 * @param city
 	 * @return
 	 */
-	public int priceToMoveKing(String cityName) {
+	public int priceToMoveKing(City destination) {
 		
-		City city = getCity(cityName);
-		
-		return 2*king.getCity().calculateShortestPath(city);
+		return PRICE_FOR_KING_STEP*calculateDistance(king.getCity(), destination);
 		
 	}
 	
