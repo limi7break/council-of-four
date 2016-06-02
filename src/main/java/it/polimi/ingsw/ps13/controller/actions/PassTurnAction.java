@@ -33,6 +33,9 @@ public class PassTurnAction implements Action {
 		
 		boolean legal = true;
 		
+		if(g.isFinished())
+			legal = false;
+		
 		if(player.getTokens().getMain() != 0)
 			legal = false;
 		

@@ -77,6 +77,7 @@ public class Game implements Serializable {
 		}
 		
 		playerWhoBuiltLastEmporium = -1;
+		finished = false;
 	}
 	
 	/**
@@ -174,8 +175,21 @@ public class Game implements Serializable {
 	public void passTurn() {
 		
 		if (playerWhoBuiltLastEmporium != -1) {
-			if (currentPlayerID == playerWhoBuiltLastEmporium-1) {
+			// @TODO: figure this out
+			
+			System.out.println("PLAYER WHO BUILT LAST EMPORIUM IS " + playerWhoBuiltLastEmporium);
+			System.out.println("CURRENT PLAYER ID IS " + currentPlayerID);
+			System.out.println("NUMBER OF PLAYERS IS " + numberOfPlayers);
+			System.out.println("FIRST IF CONDITION ((playerWhoBuiltLastEmporium == 0) && (currentPlayerID == numberOfPlayers-1)) IS " + ((playerWhoBuiltLastEmporium == 0) && (currentPlayerID == numberOfPlayers-1)));
+			System.out.println("SECOND IF CONDITION ((playerWhoBuiltLastEmporium > 0) && (currentPlayerID == playerWhoBuiltLastEmporium-1)) IS " + ((playerWhoBuiltLastEmporium > 0) && (currentPlayerID == playerWhoBuiltLastEmporium-1)));
+			
+			if ( ((playerWhoBuiltLastEmporium == 0) && (currentPlayerID == numberOfPlayers-1))
+					|| ((playerWhoBuiltLastEmporium > 0) && (currentPlayerID == playerWhoBuiltLastEmporium-1)) ) {
 				finished = true;
+				
+				for (Player p : players.values()) {
+					p.getTokens().setZeros();
+				}
 			} else if (currentPlayerID == numberOfPlayers-1) {
 				getCurrentPlayer().getTokens().setZeros();
 				currentPlayerID = 0;

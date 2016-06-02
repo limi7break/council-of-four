@@ -163,10 +163,11 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 				notifyObserver(new UpdateResponseMsg(msg.getPlayerName() + " successfully performed " + action.getClass().getSimpleName() + ". Model updated.", game));
 				
 				if (action instanceof PassTurnAction) {
-					notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
-					notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
-					
-					if (game.isFinished()) {
+					if (!game.isFinished()) {
+						notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
+						notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
+					}
+					else {
 						notifyObserver(new ResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!"));
 					}
 				}
@@ -187,8 +188,10 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		int maxVictoryPoints = 0;
 		for (Player p : game.getPlayers().values()) {
-			if (p.getVictoryPoints() > maxVictoryPoints)
+			if (p.getVictoryPoints() > maxVictoryPoints) {
+				maxVictoryPoints = p.getVictoryPoints();
 				winner = p.getName();
+			}
 		}
 		
 		return winner;
