@@ -62,13 +62,6 @@ public class Board implements Serializable {
 		// Create king reward tiles
 		kingRewardTiles = createKingRewardTiles(config);
 		
-		System.out.println("J to C (3) is " + calculateDistance(cities.get("Juvelar"), cities.get("Castrum")));
-		System.out.println("J to L (1) is " + calculateDistance(cities.get("Juvelar"), cities.get("Lyram")));
-		System.out.println("J to J (0) is " + calculateDistance(cities.get("Juvelar"), cities.get("Juvelar")));
-		System.out.println("A to O (5) is " + calculateDistance(cities.get("Arkon"), cities.get("Osium")));
-		System.out.println("L to N (2) is " + calculateDistance(cities.get("Lyram"), cities.get("Naris")));
-		System.out.println("E to I (3) is " + calculateDistance(cities.get("Esti"), cities.get("Indur")));
-		
 	}
 
 	public static Board create(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
