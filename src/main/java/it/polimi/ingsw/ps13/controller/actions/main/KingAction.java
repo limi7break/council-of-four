@@ -118,6 +118,29 @@ public class KingAction implements Action {
 		realCity.addEmporium(emporium);
 		player.addCity(city);
 		
+		realCity.giveBonuses(player);
+		
+		// Give the player the region bonus, if he has completed the region and if it's available
+		// Also check if a king reward tile is available and give it to the player
+		if (realCity.getRegion().isBonusAvailable() && player.getCityNames().containsAll(realCity.getRegion().getCityNames())) {
+			realCity.getRegion().setBonusAvailable(false);
+			realCity.getRegion().getBonus().giveTo(player);
+			g.getBoard().getKingRewardTile().giveTo(player);
+		}
+		
+		// Give the player the color bonus, if he has completed the color and if it's available
+		// Also check if a king reward tile is available and give it to the player
+		if (realCity.getCityColor().isBonusAvailable() && player.getCityNames().containsAll(realCity.getCityColor().getCityNames())) {
+			realCity.getCityColor().setBonusAvailable(false);
+			realCity.getCityColor().getBonus().giveTo(player);
+			g.getBoard().getKingRewardTile().giveTo(player);
+		}
+		
+		if (player.getNumberOfEmporiums() == 0) {
+			g.setPlayerWhoBuiltLastEmporium(player.getID());
+			player.addVictoryPoints(3);
+		}
+		
 		player.consumeMainAction();
 		
 	}
