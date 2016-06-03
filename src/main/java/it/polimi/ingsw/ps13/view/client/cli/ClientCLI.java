@@ -10,6 +10,7 @@ import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
@@ -28,9 +29,6 @@ public class ClientCLI implements ClientView {
 	@Override
 	public void run() {
 		
-		// implement CLI
-		LOG.log(Level.WARNING, "CLI has not been implemented yet.");
-		
 		startHandlers();
 		
 	}
@@ -42,7 +40,7 @@ public class ClientCLI implements ClientView {
 	@Override
 	public void showModel() {
 			
-		System.out.println("Whatcha wanna see? <region, color, city, king, kingbalcony, councillors, nobility, market, me, menu, actions, quit>");
+		System.out.println("Whatcha wanna see? <region, color, city, king, kingbalcony, kingrt, councillors, nobility, market, me, menu, actions, quit>");
 		
 	}
 	
@@ -103,6 +101,13 @@ public class ClientCLI implements ClientView {
 				break;
 			case "kingbalcony":
 				System.out.println(game.getBoard().getKingBalcony().toString());
+				break;
+			case "kingrt":
+				int i=0;
+				for (Bonus b: game.getBoard().getKingRewardTiles()) {
+					i++;
+					System.out.println(i + ". " + b.toString());
+				}
 				break;
 			case "councillors":
 				for (Councillor c : game.getBoard().getCouncillors()) {

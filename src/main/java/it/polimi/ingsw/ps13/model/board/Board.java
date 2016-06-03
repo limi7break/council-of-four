@@ -179,6 +179,17 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * 
+	 * 
+	 * @return
+	 */
+	public Deque<Bonus> getKingRewardTiles() {
+		
+		return kingRewardTiles;
+		
+	}
+	
+	/**
 	 * Gets a king reward tile from the top of the list and removes it.
 	 * 
 	 * @return

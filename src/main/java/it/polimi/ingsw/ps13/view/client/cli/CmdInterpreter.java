@@ -79,13 +79,13 @@ public class CmdInterpreter {
             String param = cmd.replaceFirst("king ", "");
             String[] params = param.split(" ");
             
-            String region = params[0].toLowerCase();
+            String city = params[0].toLowerCase();
             List<String> cards = new ArrayList<>();
             for (int i=1; i<params.length; i++) {
             	cards.add(params[i].toLowerCase());
             }
             
-            msg = new KingActionRequestMsg(region, cards);
+            msg = new KingActionRequestMsg(city, cards);
 		}
 		
 		// Quick actions
