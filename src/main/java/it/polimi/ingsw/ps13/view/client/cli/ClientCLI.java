@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ps13.view.client.cli;
 
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
@@ -18,7 +16,6 @@ import it.polimi.ingsw.ps13.view.client.ClientView;
 
 public class ClientCLI implements ClientView {
 	
-	private static final Logger LOG = Logger.getLogger(ClientCLI.class.getSimpleName());
 	private static final Scanner scanner = new Scanner(System.in);
 	
 	private ClientConnection connection;
