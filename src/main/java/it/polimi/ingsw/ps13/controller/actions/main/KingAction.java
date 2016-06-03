@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps13.controller.actions.main;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
@@ -111,6 +112,17 @@ public class KingAction implements Action {
 		
 		player.consumeCoins(price);
 		player.consumeAssistants(g.getBoard().getCity(city).getNumberOfEmporiums());
+		
+		for (Color color : cardColors) {
+			for (Iterator<PoliticsCard> it = player.getPoliticsCards().iterator(); it.hasNext();) {
+				PoliticsCard current = it.next();
+				if (color.equals(current.getColor())) {
+					it.remove();
+					g.getBoard().getPoliticsCardDeck().discardCard(current);
+					break;
+				}
+			}
+		}
 		
 		g.getBoard().setKingCity(realCity);
 		
