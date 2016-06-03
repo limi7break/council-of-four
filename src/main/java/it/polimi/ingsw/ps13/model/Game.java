@@ -350,6 +350,16 @@ public class Game implements Serializable {
 		return buyMarketPhase;
 		
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getPlayerWhoBuiltLastEmporium() {
+		
+		return playerWhoBuiltLastEmporium;
+		
+	}
 
 	/**
 	 * 

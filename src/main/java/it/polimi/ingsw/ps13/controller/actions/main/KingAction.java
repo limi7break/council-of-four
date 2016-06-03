@@ -148,7 +148,7 @@ public class KingAction implements Action {
 			g.getBoard().getKingRewardTile().giveTo(player);
 		}
 		
-		if (player.getNumberOfEmporiums() == 0) {
+		if ( (player.getNumberOfEmporiums() == 0) && (g.getPlayerWhoBuiltLastEmporium() == -1) ) {
 			g.setPlayerWhoBuiltLastEmporium(player.getID());
 			player.addVictoryPoints(3);
 		}
