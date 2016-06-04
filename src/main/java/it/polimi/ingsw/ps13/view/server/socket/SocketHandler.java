@@ -96,7 +96,7 @@ public class SocketHandler extends Handler implements Runnable {
 				RequestMsg msg = (RequestMsg) ois.readObject();
 				msg.setPlayerName(playerName);
 				
-				this.notifyObserver(msg);
+				notifyObserver(msg);
 
 			} catch (IOException | ClassNotFoundException e) {
 				LOG.log(Level.WARNING, "A problem was encountered while reading data from the client. (" + playerName + ")", e);

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps13.view.client;
 
 import java.io.IOException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +67,7 @@ public class GameClient {
 	        } else {
 	        	conn = new ClientSocket();
 	        }
-        } catch(IOException e) {
+        } catch(IOException | NotBoundException | AlreadyBoundException e) {
 			LOG.log(Level.SEVERE, "There was a problem while trying to establish a connection with the server.", e);
         }
         
