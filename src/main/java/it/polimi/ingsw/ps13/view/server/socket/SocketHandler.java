@@ -52,23 +52,22 @@ public class SocketHandler extends Handler implements Runnable {
 	 */
 	@Override
 	public void update(ResponseMsg msg) {
-		
-		if (running) {
-			// A MulticastMsg is sent to everyone except to the player whose name is written on the message
-			// Only the recipient of a UnicastMsg receives it
-			if (!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
-				|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
-				
-				try {
-					oos.reset();
-					oos.writeObject(msg);
-					oos.flush();
-		
-				} catch (IOException e) {
-					LOG.log(Level.WARNING, "A problem was encountered while sending data to the client. (" + playerName + ")", e);
-				}
-				
+
+		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
+		// Only the recipient of a UnicastMsg receives it
+		if (running && 
+			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
+			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
+			
+			try {
+				oos.reset();
+				oos.writeObject(msg);
+				oos.flush();
+	
+			} catch (IOException e) {
+				LOG.log(Level.WARNING, "A problem was encountered while sending data to the client. (" + playerName + ")", e);
 			}
+			
 		}
 		
 	}

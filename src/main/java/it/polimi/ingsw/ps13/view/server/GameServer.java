@@ -51,11 +51,12 @@ public class GameServer implements RMIServerRemote {
 		
 		try {
 			Registry registry = LocateRegistry.createRegistry(RMI_PORT);
+			LOG.log(Level.INFO, "RMI REGISTRY READY ON PORT " + RMI_PORT);
 			
-			@SuppressWarnings("unused")
-			RMIServerRemote serverRemote = (RMIServerRemote) UnicastRemoteObject.exportObject(this, 0);
-			
+			UnicastRemoteObject.exportObject(this, 0);
 			registry.bind(NAME, this);
+			LOG.log(Level.INFO, "SERVER BOUND TO " + NAME);
+			
 		} catch(RemoteException | AlreadyBoundException e) {
 			LOG.log(Level.SEVERE, "A problem was encountered while initializing RMI registry.", e);
 		}
@@ -111,9 +112,7 @@ public class GameServer implements RMIServerRemote {
 		
 		mainController.addPlayer(playerName);
 		
-		RMIHandlerRemote handlerStub = (RMIHandlerRemote) UnicastRemoteObject.exportObject(rmiHandler, 0);
-		
-		return handlerStub;
+		return (RMIHandlerRemote) UnicastRemoteObject.exportObject(rmiHandler, 0);
 		
 	}
 	

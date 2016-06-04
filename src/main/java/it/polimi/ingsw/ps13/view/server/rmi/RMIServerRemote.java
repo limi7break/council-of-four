@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 import it.polimi.ingsw.ps13.view.client.rmi.ClientRMIRemote;
 
+@FunctionalInterface
 public interface RMIServerRemote extends Remote {
 
 	public RMIHandlerRemote connect(ClientRMIRemote clientStub) throws RemoteException;

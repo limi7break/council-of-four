@@ -18,7 +18,7 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 
 	private static final Logger LOG = Logger.getLogger(RMIHandler.class.getSimpleName());
 	
-	private final ClientRMIRemote clientStub;
+	private final transient ClientRMIRemote clientStub;
 	private final String playerName;
 	
 	public RMIHandler(ClientRMIRemote clientStub, String playerName) {
@@ -59,19 +59,6 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 		notifyObserver(msg);
 		
 	}
-
-	/*@Override
-	public void registerClient(ClientRMIRemote clientStub) throws RemoteException {
-		
-		if (this.clientStub == null) {
-			
-			this.clientStub = clientStub;
-			
-		} else {
-			throw new RemoteException("A client stub is already set for this RMI handler.");
-		}
-		
-	}*/
 	
 	@Override
 	public void update() {

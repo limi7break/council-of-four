@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,21 +28,28 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	public static final int PORT = 7777;
 	public static final String NAME = "curvanerd";
 	
-	private final RMIHandlerRemote handlerStub;
+	private final transient RMIHandlerRemote handlerStub;
 	
-	private CountDownLatch cdl;
+	private transient CountDownLatch cdl;
 	private ResponseMsg lastReadObject;
 	
 	private static final Logger LOG = Logger.getLogger(ClientRMI.class.getSimpleName());
 
 	public ClientRMI() throws RemoteException, NotBoundException, AlreadyBoundException {
 		
-		Registry registry = LocateRegistry.getRegistry(HOST, PORT);
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("IP Address: ");
+		String host = scanner.nextLine();
+		
+		Registry registry = LocateRegistry.getRegistry(host, PORT);
 		RMIServerRemote serverStub = (RMIServerRemote) registry.lookup(NAME);
 		
 		cdl = new CountDownLatch(1);
 		
-		handlerStub = (RMIHandlerRemote) serverStub.connect(this);
+		handlerStub = serverStub.connect(this);
+		
+		LOG.log(Level.INFO, "RMI Connection established @ " + host + ":" + PORT + ". (" + NAME + ")");
 		
 	}
 	
@@ -51,7 +59,8 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 		try {
 			cdl.await();
 		} catch (InterruptedException e) {
-			LOG.log(Level.WARNING, "A problem was encountered while receiving data from the server.", e);
+			LOG.log(Level.WARNING, "Thread interrupted", e);
+			Thread.currentThread().interrupt();
 		}
 		
 		cdl = new CountDownLatch(1);

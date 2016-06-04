@@ -109,7 +109,7 @@ public class CmdInterpreter {
 		
 		// Sell action
 		else if (cmd.matches("^sell$")) {
-			String input = null;
+			String input;
 			do {
 				System.out.print("assistants? ");
 				input = scanner.nextLine();

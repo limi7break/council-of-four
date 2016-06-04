@@ -39,7 +39,7 @@ public class ClientSocket implements ClientConnection {
 		String host = scanner.nextLine();
 		
 		socket = new Socket(host, PORT);
-		LOG.log(Level.INFO, "Connection established @ " + host + ":" + PORT + ".");
+		LOG.log(Level.INFO, "SOCKET Connection established @ " + host + ":" + PORT + ".");
 		
 		oos = new ObjectOutputStream(socket.getOutputStream());
 		oos.flush();

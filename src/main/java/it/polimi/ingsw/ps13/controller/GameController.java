@@ -137,10 +137,15 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			notifyObserver(new ChatMulticastMsg(chatMsg.getMessage(), chatMsg.getPlayerName()));
 		}
 		
-		if (msg instanceof ActionRequestMsg) {
+		else if (msg instanceof ActionRequestMsg) {
 			ActionRequestMsg actionMsg = (ActionRequestMsg) msg;
-			handleActionMsg(actionMsg);
 			
+			if (actionMsg.getPlayerName() == game.getCurrentPlayerName()) {
+				Action action = actionMsg.accept(actionFactory);
+				handleAction(action, msg.getPlayerName());
+			} else {
+				notifyObserver(new UnicastMsg("ERROR: it\'s not your turn.", msg.getPlayerName()));
+			}
 		}
 		
 	}
@@ -151,35 +156,27 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 	}
 	
-	private void handleActionMsg(ActionRequestMsg msg) {
+	private void handleAction(Action action, String playerName) {
 		
-		if (msg.getPlayerName() == game.getCurrentPlayerName()) {
+		if (action.isLegal(game)) {
 			
-			Action action = msg.accept(actionFactory);
+			action.apply(game);
+			notifyObserver(new UpdateResponseMsg(playerName + " successfully performed " + action.getClass().getSimpleName() + ". Model updated.", game));
 			
-			if (action.isLegal(game)) {
-				
-				action.apply(game);
-				notifyObserver(new UpdateResponseMsg(msg.getPlayerName() + " successfully performed " + action.getClass().getSimpleName() + ". Model updated.", game));
-				
-				if (action instanceof PassTurnAction) {
-					if (!game.isFinished()) {
-						notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
-						notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
-					}
-					else {
-						notifyObserver(new ResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!"));
-					}
+			if (action instanceof PassTurnAction) {
+				if (!game.isFinished()) {
+					notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
+					notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
 				}
-				
-			} else {
-				notifyObserver(new UnicastMsg("ERROR: action is not legal :(", msg.getPlayerName()));
+				else {
+					notifyObserver(new ResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!"));
+				}
 			}
-				
+			
 		} else {
-			notifyObserver(new UnicastMsg("ERROR: it\'s not your turn.", msg.getPlayerName()));
+			notifyObserver(new UnicastMsg("ERROR: action is not legal :(", playerName));
 		}
-		
+
 	}
 	
 	private String calculateWinner() {

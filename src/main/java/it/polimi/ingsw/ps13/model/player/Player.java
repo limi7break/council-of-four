@@ -20,7 +20,7 @@ public class Player implements Serializable {
 
 	public static final long serialVersionUID = 0L;
 	
-	private final int ID;
+	private final int playerID;
 	private final String name;
 	private final Color color;
 	private final String colorName;
@@ -37,7 +37,7 @@ public class Player implements Serializable {
 		this.name = name;
 		this.color = color;
 		this.colorName = colorName;
-		this.ID = position;
+		this.playerID = position;
 		
 		supply = new PlayerSupply(position, color);
 		cityNames = new TreeSet<>();
@@ -189,7 +189,7 @@ public class Player implements Serializable {
 	 */
 	public int getID() {
 		
-		return ID;
+		return playerID;
 		
 	}
 	
