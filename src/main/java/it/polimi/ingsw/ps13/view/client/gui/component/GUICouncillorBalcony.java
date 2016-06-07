@@ -9,12 +9,11 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 
-public class GUICouncillorBalcony extends JPanel {
+public class GUICouncillorBalcony extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
 	private static final Logger LOG = Logger.getLogger(GUICouncillorBalcony.class.getSimpleName());
@@ -22,6 +21,7 @@ public class GUICouncillorBalcony extends JPanel {
 	public GUICouncillorBalcony(CouncillorBalcony balcony) {
 		
 		super(new FlowLayout());
+		setTransparent(true);
 		
 		BufferedImage councillor = null;
 		try {

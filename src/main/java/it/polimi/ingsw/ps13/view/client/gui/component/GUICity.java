@@ -3,9 +3,11 @@ package it.polimi.ingsw.ps13.view.client.gui.component;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -14,21 +16,29 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.region.City;
 
-public class GUICity extends JPanel {
+public class GUICity extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
 	private static final Logger LOG = Logger.getLogger(GUICity.class.getSimpleName());
 
+	private Point centerPoint;
+	private final String name;
+	private final JLabel image;
+	
 	public GUICity(City city) {
 		
 		super(new BorderLayout());
+		setTransparent(true);
 		
-		JPanel bonusPane = new JPanel(new GridLayout(0, 2));
+		this.name = city.getName();
+		
+		GUIPanel bonusPane = new GUIPanel(new GridLayout(0, 2));
+		bonusPane.setTransparent(true);
 		GUIBonusFactory.createBonus((ConcreteBonus)city.getBonus(), bonusPane);
 		add(bonusPane, BorderLayout.WEST);
 		
@@ -41,9 +51,30 @@ public class GUICity extends JPanel {
 		BufferedImage coloredCityImage = colorize(cityImage, city.getColor(), 64);
 		
 		add(new JLabel(city.getName()), BorderLayout.NORTH);
-		add(new JLabel(new ImageIcon(coloredCityImage)), BorderLayout.CENTER);
+	
+		image = new JLabel(new ImageIcon(coloredCityImage));
+		add(image, BorderLayout.CENTER);
+		
 		add(new JLabel("Emporiums: " + city.getNumberOfEmporiums()), BorderLayout.SOUTH);
 		setPreferredSize(new Dimension(150, 150));
+		
+	}
+	
+	protected Point getCenterPoint() {
+		
+		return centerPoint;
+		
+	}
+	
+	protected void setCenterPointRelativeTo(Component component) {
+	
+		centerPoint = SwingUtilities.convertPoint(image, new Point(image.getWidth()/2, image.getHeight()/2), component);
+	
+	}
+	
+	public String getName() {
+		
+		return name;
 		
 	}
 	
@@ -56,6 +87,7 @@ public class GUICity extends JPanel {
 	 * @return
 	 */
 	protected static BufferedImage colorize(BufferedImage image, Color color, int alpha) {
+		
 		Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
         int w = image.getWidth();
         int h = image.getHeight();
@@ -67,6 +99,7 @@ public class GUICity extends JPanel {
         g.fillRect(0,0,w,h);
         g.dispose();
         return colorized;
+        
     }
-
+	
 }

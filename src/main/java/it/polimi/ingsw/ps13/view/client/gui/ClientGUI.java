@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps13.view.client.gui;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,12 +9,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JLayeredPane;
 
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import it.polimi.ingsw.ps13.view.client.ClientView;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICreator;
+import it.polimi.ingsw.ps13.view.client.gui.component.GUIPanel;
 
 public class ClientGUI extends JFrame implements ClientView {
 	
@@ -21,6 +23,7 @@ public class ClientGUI extends JFrame implements ClientView {
 
 	private static final Logger LOG = Logger.getLogger(ClientGUI.class.getSimpleName());
 	
+	private final GUICreator guiCreator;
 	@SuppressWarnings("unused")
 	private transient ClientConnection connection;
 	
@@ -61,6 +64,8 @@ public class ClientGUI extends JFrame implements ClientView {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, 1440, 900);
 		
+		guiCreator = new GUICreator();
+		
 	}
 	
 	/**
@@ -69,8 +74,25 @@ public class ClientGUI extends JFrame implements ClientView {
 	@Override
 	public void showModel() {
 		
-		JPanel newPane = GUICreator.createGUI(game);
-		setContentPane(newPane);
+		JLayeredPane layers = new JLayeredPane();
+		layers.setLayout(new BorderLayout());
+		
+		GUIPanel newPane = guiCreator.createGUI(game);
+		newPane.setBounds(0, 0, 1440, 900);
+		newPane.setTransparent(true);
+		layers.setLayer(newPane, 1);
+		layers.add(newPane);
+		
+		this.setContentPane(layers);
+		
+		pack();
+		
+		GUIPanel connectionPane = guiCreator.createConnections(newPane, game);
+		connectionPane.setBounds(0, 0, 1440, 900);
+		connectionPane.setOpaque(true);
+		layers.setLayer(connectionPane, 0);
+		layers.add(connectionPane);
+		
 		revalidate();
 		repaint();
 		
