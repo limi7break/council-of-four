@@ -17,6 +17,7 @@ import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.market.Market;
+import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
@@ -54,17 +55,18 @@ public class Game implements Serializable {
 		Collections.shuffle(players);
 		
 		this.players = new TreeMap<>();
+		Iterator<String> it = colors.keySet().iterator();
+		
 		for (int i=0; i<numberOfPlayers; i++) {
 			String playerName = players.get(i);
 			
-			// Select random color for each player
-			// @TODO: prevent a random color from being picked twice (maybe ask user for color)?
-			Random random = new Random();
-			List<String> keys = new ArrayList<>(colors.keySet());
-			String randomKey = keys.get(random.nextInt(keys.size()));
-			Color randomColor = colors.get(randomKey);
+			//Colors are sequentially given to the players
+			String colorName = it.next();
 			
-			this.players.put(i, new Player(playerName, randomColor, randomKey, i, board));
+			Color color = colors.get(colorName);
+			
+			this.players.put(i, new Player(playerName, color, colorName, i, board));
+			
 		}
 		
 		for (Player p : this.players.values()) {
@@ -76,6 +78,48 @@ public class Game implements Serializable {
 		buyMarketPhase = false;		
 		playerWhoBuiltLastEmporium = -1;
 		finished = false;
+		
+		if(numberOfPlayers == 2) {
+		
+			twoPlayersSetup(it); //Setups the game for a two player game.
+			
+		}
+			
+	}
+	
+	/**
+	 * Applies the rules for a two player game: 1 to 3 random cities per region are given an emporium by default.
+	 * The color of the emporium is always the third color(the first color not assigned), since players are 2.
+	 * 
+	 * @param color
+	 */
+	private void twoPlayersSetup(Iterator<String> color) {
+		
+		Random rand = new Random();
+		
+		for(String region : this.board.getRegions().keySet()){
+			
+			int initialCities = rand.nextInt(3) + 1;
+			
+			for(int i=0; i<initialCities; i++){
+				
+				List<String> allCities = new ArrayList<>(this.board.getRegion(region).getCityNames());
+				
+				String cityName;
+				
+				do{
+					int randomCity = rand.nextInt(allCities.size());
+					cityName = allCities.get(randomCity);
+				}
+				while(this.board.getCity(cityName).getNumberOfEmporiums()!=0);
+				
+				
+				this.board.getCity(cityName).addEmporium(new Emporium(colors.get(color.next())));
+				
+			}
+			
+		}
+		
 	}
 	
 	/**

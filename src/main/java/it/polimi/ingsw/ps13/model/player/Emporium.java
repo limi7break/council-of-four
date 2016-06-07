@@ -18,7 +18,7 @@ public final class Emporium implements Serializable{
 	 * Creates an emporium and assigns it the passed color.
 	 * 
 	 */
-	protected Emporium(Color color){
+	public Emporium(Color color){
 		
 		this.color = color;
 		
