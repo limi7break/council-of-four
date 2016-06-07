@@ -165,5 +165,41 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 		return visibleTiles;
 		
 	}
-	
+
+	/**
+	 * set 2 chosen visible tiles
+	 * created for testing purposes
+	 * @param permitTile1
+	 * @param permitTile2
+	 */
+	protected void setVisibleTiles(PermitTile permitTile1,PermitTile permitTile2){
+
+		visibleTiles.clear();
+		visibleTiles.add(permitTile1);
+		visibleTiles.add(permitTile2);
+
+	}
+
+	/**
+	 * set 1 chosen visible tile
+	 * created for testing purposes
+	 * @param permitTile
+	 */
+	protected void setVisibleTile(PermitTile permitTile){
+
+		visibleTiles.clear();
+		visibleTiles.add(permitTile);
+
+	}
+
+	/**
+	 * clear visible tiles
+	 * created for testing purposes
+	 * @param permitTile
+	 */
+	protected void clearVisibleTiles(){
+		visibleTiles.clear();
+	}
+
+
 }
