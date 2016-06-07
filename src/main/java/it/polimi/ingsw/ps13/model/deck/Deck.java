@@ -58,6 +58,34 @@ public abstract class Deck<E extends Serializable> implements Serializable {
         Collections.shuffle((LinkedList<?>) drawPile);
 
     }
+
+	/**
+	 * add to drawpile all the cards in a Collection
+	 * created for testing purposes
+	 * @param cards
+     */
+	protected void setDrawPile(Collection<E> cards){
+		drawPile.addAll(cards);
+	}
+
+
+
+	/**
+	 * clear the draw pile
+	 * created for testing purposes
+	 */
+	protected void clearDrawPile(){
+		drawPile.clear();
+	}
+
+	/**
+	 * add to drawpile  the  chosen card
+	 * created for testing purposes
+	 * @param card
+	 */
+	protected void addCardToDrawPile(E card){
+		drawPile.add(card);
+	}
     
     /**
 	 * Useful for debug.

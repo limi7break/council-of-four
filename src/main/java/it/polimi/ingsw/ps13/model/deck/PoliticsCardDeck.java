@@ -112,4 +112,33 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
 		return sb.toString();
 		
 	}
+
+    /**
+     * created for testing purposes
+     * @return the discard pile as a list of politics cards
+     */
+    protected List <PoliticsCard> getDiscardPile() {
+        return discardPile;
+    }
+
+    /**
+     * add 1 chosen card to discard pile
+     * created for testing purposes
+     * @param card
+     */
+    protected void addCardToDiscardPile(PoliticsCard card){
+
+        discardPile.add(card);
+
+    }
+
+    /**
+     * clear visible tiles
+     * created for testing purposes
+     */
+    protected void clearDiscardPile(){
+        discardPile.clear();
+    }
+
+   
 }

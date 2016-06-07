@@ -5,11 +5,11 @@ import java.awt.*;
 /**
  *	created just for testing reasons
  */
-final class PoliticsCardTest extends it.polimi.ingsw.ps13.model.deck.PoliticsCard {
+final class PoliticsCardForTesting extends it.polimi.ingsw.ps13.model.deck.PoliticsCard {
 
 	private final static long serialVersionUID = 0L;
 
-	protected PoliticsCardTest(Color color, String colorName) {
+	protected PoliticsCardForTesting(Color color, String colorName) {
 		
 		super(color, colorName);
 	

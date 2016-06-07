@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,14 +67,14 @@ public class CouncillorBalconyTest {
     public void calculateNumberOfMatches() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
-        PoliticsCardTest black = new PoliticsCardTest(Color.BLACK, "black");
-        PoliticsCardTest w = new PoliticsCardTest(Color.WHITE, "white");
-        PoliticsCardTest p = new PoliticsCardTest(Color.PINK, "pink");
-        PoliticsCardTest g = new PoliticsCardTest(Color.GREEN, "green");
-        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCardTest.jollyColor, "JOLLY");
+        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
+        PoliticsCardForTesting black = new PoliticsCardForTesting(Color.BLACK, "black");
+        PoliticsCardForTesting w = new PoliticsCardForTesting(Color.WHITE, "white");
+        PoliticsCardForTesting p = new PoliticsCardForTesting(Color.PINK, "pink");
+        PoliticsCardForTesting g = new PoliticsCardForTesting(Color.GREEN, "green");
+        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCardForTesting.jollyColor, "JOLLY");
 
-        List<PoliticsCardTest> c = new ArrayList<>();
+        List<PoliticsCardForTesting> c = new ArrayList<>();
         
         //TEST CASE: 0 cards
         assertEquals(councillorBalcony.calculateNumberOfMatches(c),0);
@@ -152,10 +151,10 @@ public class CouncillorBalconyTest {
     public void calculateNumberOfMulticoloredCards() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
-        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCard.jollyColor, "JOLLY");
+        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
+        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCard.jollyColor, "JOLLY");
 
-        List<PoliticsCardTest> c = new ArrayList<>();
+        List<PoliticsCardForTesting> c = new ArrayList<>();
 
         //TEST CASE: 0 cards
         assertEquals(councillorBalcony.calculateNumberOfMulticoloredCards(c),0);
@@ -183,14 +182,14 @@ public class CouncillorBalconyTest {
     public void isSatisfiable() {
 
         //create some politics cards for the testing
-        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
-        PoliticsCardTest black = new PoliticsCardTest(Color.BLACK, "black");
-        PoliticsCardTest w = new PoliticsCardTest(Color.WHITE, "white");
-        PoliticsCardTest p = new PoliticsCardTest(Color.PINK, "pink");
-        PoliticsCardTest g = new PoliticsCardTest(Color.GREEN, "green");
-        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCard.jollyColor, "JOLLY");
+        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
+        PoliticsCardForTesting black = new PoliticsCardForTesting(Color.BLACK, "black");
+        PoliticsCardForTesting w = new PoliticsCardForTesting(Color.WHITE, "white");
+        PoliticsCardForTesting p = new PoliticsCardForTesting(Color.PINK, "pink");
+        PoliticsCardForTesting g = new PoliticsCardForTesting(Color.GREEN, "green");
+        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCard.jollyColor, "JOLLY");
 
-        List<PoliticsCardTest> c = new ArrayList<>();
+        List<PoliticsCardForTesting> c = new ArrayList<>();
 
         c.add(b);
         //TEST CASE: 0 matching cards 0 coins
@@ -242,9 +241,9 @@ public class CouncillorBalconyTest {
 
         //create some politics cards for the testing
     	@SuppressWarnings("unused")
-        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
+        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
 
-        List<PoliticsCardTest> c = new ArrayList<>();
+        List<PoliticsCardForTesting> c = new ArrayList<>();
 
         //TEST CASE: 0 cards
         assertFalse(councillorBalcony.isSatisfiable(c,0));
@@ -258,15 +257,15 @@ public class CouncillorBalconyTest {
     public void coinsToPay() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCardTest b = new PoliticsCardTest(Color.BLUE, "blue");
-        PoliticsCardTest black = new PoliticsCardTest(Color.BLACK, "black");
-        PoliticsCardTest w = new PoliticsCardTest(Color.WHITE, "white");
+        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
+        PoliticsCardForTesting black = new PoliticsCardForTesting(Color.BLACK, "black");
+        PoliticsCardForTesting w = new PoliticsCardForTesting(Color.WHITE, "white");
         @SuppressWarnings("unused")
-        PoliticsCardTest p = new PoliticsCardTest(Color.PINK, "pink");
-        PoliticsCardTest g = new PoliticsCardTest(Color.GREEN, "green");
-        PoliticsCardTest multi = new PoliticsCardTest(PoliticsCard.jollyColor, "JOLLY");
+        PoliticsCardForTesting p = new PoliticsCardForTesting(Color.PINK, "pink");
+        PoliticsCardForTesting g = new PoliticsCardForTesting(Color.GREEN, "green");
+        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCard.jollyColor, "JOLLY");
 
-        List<PoliticsCardTest> c = new ArrayList<>();
+        List<PoliticsCardForTesting> c = new ArrayList<>();
 
         c.add(g);
         //TEST CASE: 1 matching card

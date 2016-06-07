@@ -114,5 +114,25 @@ public final class PermitTile implements Marketable, Serializable {
 		
 		return sb.toString();
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		PermitTile that = (PermitTile) o;
+
+		if (used != that.used) return false;
+		if (!bonus.equals(that.bonus)) return false;
+		return cityNames.equals(that.cityNames);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = bonus.hashCode();
+		result = 31 * result + cityNames.hashCode();
+		result = 31 * result + (used ? 1 :0);
+		return result;
+	}
 }

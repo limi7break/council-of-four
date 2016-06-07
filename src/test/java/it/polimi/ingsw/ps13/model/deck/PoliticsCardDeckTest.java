@@ -34,13 +34,13 @@ public class PoliticsCardDeckTest  {
         createEmpityDeck();
         assertTrue(emptyDeck.drawCard() == null);
 
-        //it should put the 2 discarded cards in the draw pile again: draw one then 1 left in the drawPile
+        //it should put the 2 discarded cards in the draw pile again. Draw one, and 1 card left in the drawPile
         PoliticsCard r1 = new PoliticsCard(Color.red, "red");
         PoliticsCard r2 = new PoliticsCard(Color.red, "red");
         deck.discardCard(r1);
         deck.discardCard(r2);
         assertFalse(deck.drawCard() == null);
-        assertEquals(deck.toString(),"[PoliticsCardDeck]\n\nDraw Pile:\n[PoliticsCard] (255, 0, 0)\n\nDiscard Pile:\n");
+        assertEquals(deck.drawCard().getColor(),Color.red);
 
     }
 
@@ -48,16 +48,39 @@ public class PoliticsCardDeckTest  {
     public void discardCard() throws Exception {
 
         createSmallDeck();
+
         PoliticsCard y1 = new PoliticsCard(Color.yellow, "yellow");
         PoliticsCard o1 = new PoliticsCard(Color.orange, "orange");
-        System.out.println(deck.toString());
-        assertEquals(deck.toString(),"[PoliticsCardDeck]\n\nDraw Pile:\n[PoliticsCard] (255, 0, 0)\n[PoliticsCard] (0, 0, 255)\n\nDiscard Pile:\n");
+
+        //creating the test deck made of the expected cards
+        cards.clear();
+        PoliticsCardDeck testDeck = new PoliticsCardDeck(cards);
+        testDeck.addCardToDrawPile(new PoliticsCard(Color.red, "red"));
+        testDeck.addCardToDrawPile(new PoliticsCard(Color.blue, "blue"));
+
+        //TEST CASE: initial situation: empty discard pile and the 2 cards in the draw pile
+        assertEquals(deck.getDrawPile().toString(),testDeck.getDrawPile().toString());
+        assertEquals(deck.getDiscardPile().toString(),testDeck.getDiscardPile().toString());
+
+
         deck.discardCard(y1);
-        System.out.println(deck.toString());
-        assertEquals(deck.toString(),"[PoliticsCardDeck]\n\nDraw Pile:\n[PoliticsCard] (255, 0, 0)\n[PoliticsCard] (0, 0, 255)\n\nDiscard Pile:\n[PoliticsCard] (255, 255, 0)\n");
+
+        //creating the test deck made of the expected cards
+        testDeck.addCardToDiscardPile(y1);
+
+        //TEST CASE: 1 discarded card and the 2 cards in the draw pile
+        assertEquals(deck.getDrawPile().toString(),testDeck.getDrawPile().toString());
+        assertEquals(deck.getDiscardPile().toString(),testDeck.getDiscardPile().toString());
+
+
         deck.discardCard(o1);
-        assertEquals(deck.toString(),"[PoliticsCardDeck]\n\nDraw Pile:\n[PoliticsCard] (255, 0, 0)\n[PoliticsCard] (0, 0, 255)\n\nDiscard Pile:\n[PoliticsCard] (255, 255, 0)\n[PoliticsCard] (255, 200, 0)\n");
-        System.out.println(deck.toString());
+
+        //creating the test deck made of the expected cards
+        testDeck.addCardToDiscardPile(o1);
+
+        //TEST CASE: 2 discarded card and the 2 cards in the draw pile
+        assertEquals(deck.getDrawPile().toString(),testDeck.getDrawPile().toString());
+        assertEquals(deck.getDiscardPile().toString(),testDeck.getDiscardPile().toString());
 
     }
 
@@ -74,8 +97,10 @@ public class PoliticsCardDeckTest  {
 
     private void createSmallDeck() {
 
-         PoliticsCard r1 = new PoliticsCard(Color.red, "red");
-         PoliticsCard b1 = new PoliticsCard(Color.blue, "blue");
+        PoliticsCard r1;
+        r1 = new PoliticsCard(Color.red, "red");
+        PoliticsCard b1;
+        b1 = new PoliticsCard(Color.blue, "blue");
 
         cards = new ArrayList<>();
 
@@ -94,6 +119,7 @@ public class PoliticsCardDeckTest  {
         emptyDeck = new PoliticsCardDeck(emptyCards);
 
     }
+
 
     @SuppressWarnings("unused")
     private void createDeck() {                                 //unused for now
