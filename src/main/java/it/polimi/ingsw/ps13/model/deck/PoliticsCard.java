@@ -40,6 +40,16 @@ public class PoliticsCard implements Marketable, Serializable {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public String getColorName() {
+		
+		return colorName;
+		
+	}
+	
+	/**
 	 * @return true if the card is a multicolored one
 	 */
 	public boolean isMultiColored() {

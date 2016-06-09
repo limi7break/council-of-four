@@ -36,6 +36,16 @@ public final class Councillor implements Serializable {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public String getColorName() {
+		
+		return colorName;
+		
+	}
+	
+	/**
 	 * Useful for debug.
 	 * 
 	 */

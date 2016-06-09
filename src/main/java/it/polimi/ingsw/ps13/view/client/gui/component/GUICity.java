@@ -56,7 +56,13 @@ public class GUICity extends GUIPanel {
 		add(image, BorderLayout.CENTER);
 		
 		add(new JLabel("Emporiums: " + city.getNumberOfEmporiums()), BorderLayout.SOUTH);
-		setPreferredSize(new Dimension(150, 150));
+		setMaximumSize(new Dimension(150, 150));
+		
+	}
+	
+	public String getName() {
+		
+		return name;
 		
 	}
 	
@@ -72,9 +78,9 @@ public class GUICity extends GUIPanel {
 	
 	}
 	
-	public String getName() {
+	public void setKing() {
 		
-		return name;
+		add(new JLabel("K"), BorderLayout.EAST);
 		
 	}
 	

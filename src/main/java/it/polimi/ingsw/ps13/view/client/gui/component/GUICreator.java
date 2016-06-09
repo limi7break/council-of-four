@@ -1,15 +1,18 @@
 package it.polimi.ingsw.ps13.view.client.gui.component;
 
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.border.EmptyBorder;
 
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.region.Region;
 import net.miginfocom.swing.MigLayout;
@@ -21,16 +24,20 @@ public final class GUICreator {
 	
 	public GUIPanel createGUI(Game game) {
 		
-		GUIPanel contentPane = new GUIPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new MigLayout("", "[]50[]", "[]50[]"));
+		GUIPanel mainPane = new GUIPanel();
+		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		mainPane.setLayout(new MigLayout("", "", ""));
+		
+		GUIPanel mapPane = new GUIPanel(new GridLayout(1, 0, 50, 0));
+		mapPane.setBorder(BorderFactory.createTitledBorder("Map"));
+		mapPane.setTransparent(true);
 		
 		// Create regions
 		for (Region region : game.getBoard().getRegions().values()) {
 			GUIRegion regionPane = new GUIRegion(region);
 			
 			regions.put(region.getName(), regionPane);
-			contentPane.add(regionPane);
+			mapPane.add(regionPane);
 		}
 		
 		// Create cities
@@ -41,7 +48,27 @@ public final class GUICreator {
 			regions.get(city.getRegion().getName()).addCity(cityPane);
 		}
 		
-		return contentPane;
+		GUICity kingCity = cities.get(game.getBoard().getKing().getCity().getName());
+		kingCity.setKing();
+		
+		mainPane.add(mapPane);
+		
+		// Create players
+		GUIPanel players = new GUIPanel(new GridLayout(0, 1));
+		for (Player player : game.getPlayers().values()) {
+			GUIPlayer playerPane = new GUIPlayer(player);
+			
+			players.add(playerPane);
+		}
+		
+		players.setBorder(BorderFactory.createTitledBorder("Players"));
+		mainPane.add(players, "cell 0 0, growx, top");
+		
+		// Create nobility track
+		GUINobilityTrack nobilityTrack = new GUINobilityTrack(game.getBoard().getNobilityTrack());
+		mainPane.add(nobilityTrack, "cell 0 1");
+		
+		return mainPane;
 		
 	}
 	
