@@ -2,9 +2,9 @@ package it.polimi.ingsw.ps13.model.board;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,7 +33,7 @@ public final class BoardFactory {
 	public static Board createBoard(Document config, Map<String, Color> colors) {
 		
 		Map<String, CityColor> cityColors = CityColorFactory.createCityColors(config, colors);
-		Map<String, Region> regions = new TreeMap<>();
+		Map<String, Region> regions = new LinkedHashMap<>();
 		Map<String, City> cities;
 		
 		PoliticsCardDeck politicsCardDeck = PoliticsCardDeckFactory.createPoliticsCardDeck(config, colors);

@@ -3,9 +3,9 @@ package it.polimi.ingsw.ps13.model.region;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,7 +23,7 @@ public final class RegionFactory {
 	
 	public static Map<String, City> createCities(Map<String, Region> regions, Map<String, CityColor> cityColors, List<CouncillorBalcony> councillorBalconies, Map<String, Color> colors, Document config) {
 		
-		Map<String, City> cities = new TreeMap<>();
+		Map<String, City> cities = new LinkedHashMap<>();
 		List<Bonus> rewardTokens = createRewardTokens(config);
 		
 		// Create capital color with empty bonus

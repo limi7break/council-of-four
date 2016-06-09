@@ -72,14 +72,14 @@
 					<neighbor name="Burgen"/>
 					<neighbor name="Castrum"/>
 				</city>
+				<city name="Castrum" color="lightGray">
+					<neighbor name="Arkon"/>
+					<neighbor name="Framek"/>
+				</city>
 				<city name="Burgen" color="yellow">
 					<neighbor name="Arkon"/>
 					<neighbor name="Dorful"/>
 					<neighbor name="Esti"/>
-				</city>
-				<city name="Castrum" color="lightGray">
-					<neighbor name="Arkon"/>
-					<neighbor name="Framek"/>
 				</city>
 				<city name="Dorful" color="lightGray">
 					<neighbor name="Burgen"/>
@@ -221,19 +221,14 @@
 					<neighbor name="Castrum"/>
 					<neighbor name="Indur"/>
 				</city>
-				<city name="Graden" color="lightGray">
-					<neighbor name="Dorful"/>
-					<neighbor name="Juvelar"/>
-				</city>
-				<city name="Hellar" color="yellow">
-					<neighbor name="Esti"/>
-					<neighbor name="Juvelar"/>
-					<neighbor name="Merkatim"/>
-				</city>
 				<city name="Indur" color="orange">
 					<neighbor name="Framek"/>
 					<neighbor name="Juvelar"/>
 					<neighbor name="Kultos"/>
+				</city>
+				<city name="Graden" color="lightGray">
+					<neighbor name="Dorful"/>
+					<neighbor name="Juvelar"/>
 				</city>
 				<!-- CAPITAL -->
 				<city name="Juvelar" color="magenta">
@@ -241,6 +236,11 @@
 					<neighbor name="Hellar"/>
 					<neighbor name="Indur"/>
 					<neighbor name="Lyram"/>
+				</city>
+				<city name="Hellar" color="yellow">
+					<neighbor name="Esti"/>
+					<neighbor name="Juvelar"/>
+					<neighbor name="Merkatim"/>
 				</city>
 			</cities>
 
@@ -374,22 +374,22 @@
 					<neighbor name="Indur"/>
 					<neighbor name="Naris"/>
 				</city>
-				<city name="Lyram" color="lightGray">
-					<neighbor name="Juvelar"/>
-					<neighbor name="Osium"/>
-				</city>
-				<city name="Merkatim" color="blue">
-					<neighbor name="Hellar"/>
-					<neighbor name="Osium"/>
-				</city>
 				<city name="Naris" color="orange">
 					<neighbor name="Kultos"/>
+					<neighbor name="Osium"/>
+				</city>
+				<city name="Lyram" color="lightGray">
+					<neighbor name="Juvelar"/>
 					<neighbor name="Osium"/>
 				</city>
 				<city name="Osium" color="yellow">
 					<neighbor name="Lyram"/>
 					<neighbor name="Merkatim"/>
 					<neighbor name="Naris"/>
+				</city>
+				<city name="Merkatim" color="blue">
+					<neighbor name="Hellar"/>
+					<neighbor name="Osium"/>
 				</city>
 			</cities>
 
