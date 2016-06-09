@@ -105,6 +105,16 @@ public class City implements Serializable {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public List<Emporium> getEmporiums() {
+		
+		return Collections.unmodifiableList(emporiums);
+		
+	}
+	
+	/**
+	 * 
 	 * @return the number of emporiums that have been built on the city
 	 */
 	public int getNumberOfEmporiums() {

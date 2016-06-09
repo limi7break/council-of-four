@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
+import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.region.City;
 
 public class GUICity extends GUIPanel {
@@ -55,7 +57,22 @@ public class GUICity extends GUIPanel {
 		image = new JLabel(new ImageIcon(coloredCityImage));
 		add(image, BorderLayout.CENTER);
 		
-		add(new JLabel("Emporiums: " + city.getNumberOfEmporiums()), BorderLayout.SOUTH);
+		GUIPanel emporiumsPanel = new GUIPanel(new FlowLayout());
+		emporiumsPanel.setTransparent(true);
+		
+		BufferedImage emporiumImage = null;
+		try {
+			emporiumImage = ImageIO.read(getClass().getResourceAsStream("/it/polimi/ingsw/ps13/resource/image/emporium.png"));
+		} catch (IOException e) {
+			LOG.log(Level.WARNING, "A problem was encountered while loading the emporium image file.", e);
+		}
+		
+		for (Emporium emporium : city.getEmporiums()) {
+			BufferedImage coloredEmporiumImage = colorize(emporiumImage, emporium.getColor(), 255);
+			emporiumsPanel.add(new JLabel(new ImageIcon(coloredEmporiumImage)));
+		}
+		add(emporiumsPanel, BorderLayout.SOUTH);
+		
 		setMaximumSize(new Dimension(150, 150));
 		
 	}

@@ -17,6 +17,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultCaret;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
@@ -86,6 +87,9 @@ public class ClientGUI extends JFrame implements ClientView {
 		Font font = new Font("Lucida Console", Font.PLAIN, 13);
 		textArea.setFont(font);
 		
+		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
 	}
 	
 	/**
@@ -138,27 +142,9 @@ public class ClientGUI extends JFrame implements ClientView {
 		// Create and set text area and text field
 		addTextAreaTo(rightPane);
 		
-		GUIPanel politicsCardsPanel = new GUIPanel(new GridLayout(0, 4));
-		politicsCardsPanel.setBorder(BorderFactory.createTitledBorder("Politics Cards"));
-		for (PoliticsCard card : game.getPlayer(playerName).getPoliticsCards()) {
-			JLabel cardLabel = new JLabel(card.getColorName());
-			cardLabel.setHorizontalAlignment(JLabel.CENTER);
-			politicsCardsPanel.add(cardLabel);
-		}
-		rightPane.add(politicsCardsPanel);
-		
-		GUIPanel councillorsPanel = new GUIPanel(new GridLayout(0, 4));
-		councillorsPanel.setBorder(BorderFactory.createTitledBorder("Councillors"));
-		for (Councillor councillor : game.getBoard().getCouncillors()) {
-			JLabel councillorLabel = new JLabel(councillor.getColorName());
-			councillorLabel.setHorizontalAlignment(JLabel.CENTER);
-			councillorsPanel.add(councillorLabel);
-		}
-		rightPane.add(councillorsPanel);
-		
 		GUICouncillorBalcony kingBalcony = new GUICouncillorBalcony(game.getBoard().getKingBalcony());
 		kingBalcony.setBorder(BorderFactory.createTitledBorder("King Balcony"));
-		rightPane.add(kingBalcony, "flowx");
+		rightPane.add(kingBalcony, "cell 0 2, flowx");
 		
 		GUIPanel actionsPanel = new GUIPanel(new GridLayout(2, 0));
 		actionsPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
@@ -169,7 +155,25 @@ public class ClientGUI extends JFrame implements ClientView {
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getRewardToken() + " RT Again"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTileBonus() + " TB Again"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTakeTile() + " Take Tile"));
-		rightPane.add(actionsPanel, "cell 0 4");
+		rightPane.add(actionsPanel, "cell 0 2");
+		
+		GUIPanel politicsCardsPanel = new GUIPanel(new GridLayout(0, 4));
+		politicsCardsPanel.setBorder(BorderFactory.createTitledBorder("Politics Cards"));
+		for (PoliticsCard card : game.getPlayer(playerName).getPoliticsCards()) {
+			JLabel cardLabel = new JLabel(card.getColorName());
+			cardLabel.setHorizontalAlignment(JLabel.CENTER);
+			politicsCardsPanel.add(cardLabel);
+		}
+		rightPane.add(politicsCardsPanel, "cell 0 3, flowx");
+		
+		GUIPanel councillorsPanel = new GUIPanel(new GridLayout(0, 4));
+		councillorsPanel.setBorder(BorderFactory.createTitledBorder("Councillors"));
+		for (Councillor councillor : game.getBoard().getCouncillors()) {
+			JLabel councillorLabel = new JLabel(councillor.getColorName());
+			councillorLabel.setHorizontalAlignment(JLabel.CENTER);
+			councillorsPanel.add(councillorLabel);
+		}
+		rightPane.add(councillorsPanel, "cell 0 3");
 		
 		GUIPanel tilesPanel = new GUIPanel(new FlowLayout());
 		tilesPanel.setBorder(BorderFactory.createTitledBorder("Permit Tiles"));
@@ -177,7 +181,7 @@ public class ClientGUI extends JFrame implements ClientView {
 			GUIPermitTile t = new GUIPermitTile(tile);
 			tilesPanel.add(t);
 		}
-		rightPane.add(tilesPanel);
+		rightPane.add(tilesPanel, "cell 0 4");
 		
 		mainPane.add(rightPane, "cell 1 0, spany 2, top");
 		
