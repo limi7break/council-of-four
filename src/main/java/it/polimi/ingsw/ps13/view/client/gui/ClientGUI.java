@@ -2,7 +2,6 @@ package it.polimi.ingsw.ps13.view.client.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -44,6 +44,7 @@ public class ClientGUI extends JFrame implements ClientView {
 	private static final Logger LOG = Logger.getLogger(ClientGUI.class.getSimpleName());
 	
 	private JTextArea textArea;
+	private JScrollBar scrollBar;
 	private final GUICreator guiCreator;
 
 	private transient ClientConnection connection;
@@ -80,7 +81,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		guiCreator = new GUICreator();
 		
 		textArea = new JTextArea("Council of Four version 1.0", 20, 40);
-		textArea.setEnabled(false);
+		textArea.setEditable(false);
 		textArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		textArea.setBackground(Color.white);
 		textArea.setForeground(Color.black);
@@ -175,7 +176,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		}
 		rightPane.add(councillorsPanel, "cell 0 3");
 		
-		GUIPanel tilesPanel = new GUIPanel(new FlowLayout());
+		GUIPanel tilesPanel = new GUIPanel(new GridLayout(0, 4));
 		tilesPanel.setBorder(BorderFactory.createTitledBorder("Permit Tiles"));
 		for (PermitTile tile : game.getPlayer(playerName).getPermitTiles()) {
 			GUIPermitTile t = new GUIPermitTile(tile);
@@ -231,6 +232,8 @@ public class ClientGUI extends JFrame implements ClientView {
 			textArea.append(msg.getMessage());
 		}
 		
+		scrollBar.setValue(scrollBar.getMaximum());
+		
 	}
 	
 	public void startHandlers() {
@@ -251,6 +254,8 @@ public class ClientGUI extends JFrame implements ClientView {
 		
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		panel.add(scrollPane, "grow");
+		
+		scrollBar = scrollPane.getVerticalScrollBar();
 		
 		JTextField textField = new JTextField("", 40);
 		panel.add(textField);

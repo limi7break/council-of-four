@@ -77,25 +77,39 @@ public class GUICity extends GUIPanel {
 		
 	}
 	
+	/**
+	 * 
+	 */
 	public String getName() {
 		
 		return name;
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	protected Point getCenterPoint() {
 		
 		return centerPoint;
 		
 	}
 	
+	/**
+	 * 
+	 * @param component
+	 */
 	protected void setCenterPointRelativeTo(Component component) {
 	
 		centerPoint = SwingUtilities.convertPoint(image, new Point(image.getWidth()/2, image.getHeight()/2), component);
 	
 	}
 	
-	public void setKing() {
+	/**
+	 * 
+	 */
+	protected void setKing() {
 		
 		add(new JLabel("K"), BorderLayout.EAST);
 		

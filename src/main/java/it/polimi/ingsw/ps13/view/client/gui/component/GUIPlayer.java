@@ -40,7 +40,9 @@ public class GUIPlayer extends GUIPanel {
 		panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/emporium.png"))));
 		panel.add(new JLabel(String.valueOf(player.getNumberOfEmporiums())));
 		
-		
+		// Add nobility position
+		panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/nobilitypoints.png"))));
+		panel.add(new JLabel(String.valueOf(player.getNobilityPosition())));
 		
 		add(panel);
 		
