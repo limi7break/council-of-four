@@ -97,6 +97,8 @@ public class Game implements Serializable {
 		
 		Random rand = new Random();
 		
+		Color unusedColor = colors.get(color.next());
+		
 		for(String region : this.board.getRegions().keySet()){
 			
 			int initialCities = rand.nextInt(3) + 1;
@@ -114,7 +116,7 @@ public class Game implements Serializable {
 				while(this.board.getCity(cityName).getNumberOfEmporiums()!=0);
 				
 				
-				this.board.getCity(cityName).addEmporium(new Emporium(colors.get(color.next())));
+				this.board.getCity(cityName).addEmporium(new Emporium(unusedColor));
 				
 			}
 			
