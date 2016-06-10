@@ -80,6 +80,7 @@ public class GUICity extends GUIPanel {
 	/**
 	 * 
 	 */
+	@Override
 	public String getName() {
 		
 		return name;

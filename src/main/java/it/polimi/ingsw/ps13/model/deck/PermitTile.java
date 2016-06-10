@@ -117,13 +117,17 @@ public final class PermitTile implements Marketable, Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
 		PermitTile that = (PermitTile) o;
 
-		if (used != that.used) return false;
-		if (!bonus.equals(that.bonus)) return false;
+		if (used != that.used)
+			return false;
+		if (!bonus.equals(that.bonus))
+			return false;
 		return cityNames.equals(that.cityNames);
 
 	}

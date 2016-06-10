@@ -50,12 +50,20 @@ public class GUIRegion extends GUIPanel {
 		
 	}
 	
+	/**
+	 * 
+	 * @param city
+	 */
 	protected void addCity(GUICity city) {
 		
 		cityPane.add(city);
 		
 	}
 	
+	/**
+	 * 
+	 */
+	@Override
 	public String getName() {
 		
 		return name;

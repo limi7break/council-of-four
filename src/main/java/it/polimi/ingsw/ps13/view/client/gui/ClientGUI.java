@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,29 +43,12 @@ public class ClientGUI extends JFrame implements ClientView {
 	
 	private JTextArea textArea;
 	private JScrollBar scrollBar;
-	private final GUICreator guiCreator;
+	private final transient GUICreator guiCreator;
 
 	private transient ClientConnection connection;
 	
 	private Game game;
 	private String playerName = "Giocatore 1";
-
-	/**
-	 * Launch the GUI.
-	 */
-	@Override
-	public void run() {
-		
-		init();
-		startHandlers();
-		
-		try {
-			setVisible(true);
-		} catch (Exception e) {
-			LOG.log(Level.WARNING, "There was a problem while initializing the GUI.", e);
-		}
-		
-	}
 
 	/**
 	 * Create the frame.
@@ -90,6 +71,23 @@ public class ClientGUI extends JFrame implements ClientView {
 		
 		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
+	}
+	
+	/**
+	 * Launch the GUI.
+	 */
+	@Override
+	public void run() {
+		
+		init();
+		startHandlers();
+		
+		try {
+			setVisible(true);
+		} catch (Exception e) {
+			LOG.log(Level.WARNING, "There was a problem while initializing the GUI.", e);
+		}
 		
 	}
 	
@@ -260,20 +258,16 @@ public class ClientGUI extends JFrame implements ClientView {
 		JTextField textField = new JTextField("", 40);
 		panel.add(textField);
 		
-		textField.addActionListener(new ActionListener() {
+		textField.addActionListener(ae -> {
 			
-			@Override
-		    public void actionPerformed(ActionEvent e)
-		    {
-		        RequestMsg msg = CmdInterpreter.parseCommand(textField.getText());
-		        textField.setText("");
-		        
-		        if (msg != null) {
-		        	connection.sendMessage(msg);
-		        } else {
-		        	textArea.append("\nCommand not recognized.");
-		        }
-		    }
+	        RequestMsg msg = CmdInterpreter.parseCommand(textField.getText());
+	        textField.setText("");
+	        
+	        if (msg != null) {
+	        	connection.sendMessage(msg);
+	        } else {
+	        	textArea.append("\nCommand not recognized.");
+	        }
 			
 		});
 		
