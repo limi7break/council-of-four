@@ -16,7 +16,7 @@
 		<color name="green" 		r="000" g="255" b="000"/>
 		<color name="lightGray" 	r="192" g="192" b="192"/>
 		<color name="magenta" 		r="255" g="000" b="255"/>
-		<color name="orange" 		r="255" g="200" b="000"/>
+		<color name="orange" 		r="255" g="140" b="000"/>
 		<color name="pink" 			r="255" g="175" b="175"/>
 		<color name="red" 			r="255" g="000" b="000"/>
 		<color name="white" 		r="255" g="255" b="255"/>

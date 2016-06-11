@@ -1,11 +1,16 @@
 package it.polimi.ingsw.ps13.view.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -22,6 +27,7 @@ import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import it.polimi.ingsw.ps13.view.client.ClientView;
 import it.polimi.ingsw.ps13.view.client.cli.CmdInterpreter;
+import it.polimi.ingsw.ps13.view.client.gui.component.GUICity;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICouncillorBalcony;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICreator;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIForm;
@@ -152,23 +158,45 @@ public class ClientGUI extends JFrame implements ClientView {
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTakeTile() + " get tile"));
 		rightPane.add(actionsPanel, "cell 0 2");
 		
-		GUIPanel politicsCardsPanel = new GUIPanel(new GridLayout(0, 4));
-		politicsCardsPanel.setBorder(BorderFactory.createTitledBorder("Politics Cards"));
-		for (PoliticsCard card : game.getPlayer(playerName).getPoliticsCards()) {
-			JLabel cardLabel = new JLabel(card.getColorName());
-			cardLabel.setHorizontalAlignment(JLabel.CENTER);
-			politicsCardsPanel.add(cardLabel);
-		}
-		rightPane.add(politicsCardsPanel, "cell 0 3, flowx");
-		
-		GUIPanel councillorsPanel = new GUIPanel(new GridLayout(0, 4));
+		GUIPanel councillorsPanel = new GUIPanel(new FlowLayout());
 		councillorsPanel.setBorder(BorderFactory.createTitledBorder("Councillors"));
+		BufferedImage councillorImage = null;
+		try {
+			councillorImage = ImageIO.read(getClass().getResourceAsStream("/it/polimi/ingsw/ps13/resource/image/councillor.png"));
+		} catch (IOException e) {
+			LOG.log(Level.WARNING, "A problem was encountered while loading the councillor image file.", e);
+		}
 		for (Councillor councillor : game.getBoard().getCouncillors()) {
-			JLabel councillorLabel = new JLabel(councillor.getColorName());
-			councillorLabel.setHorizontalAlignment(JLabel.CENTER);
+			JLabel councillorLabel;
+			BufferedImage coloredCouncillorImage = GUICity.colorize(councillorImage, councillor.getColor(), 255);
+			councillorLabel = new JLabel(new ImageIcon(coloredCouncillorImage));
+			councillorLabel.setToolTipText(councillor.getColorName());
+			
 			councillorsPanel.add(councillorLabel);
 		}
 		rightPane.add(councillorsPanel, "cell 0 3");
+		
+		GUIPanel politicsCardsPanel = new GUIPanel(new FlowLayout());
+		politicsCardsPanel.setBorder(BorderFactory.createTitledBorder("Politics Cards"));
+		BufferedImage cardImage = null;
+		try {
+			cardImage = ImageIO.read(getClass().getResourceAsStream("/it/polimi/ingsw/ps13/resource/image/politicscard.png"));
+		} catch (IOException e) {
+			LOG.log(Level.WARNING, "A problem was encountered while loading the politics card image file.", e);
+		}
+		for (PoliticsCard card : game.getPlayer(playerName).getPoliticsCards()) {
+			JLabel cardLabel;
+			if (card.isMultiColored()) {
+				cardLabel = new JLabel(new ImageIcon(getClass().getResource("/it/polimi/ingsw/ps13/resource/image/jolly.png")));
+			} else {
+				BufferedImage coloredCardImage = GUICity.colorize(cardImage, card.getColor(), 96);
+				cardLabel = new JLabel(new ImageIcon(coloredCardImage));
+			}
+			cardLabel.setToolTipText(card.getColorName());
+			
+			politicsCardsPanel.add(cardLabel);
+		}
+		rightPane.add(politicsCardsPanel, "cell 0 4");
 		
 		GUIPanel tilesPanel = new GUIPanel(new GridLayout(0, 4));
 		tilesPanel.setBorder(BorderFactory.createTitledBorder("Permit Tiles"));
@@ -176,7 +204,7 @@ public class ClientGUI extends JFrame implements ClientView {
 			GUIPermitTile t = new GUIPermitTile(tile);
 			tilesPanel.add(t);
 		}
-		rightPane.add(tilesPanel, "cell 0 4");
+		rightPane.add(tilesPanel, "cell 0 5");
 		
 		mainPane.add(rightPane, "cell 1 0, spany 2, top");
 		

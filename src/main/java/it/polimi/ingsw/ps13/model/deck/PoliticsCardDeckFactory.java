@@ -43,7 +43,7 @@ public final class PoliticsCardDeckFactory {
 		}
 		
 		for (int i=0; i<MULTICOLORED_CARDS; i++) {
-			cards.add(new PoliticsCard(PoliticsCard.jollyColor, "JOLLY"));
+			cards.add(new PoliticsCard(PoliticsCard.jollyColor, "jolly"));
 		}
 		
 		PoliticsCardDeck politicsCardDeck = new PoliticsCardDeck(cards);

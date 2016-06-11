@@ -124,7 +124,7 @@ public class GUICity extends GUIPanel {
 	 * @param color
 	 * @return
 	 */
-	protected static BufferedImage colorize(BufferedImage image, Color color, int alpha) {
+	public static BufferedImage colorize(BufferedImage image, Color color, int alpha) {
 		
 		Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
         int w = image.getWidth();
