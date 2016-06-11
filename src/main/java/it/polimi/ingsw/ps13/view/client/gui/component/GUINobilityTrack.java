@@ -19,7 +19,7 @@ public class GUINobilityTrack extends GUIPanel {
 	 * 
 	 * @param nobilityTrack
 	 */
-	public GUINobilityTrack(NobilityTrack nobilityTrack) {
+	protected GUINobilityTrack(NobilityTrack nobilityTrack) {
 		
 		super(new GridLayout(2, 0));
 		setBorder(BorderFactory.createTitledBorder("Nobility Track"));

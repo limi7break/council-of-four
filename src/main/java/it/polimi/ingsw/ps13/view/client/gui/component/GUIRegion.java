@@ -18,7 +18,7 @@ public class GUIRegion extends GUIPanel {
 	private final GUIPanel cityPane;
 	private final String name;
 
-	public GUIRegion(Region region) {
+	protected GUIRegion(Region region) {
 		
 		super(new BorderLayout());
 		setOpaque(false);

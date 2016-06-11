@@ -1,8 +1,6 @@
 package it.polimi.ingsw.ps13.view.client.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,11 +9,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.text.DefaultCaret;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
@@ -31,6 +24,7 @@ import it.polimi.ingsw.ps13.view.client.ClientView;
 import it.polimi.ingsw.ps13.view.client.cli.CmdInterpreter;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICouncillorBalcony;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICreator;
+import it.polimi.ingsw.ps13.view.client.gui.component.GUIForm;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIPanel;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIPermitTile;
 import net.miginfocom.swing.MigLayout;
@@ -41,8 +35,7 @@ public class ClientGUI extends JFrame implements ClientView {
 
 	private static final Logger LOG = Logger.getLogger(ClientGUI.class.getSimpleName());
 	
-	private JTextArea textArea;
-	private JScrollBar scrollBar;
+	private final GUIForm form;
 	private final transient GUICreator guiCreator;
 
 	private transient ClientConnection connection;
@@ -61,16 +54,19 @@ public class ClientGUI extends JFrame implements ClientView {
 		
 		guiCreator = new GUICreator();
 		
-		textArea = new JTextArea("Council of Four version 1.0", 20, 40);
-		textArea.setEditable(false);
-		textArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		textArea.setBackground(Color.white);
-		textArea.setForeground(Color.black);
-		Font font = new Font("Lucida Console", Font.PLAIN, 13);
-		textArea.setFont(font);
-		
-		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		form = new GUIForm();
+		form.getTextField().addActionListener(ae -> {
+			
+	        RequestMsg msg = CmdInterpreter.parseCommand(form.getTextField().getText());
+	        form.getTextField().setText("");
+	        
+	        if (msg != null) {
+	        	connection.sendMessage(msg);
+	        } else {
+	        	form.append("\nCommand not recognized.");
+	        }
+			
+		});
 		
 	}
 	
@@ -106,7 +102,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		initialPanel.add(label);
 		
 		// Create and set text area and text field
-		addTextAreaTo(initialPanel);
+		initialPanel.add(form, "growx");
 		
 		this.setContentPane(initialPanel);
 		revalidate();
@@ -139,7 +135,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		rightPane.setLayout(new MigLayout("flowy", "", ""));
 		
 		// Create and set text area and text field
-		addTextAreaTo(rightPane);
+		rightPane.add(form, "growx");
 		
 		GUICouncillorBalcony kingBalcony = new GUICouncillorBalcony(game.getBoard().getKingBalcony());
 		kingBalcony.setBorder(BorderFactory.createTitledBorder("King Balcony"));
@@ -151,9 +147,9 @@ public class ClientGUI extends JFrame implements ClientView {
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getQuick() + " Quick"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getSell() + " Sell"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getBuy() + " Buy"));
-		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getRewardToken() + " RT Again"));
-		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTileBonus() + " TB Again"));
-		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTakeTile() + " Take Tile"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getRewardToken() + " get rt"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTileBonus() + " get tb"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTakeTile() + " get tile"));
 		rightPane.add(actionsPanel, "cell 0 2");
 		
 		GUIPanel politicsCardsPanel = new GUIPanel(new GridLayout(0, 4));
@@ -211,26 +207,24 @@ public class ClientGUI extends JFrame implements ClientView {
 			
 			this.game = updateMsg.getGame();
 			showModel();
-			textArea.append("\n");
-			textArea.append(updateMsg.getMessage());
+			form.append("\n");
+			form.append(updateMsg.getMessage());
 		}
 		else if (msg instanceof ChatMulticastMsg) {
 			ChatMulticastMsg chatMsg = (ChatMulticastMsg) msg;
-			textArea.append("\n");
-			textArea.append("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
+			form.append("\n");
+			form.append("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
 		}
 		else if (msg instanceof ConnectionUnicastMsg) {
 			ConnectionUnicastMsg connMsg = (ConnectionUnicastMsg) msg;
 			this.playerName = connMsg.getPlayerName();
-			textArea.append("\n");
-			textArea.append(connMsg.getMessage());
+			form.append("\n");
+			form.append(connMsg.getMessage());
 		}
 		else {
-			textArea.append("\n");
-			textArea.append(msg.getMessage());
+			form.append("\n");
+			form.append(msg.getMessage());
 		}
-		
-		scrollBar.setValue(scrollBar.getMaximum());
 		
 	}
 	
@@ -245,31 +239,6 @@ public class ClientGUI extends JFrame implements ClientView {
 				
 			}
 		}).start();
-		
-	}
-	
-	public void addTextAreaTo(GUIPanel panel) {
-		
-		JScrollPane scrollPane = new JScrollPane(textArea);
-		panel.add(scrollPane, "grow");
-		
-		scrollBar = scrollPane.getVerticalScrollBar();
-		
-		JTextField textField = new JTextField("", 40);
-		panel.add(textField);
-		
-		textField.addActionListener(ae -> {
-			
-	        RequestMsg msg = CmdInterpreter.parseCommand(textField.getText());
-	        textField.setText("");
-	        
-	        if (msg != null) {
-	        	connection.sendMessage(msg);
-	        } else {
-	        	textArea.append("\nCommand not recognized.");
-	        }
-			
-		});
 		
 	}
 

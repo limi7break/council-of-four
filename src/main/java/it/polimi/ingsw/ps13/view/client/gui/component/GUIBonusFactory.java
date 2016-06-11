@@ -3,6 +3,7 @@ package it.polimi.ingsw.ps13.view.client.gui.component;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
@@ -32,32 +33,29 @@ public final class GUIBonusFactory {
 		for (Bonus b : cb.getContents()) {
 			
 			if (b instanceof Coins) {
-				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/coins.png"))));
-				panel.add(new JLabel(String.valueOf(((Coins) b).getAmount())));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/coins.png")), SwingConstants.CENTER));
+				panel.add(new JLabel(String.valueOf(((Coins) b).getAmount()), JLabel.CENTER));
 			} else if (b instanceof Assistants) {
-				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/assistants.png"))));
-				panel.add(new JLabel(String.valueOf(((Assistants) b).getAmount())));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/assistants.png")), SwingConstants.CENTER));
+				panel.add(new JLabel(String.valueOf(((Assistants) b).getAmount()), JLabel.CENTER));
 			} else if (b instanceof VictoryPoints) {
-				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/victorypoints.png"))));
-				panel.add(new JLabel(String.valueOf(((VictoryPoints) b).getAmount())));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/victorypoints.png")), SwingConstants.CENTER));
+				panel.add(new JLabel(String.valueOf(((VictoryPoints) b).getAmount()), JLabel.CENTER));
 			} else if (b instanceof PoliticsCardsBonus) {
-				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/politicscards.png"))));
-				panel.add(new JLabel(String.valueOf(((PoliticsCardsBonus) b).getAmount())));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/politicscards.png")), SwingConstants.CENTER));
+				panel.add(new JLabel(String.valueOf(((PoliticsCardsBonus) b).getAmount()), JLabel.CENTER));
 			} else if (b instanceof MainActionsBonus) {
-				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/mainactions.png"))));
-				panel.add(new JLabel(String.valueOf(((MainActionsBonus) b).getAmount())));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/mainactions.png")), SwingConstants.CENTER));
+				panel.add(new JLabel(String.valueOf(((MainActionsBonus) b).getAmount()), JLabel.CENTER));
 			} else if (b instanceof NobilityPointsBonus) {
-				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/nobilitypoints.png"))));
-				panel.add(new JLabel(String.valueOf(((NobilityPointsBonus) b).getAmount())));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/nobilitypoints.png")), SwingConstants.CENTER));
+				panel.add(new JLabel(String.valueOf(((NobilityPointsBonus) b).getAmount()), JLabel.CENTER));
 			} else if (b instanceof RegainRewardTokenBonus) {
-				panel.add(new JLabel("rt"));
-				//panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/rewardtokenagain.png"))));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/rewardtokenagain.png")), SwingConstants.CENTER));
 			} else if (b instanceof RegainPermitTileBonus) {
-				panel.add(new JLabel("ptb"));
-				//panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/tilebonusagain.png"))));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/tilebonusagain.png")), SwingConstants.CENTER));
 			} else if (b instanceof VisiblePermitTileBonus) {
-				panel.add(new JLabel("vt"));
-				//panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/takevisibletile.png"))));
+				panel.add(new JLabel(new ImageIcon(GUIBonusFactory.class.getResource("/it/polimi/ingsw/ps13/resource/image/bonus/takevisibletile.png")), SwingConstants.CENTER));
 			}
 			
 		}

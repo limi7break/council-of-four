@@ -32,7 +32,7 @@ public class GUICity extends GUIPanel {
 	private final String name;
 	private final JLabel image;
 	
-	public GUICity(City city) {
+	protected GUICity(City city) {
 		
 		super(new BorderLayout());
 		setTransparent(true);

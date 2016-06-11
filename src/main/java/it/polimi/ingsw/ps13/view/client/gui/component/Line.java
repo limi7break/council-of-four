@@ -7,20 +7,20 @@ public class Line {
 	private final Point firstPoint;
 	private final Point secondPoint;
 	
-	public Line(Point first, Point second) {
+	protected Line(Point first, Point second) {
 		
 		this.firstPoint = first;
 		this.secondPoint = second;
 		
 	}
 	
-	public Point getFirstPoint() {
+	protected Point getFirstPoint() {
 		
 		return firstPoint;
 		
 	}
 	
-	public Point getSecondPoint() {
+	protected Point getSecondPoint() {
 		
 		return secondPoint;
 		

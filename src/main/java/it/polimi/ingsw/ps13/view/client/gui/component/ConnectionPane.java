@@ -16,7 +16,7 @@ public class ConnectionPane extends GUIPanel {
 	private static final long serialVersionUID = 0L;
 	private final transient List<Line> lines;
 	
-	public ConnectionPane(Collection<Line> lines) {
+	protected ConnectionPane(Collection<Line> lines) {
 		
 		this.lines = new ArrayList<>();
 		this.lines.addAll(lines);
