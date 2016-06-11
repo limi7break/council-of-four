@@ -43,6 +43,10 @@ public class BuildEmporiumAction implements Action {
 		if (player.getTokens().getMain() == 0)
 			legal = false;
 		
+		//Check if player has at least one emporium
+		if(player.getNumberOfEmporiums() == 0)
+			legal = false;
+		
 		// Check if city is a valid city
 		if (!g.getBoard().getCities().containsKey(city))
 			return false;
