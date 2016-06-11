@@ -16,9 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
+import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
-import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.council.Councillor;
@@ -71,6 +71,8 @@ public class ClientGUI extends JFrame implements ClientView {
 	        } else {
 	        	form.append("\nCommand not recognized.");
 	        }
+	        
+	        form.getTextField().requestFocusInWindow();
 			
 		});
 		
@@ -198,7 +200,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		}
 		rightPane.add(politicsCardsPanel, "cell 0 4");
 		
-		GUIPanel tilesPanel = new GUIPanel(new GridLayout(0, 4));
+		GUIPanel tilesPanel = new GUIPanel(new GridLayout(0, 5));
 		tilesPanel.setBorder(BorderFactory.createTitledBorder("Permit Tiles"));
 		for (PermitTile tile : game.getPlayer(playerName).getPermitTiles()) {
 			GUIPermitTile t = new GUIPermitTile(tile);
@@ -219,6 +221,8 @@ public class ClientGUI extends JFrame implements ClientView {
 		revalidate();
 		repaint();
 		
+		form.getTextField().requestFocusInWindow();
+		
 	}
 	
 	/**
@@ -230,7 +234,8 @@ public class ClientGUI extends JFrame implements ClientView {
 			UpdateResponseMsg updateMsg = (UpdateResponseMsg)msg;
 			
 			if (this.game == null) {
-				setBounds(0, 0, 1366, 768);
+				setSize(1366, 768);
+				setLocationRelativeTo(null);
 			}
 			
 			this.game = updateMsg.getGame();
@@ -238,8 +243,8 @@ public class ClientGUI extends JFrame implements ClientView {
 			form.append("\n");
 			form.append(updateMsg.getMessage());
 		}
-		else if (msg instanceof ChatMulticastMsg) {
-			ChatMulticastMsg chatMsg = (ChatMulticastMsg) msg;
+		else if (msg instanceof ChatResponseMsg) {
+			ChatResponseMsg chatMsg = (ChatResponseMsg) msg;
 			form.append("\n");
 			form.append("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
 		}

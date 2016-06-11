@@ -3,9 +3,9 @@ package it.polimi.ingsw.ps13.view.client.cli;
 import java.util.Scanner;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
+import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
-import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
@@ -170,8 +170,8 @@ public class ClientCLI implements ClientView {
 			this.game = updateMsg.getGame();
 			System.out.println(updateMsg.getMessage());
 		}
-		else if (msg instanceof ChatMulticastMsg) {
-			ChatMulticastMsg chatMsg = (ChatMulticastMsg) msg;
+		else if (msg instanceof ChatResponseMsg) {
+			ChatResponseMsg chatMsg = (ChatResponseMsg) msg;
 			System.out.println("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
 		}
 		else if (msg instanceof ConnectionUnicastMsg) {

@@ -32,7 +32,7 @@ public class GUIRegion extends GUIPanel {
 		cityPane.setTransparent(true);
 		add(cityPane, BorderLayout.CENTER);
 		
-		GUIPanel tilesAndBalcony = new GUIPanel(new GridLayout(2, 1));
+		GUIPanel tilesAndBalcony = new GUIPanel(new GridLayout(3, 1));
 		tilesAndBalcony.setTransparent(true);
 		
 		GUIPanel visibleTiles = new GUIPanel(new FlowLayout());

@@ -19,8 +19,6 @@ public class GUIPermitTile extends GUIPanel {
 	public GUIPermitTile(PermitTile tile) {
 	
 		super(new BorderLayout());
-		setOpaque(false);
-		setBackground(new Color(0,0,0,0));
 		
 		GUIPanel cityPane = new GUIPanel(new GridLayout(0, 1));
 		cityPane.setTransparent(true);
@@ -38,7 +36,12 @@ public class GUIPermitTile extends GUIPanel {
 		add(bonusPane, BorderLayout.SOUTH);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setPreferredSize(new Dimension(70, 70));
-		setBackground(new Color(160, 82, 45));
+		
+		if (tile.isUsed()) {
+			setTransparent(true);
+		} else {
+			setBackground(new Color(139, 69, 19, 96));
+		}
 		
 	}
 

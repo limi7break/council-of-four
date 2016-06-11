@@ -18,9 +18,9 @@ import it.polimi.ingsw.ps13.controller.actions.PassTurnAction;
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.ActionRequestMsg;
+import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
-import it.polimi.ingsw.ps13.message.response.multicast.ChatMulticastMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
@@ -134,7 +134,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		if (msg instanceof ChatRequestMsg) {
 			ChatRequestMsg chatMsg = (ChatRequestMsg) msg;
-			notifyObserver(new ChatMulticastMsg(chatMsg.getMessage(), chatMsg.getPlayerName()));
+			notifyObserver(new ChatResponseMsg(chatMsg.getMessage(), chatMsg.getPlayerName()));
 		}
 		
 		else if (msg instanceof ActionRequestMsg) {
