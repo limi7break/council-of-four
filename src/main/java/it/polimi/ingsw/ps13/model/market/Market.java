@@ -21,6 +21,7 @@ public class Market implements Serializable {
 
 	public static final long serialVersionUID = 0L;
 	private final List<MarketEntry> entryList;
+	private boolean enabled;
 	
 	/**
 	 * Creates the market with an empty list of entries.
@@ -29,6 +30,7 @@ public class Market implements Serializable {
 	public Market() {
 		
 		entryList = new ArrayList<>();
+		enabled = true;
 		
 	}
 	
@@ -100,6 +102,26 @@ public class Market implements Serializable {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public boolean isEnabled() {
+		
+		return enabled;
+		
+	}
+	
+	/**
+	 * 
+	 * @param isEnabled
+	 */
+	public void setEnabled(boolean isEnabled) {
+		
+		enabled = isEnabled;
+		
+	}
+	
+	/**
+	 * 
 	 */
 	@Override
 	public String toString() {
@@ -108,12 +130,16 @@ public class Market implements Serializable {
 		
 		sb.append("[Market]\n");
 		
-		if (entryList.isEmpty()) {
-			sb.append("empty\n");
+		if (!enabled) {
+			sb.append("disabled\n");
 		} else {
-			for (int i=0; i<entryList.size(); i++) {
-				sb.append("[" + i + "]");
-				sb.append(entryList.get(i).toString());
+			if (entryList.isEmpty()) {
+				sb.append("empty\n");
+			} else {
+				for (int i=0; i<entryList.size(); i++) {
+					sb.append("[" + i + "]");
+					sb.append(entryList.get(i).toString());
+				}
 			}
 		}
 		

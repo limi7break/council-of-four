@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
@@ -39,10 +40,10 @@ public class Game implements Serializable {
 	private final int numberOfPlayers;
 	private final Market market;
 	private int currentPlayerID;							// number of the player in the players map
-	private boolean sellMarketPhase;
-	private boolean buyMarketPhase;
 	private int playerWhoBuiltLastEmporium;
 	private boolean finished;
+	private boolean sellMarketPhase;
+	private boolean buyMarketPhase;
 	
 	public Game(Document config, List<String> players) { 
 		
@@ -73,17 +74,22 @@ public class Game implements Serializable {
 			p.drawPoliticsCards(INITIAL_POLITICS_CARDS);
 		}
 		
-		currentPlayerID = 0;
-		sellMarketPhase = false;
-		buyMarketPhase = false;		
 		playerWhoBuiltLastEmporium = -1;
 		finished = false;
+		sellMarketPhase = false;
+		buyMarketPhase = false;
 		
-		if(numberOfPlayers == 2) {
+		// Check if market is disabled in configuration file, else leave it as is (enabled by default)
+		Element marketElement = (Element) config.getElementsByTagName("market").item(0);
+		if (marketElement.getAttribute("enabled").equals("false"))
+			market.setEnabled(false);
 		
-			twoPlayersSetup(it); //Setups the game for a two player game.
-			
-		}
+		// Setups the game for a two player game.
+		if(numberOfPlayers == 2)
+			twoPlayerSetup(it);
+		
+		currentPlayerID = 0;
+		getCurrentPlayer().getTokens().setInitial();
 			
 	}
 	
@@ -93,7 +99,7 @@ public class Game implements Serializable {
 	 * 
 	 * @param color
 	 */
-	private void twoPlayersSetup(Iterator<String> color) {
+	private void twoPlayerSetup(Iterator<String> color) {
 		
 		Random rand = new Random();
 		
@@ -255,25 +261,30 @@ public class Game implements Serializable {
 		else {
 			// If we are in the NORMAL GAME PHASE
 			if (!sellMarketPhase && !buyMarketPhase) {
-				if (nextPlayerID != 0) {
-					getCurrentPlayer().getTokens().setZeros();
-					currentPlayerID = nextPlayerID;
-					getCurrentPlayer().getTokens().setInitial();
-					getCurrentPlayer().drawPoliticsCards(1);
-				}
 				
 				// Transition from normal game phase to sell market phase
-				else {
+				if (nextPlayerID == 0 && market.isEnabled()){
 					sellMarketPhase = true;
 					
 					getCurrentPlayer().getTokens().setZeros();
 					currentPlayerID = nextPlayerID;
 					getCurrentPlayer().getTokens().setSell();
 				}
+				
+				// No transition, continue with normal game phase
+				else {
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID = nextPlayerID;
+					getCurrentPlayer().getTokens().setInitial();
+					getCurrentPlayer().drawPoliticsCards(1);
+				}
+				
 			}
 			
 			// If we are in the SELL MARKET PHASE
 			else if (sellMarketPhase) {
+				
+				// No transition, continue with sell market phase
 				if (nextPlayerID != 0) {
 					getCurrentPlayer().getTokens().setZeros();
 					currentPlayerID = nextPlayerID;
@@ -289,10 +300,13 @@ public class Game implements Serializable {
 					currentPlayerID = nextPlayerID;
 					getCurrentPlayer().getTokens().setBuy();
 				}
+				
 			}
 			
 			// If we are in the BUY MARKET PHASE
 			else {
+				
+				// No transition, continue with buy market phase
 				if (nextPlayerID != 0) {
 					getCurrentPlayer().getTokens().setZeros();
 					currentPlayerID = nextPlayerID;
@@ -309,6 +323,7 @@ public class Game implements Serializable {
 					getCurrentPlayer().getTokens().setInitial();
 					getCurrentPlayer().drawPoliticsCards(1);
 				}
+				
 			}
 		}
 		

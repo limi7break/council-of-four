@@ -16,8 +16,8 @@ public class ActionTokens implements Serializable {
 	
 	protected ActionTokens() {
 		
-		main = 1;
-		quick = 1;
+		main = 0;
+		quick = 0;
 		
 	}
 	
