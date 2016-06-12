@@ -180,7 +180,7 @@ public class ClientCLI implements ClientView {
 	}
 	
 	/**
-	 * @TODO: create and implement CLI message visitor
+	 *
 	 */
 	public void handleMessage(ResponseMsg msg) {
 		

@@ -26,13 +26,13 @@ import javax.swing.text.*;
  *
  *  Similiar logic would apply for horizontal scrolling.
  */
-public class SmartScroller implements AdjustmentListener
-{
-	public final static int HORIZONTAL = 0;
-	public final static int VERTICAL = 1;
+public class SmartScroller implements AdjustmentListener {
+	
+	public static final int HORIZONTAL = 0;
+	public static final int VERTICAL = 1;
 
-	public final static int START = 0;
-	public final static int END = 1;
+	public static final int START = 0;
+	public static final int END = 1;
 
 	private int viewportPosition;
 
@@ -48,8 +48,7 @@ public class SmartScroller implements AdjustmentListener
 	 *
 	 *  @param scrollPane the scroll pane to monitor
 	 */
-	public SmartScroller(JScrollPane scrollPane)
-	{
+	public SmartScroller(JScrollPane scrollPane) {
 		this(scrollPane, VERTICAL, END);
 	}
 
@@ -60,8 +59,7 @@ public class SmartScroller implements AdjustmentListener
 	 *  @param scrollPane the scroll pane to monitor
 	 *  @param viewportPosition valid values are START and END
 	 */
-	public SmartScroller(JScrollPane scrollPane, int viewportPosition)
-	{
+	public SmartScroller(JScrollPane scrollPane, int viewportPosition) {
 		this(scrollPane, VERTICAL, viewportPosition);
 	}
 
@@ -75,8 +73,7 @@ public class SmartScroller implements AdjustmentListener
 	 *                          positioned as data is added.
 	 *                          Valid values are START and END
 	 */
-	public SmartScroller(JScrollPane scrollPane, int scrollDirection, int viewportPosition)
-	{
+	public SmartScroller(JScrollPane scrollPane, int scrollDirection, int viewportPosition) {
 		if (scrollDirection != HORIZONTAL
 		&&  scrollDirection != VERTICAL)
 			throw new IllegalArgumentException("invalid scroll direction specified");
@@ -95,11 +92,9 @@ public class SmartScroller implements AdjustmentListener
 		scrollBar.addAdjustmentListener( this );
 
 		//  Turn off automatic scrolling for text components
-
 		Component view = scrollPane.getViewport().getView();
 
-		if (view instanceof JTextComponent)
-		{
+		if (view instanceof JTextComponent) {
 			JTextComponent textComponent = (JTextComponent)view;
 			DefaultCaret caret = (DefaultCaret)textComponent.getCaret();
 			caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
@@ -107,28 +102,21 @@ public class SmartScroller implements AdjustmentListener
 	}
 
 	@Override
-	public void adjustmentValueChanged(final AdjustmentEvent e)
-	{
-		SwingUtilities.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				checkScrollBar(e);
-			}
-		});
+	public void adjustmentValueChanged(final AdjustmentEvent e) {
+		
+		SwingUtilities.invokeLater(() -> checkScrollBar(e));
+		
 	}
 
 	/*
 	 *  Analyze every adjustment event to determine when the viewport
 	 *  needs to be repositioned.
 	 */
-	private void checkScrollBar(AdjustmentEvent e)
-	{
+	private void checkScrollBar(AdjustmentEvent e) {
 		//  The scroll bar listModel contains information needed to determine
 		//  whether the viewport should be repositioned or not.
-
-		JScrollBar scrollBar = (JScrollBar)e.getSource();
-		BoundedRangeModel listModel = scrollBar.getModel();
+		JScrollBar scroll = (JScrollBar)e.getSource();
+		BoundedRangeModel listModel = scroll.getModel();
 		int value = listModel.getValue();
 		int extent = listModel.getExtent();
 		int maximum = listModel.getMaximum();
@@ -137,9 +125,7 @@ public class SmartScroller implements AdjustmentListener
 		boolean maximumChanged = previousMaximum != maximum;
 
 		//  Check if the user has manually repositioned the scrollbar
-
-		if (valueChanged && !maximumChanged)
-		{
+		if (valueChanged && !maximumChanged) {
 			if (viewportPosition == START)
 				adjustScrollBar = value != 0;
 			else
@@ -149,26 +135,24 @@ public class SmartScroller implements AdjustmentListener
 		//  Reset the "value" so we can reposition the viewport and
 		//  distinguish between a user scroll and a program scroll.
 		//  (ie. valueChanged will be false on a program scroll)
-
-		if (adjustScrollBar && viewportPosition == END)
-		{
+		if (adjustScrollBar && viewportPosition == END) {
 			//  Scroll the viewport to the end.
-			scrollBar.removeAdjustmentListener( this );
+			scroll.removeAdjustmentListener(this);
 			value = maximum - extent;
-			scrollBar.setValue( value );
-			scrollBar.addAdjustmentListener( this );
+			scroll.setValue(value);
+			scroll.addAdjustmentListener(this);
 		}
 
-		if (adjustScrollBar && viewportPosition == START)
-		{
+		if (adjustScrollBar && viewportPosition == START) {
 			//  Keep the viewport at the same relative viewportPosition
-			scrollBar.removeAdjustmentListener( this );
+			scroll.removeAdjustmentListener(this);
 			value = value + maximum - previousMaximum;
-			scrollBar.setValue( value );
-			scrollBar.addAdjustmentListener( this );
+			scroll.setValue(value);
+			scroll.addAdjustmentListener(this);
 		}
 
 		previousValue = value;
 		previousMaximum = maximum;
+		
 	}
 }

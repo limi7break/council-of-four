@@ -152,7 +152,8 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
+		// empty update not implemented
 		
 	}
 	

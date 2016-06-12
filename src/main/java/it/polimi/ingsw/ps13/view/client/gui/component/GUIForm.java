@@ -21,6 +21,7 @@ public class GUIForm extends GUIPanel {
 	public GUIForm() {
 		
 		super(new MigLayout("fill, flowy", "", ""));
+		setTransparent(true);
 		
 		// Create text area
 		textArea = new JTextArea("Council of Four version 1.0", 20, 40);
@@ -39,7 +40,8 @@ public class GUIForm extends GUIPanel {
 		
 		// Create scroll pane
 		JScrollPane scrollPane = new JScrollPane(textArea);
-		new SmartScroller(scrollPane);
+		@SuppressWarnings("unused")
+		SmartScroller ss = new SmartScroller(scrollPane);
 		
 		add(scrollPane, "grow");
 		add(textField, "grow");

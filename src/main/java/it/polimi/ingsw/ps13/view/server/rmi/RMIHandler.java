@@ -62,7 +62,8 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 	
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+
+		// empty update not implemented
 		
 	}
 

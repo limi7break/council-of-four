@@ -15,7 +15,6 @@ public class GUINobilityTrack extends GUIPanel {
 	private static final long serialVersionUID = 0L;
 
 	/**
-	 * @TODO: fix nobility track width with certain bonuses (the special ones)
 	 * 
 	 * @param nobilityTrack
 	 */

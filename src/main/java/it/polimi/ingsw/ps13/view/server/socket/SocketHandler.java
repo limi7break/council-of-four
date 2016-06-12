@@ -77,7 +77,8 @@ public class SocketHandler extends Handler implements Runnable {
 	 */
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
+		// empty update not implemented
 		
 	}
 	
