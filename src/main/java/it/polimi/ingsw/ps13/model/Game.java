@@ -455,7 +455,7 @@ public class Game implements Serializable {
 	 * Adds extra victory points to the players who own the highest amount of permit tiles and to
 	 * the most advanced in nobility track.
 	 */
-	public void finalize() {
+	public void finalizeGame() {
 		
 		bestNobilityProgress();
 		bestPermitTilesAcquisition();

@@ -170,8 +170,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 					notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
 				}
 				else {
-					
-					game.finalize();
+					game.finalizeGame();
 					notifyObserver(new ResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!"));
 				}
 			}
