@@ -153,8 +153,8 @@ public class ClientGUI extends JFrame implements ClientView {
 		actionsPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getMain() + " Main"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getQuick() + " Quick"));
-		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getSell() + " Sell"));
-		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getBuy() + " Buy"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getSell() + " sell"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getBuy() + " buy"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getRewardToken() + " get rt"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTileBonus() + " get tb"));
 		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTakeTile() + " get tile"));
@@ -208,7 +208,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		}
 		rightPane.add(tilesPanel, "cell 0 5");
 		
-		mainPane.add(rightPane, "cell 1 0, spany 2, top");
+		mainPane.add(rightPane, "cell 1 0, spany 3, top");
 		
 		pack();
 		

@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -47,7 +47,7 @@ public class Game implements Serializable {
 	public Game(Document config, List<String> players) { 
 		
 		market = new Market();
-		colors = new HashMap<>();
+		colors = new LinkedHashMap<>();
 		ColorFactory.createColors(config, colors);
 		board = BoardFactory.createBoard(config, colors);
 		numberOfPlayers = players.size();

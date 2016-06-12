@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps13.controller.actions.main;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.board.KingRewardTile;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
@@ -98,7 +99,12 @@ public class BuildEmporiumAction implements Action {
 		if (realCity.getRegion().isBonusAvailable() && player.getCityNames().containsAll(realCity.getRegion().getCityNames())) {
 			realCity.getRegion().setBonusAvailable(false);
 			realCity.getRegion().getBonus().giveTo(player);
-			g.getBoard().getKingRewardTile().giveTo(player);
+			
+			KingRewardTile krt = g.getBoard().getNextKingRewardTile();
+			if (krt != null) {
+				krt.getBonus().giveTo(player);
+				krt.setAvailable(false);
+			}
 		}
 		
 		// Give the player the color bonus, if he has completed the color and if it's available
@@ -106,7 +112,12 @@ public class BuildEmporiumAction implements Action {
 		if (realCity.getCityColor().isBonusAvailable() && player.getCityNames().containsAll(realCity.getCityColor().getCityNames())) {
 			realCity.getCityColor().setBonusAvailable(false);
 			realCity.getCityColor().getBonus().giveTo(player);
-			g.getBoard().getKingRewardTile().giveTo(player);
+			
+			KingRewardTile krt = g.getBoard().getNextKingRewardTile();
+			if (krt != null) {
+				krt.getBonus().giveTo(player);
+				krt.setAvailable(false);
+			}
 		}
 		
 		if ( (player.getNumberOfEmporiums() == 0) && (g.getPlayerWhoBuiltLastEmporium() == -1) ) {

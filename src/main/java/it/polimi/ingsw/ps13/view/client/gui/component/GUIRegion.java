@@ -2,12 +2,16 @@ package it.polimi.ingsw.ps13.view.client.gui.component;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.region.Region;
 
@@ -32,8 +36,12 @@ public class GUIRegion extends GUIPanel {
 		cityPane.setTransparent(true);
 		add(cityPane, BorderLayout.CENTER);
 		
-		GUIPanel tilesAndBalcony = new GUIPanel(new GridLayout(3, 1));
-		tilesAndBalcony.setTransparent(true);
+		GUIPanel southPanel = new GUIPanel();
+		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.PAGE_AXIS));
+		southPanel.setTransparent(true);
+		
+		GUICouncillorBalcony balcony = new GUICouncillorBalcony(region.getCouncillorBalcony());
+		southPanel.add(balcony);
 		
 		GUIPanel visibleTiles = new GUIPanel(new FlowLayout());
 		visibleTiles.setTransparent(true);
@@ -41,12 +49,22 @@ public class GUIRegion extends GUIPanel {
 			GUIPermitTile tile = new GUIPermitTile(t);
 			visibleTiles.add(tile);
 		}
-		tilesAndBalcony.add(visibleTiles);
+		southPanel.add(visibleTiles);
 		
-		GUICouncillorBalcony balcony = new GUICouncillorBalcony(region.getCouncillorBalcony());
-		tilesAndBalcony.add(balcony, SwingConstants.CENTER);
+		GUIPanel bonusPanel = new GUIPanel(new FlowLayout());
+		GUIPanel bonus = new GUIPanel(new GridLayout(1, 0));
+		GUIBonusFactory.createBonus((ConcreteBonus)region.getBonus(), bonus);
+		bonus.setPreferredSize(new Dimension(60, 30));
+		bonus.setBorder(BorderFactory.createLineBorder(Color.black));
+		if (region.isBonusAvailable()) {
+			bonus.setBackground(new Color(139, 69, 19, 96));
+		} else {
+			bonus.setTransparent(true);
+		}
+		bonusPanel.add(bonus);
+		southPanel.add(bonusPanel);
 		
-		add(tilesAndBalcony, BorderLayout.SOUTH);
+		add(southPanel, BorderLayout.SOUTH);
 		
 	}
 	

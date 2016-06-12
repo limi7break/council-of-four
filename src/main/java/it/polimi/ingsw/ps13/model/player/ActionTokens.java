@@ -227,7 +227,7 @@ public class ActionTokens implements Serializable {
 	@Override
 	public String toString() {
 		
-		return main + " Main " + quick + " Quick " + sell + " Sell " + buy + " Buy " + tileBonus + " TileBonus " + rewardToken + " RewTok " + takeTile + " GetVisibleTile";
+		return main + " Main " + quick + " Quick " + sell + " sell " + buy + " buy " + tileBonus + " get tb " + rewardToken + " get rt " + takeTile + " get tile";
 		
 	}
 	

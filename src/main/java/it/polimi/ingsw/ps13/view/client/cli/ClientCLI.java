@@ -8,7 +8,7 @@ import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
-import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.board.KingRewardTile;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
@@ -37,7 +37,7 @@ public class ClientCLI implements ClientView {
 	@Override
 	public void showModel() {
 			
-		System.out.println("Whatcha wanna see? <region, color, city, king, kingbalcony, kingrt, councillors, nobility, market, me, menu, actions, quit>");
+		System.out.println("Whatcha wanna see? <region, color, city, king, kingbalcony, kingrt, councillors, nobility, market, me, others, menu, actions, quit>");
 		
 	}
 	
@@ -101,9 +101,9 @@ public class ClientCLI implements ClientView {
 				break;
 			case "kingrt":
 				int i=0;
-				for (Bonus b: game.getBoard().getKingRewardTiles()) {
+				for (KingRewardTile krt : game.getBoard().getKingRewardTiles()) {
 					i++;
-					System.out.println(i + ". " + b.toString());
+					System.out.println(i + ". " + krt.getBonus().toString() + ", available = " + krt.isAvailable());
 				}
 				break;
 			case "councillors":
@@ -120,6 +120,25 @@ public class ClientCLI implements ClientView {
 			case "me":
 				Player p = game.getPlayer(playerName);
 				System.out.println(p.toString());
+				break;
+			case "others":
+				for (Player player : game.getPlayers().values()) {
+					if (!player.getName().equals(playerName)) {
+						StringBuilder sb = new StringBuilder();
+						
+						sb.append("\n[").append(player.getName()).append("]\n")
+						  .append("VICTORY POINTS: ").append(player.getVictoryPoints()).append(" ")
+						  .append("COINS: ").append(player.getCoins()).append(" ")
+						  .append("ASSISTANTS: ").append(player.getAssistants()).append(" ")
+						  .append("EMPORIUMS: ").append(player.getNumberOfEmporiums()).append(" ")
+						  .append("NOBILITY POSITION: ").append(player.getNobilityPosition()).append(" ")
+						  .append("POLITICS CARDS: ").append(player.getPoliticsCards().size()).append(" ")
+						  .append("PERMIT TILES: ").append(player.getPermitTiles().size()).append("\n\n")
+						  .append("CITIES: ").append(player.getCityNames().toString()).append("\n");
+						
+						System.out.println(sb.toString());
+					}
+				}
 				break;
 			case "menu":
 				showModel();

@@ -15,8 +15,11 @@ public class GUIPlayer extends GUIPanel {
 	protected GUIPlayer(Player player) {
 		
 		super(new BorderLayout());
+		setTransparent(true);
 		
-		add(new JLabel(player.getName()), BorderLayout.NORTH);
+		JLabel playerName = new JLabel(player.getName());
+		playerName.setForeground(player.getColor());
+		add(playerName, BorderLayout.NORTH);
 		
 		GUIPanel panel = new GUIPanel(new GridLayout(0, 4));
 		

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.ps13.model.board;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -36,7 +36,7 @@ public class Board implements Serializable {
 	private final NobilityTrack nobilityTrack;
 	private final PoliticsCardDeck politicsCardDeck;
 	private final CouncillorBalcony kingBalcony;
-	private final Deque<Bonus> kingRewardTiles;
+	private final List<KingRewardTile> kingRewardTiles;
 	private final List<Councillor> councillors;
 	
 	private Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
@@ -183,20 +183,26 @@ public class Board implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Deque<Bonus> getKingRewardTiles() {
+	public List<KingRewardTile> getKingRewardTiles() {
 		
 		return kingRewardTiles;
 		
 	}
 	
 	/**
-	 * Gets a king reward tile from the top of the list and removes it.
+	 * Gets the first available king reward tile.
+	 * If the list of king reward tiles is empty, returns null.
 	 * 
 	 * @return
 	 */
-	public Bonus getKingRewardTile() {
+	public KingRewardTile getNextKingRewardTile() {
 		
-		return kingRewardTiles.removeFirst();
+		for (KingRewardTile krt : kingRewardTiles) {
+			if (krt.isAvailable())
+				return krt;
+		}
+		
+		return null;
 		
 	}
 	
@@ -215,15 +221,15 @@ public class Board implements Serializable {
 	 * @param config
 	 * @return
 	 */
-	private Deque<Bonus> createKingRewardTiles(Document config) {
+	private List<KingRewardTile> createKingRewardTiles(Document config) {
 		
-		Deque<Bonus> rewardTiles = new LinkedList<>();
+		List<KingRewardTile> rewardTiles = new ArrayList<>();
 		
 		Element kingRewardTilesElement = (Element) config.getElementsByTagName("kingrewardtiles").item(0);
 		NodeList bonusElementList = kingRewardTilesElement.getElementsByTagName("bonus");
 		for (int i=0; i<bonusElementList.getLength(); i++) {
 			Element currentBonusElement = (Element) bonusElementList.item(i);
-			rewardTiles.addLast(BonusFactory.createBonus(currentBonusElement));
+			rewardTiles.add(new KingRewardTile(BonusFactory.createBonus(currentBonusElement)));
 		}
 		
 		return rewardTiles;

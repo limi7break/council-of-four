@@ -22,6 +22,7 @@ public class GUINobilityTrack extends GUIPanel {
 	protected GUINobilityTrack(NobilityTrack nobilityTrack) {
 		
 		super(new GridLayout(2, 0));
+		setTransparent(true);
 		setBorder(BorderFactory.createTitledBorder("Nobility Track"));
 		
 		// Add bonuses

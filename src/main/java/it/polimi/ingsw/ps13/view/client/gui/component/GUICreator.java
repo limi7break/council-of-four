@@ -1,6 +1,9 @@
 package it.polimi.ingsw.ps13.view.client.gui.component;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -9,11 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
 import it.polimi.ingsw.ps13.model.Game;
+import it.polimi.ingsw.ps13.model.board.KingRewardTile;
+import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
+import it.polimi.ingsw.ps13.model.region.CityColor;
 import it.polimi.ingsw.ps13.model.region.Region;
 import net.miginfocom.swing.MigLayout;
 
@@ -55,6 +62,7 @@ public final class GUICreator {
 		
 		// Create players
 		GUIPanel players = new GUIPanel(new GridLayout(0, 1));
+		players.setTransparent(true);
 		for (Player player : game.getPlayers().values()) {
 			GUIPlayer playerPane = new GUIPlayer(player);
 			
@@ -64,9 +72,49 @@ public final class GUICreator {
 		players.setBorder(BorderFactory.createTitledBorder("Players"));
 		mainPane.add(players, "cell 0 0, growx, top");
 		
+		// Create bonus tiles relative to city colors
+		GUIPanel colorTiles = new GUIPanel(new FlowLayout());
+		colorTiles.setBorder(BorderFactory.createTitledBorder("Bonus Tiles"));
+		for (CityColor c : game.getBoard().getCityColors().values()) {
+			if (!c.getBonus().isEmpty()) {	
+				GUIPanel bonusPanel = new GUIPanel(new GridLayout(1, 0));
+				GUIBonusFactory.createBonus((ConcreteBonus)c.getBonus(), bonusPanel);
+				bonusPanel.setPreferredSize(new Dimension(60, 30));
+				bonusPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+				if (c.isBonusAvailable()) {
+					bonusPanel.setBackground(new Color(c.getColor().getRed(), c.getColor().getGreen(), c.getColor().getBlue(), 96));
+				} else {
+					bonusPanel.setTransparent(true);
+				}
+				colorTiles.add(bonusPanel);
+			}
+		}
+		
+		// Create king's reward tiles
+		GUIPanel kingTiles = new GUIPanel(new FlowLayout());
+		kingTiles.setBorder(BorderFactory.createTitledBorder("King's Reward Tiles"));
+		int i=0;
+		for (KingRewardTile krt : game.getBoard().getKingRewardTiles()) {
+			i++;
+			GUIPanel bonusPanel = new GUIPanel(new GridLayout(1, 0));
+			bonusPanel.add(new JLabel(i + "\u00b0"));
+			GUIBonusFactory.createBonus((ConcreteBonus)krt.getBonus(), bonusPanel);
+			bonusPanel.setPreferredSize(new Dimension(70, 30));
+			bonusPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			if (krt.isAvailable()) {
+				bonusPanel.setBackground(new Color(147, 112, 219, 96));
+			} else {
+				bonusPanel.setTransparent(true);
+			}
+			kingTiles.add(bonusPanel);
+		}
+		
+		mainPane.add(colorTiles, "cell 0 1");
+		mainPane.add(kingTiles, "cell 0 1");
+		
 		// Create nobility track
 		GUINobilityTrack nobilityTrack = new GUINobilityTrack(game.getBoard().getNobilityTrack());
-		mainPane.add(nobilityTrack, "cell 0 1");
+		mainPane.add(nobilityTrack, "cell 0 2");
 		
 		return mainPane;
 		
