@@ -31,7 +31,7 @@ public class GUICouncillorBalcony extends GUIPanel {
 		}
 		
 		for (Councillor c : balcony.getCouncillors()) {
-			add(new JLabel(new ImageIcon(GUICity.colorize(councillor, c.getColor(), 255))));
+			add(new JLabel(new ImageIcon(colorize(councillor, c.getColor(), 255))));
 		}
 		
 	}

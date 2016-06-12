@@ -24,7 +24,7 @@ public class GUIForm extends GUIPanel {
 		setTransparent(true);
 		
 		// Create text area
-		textArea = new JTextArea("Council of Four version 1.0", 20, 40);
+		textArea = new JTextArea("Council of Four version 1.0", 15, 40);
 		textArea.setEditable(false);
 		textArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		textArea.setBackground(Color.white);

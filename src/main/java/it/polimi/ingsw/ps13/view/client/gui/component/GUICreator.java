@@ -18,6 +18,9 @@ import javax.swing.border.EmptyBorder;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.board.KingRewardTile;
 import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
+import it.polimi.ingsw.ps13.model.council.Councillor;
+import it.polimi.ingsw.ps13.model.deck.PermitTile;
+import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.region.CityColor;
@@ -26,10 +29,13 @@ import net.miginfocom.swing.MigLayout;
 
 public final class GUICreator {
 	
-	private Map<String, GUICity> cities = new HashMap<>();
-	private Map<String, GUIRegion> regions = new HashMap<>();
+	private final Map<String, GUICity> cities = new HashMap<>();
+	private final Map<String, GUIRegion> regions = new HashMap<>();
+	private final List<GUICouncillor> councillors = new ArrayList<>();
+	private final List<GUIPoliticsCard> cards = new ArrayList<>();
+	private final List<GUIPermitTile> tiles = new ArrayList<>();
 	
-	public GUIPanel createGUI(Game game) {
+	public GUIPanel createMainPane(Game game) {
 		
 		GUIPanel mainPane = new GUIPanel();
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -117,6 +123,69 @@ public final class GUICreator {
 		mainPane.add(nobilityTrack, "cell 0 2");
 		
 		return mainPane;
+		
+	}
+	
+	public GUIPanel createRightPane(Game game, GUIForm form, String playerName) {
+		
+		// Create right pane with another MiGLayout
+		GUIPanel rightPane = new GUIPanel();
+		rightPane.setLayout(new MigLayout("flowy", "", ""));
+		rightPane.setTransparent(true);
+		
+		// Create and set text area and text field
+		rightPane.add(form, "growx");
+		
+		GUICouncillorBalcony kingBalcony = new GUICouncillorBalcony(game.getBoard().getKingBalcony());
+		kingBalcony.setBorder(BorderFactory.createTitledBorder("King Balcony"));
+		rightPane.add(kingBalcony, "cell 0 2, flowx");
+		
+		GUIPanel actionsPanel = new GUIPanel(new GridLayout(2, 0));
+		actionsPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getMain() + " Main"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getQuick() + " Quick"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getSell() + " sell"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getBuy() + " buy"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getRewardToken() + " get rt"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTileBonus() + " get tb"));
+		actionsPanel.add(new JLabel(game.getPlayer(playerName).getTokens().getTakeTile() + " get tile"));
+		rightPane.add(actionsPanel, "cell 0 2");
+		
+		GUIPanel actionButtons = new GUIPanel(new GridLayout(4, 0));
+		actionButtons.setBorder(BorderFactory.createTitledBorder("Actions"));
+		// @TODO: implement action buttons!!
+		rightPane.add(actionButtons, "cell 0 3");
+		
+		GUIPanel councillorsPanel = new GUIPanel(new FlowLayout());
+		councillorsPanel.setBorder(BorderFactory.createTitledBorder("Councillors"));
+		for (Councillor c : game.getBoard().getCouncillors()) {
+			GUICouncillor councillor = new GUICouncillor(c);
+			councillorsPanel.add(councillor);
+			councillors.add(councillor);
+		}
+		rightPane.add(councillorsPanel, "cell 0 4");
+		
+		GUIPanel politicsCardsPanel = new GUIPanel(new FlowLayout());
+		politicsCardsPanel.setTransparent(true);
+		politicsCardsPanel.setBorder(BorderFactory.createTitledBorder("Politics Cards"));
+		for (PoliticsCard c : game.getPlayer(playerName).getPoliticsCards()) {
+			GUIPoliticsCard card = new GUIPoliticsCard(c);
+			politicsCardsPanel.add(card);
+			cards.add(card);
+		}
+		rightPane.add(politicsCardsPanel, "cell 0 5");
+		
+		GUIPanel tilesPanel = new GUIPanel(new GridLayout(0, 5));
+		tilesPanel.setBorder(BorderFactory.createTitledBorder("Permit Tiles"));
+		for (int i=0; i<game.getPlayer(playerName).getPermitTiles().size(); i++) {
+			PermitTile tile = game.getPlayer(playerName).getPermitTiles().get(i);
+			GUIPermitTile t = new GUIPermitTile(tile, i);
+			tilesPanel.add(t);
+			tiles.add(t);
+		}
+		rightPane.add(tilesPanel, "cell 0 6");
+		
+		return rightPane;
 		
 	}
 	

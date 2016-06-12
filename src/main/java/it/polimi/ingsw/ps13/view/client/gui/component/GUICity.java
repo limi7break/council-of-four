@@ -1,12 +1,9 @@
 package it.polimi.ingsw.ps13.view.client.gui.component;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -115,29 +112,5 @@ public class GUICity extends GUIPanel {
 		add(new JLabel("K"), BorderLayout.EAST);
 		
 	}
-	
-	/**
-	 * This method is used to automatically colorize the default city image (which is grayscale)
-	 * using the real color of the city.
-	 * 
-	 * @param image
-	 * @param color
-	 * @return
-	 */
-	public static BufferedImage colorize(BufferedImage image, Color color, int alpha) {
-		
-		Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
-        int w = image.getWidth();
-        int h = image.getHeight();
-        BufferedImage colorized = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = colorized.createGraphics();
-        g.drawImage(image, 0,0, null);
-        g.setComposite(AlphaComposite.SrcAtop);
-        g.setColor(withAlpha);
-        g.fillRect(0,0,w,h);
-        g.dispose();
-        return colorized;
-        
-    }
 	
 }

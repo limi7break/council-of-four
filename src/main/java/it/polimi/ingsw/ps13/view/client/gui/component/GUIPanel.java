@@ -1,7 +1,10 @@
 package it.polimi.ingsw.ps13.view.client.gui.component;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.LayoutManager;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -43,5 +46,29 @@ public class GUIPanel extends JPanel {
 		}
 		
 	}
+	
+	/**
+	 * This method is used to automatically colorize an image with the passed color and
+	 * the selected level of transparency.
+	 * 
+	 * @param image
+	 * @param color
+	 * @return
+	 */
+	protected static BufferedImage colorize(BufferedImage image, Color color, int alpha) {
+		
+		Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
+        int w = image.getWidth();
+        int h = image.getHeight();
+        BufferedImage colorized = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = colorized.createGraphics();
+        g.drawImage(image, 0,0, null);
+        g.setComposite(AlphaComposite.SrcAtop);
+        g.setColor(withAlpha);
+        g.fillRect(0,0,w,h);
+        g.dispose();
+        return colorized;
+        
+    }
 	
 }

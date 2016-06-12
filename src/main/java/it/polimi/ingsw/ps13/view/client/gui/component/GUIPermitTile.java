@@ -15,10 +15,12 @@ import it.polimi.ingsw.ps13.model.deck.PermitTile;
 public class GUIPermitTile extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
+	private final int number;
 
-	public GUIPermitTile(PermitTile tile) {
+	public GUIPermitTile(PermitTile tile, int number) {
 	
 		super(new BorderLayout());
+		this.number = number;
 		
 		GUIPanel cityPane = new GUIPanel(new GridLayout(0, 1));
 		cityPane.setTransparent(true);
@@ -42,6 +44,16 @@ public class GUIPermitTile extends GUIPanel {
 		} else {
 			setBackground(new Color(139, 69, 19, 96));
 		}
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getNumber() {
+		
+		return number;
 		
 	}
 

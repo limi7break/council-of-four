@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,6 +22,8 @@ public class GUIRegion extends GUIPanel {
 	private static final long serialVersionUID = 0L;
 	
 	private final GUIPanel cityPane;
+	private final GUICouncillorBalcony councillorBalcony;
+	private final List<GUIPermitTile> tiles;
 	private final String name;
 
 	protected GUIRegion(Region region) {
@@ -40,14 +44,17 @@ public class GUIRegion extends GUIPanel {
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.PAGE_AXIS));
 		southPanel.setTransparent(true);
 		
-		GUICouncillorBalcony balcony = new GUICouncillorBalcony(region.getCouncillorBalcony());
-		southPanel.add(balcony);
+		councillorBalcony = new GUICouncillorBalcony(region.getCouncillorBalcony());
+		southPanel.add(councillorBalcony);
 		
+		tiles = new ArrayList<>();
 		GUIPanel visibleTiles = new GUIPanel(new FlowLayout());
 		visibleTiles.setTransparent(true);
-		for (PermitTile t : region.getPermitTileDeck().getVisibleTiles()) {
-			GUIPermitTile tile = new GUIPermitTile(t);
+		for (int i=0; i<region.getPermitTileDeck().getVisibleTiles().size(); i++) {
+			PermitTile t = region.getPermitTileDeck().getVisibleTiles().get(i);
+			GUIPermitTile tile = new GUIPermitTile(t, i);
 			visibleTiles.add(tile);
+			tiles.add(tile);
 		}
 		southPanel.add(visibleTiles);
 		
@@ -85,6 +92,26 @@ public class GUIRegion extends GUIPanel {
 	public String getName() {
 		
 		return name;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public GUICouncillorBalcony getCouncillorBalcony() {
+		
+		return councillorBalcony;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<GUIPermitTile> getVisibleTiles() {
+		
+		return tiles;
 		
 	}
 
