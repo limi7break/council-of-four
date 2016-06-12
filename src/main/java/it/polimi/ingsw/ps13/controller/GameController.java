@@ -171,7 +171,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 				}
 				else {
 					game.finalizeGame();
-					notifyObserver(new ResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!"));
+					notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
 				}
 			}
 			
