@@ -466,7 +466,7 @@ public class Game implements Serializable {
 	private void bestNobilityProgress() {
 		
 		int maxProgress = -1;
-		Player player = null;
+		String player = "";
 		
 		for(Player p : players.values()){
 			
@@ -476,13 +476,13 @@ public class Game implements Serializable {
 															// We choose only one player gains extra points.
 				
 				maxProgress = p.getNobilityPosition();
-				player = p;
+				player = p.getName();
 				
 			}
 			
 		}
 		
-		player.addVictoryPoints(5);
+		this.getPlayer(player).addVictoryPoints(5);
 		
 	}
 	
@@ -490,7 +490,7 @@ public class Game implements Serializable {
 	private void bestPermitTilesAcquisition() {
 		
 		int maxTiles = -1;
-		Player player = null;
+		String player = "";
 		
 		for(Player p : players.values()){
 			
@@ -499,13 +499,13 @@ public class Game implements Serializable {
 															// the points.
 				
 				maxTiles = p.getPermitTiles().size();
-				player = p;
+				player = p.getName();
 				
 			}
 			
 		}
 		
-		player.addVictoryPoints(3);
+		this.getPlayer(player).addVictoryPoints(3);
 		
 	}
 	
