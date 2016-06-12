@@ -451,4 +451,62 @@ public class Game implements Serializable {
 		
 	}
 	
+	/**
+	 * Adds extra victory points to the players who own the highest amount of permit tiles and to
+	 * the most advanced in nobility track.
+	 */
+	public void finalize() {
+		
+		bestNobilityProgress();
+		bestPermitTilesAcquisition();
+		
+	}
+	
+	//The player whose nobility position is most advanced gains 5 victory points.
+	private void bestNobilityProgress() {
+		
+		int maxProgress = -1;
+		Player player = null;
+		
+		for(Player p : players.values()){
+			
+			if(p.getNobilityPosition() > maxProgress){		// Rules do not clarify if extra points are given to one or
+															// all the players who are most advanced, in case of same
+															// nobility position.
+															// We choose only one player gains extra points.
+				
+				maxProgress = p.getNobilityPosition();
+				player = p;
+				
+			}
+			
+		}
+		
+		player.addVictoryPoints(5);
+		
+	}
+	
+	//The player who owns the highest number of permit tiles gains 3 victory points.
+	private void bestPermitTilesAcquisition() {
+		
+		int maxTiles = -1;
+		Player player = null;
+		
+		for(Player p : players.values()){
+			
+			if(p.getPermitTiles().size() > maxTiles){		// Rules do not clarify how to behave in case of same number
+															// of permit tiles. We choose only one player gains 
+															// the points.
+				
+				maxTiles = p.getPermitTiles().size();
+				player = p;
+				
+			}
+			
+		}
+		
+		player.addVictoryPoints(3);
+		
+	}
+	
 }

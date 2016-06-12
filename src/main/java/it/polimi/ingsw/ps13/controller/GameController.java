@@ -170,6 +170,8 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 					notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
 				}
 				else {
+					
+					game.finalize();
 					notifyObserver(new ResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!"));
 				}
 			}
@@ -184,15 +186,45 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 		String winner = "";
 		
-		int maxVictoryPoints = 0;
+		int maxVictoryPoints = -1;
 		for (Player p : game.getPlayers().values()) {
 			if (p.getVictoryPoints() > maxVictoryPoints) {
 				maxVictoryPoints = p.getVictoryPoints();
 				winner = p.getName();
 			}
+			
+			//draw contest
+			if(p.getVictoryPoints() == maxVictoryPoints && p.getVictoryPoints() != 0) {
+				
+				winner = drawContest(p, game.getPlayer(winner));
+				
+			}
+			
 		}
 		
 		return winner;
+		
+	}
+	
+	/**
+	 * Applies draw rules to calculate whose the winner in case of same amount of victory points.
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
+	private String drawContest(Player p1, Player p2) {
+		
+		int p1Stock = p1.getAssistants() + p1.getPoliticsCards().size();
+		int p2Stock = p2.getAssistants() + p2.getPoliticsCards().size();
+		
+		if(p1Stock > p2Stock)
+			return p1.getName();
+		
+		else 
+			return p2.getName();		// game rules do not clarify how to behave in case of same amount of
+										// assistants and politics cards in addition to victory points draw.
+										// Therefore we choose p2 will be the winner in this case.
 		
 	}
 	
