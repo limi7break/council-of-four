@@ -60,6 +60,7 @@ public class AcquirePermitTileAction implements Action {
 				|| (tile < 0) )
 			legal = false;
 		
+		// Retrieve colors of the selected politics cards from color names
 		for (String card : cards) {
 			if ("jolly".equals(card))
 				cardColors.add(PoliticsCard.jollyColor);
@@ -69,15 +70,27 @@ public class AcquirePermitTileAction implements Action {
 				cardColors.add(g.getColors().get(card));
 		}
 		
+		// Retrieve the colors of the politics cards in the player's hand
 		List<Color> playerCardColors = new ArrayList<>();
-		
 		for (PoliticsCard card : player.getPoliticsCards()) {
 			playerCardColors.add(card.getColor());
 		}
 		
-		if (!playerCardColors.containsAll(cardColors))
-			legal = false;
+		// Check if player has the selected politics cards
+		for (Color c : cardColors) {
+			boolean matchFound = false;
+			for (Iterator<Color> it = playerCardColors.iterator(); it.hasNext() && !matchFound;) {
+				Color color = it.next();
+				if (color.equals(c)) {
+					matchFound = true;
+					it.remove();
+				}
+			}
+			if (!matchFound)
+				return false;
+		}
 		
+		// Check if balcony is satisfiable
 		if(!g.getBoard().getRegion(region).getCouncillorBalcony().isSatisfiable(cardColors, player.getCoins()))
 			legal = false;
 		

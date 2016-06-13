@@ -7,6 +7,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.SwingUtilities;
+
 import it.polimi.ingsw.ps13.view.client.cli.ClientCLI;
 import it.polimi.ingsw.ps13.view.client.gui.ClientGUI;
 import it.polimi.ingsw.ps13.view.client.rmi.ClientRMI;
@@ -19,7 +21,7 @@ import it.polimi.ingsw.ps13.view.client.socket.ClientSocket;
 public class GameClient {
 	
 	private static final Logger LOG = Logger.getLogger(GameClient.class.getSimpleName());
-	private static final Scanner scanner = new Scanner(System.in);
+	private final Scanner scanner = new Scanner(System.in);
 	
 	private final ClientView view;
 	private final ClientConnection connection;
@@ -104,8 +106,12 @@ public class GameClient {
 	public void init() {
 		
 		view.setConnection(connection);
-		new Thread(view).start();
 		
+		if (view instanceof ClientGUI) {
+			SwingUtilities.invokeLater(view);
+		} else {
+			new Thread(view).start();
+		}
 	}
 
 }

@@ -121,7 +121,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		mainPane.setBounds(0, 0, 1366, 768);
 		mainPane.setTransparent(true);
 		
-		GUIPanel rightPane = guiCreator.createRightPane(game, form, playerName);
+		GUIPanel rightPane = guiCreator.createRightPane(game, form, playerName, connection);
 		mainPane.add(rightPane, "cell 1 0, spany 3, top");
 		
 		layers.setLayer(mainPane, 1);
@@ -159,22 +159,18 @@ public class ClientGUI extends JFrame implements ClientView {
 			
 			this.game = updateMsg.getGame();
 			showModel();
-			form.append("\n");
 			form.append(updateMsg.getMessage());
 		}
 		else if (msg instanceof ChatResponseMsg) {
 			ChatResponseMsg chatMsg = (ChatResponseMsg) msg;
-			form.append("\n");
 			form.append("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
 		}
 		else if (msg instanceof ConnectionUnicastMsg) {
 			ConnectionUnicastMsg connMsg = (ConnectionUnicastMsg) msg;
 			this.playerName = connMsg.getPlayerName();
-			form.append("\n");
 			form.append(connMsg.getMessage());
 		}
 		else {
-			form.append("\n");
 			form.append(msg.getMessage());
 		}
 		

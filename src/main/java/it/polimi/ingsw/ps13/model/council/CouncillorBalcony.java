@@ -24,7 +24,7 @@ import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
  */
 public class CouncillorBalcony implements Serializable {
 
-	protected static final int COUNCILLORS_PER_BALCONY = 4;
+	public static final int COUNCILLORS_PER_BALCONY = 4;
 	private static final int[] coinsPerMissingCard = new int[] {0, 4, 7, 10};
 	private static final long serialVersionUID = 0L;
 	private final LinkedList<Councillor> councillorList;

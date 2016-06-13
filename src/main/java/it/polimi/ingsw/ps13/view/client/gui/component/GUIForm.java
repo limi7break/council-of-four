@@ -54,6 +54,7 @@ public class GUIForm extends GUIPanel {
 	 */
 	public void append(String str) {
 		
+		textArea.append("\n");
 		textArea.append(str);
 		
 	}
