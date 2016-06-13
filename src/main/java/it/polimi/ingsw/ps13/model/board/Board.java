@@ -12,6 +12,7 @@ import java.util.Queue;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -38,7 +39,8 @@ public class Board implements Serializable {
 	private final CouncillorBalcony kingBalcony;
 	private final List<KingRewardTile> kingRewardTiles;
 	private final List<Councillor> councillors;
-	
+
+	@VisibleForTesting
 	private Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
 		
 		this.regions = regions;

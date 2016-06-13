@@ -32,7 +32,7 @@ public class Player implements Serializable {
 	private final Board board;
 	
 	
-	public Player(String name, Color color, String colorName, int position, Board board) { 
+	public Player(String name, Color color, String colorName, int position, Board board) {
 		
 		this.name = name;
 		this.color = color;
