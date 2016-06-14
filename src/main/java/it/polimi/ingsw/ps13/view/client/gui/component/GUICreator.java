@@ -25,6 +25,7 @@ import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.region.CityColor;
 import it.polimi.ingsw.ps13.model.region.Region;
+import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import net.miginfocom.swing.MigLayout;
 
 public final class GUICreator {
@@ -126,7 +127,7 @@ public final class GUICreator {
 		
 	}
 	
-	public GUIPanel createRightPane(Game game, GUIForm form, String playerName) {
+	public GUIPanel createRightPane(Game game, GUIForm form, String playerName, ClientConnection connection) {
 		
 		// Create right pane with another MiGLayout
 		GUIPanel rightPane = new GUIPanel();
