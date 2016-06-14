@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.view.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,9 +55,11 @@ public class ClientGUI extends JFrame implements ClientView {
 	        form.getTextField().setText("");
 	        
 	        if (msg != null) {
+	        	System.out.println("[FORM] Sending message " + msg.getClass().getSimpleName());
 	        	connection.sendMessage(msg);
+	        	System.out.println("[FORM] Sent message " + msg.getClass().getSimpleName());
 	        } else {
-	        	form.append("\nCommand not recognized.");
+	        	form.append("Command not recognized.");
 	        }
 	        
 	        form.getTextField().requestFocusInWindow();
@@ -75,6 +78,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		startHandlers();
 		
 		try {
+			setUndecorated(true);
 			setVisible(true);
 		} catch (Exception e) {
 			LOG.log(Level.WARNING, "There was a problem while initializing the GUI.", e);
@@ -118,7 +122,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		layers.setLayout(new BorderLayout());
 		
 		GUIPanel mainPane = guiCreator.createMainPane(game);
-		mainPane.setBounds(0, 0, 1366, 768);
+		mainPane.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		mainPane.setTransparent(true);
 		
 		GUIPanel rightPane = guiCreator.createRightPane(game, form, playerName, connection);
@@ -132,7 +136,6 @@ public class ClientGUI extends JFrame implements ClientView {
 		pack();
 		
 		GUIPanel connectionPane = guiCreator.createConnections(mainPane, game);
-		connectionPane.setBounds(0, 0, 1366, 768);
 		connectionPane.setOpaque(true);
 		layers.setLayer(connectionPane, 0);
 		layers.add(connectionPane);
@@ -153,12 +156,12 @@ public class ClientGUI extends JFrame implements ClientView {
 			UpdateResponseMsg updateMsg = (UpdateResponseMsg)msg;
 			
 			if (this.game == null) {
-				setSize(1366, 768);
-				setLocationRelativeTo(null);
+				setExtendedState(JFrame.MAXIMIZED_BOTH);
 			}
 			
 			this.game = updateMsg.getGame();
 			showModel();
+			
 			form.append(updateMsg.getMessage());
 		}
 		else if (msg instanceof ChatResponseMsg) {
