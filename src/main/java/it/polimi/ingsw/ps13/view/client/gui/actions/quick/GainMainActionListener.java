@@ -19,10 +19,9 @@ public class GainMainActionListener extends GUIListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("[LISTENER] Sending message " + GainMainActionListener.this.getClass().getSimpleName());
+		
 		connection.sendMessage(new GainMainActionRequestMsg());
-		System.out.println("[LISTENER] Sent message " + GainMainActionListener.this.getClass().getSimpleName());
-
+		
 	}
 
 }

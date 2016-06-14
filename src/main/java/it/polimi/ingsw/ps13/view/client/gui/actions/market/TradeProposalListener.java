@@ -1,12 +1,19 @@
 package it.polimi.ingsw.ps13.view.client.gui.actions.market;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class TradeProposalListener implements ActionListener {
+import javax.swing.JButton;
 
-	public TradeProposalListener() {
-		// TODO Auto-generated constructor stub
+import it.polimi.ingsw.ps13.view.client.ClientConnection;
+import it.polimi.ingsw.ps13.view.client.gui.actions.GUIListener;
+import it.polimi.ingsw.ps13.view.client.gui.component.GUIForm;
+
+public class TradeProposalListener extends GUIListener {
+
+	public TradeProposalListener(GUIForm form, ClientConnection connection, JButton confirmButton) {
+		
+		super(form, connection, confirmButton);
+		
 	}
 
 	@Override

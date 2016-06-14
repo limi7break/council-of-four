@@ -242,7 +242,7 @@ public final class GUICreator {
 		getrt.addActionListener(removeListeners);
 		
 		GUIPanel mainActionButtons = new GUIPanel(new GridLayout(0, 1));
-		mainActionButtons.setBorder(BorderFactory.createTitledBorder("Main"));
+		mainActionButtons.setBorder(BorderFactory.createTitledBorder("Main (" + game.getPlayer(playerName).getTokens().getMain() + ")"));
 		
 		GUIPanel quickActionButtons = new GUIPanel(new GridLayout(0, 1));
 		quickActionButtons.setBorder(BorderFactory.createTitledBorder("Quick"));

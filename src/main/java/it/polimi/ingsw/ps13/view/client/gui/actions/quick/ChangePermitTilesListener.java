@@ -50,9 +50,9 @@ public class ChangePermitTilesListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			System.out.println("[LISTENER] Sending message " + ChangePermitTilesListener.this.getClass().getSimpleName());
+			
 			connection.sendMessage(new ChangePermitTilesRequestMsg(region));
-			System.out.println("[LISTENER] Sent message " + ChangePermitTilesListener.this.getClass().getSimpleName());
+			
 		});
 
 	}

@@ -19,9 +19,8 @@ public class EngageAssistantListener extends GUIListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("[LISTENER] Sending message " + EngageAssistantListener.this.getClass().getSimpleName());
+		
 		connection.sendMessage(new EngageAssistantRequestMsg());
-		System.out.println("[LISTENER] Sent message " + EngageAssistantListener.this.getClass().getSimpleName());
 
 	}
 

@@ -65,9 +65,9 @@ public class BuildEmporiumListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			System.out.println("[LISTENER] Sending message " + BuildEmporiumListener.this.getClass().getSimpleName());
+			
 			connection.sendMessage(new BuildEmporiumRequestMsg(tile, city));
-			System.out.println("[LISTENER] Sent message " + BuildEmporiumListener.this.getClass().getSimpleName());
+			
 		});
 
 	}

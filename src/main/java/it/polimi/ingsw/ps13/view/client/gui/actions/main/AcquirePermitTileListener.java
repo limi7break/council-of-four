@@ -88,9 +88,9 @@ public class AcquirePermitTileListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			System.out.println("[LISTENER] Sending message " + AcquirePermitTileListener.this.getClass().getSimpleName());
+			
 			connection.sendMessage(new AcquirePermitTileRequestMsg(region, tile, cards));
-			System.out.println("[LISTENER] Sent message " + AcquirePermitTileListener.this.getClass().getSimpleName());
+			
 		});
 
 	}

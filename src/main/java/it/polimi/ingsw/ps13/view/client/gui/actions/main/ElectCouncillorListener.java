@@ -64,9 +64,9 @@ public class ElectCouncillorListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			System.out.println("[LISTENER] Sending message " + ElectCouncillorListener.this.getClass().getSimpleName());
+			
 			connection.sendMessage(new ElectCouncillorRequestMsg(region, councillor));
-			System.out.println("[LISTENER] Sent message " + ElectCouncillorListener.this.getClass().getSimpleName());
+			
 		});
 
 	}

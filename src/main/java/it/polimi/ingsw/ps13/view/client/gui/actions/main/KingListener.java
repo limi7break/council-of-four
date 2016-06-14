@@ -72,9 +72,9 @@ public class KingListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			System.out.println("[LISTENER] Sending message " + KingListener.this.getClass().getSimpleName());
+			
 			connection.sendMessage(new KingActionRequestMsg(city, cards));
-			System.out.println("[LISTENER] Sent message " + KingListener.this.getClass().getSimpleName());
+			
 		});
 
 	}
