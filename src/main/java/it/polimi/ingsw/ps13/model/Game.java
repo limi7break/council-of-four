@@ -476,13 +476,32 @@ public class Game implements Serializable {
 		int second = -1;
 		for(Player p : players.values()){
 			
-			if(p.getNobilityPosition() >= first)
+			if(p.getNobilityPosition() == first){
+				
 				firstPlace.add(p);
-			else
-				if(p.getNobilityPosition() >= second)
-					secondPlace.add(p);
-			
-		}
+				
+			}
+			else 
+				if(p.getNobilityPosition() > first){
+					
+					first = p.getNobilityPosition();
+					firstPlace.clear();
+					firstPlace.add(p);
+					
+				}
+				else
+					if(p.getNobilityPosition() == second)
+					
+						secondPlace.add(p);
+					else
+						if(p.getNobilityPosition() > second){
+							
+							second = p.getNobilityPosition();
+							secondPlace.clear();
+							secondPlace.add(p);
+							
+						}
+			}
 		
 		if(firstPlace.size() > 1){
 			
