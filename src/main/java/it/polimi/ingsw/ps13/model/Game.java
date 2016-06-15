@@ -462,27 +462,48 @@ public class Game implements Serializable {
 		
 	}
 	
-	//The player whose nobility position is most advanced gains 5 victory points.
+	/**
+	 * The player whose nobility position is most advanced gains 5 victory points, the second 2 victory points.
+	 * If more players have the highest nobility points, then they only gain 5 victory points.
+	 * Otherwise, all the players who have the second position gain 2 points.
+	 */
 	private void bestNobilityProgress() {
 		
-		int maxProgress = -1;
-		String player = "";
+		List<Player> firstPlace = new ArrayList<>();
+		List<Player> secondPlace = new ArrayList<>();
 		
+		int first = -1;
+		int second = -1;
 		for(Player p : players.values()){
 			
-			if(p.getNobilityPosition() > maxProgress){		// Rules do not clarify if extra points are given to one or
-															// all the players who are most advanced, in case of same
-															// nobility position.
-															// We choose only one player gains extra points.
+			if(p.getNobilityPosition() >= first)
+				firstPlace.add(p);
+			else
+				if(p.getNobilityPosition() >= second)
+					secondPlace.add(p);
+			
+		}
+		
+		if(firstPlace.size() > 1){
+			
+			for(Player p : firstPlace){
 				
-				maxProgress = p.getNobilityPosition();
-				player = p.getName();
+				p.addVictoryPoints(5);
 				
 			}
 			
 		}
-		
-		this.getPlayer(player).addVictoryPoints(5);
+		else{
+			
+			firstPlace.get(0).addVictoryPoints(5);
+			
+			for(Player p : secondPlace){
+				
+				p.addVictoryPoints(2);
+				
+			}
+			
+		}
 		
 	}
 	
