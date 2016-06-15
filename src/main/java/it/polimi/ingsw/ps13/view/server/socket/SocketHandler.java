@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
@@ -66,6 +67,7 @@ public class SocketHandler extends Handler implements Runnable {
 	
 			} catch (IOException e) {
 				LOG.log(Level.WARNING, "A problem was encountered while sending data to the client. (" + playerName + ")", e);
+				stop();
 			}
 			
 		}
@@ -98,9 +100,12 @@ public class SocketHandler extends Handler implements Runnable {
 				
 				notifyObserver(msg);
 
-			} catch (IOException | ClassNotFoundException e) {
-				LOG.log(Level.WARNING, "A problem was encountered while reading data from the client. (" + playerName + ")", e);
+			} catch (IOException e) {
 				stop();
+				notifyObserver(new DisconnectRequestMsg(playerName));
+				LOG.log(Level.INFO, playerName + "disconnected.");
+			} catch (ClassNotFoundException e) {
+				LOG.log(Level.WARNING, "A problem was encountered while reading data from the client. (" + playerName + ")", e);
 			}
 		}
 		

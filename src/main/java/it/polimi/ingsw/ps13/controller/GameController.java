@@ -18,6 +18,7 @@ import it.polimi.ingsw.ps13.controller.actions.ActionFactory;
 import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
 import it.polimi.ingsw.ps13.controller.actions.PassTurnAction;
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
+import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.ActionRequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
@@ -39,7 +40,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
-	private static final int TIMEOUT = 60;
+	private static final int TIMEOUT = 40;
 	
 	private Document config;
 	
@@ -125,6 +126,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			notifyObserver(new MulticastMsg(name + " entered the room." , name));
 			notifyObserver(new ConnectionUnicastMsg("Welcome " + name + "! Have fun.", name));
 			notifyObserver(otherPlayersMsg);
+			
 		}
 		
 	}
@@ -164,6 +166,28 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			}
 		}
 		
+		else if (msg instanceof DisconnectRequestMsg) {
+			DisconnectRequestMsg disconnectMsg = (DisconnectRequestMsg) msg;
+			
+			String disconnectedPlayer = disconnectMsg.getPlayerName();
+			game.getPlayer(disconnectedPlayer).setConnected(false);
+			if (game.getConnectedPlayers() < 2) {
+				timer.cancel();
+				game.finalizeGame();
+				notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
+				
+				// @TODO: close game
+			} else if (game.getCurrentPlayerName().equals(disconnectedPlayer)) {
+				game.passTurn();
+				notifyCurrentTurn();
+				
+				timer.cancel();
+				setTimer();
+			}
+			
+			notifyObserver(new ResponseMsg(disconnectedPlayer + " has disconnected!"));
+		}
+		
 	}
 
 	@Override
@@ -189,6 +213,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 					setTimer();
 				}
 				else {
+					timer.cancel();
 					game.finalizeGame();
 					notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
 				}

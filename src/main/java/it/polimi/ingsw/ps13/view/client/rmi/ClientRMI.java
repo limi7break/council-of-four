@@ -6,8 +6,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,12 +31,13 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	
 	private final transient RMIHandlerRemote handlerStub;
 	
-	private transient CountDownLatch cdl;
-	private ResponseMsg lastReadObject;
+	private List<ResponseMsg> inbox;
 	
 	private static final Logger LOG = Logger.getLogger(ClientRMI.class.getSimpleName());
 
 	public ClientRMI() throws RemoteException, NotBoundException, AlreadyBoundException {
+		
+		inbox = new ArrayList<>();
 		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
@@ -45,8 +47,6 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 		Registry registry = LocateRegistry.getRegistry(host, PORT);
 		RMIServerRemote serverStub = (RMIServerRemote) registry.lookup(NAME);
 		
-		cdl = new CountDownLatch(1);
-		
 		handlerStub = serverStub.connect(this);
 		
 		LOG.log(Level.INFO, "RMI Connection established @ " + host + ":" + PORT + ". (" + NAME + ")");
@@ -54,18 +54,17 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	}
 	
 	@Override
-	public ResponseMsg receiveMessage() {
+	public synchronized ResponseMsg receiveMessage() {
 		
-		try {
-			cdl.await();
-		} catch (InterruptedException e) {
-			LOG.log(Level.WARNING, "Thread interrupted", e);
-			Thread.currentThread().interrupt();
+		while (inbox.isEmpty()) {
+			try {
+				wait();
+			} catch(InterruptedException e) {
+				LOG.log(Level.WARNING, "A problem was encountered while receiving data from the server.", e);
+			}
 		}
 		
-		cdl = new CountDownLatch(1);
-		
-		return lastReadObject;
+		return inbox.remove(0);
 		
 	}
 
@@ -83,10 +82,10 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	}
 
 	@Override
-	public void updateClient(ResponseMsg msg) throws RemoteException {
+	public synchronized void updateClient(ResponseMsg msg) throws RemoteException {
 		
-		this.lastReadObject = msg;
-		cdl.countDown();
+		inbox.add(msg);
+		notifyAll();
 		
 	}
 	

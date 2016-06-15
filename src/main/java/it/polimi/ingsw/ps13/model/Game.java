@@ -222,12 +222,19 @@ public class Game implements Serializable {
 	 * 
 	 * @return
 	 */
-	public int getNextPlayerID() {
+	public int getNextPlayerID(int currentPlayerID) {
+		
+		int nextPlayerID;
 		
 		if (currentPlayerID == numberOfPlayers-1)
-			return 0;
+			nextPlayerID = 0;
 		else
-			return currentPlayerID+1;
+			nextPlayerID = currentPlayerID+1;
+		
+		if (players.get(nextPlayerID).isConnected())
+			return nextPlayerID;
+		else
+			return getNextPlayerID(nextPlayerID); 
 		
 	}
 	
@@ -237,17 +244,13 @@ public class Game implements Serializable {
 	 */
 	public void passTurn() {
 		
-		int nextPlayerID = getNextPlayerID();
+		int nextPlayerID = getNextPlayerID(currentPlayerID);
 		
 		// if a player has already built his last emporium, every other player has the last turn
 		if (playerWhoBuiltLastEmporium != -1) {
 			
 			if ( nextPlayerID == playerWhoBuiltLastEmporium ) {
 				finished = true;
-				
-				for (Player p : players.values()) {
-					p.getTokens().setZeros();
-				}
 			} else {
 				getCurrentPlayer().getTokens().setZeros();
 				currentPlayerID = nextPlayerID;
@@ -452,10 +455,32 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public int getConnectedPlayers() {
+		
+		int connectedPlayers = 0;
+		
+		for (Player p : players.values()) {
+			if (p.isConnected()) {
+				connectedPlayers++;
+			}
+		}
+		
+		return connectedPlayers;
+		
+	}
+	
+	/**
 	 * Adds extra victory points to the players who own the highest amount of permit tiles and to
 	 * the most advanced in nobility track.
 	 */
 	public void finalizeGame() {
+		
+		for (Player p : players.values()) {
+			p.getTokens().setZeros();
+		}
 		
 		bestNobilityProgress();
 		bestPermitTilesAcquisition();
@@ -526,26 +551,33 @@ public class Game implements Serializable {
 		
 	}
 	
-	//The player who owns the highest number of permit tiles gains 3 victory points.
+	/**
+	 * The player who owns the highest number of permit tiles gains 3 victory points.
+	 * Rules do not clarify how to behave in case of same number
+	 * of permit tiles. We choose all the players gain 
+	 * the points.
+	 */
 	private void bestPermitTilesAcquisition() {
 		
 		int maxTiles = -1;
-		String player = "";
+		List<Player> winners = new ArrayList<>();;
 		
 		for(Player p : players.values()){
 			
-			if(p.getPermitTiles().size() > maxTiles){		// Rules do not clarify how to behave in case of same number
-															// of permit tiles. We choose only one player gains 
-															// the points.
-				
-				maxTiles = p.getPermitTiles().size();
-				player = p.getName();
-				
+			if (p.getPermitTiles().size() == maxTiles){
+				winners.add(p);
+			}
+			else if (p.getNobilityPosition() > maxTiles){
+				maxTiles = p.getNobilityPosition();
+				winners.clear();
+				winners.add(p);
 			}
 			
 		}
 		
-		this.getPlayer(player).addVictoryPoints(3);
+		for (Player p : winners) {
+			p.addVictoryPoints(3);
+		}
 		
 	}
 	

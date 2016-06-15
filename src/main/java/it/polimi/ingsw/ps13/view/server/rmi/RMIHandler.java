@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
@@ -21,27 +22,34 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 	private final transient ClientRMIRemote clientStub;
 	private final String playerName;
 	
+	private boolean running;
+	
 	public RMIHandler(ClientRMIRemote clientStub, String playerName) {
 		
 		this.clientStub = clientStub;
 		this.playerName = playerName;
 		
+		running = true;
+		
 	}
 	
 	@Override
-	public void update(ResponseMsg msg) {
+	public synchronized void update(ResponseMsg msg) {
 		
 		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
 		// Only the recipient of a UnicastMsg receives it
-		if (!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
+		if (running && 
+			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
 			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
-				
+			
 			try {
 				
 				clientStub.updateClient(msg);
-	
+				
 			} catch (RemoteException e) {
-				LOG.log(Level.WARNING, "A problem was encountered while sending data to the client. (" + playerName + ")", e);
+				stop();
+				notifyObserver(new DisconnectRequestMsg(playerName));
+				LOG.log(Level.INFO, playerName + " disconnected.");
 			}
 			
 		}
@@ -64,6 +72,12 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 	public void update() {
 
 		// empty update not implemented
+		
+	}
+	
+	public void stop() {
+		
+		running = false;
 		
 	}
 

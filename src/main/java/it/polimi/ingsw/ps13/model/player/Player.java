@@ -28,6 +28,7 @@ public class Player implements Serializable {
 	private final Set<String> cityNames;
 	private int nobilityPosition;
 	private final ActionTokens tokens;
+	private boolean connected;
 	
 	private final Board board;
 	
@@ -45,6 +46,7 @@ public class Player implements Serializable {
 		nobilityPosition = 0;
 		
 		tokens = new ActionTokens();
+		connected = true;
 		
 		this.board = board;
 	}
@@ -415,6 +417,30 @@ public class Player implements Serializable {
 			throw new IndexOutOfBoundsException();
 		else
 			tokens.setTakeTile(tokens.getTakeTile() - 1);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isConnected() {
+		
+		return connected;
+		
+	}
+	
+	/**
+	 * 
+	 * @param isConnected
+	 */
+	public void setConnected(boolean isConnected) {
+		
+		if (!connected && isConnected) {
+			throw new UnsupportedOperationException("Reconnection isn\'t supported yet.");
+		} else {
+			connected = isConnected;
+		}
 		
 	}
 	
