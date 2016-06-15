@@ -33,7 +33,7 @@ public class ChangePermitTilesListener extends GUIListener {
 		
 		region = null;
 		
-		form.append("[INFO] Change Permit Tiles selected. Please choose tiles");
+		form.appendInfo("Please select a visible tiles area.");
 		
 		for (GUIRegion reg : regions) {
 			for (GUIPermitTile ti : reg.getVisibleTiles()) {
@@ -42,7 +42,7 @@ public class ChangePermitTilesListener extends GUIListener {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						region = reg.getName();
-						form.append("[INFO] Selected region: " + region);
+						form.appendInfo("Selected region: " + region);
 					}
 					
 				});
@@ -50,9 +50,7 @@ public class ChangePermitTilesListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			
 			connection.sendMessage(new ChangePermitTilesRequestMsg(region));
-			
 		});
 
 	}

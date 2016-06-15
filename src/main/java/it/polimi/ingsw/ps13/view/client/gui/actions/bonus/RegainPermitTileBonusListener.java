@@ -32,7 +32,7 @@ public class RegainPermitTileBonusListener extends GUIListener {
 		
 		tile = -1;
 		
-		form.append("[INFO] Regain Permit Tile Bonus selected. Please choose permit tile");
+		form.appendInfo("Please select one of your permit tiles.");
 		
 		for (GUIPermitTile ti : tiles) {
 			ti.addMouseListener(new MouseAdapter() {
@@ -40,7 +40,7 @@ public class RegainPermitTileBonusListener extends GUIListener {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					tile = ti.getNumber();
-					form.append("[INFO] Selected tile n\u00b0: " + tile);
+					form.appendInfo("[INFO] Selected tile n\u00b0: " + tile);
 				}
 				
 			});

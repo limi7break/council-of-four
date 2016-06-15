@@ -11,6 +11,7 @@ import it.polimi.ingsw.ps13.message.request.action.QuickElectCouncillorRequestMs
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import it.polimi.ingsw.ps13.view.client.gui.actions.GUIListener;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICouncillor;
+import it.polimi.ingsw.ps13.view.client.gui.component.GUICouncillorBalcony;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIForm;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIRegion;
 
@@ -21,13 +22,15 @@ public class QuickElectCouncillorListener extends GUIListener {
 	
 	private final Collection<GUIRegion> regions;
 	private final Collection<GUICouncillor> councillors;
+	private final GUICouncillorBalcony kingBalcony;
 	
-	public QuickElectCouncillorListener(Collection<GUIRegion> regions, Collection<GUICouncillor> councillors, GUIForm form, ClientConnection connection, JButton confirmButton) {
+	public QuickElectCouncillorListener(Collection<GUIRegion> regions, Collection<GUICouncillor> councillors, GUICouncillorBalcony kingBalcony, GUIForm form, ClientConnection connection, JButton confirmButton) {
 		
 		super(form, connection, confirmButton);
 		
 		this.regions = regions;
 		this.councillors = councillors;
+		this.kingBalcony = kingBalcony;
 		
 	}
 
@@ -37,7 +40,7 @@ public class QuickElectCouncillorListener extends GUIListener {
 		region = null;
 		councillor = null;
 		
-		form.append("[INFO] Quick Elect Councillor selected. Please choose balcony and councillor");
+		form.appendInfo("Please select a balcony and a councillor.");
 		
 		for (GUIRegion reg : regions) {
 			reg.getCouncillorBalcony().addMouseListener(new MouseAdapter() {
@@ -45,11 +48,21 @@ public class QuickElectCouncillorListener extends GUIListener {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					region = reg.getName();
-					form.append("[INFO] Selected region: " + region);
+					form.appendInfo("Selected region: " + region);
 				}
 				
 			});
 		}
+		
+		kingBalcony.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				region = "king";
+				form.appendInfo("Selected region: " + region);
+			}
+			
+		});
 		
 		for (GUICouncillor co : councillors) {
 			co.addMouseListener(new MouseAdapter() {
@@ -57,16 +70,14 @@ public class QuickElectCouncillorListener extends GUIListener {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					councillor = co.getColorName();
-					form.append("[INFO] Selected councillor: " + councillor);
+					form.appendInfo("Selected councillor: " + councillor);
 				}
 				
 			});
 		}
 
 		confirmButton.addActionListener(ae -> {
-			
 			connection.sendMessage(new QuickElectCouncillorRequestMsg(region, councillor));
-			
 		});
 
 	}

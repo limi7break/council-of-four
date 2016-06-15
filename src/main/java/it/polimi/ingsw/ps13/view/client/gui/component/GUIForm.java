@@ -24,7 +24,7 @@ public class GUIForm extends GUIPanel {
 		setTransparent(true);
 		
 		// Create text area
-		textArea = new JTextArea("Council of Four version 1.0", 15, 40);
+		textArea = new JTextArea("Council of Four version 1.0", 15, 35);
 		textArea.setEditable(false);
 		textArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		textArea.setBackground(Color.white);
@@ -36,7 +36,7 @@ public class GUIForm extends GUIPanel {
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		
 		// Create text field
-		textField = new JTextField("", 40);
+		textField = new JTextField("", 35);
 		
 		// Create scroll pane
 		JScrollPane scrollPane = new JScrollPane(textArea);
@@ -56,6 +56,29 @@ public class GUIForm extends GUIPanel {
 		
 		textArea.append("\n");
 		textArea.append(str);
+		
+	}
+	
+	/**
+	 * 
+	 * @param str
+	 */
+	public void appendInfo(String str) {
+		
+		textArea.append("\n");
+		textArea.append("[INFO] " + str);
+		
+	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @param str
+	 */
+	public void appendChat(String player, String str) {
+		
+		textArea.append("\n");
+		textArea.append("[" + player + "] " + str);
 		
 	}
 	

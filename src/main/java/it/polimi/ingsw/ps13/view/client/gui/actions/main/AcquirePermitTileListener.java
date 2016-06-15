@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 import it.polimi.ingsw.ps13.message.request.action.AcquirePermitTileRequestMsg;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
@@ -24,14 +25,18 @@ public class AcquirePermitTileListener extends GUIListener {
 	private int tile = -1;
 	private List<String> cards;
 	
-	private final Collection<GUIRegion> regions;
+	private final Collection<GUIPermitTile> tiles;
 	private final Collection<GUIPoliticsCard> politicsCards;
 	
 	public AcquirePermitTileListener(Collection<GUIRegion> regions, Collection<GUIPoliticsCard> politicsCards, GUIForm form, ClientConnection connection, JButton confirmButton) {
 		
 		super(form, connection, confirmButton);
 		
-		this.regions = regions;
+		tiles = new ArrayList<>();
+		for (GUIRegion r : regions) {
+			tiles.addAll(r.getVisibleTiles());
+		}
+		
 		this.politicsCards = politicsCards;
 		
 		cards = new ArrayList<>();
@@ -45,31 +50,21 @@ public class AcquirePermitTileListener extends GUIListener {
 		tile = -1;
 		cards.clear();
 		
-		form.append("[INFO] Acquire Permit Tile selected. Please choose balcony, permit tile, politics cards");
+		form.appendInfo("Please select a visible permit tile and [1, " + CouncillorBalcony.COUNCILLORS_PER_BALCONY + "] politics cards.");
 		
-		for (GUIRegion reg : regions) {
-			reg.getCouncillorBalcony().addMouseListener(new MouseAdapter() {
-
+		for (GUIPermitTile ti : tiles) {
+			ti.addMouseListener(new MouseAdapter() {
+				
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					region = reg.getName();
-					form.append("[INFO] Selected region: " + region);
+					GUIRegion r = (GUIRegion) SwingUtilities.getAncestorOfClass(GUIRegion.class, ti);
+					region = r.getName();
+					tile = ti.getNumber();
+					form.appendInfo("Selected region: " + region);
+					form.appendInfo("Selected tile n\u00b0: " + tile);
 				}
-				
+		
 			});
-			
-			for (GUIPermitTile ti : reg.getVisibleTiles()) {
-				ti.addMouseListener(new MouseAdapter() {
-					
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						GUIPermitTile t = (GUIPermitTile)arg0.getSource();
-						tile = t.getNumber();
-						form.append("[INFO] Selected tile n\u00b0: " + tile);
-					}
-			
-				});
-			}
 		}
 		
 		for (GUIPoliticsCard c : politicsCards) {
@@ -80,7 +75,7 @@ public class AcquirePermitTileListener extends GUIListener {
 					GUIPoliticsCard pol = (GUIPoliticsCard)arg0.getSource();
 					if (cards.size() < CouncillorBalcony.COUNCILLORS_PER_BALCONY) {
 						cards.add(pol.getColorName());
-						form.append("[INFO] Selected cards: " + cards.toString());
+						form.appendInfo("Selected cards: " + cards.toString());
 					}
 				}
 				
@@ -88,9 +83,7 @@ public class AcquirePermitTileListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			
 			connection.sendMessage(new AcquirePermitTileRequestMsg(region, tile, cards));
-			
 		});
 
 	}

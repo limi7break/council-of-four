@@ -42,7 +42,7 @@ public class KingListener extends GUIListener {
 		city = null;
 		cards.clear();
 		
-		form.append("[INFO] King selected. Please choose city and politics cards");
+		form.appendInfo("Please select a city and [1, " + CouncillorBalcony.COUNCILLORS_PER_BALCONY + "] politics cards");
 		
 		for (GUICity ci : cities) {
 			ci.addMouseListener(new MouseAdapter() {
@@ -50,7 +50,7 @@ public class KingListener extends GUIListener {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					city = ci.getName();
-					form.append("[INFO] Selected city: " + city);
+					form.appendInfo("Selected city: " + city);
 				}
 				
 			});
@@ -64,7 +64,7 @@ public class KingListener extends GUIListener {
 					GUIPoliticsCard pol = (GUIPoliticsCard)arg0.getSource();
 					if (cards.size() < CouncillorBalcony.COUNCILLORS_PER_BALCONY) {
 						cards.add(pol.getColorName());
-						form.append("[INFO] Selected cards: " + cards.toString());
+						form.appendInfo("Selected cards: " + cards.toString());
 					}
 				}
 				
@@ -72,9 +72,7 @@ public class KingListener extends GUIListener {
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			
 			connection.sendMessage(new KingActionRequestMsg(city, cards));
-			
 		});
 
 	}

@@ -50,6 +50,7 @@ public final class GUICreator {
 	private final List<GUICouncillor> councillors = new ArrayList<>();
 	private final List<GUIPoliticsCard> cards = new ArrayList<>();
 	private final List<GUIPermitTile> tiles = new ArrayList<>();
+	private GUICouncillorBalcony kingBalcony;
 	
 	public GUIPanel createMainPane(Game game) {
 		
@@ -152,7 +153,7 @@ public final class GUICreator {
 		// Create and set text area and text field
 		rightPane.add(form, "growx");
 		
-		GUICouncillorBalcony kingBalcony = new GUICouncillorBalcony(game.getBoard().getKingBalcony());
+		kingBalcony = new GUICouncillorBalcony(game.getBoard().getKingBalcony());
 		kingBalcony.setBorder(BorderFactory.createTitledBorder("King Balcony"));
 		rightPane.add(kingBalcony, "cell 0 1, flowx");
 		
@@ -214,7 +215,7 @@ public final class GUICreator {
 		build.addActionListener(new BuildEmporiumListener(tiles, cities.values(), form, connection, confirmButton));
 		build.addActionListener(removeListeners);
 		JButton elect = new JButton("elect");
-		elect.addActionListener(new ElectCouncillorListener(regions.values(), councillors, form, connection, confirmButton));
+		elect.addActionListener(new ElectCouncillorListener(regions.values(), councillors, kingBalcony, form, connection, confirmButton));
 		elect.addActionListener(removeListeners);
 		JButton king = new JButton("king");
 		king.addActionListener(new KingListener(cities.values(), cards, form, connection, confirmButton));
@@ -229,7 +230,7 @@ public final class GUICreator {
 		gainmainaction.addActionListener(new GainMainActionListener(form, connection, confirmButton));
 		gainmainaction.addActionListener(removeListeners);
 		JButton qelect = new JButton("qelect");
-		qelect.addActionListener(new QuickElectCouncillorListener(regions.values(), councillors, form, connection, confirmButton));
+		qelect.addActionListener(new QuickElectCouncillorListener(regions.values(), councillors, kingBalcony, form, connection, confirmButton));
 		qelect.addActionListener(removeListeners);
 		JButton gettile = new JButton("get tile");
 		gettile.addActionListener(new GainVisiblePermitTileListener(regions.values(), form, connection, confirmButton));

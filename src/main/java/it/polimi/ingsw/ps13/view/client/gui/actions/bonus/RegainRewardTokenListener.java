@@ -32,7 +32,7 @@ public class RegainRewardTokenListener extends GUIListener {
 		
 		city = null;
 		
-		form.append("[INFO] Regain Reward Token selected. Please choose city");
+		form.appendInfo("Please select a city where there is an emporium of yours.");
 		
 		for (GUICity ci : cities) {
 			ci.addMouseListener(new MouseAdapter() {
@@ -40,7 +40,7 @@ public class RegainRewardTokenListener extends GUIListener {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					city = ci.getName();
-					form.append("[INFO] Selected city: " + city);
+					form.appendInfo("Selected city: " + city);
 				}
 				
 			});

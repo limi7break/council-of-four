@@ -37,7 +37,7 @@ public class BuildEmporiumListener extends GUIListener {
 		tile = -1;
 		city = null;
 		
-		form.append("[INFO] Build Emporium selected. Please choose permit tile and city");
+		form.appendInfo("Please select one of your permit tiles and a city.");
 		
 		for (GUICity ci : cities) {
 			ci.addMouseListener(new MouseAdapter() {
@@ -45,7 +45,7 @@ public class BuildEmporiumListener extends GUIListener {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					city = ci.getName();
-					form.append("[INFO] Selected city: " + city);
+					form.appendInfo("Selected city: " + city);
 				}
 				
 			});
@@ -58,16 +58,14 @@ public class BuildEmporiumListener extends GUIListener {
 				public void mouseClicked(MouseEvent arg0) {
 					GUIPermitTile t = (GUIPermitTile)arg0.getSource();
 					tile = t.getNumber();
-					form.append("[INFO] Selected tile n\u00b0: " + tile);
+					form.appendInfo("Selected tile n\u00b0: " + tile);
 				}
 				
 			});
 		}
 		
 		confirmButton.addActionListener(ae -> {
-			
 			connection.sendMessage(new BuildEmporiumRequestMsg(tile, city));
-			
 		});
 
 	}

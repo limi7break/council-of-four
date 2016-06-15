@@ -3,6 +3,8 @@ package it.polimi.ingsw.ps13.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,11 +39,15 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
+	private static final int TIMEOUT = 60;
 	
 	private Document config;
 	
 	private Game game;
 	private final String configFilePath;
+	
+	private Timer timer;
+	private TimerTask timerTask;
 	
 	private final ActionVisitor actionFactory;
 	
@@ -90,11 +96,11 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		game = new Game(config, players);
 		
 		// Send created game to every client
-		notifyObserver(new UpdateResponseMsg("Initial game broadcast.", game));
+		notifyObserver(new UpdateResponseMsg("=== !!! GAME STARTED !!! ===", game));
+		notifyCurrentTurn();
 		
-		// Notify current player that it's time to play
-		notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
-		notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
+		// Set timer for first turn
+		setTimer();
 		
 	}
 	
@@ -106,9 +112,19 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	protected void addPlayer(String name) {
 		
 		if (game == null) {
+			int size = players.size();
+			
+			UnicastMsg otherPlayersMsg = new UnicastMsg(
+					players.isEmpty() 	? "There are no other players in this room."
+										: "There " 	+ (size==1 ? "is " : "are ") 
+													+ size + " other player"
+													+ (size==1 ? "" : "s")
+													+ " in this room: " + players.toString(), name);
+			
 			players.add(name);
 			notifyObserver(new MulticastMsg(name + " entered the room." , name));
 			notifyObserver(new ConnectionUnicastMsg("Welcome " + name + "! Have fun.", name));
+			notifyObserver(otherPlayersMsg);
 		}
 		
 	}
@@ -144,7 +160,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 				Action action = actionMsg.accept(actionFactory);
 				handleAction(action, msg.getPlayerName());
 			} else {
-				notifyObserver(new UnicastMsg("ERROR: it\'s not your turn.", msg.getPlayerName()));
+				notifyObserver(new UnicastMsg("ERROR: It\'s not your turn!", msg.getPlayerName()));
 			}
 		}
 		
@@ -162,12 +178,15 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		if (action.isLegal(game)) {
 			
 			action.apply(game);
-			notifyObserver(new UpdateResponseMsg(playerName + " successfully performed " + action.getClass().getSimpleName() + ". Model updated.", game));
+			notifyObserver(new UpdateResponseMsg(playerName + " performed " + action.getClass().getSimpleName() + ".", game));
 			
 			if (action instanceof PassTurnAction) {
 				if (!game.isFinished()) {
-					notifyObserver(new UnicastMsg("It\'s YOUR turn, biatch! Bring it on!!", game.getCurrentPlayerName()));
-					notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
+					notifyCurrentTurn();
+					
+					// Reset timer for next turn
+					timer.cancel();
+					setTimer();
 				}
 				else {
 					game.finalizeGame();
@@ -176,9 +195,41 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			}
 			
 		} else {
-			notifyObserver(new UnicastMsg("ERROR: action is not legal :(", playerName));
+			notifyObserver(new UnicastMsg("ERROR: Action is not legal!", playerName));
 		}
 
+	}
+	
+	private void notifyCurrentTurn() {
+		
+		notifyObserver(new UnicastMsg("It\'s YOUR turn, " + game.getCurrentPlayerName() + "! Bring it on!!\n(but move your ass, you only have " + TIMEOUT + " seconds.)", game.getCurrentPlayerName()));
+		notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
+		
+	}
+	
+	private void setTimer() {
+		
+		timer = new Timer();
+		
+		timerTask = new TimerTask() {
+            @Override
+            public void run() {
+            	
+            	String slowPlayer = game.getCurrentPlayerName();
+            	
+            	game.passTurn();
+            	notifyObserver(new UpdateResponseMsg("Time\'s up for " + slowPlayer + "!", game));
+            	notifyCurrentTurn();
+            	
+            	// Reset timer for next turn
+            	timer.cancel();
+            	setTimer();
+            	
+            }
+        };
+		
+		timer.schedule(timerTask, (long) TIMEOUT * 1000);
+		
 	}
 	
 	private String calculateWinner() {

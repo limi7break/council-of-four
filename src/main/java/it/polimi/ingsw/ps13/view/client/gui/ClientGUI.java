@@ -55,9 +55,7 @@ public class ClientGUI extends JFrame implements ClientView {
 	        form.getTextField().setText("");
 	        
 	        if (msg != null) {
-	        	System.out.println("[FORM] Sending message " + msg.getClass().getSimpleName());
 	        	connection.sendMessage(msg);
-	        	System.out.println("[FORM] Sent message " + msg.getClass().getSimpleName());
 	        } else {
 	        	form.append("Command not recognized.");
 	        }
@@ -166,7 +164,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		}
 		else if (msg instanceof ChatResponseMsg) {
 			ChatResponseMsg chatMsg = (ChatResponseMsg) msg;
-			form.append("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
+			form.appendChat(chatMsg.getPlayerName(), chatMsg.getMessage());
 		}
 		else if (msg instanceof ConnectionUnicastMsg) {
 			ConnectionUnicastMsg connMsg = (ConnectionUnicastMsg) msg;

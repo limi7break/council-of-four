@@ -42,7 +42,7 @@ public class GainVisiblePermitTileListener extends GUIListener {
 		region = null;
 		tile = -1;
 		
-		form.append("[INFO] Gain Visible Permit Tile selected. Please choose permit tile");
+		form.appendInfo("Please select a visible permit tile.");
 		
 		for (GUIPermitTile ti : tiles) {
 			ti.addMouseListener(new MouseAdapter() {
@@ -52,8 +52,8 @@ public class GainVisiblePermitTileListener extends GUIListener {
 					GUIRegion r = (GUIRegion) SwingUtilities.getAncestorOfClass(GUIRegion.class, ti);
 					region = r.getName();
 					tile = ti.getNumber();
-					form.append("[INFO] Selected region: " + region);
-					form.append("[INFO] Selected tile n\u00b0: " + tile);
+					form.appendInfo("Selected region: " + region);
+					form.appendInfo("Selected tile n\u00b0: " + tile);
 				}
 				
 			});
