@@ -25,7 +25,6 @@ public class PoliticsCard implements Marketable, Serializable {
 	 * 
 	 * @param color
 	 */
-	@VisibleForTesting
 	protected PoliticsCard(Color color, String colorName) {
 		
 		this.color = color;

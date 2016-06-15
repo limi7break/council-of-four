@@ -40,8 +40,7 @@ public class Board implements Serializable {
 	private final List<KingRewardTile> kingRewardTiles;
 	private final List<Councillor> councillors;
 
-	@VisibleForTesting
-	private Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
+	public Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
 		
 		this.regions = regions;
 		this.cityColors = cityColors;
@@ -73,12 +72,7 @@ public class Board implements Serializable {
 	}
 	
 	// === GETTER METHODS ===
-	
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
+
 	public Region getRegion(String name) {
 		
 		return regions.get(name);
