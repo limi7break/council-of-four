@@ -81,7 +81,7 @@ public class Game implements Serializable {
 		
 		// Check if market is disabled in configuration file, else leave it as is (enabled by default)
 		Element marketElement = (Element) config.getElementsByTagName("market").item(0);
-		if (marketElement.getAttribute("enabled").equals("false"))
+		if ("false".equals(marketElement.getAttribute("enabled")))
 			market.setEnabled(false);
 		
 		// Setups the game for a two player game.

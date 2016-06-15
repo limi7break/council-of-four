@@ -103,7 +103,7 @@ public class SocketHandler extends Handler implements Runnable {
 			} catch (IOException e) {
 				stop();
 				notifyObserver(new DisconnectRequestMsg(playerName));
-				LOG.log(Level.INFO, playerName + "disconnected.");
+				LOG.log(Level.INFO, playerName + "disconnected.", e);
 			} catch (ClassNotFoundException e) {
 				LOG.log(Level.WARNING, "A problem was encountered while reading data from the client. (" + playerName + ")", e);
 			}

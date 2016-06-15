@@ -61,6 +61,7 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 				wait();
 			} catch(InterruptedException e) {
 				LOG.log(Level.WARNING, "A problem was encountered while receiving data from the server.", e);
+				Thread.currentThread().interrupt();
 			}
 		}
 		

@@ -49,7 +49,7 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 			} catch (RemoteException e) {
 				stop();
 				notifyObserver(new DisconnectRequestMsg(playerName));
-				LOG.log(Level.INFO, playerName + " disconnected.");
+				LOG.log(Level.INFO, playerName + " disconnected.", e);
 			}
 			
 		}
