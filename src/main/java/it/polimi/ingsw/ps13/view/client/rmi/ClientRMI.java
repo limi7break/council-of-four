@@ -24,6 +24,8 @@ import it.polimi.ingsw.ps13.view.server.rmi.RMIServerRemote;
  */
 public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, ClientConnection {
 	
+	private static final Logger LOG = Logger.getLogger(ClientRMI.class.getSimpleName());
+	
 	private static final long serialVersionUID = 0L;
 	public static final String HOST = "localhost";
 	public static final int PORT = 7777;
@@ -33,11 +35,12 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	
 	private List<ResponseMsg> inbox;
 	
-	private static final Logger LOG = Logger.getLogger(ClientRMI.class.getSimpleName());
+	private boolean active;
 
 	public ClientRMI() throws RemoteException, NotBoundException, AlreadyBoundException {
 		
 		inbox = new ArrayList<>();
+		active = true;
 		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
@@ -70,14 +73,20 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	}
 
 	@Override
-	public void sendMessage(RequestMsg msg) {
+	public synchronized void sendMessage(RequestMsg msg) {
+		
+		if (!active) {
+			throw new IllegalStateException("Connection is closed!");
+		}
 		
 		try {
 			
 			handlerStub.processRequest(msg);
 			
 		} catch(RemoteException e) {
-			LOG.log(Level.WARNING, "A problem was encountered while sending data to the server.", e);
+			active = false;
+			inbox.add(new ResponseMsg("You have lost connection with the server!"));
+			notifyAll();
 		}
 		
 	}
@@ -87,6 +96,17 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 		
 		inbox.add(msg);
 		notifyAll();
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@Override
+	public boolean isActive() {
+		
+		return active;
 		
 	}
 	

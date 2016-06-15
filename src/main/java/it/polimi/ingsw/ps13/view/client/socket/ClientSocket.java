@@ -26,12 +26,16 @@ public class ClientSocket implements ClientConnection {
 	private final ObjectInputStream ois;
 	private final ObjectOutputStream oos;
 	
+	private boolean active;
+	
 	/**
 	 * A new socket connection is created.
 	 * 
 	 * @throws IOException
 	 */
 	public ClientSocket() throws IOException {
+		
+		active = true;
 		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
@@ -56,7 +60,10 @@ public class ClientSocket implements ClientConnection {
 			
 			msg = (ResponseMsg) ois.readObject();
 			
-		} catch(IOException | ClassNotFoundException e) {
+		} catch (IOException e) {
+			active = false;
+			return new ResponseMsg("You have lost connection with the server!");
+		} catch (ClassNotFoundException e) {
 			LOG.log(Level.WARNING, "A problem was encountered while receiving data from the server.", e);
 		}
 		
@@ -67,6 +74,10 @@ public class ClientSocket implements ClientConnection {
 	@Override
 	public void sendMessage(RequestMsg msg) {
 		
+		if (!active) {
+			throw new IllegalStateException("Connection is closed!");
+		}
+		
 		try {
 			oos.reset();
 			oos.writeObject(msg);
@@ -75,6 +86,17 @@ public class ClientSocket implements ClientConnection {
 		} catch(IOException e) {
 			LOG.log(Level.WARNING, "A problem was encountered while sending data to the server.", e);
 		}
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@Override
+	public boolean isActive() {
+		
+		return active;
 		
 	}
 	

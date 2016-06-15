@@ -181,7 +181,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		
 		// This is the input handler
 		new Thread(() -> {
-			while(true) {
+			while(connection.isActive()) {
 				
 				ResponseMsg msg = connection.receiveMessage();
 				handleMessage(msg);

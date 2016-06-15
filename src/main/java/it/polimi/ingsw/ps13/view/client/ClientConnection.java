@@ -9,4 +9,6 @@ public interface ClientConnection {
 	
 	public void sendMessage(RequestMsg msg);
 	
+	public boolean isActive();
+	
 }

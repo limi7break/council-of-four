@@ -46,9 +46,8 @@ public class ClientCLI implements ClientView {
 	 * 
 	 * @param command
 	 */
-	// Warning suppressed, test method
 	@SuppressWarnings("all")
-	public void test(String command) {
+	public void localCommand(String command) {
 		
 		switch(command.toLowerCase()) {
 			case "region":
@@ -219,7 +218,7 @@ public class ClientCLI implements ClientView {
 				
 				// Some commands are elaborated locally
 				else {
-					test(cmd);
+					localCommand(cmd);
 				}
 				
 			}
@@ -227,7 +226,7 @@ public class ClientCLI implements ClientView {
 				
 		// This is the input handler
 		new Thread(() -> {
-			while(true) {
+			while(connection.isActive()) {
 				
 				ResponseMsg msg = connection.receiveMessage();
 				handleMessage(msg);
