@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
+import it.polimi.ingsw.ps13.message.response.PingResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
@@ -31,7 +32,7 @@ public class ClientCLI implements ClientView {
 	}
 	
 	/**
-	 * Only here for testing purposes, must be changed!.
+	 *
 	 * 
 	 */
 	@Override
@@ -42,7 +43,7 @@ public class ClientCLI implements ClientView {
 	}
 	
 	/**
-	 * Only here for testing purposes, must be removed!
+	 *
 	 * 
 	 * @param command
 	 */
@@ -197,6 +198,7 @@ public class ClientCLI implements ClientView {
 			this.playerName = connMsg.getPlayerName();
 			System.out.println(connMsg.getMessage());
 		}
+		else if (msg instanceof PingResponseMsg) { }
 		else {
 			System.out.println(msg.getMessage());
 		}

@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
+import it.polimi.ingsw.ps13.message.response.PingResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
@@ -189,6 +190,7 @@ public class ClientGUI extends JFrame implements ClientView {
 			this.playerName = connMsg.getPlayerName();
 			form.append(connMsg.getMessage());
 		}
+		else if (msg instanceof PingResponseMsg) { }
 		else {
 			form.append(msg.getMessage());
 		}

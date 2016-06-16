@@ -22,6 +22,7 @@ import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.ActionRequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
+import it.polimi.ingsw.ps13.message.response.PingResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
@@ -40,7 +41,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
-	private static final int TIMEOUT = 30;
+	private static final int TIMEOUT = 90;
 	
 	private Document config;
 	
@@ -93,6 +94,8 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		} catch(Exception e) {
 			LOG.log(Level.SEVERE, "There was a problem reading the configuration file.", e);
 		}
+		
+		notifyObserver(new PingResponseMsg());
 		
 		game = new Game(config, players);
 		
