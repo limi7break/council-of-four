@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.SwingUtilities;
 
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
@@ -169,7 +170,9 @@ public class ClientGUI extends JFrame implements ClientView {
 			}
 			
 			if (market != null && market.isVisible()) {
-				market.dispose();
+				SwingUtilities.invokeLater(() -> {
+					market.dispose();
+				});
 			}
 			
 			this.game = updateMsg.getGame();

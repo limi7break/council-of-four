@@ -57,7 +57,6 @@ public class GUIMarket extends JFrame {
 		cards = new ArrayList<>();
 		
 		setResizable(true);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
 		setSize(800, 600);
 		setLocationRelativeTo(null);

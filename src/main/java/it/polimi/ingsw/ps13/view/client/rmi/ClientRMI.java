@@ -73,7 +73,7 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	}
 
 	@Override
-	public synchronized void sendMessage(RequestMsg msg) {
+	public void sendMessage(RequestMsg msg) {
 		
 		if (!active) {
 			throw new IllegalStateException("Connection is closed!");
@@ -85,8 +85,11 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 			
 		} catch(RemoteException e) {
 			active = false;
-			inbox.add(new ResponseMsg("You have lost connection with the server!"));
-			notifyAll();
+			try {
+				updateClient(new ResponseMsg("You have lost connection with the server!"));
+			} catch (RemoteException e1) {
+				// method called locally, no risk of RemoteException
+			}
 		}
 		
 	}
