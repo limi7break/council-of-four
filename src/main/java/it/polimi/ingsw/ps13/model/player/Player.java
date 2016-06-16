@@ -179,7 +179,15 @@ public class Player implements Serializable {
 	 */
 	public void receivePermitTile(PermitTile tile) {
 		
+		tile.setUsable(false);
+		for (String cityName : tile.getCityNames()) {
+			if (!hasBuiltOn(cityName)) {
+				tile.setUsable(true);
+			}
+		}
+		
 		supply.getPermitTiles().add(tile);
+		tile.getBonus().giveTo(this);
 		
 	}
 	

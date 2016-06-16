@@ -1,13 +1,12 @@
 package it.polimi.ingsw.ps13.model.council;
 
-import java.awt.*;
-import java.awt.color.*;
+import static org.junit.Assert.assertEquals;
+
+import java.awt.Color;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class CouncillorTest {
 

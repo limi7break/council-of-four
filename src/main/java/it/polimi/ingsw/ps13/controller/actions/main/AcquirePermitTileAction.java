@@ -116,8 +116,8 @@ public class AcquirePermitTileAction implements Action {
 		}
 		
 		PermitTile permitTile = g.getBoard().getRegion(region).getPermitTileDeck().takeTile(tile);
+		// Permit tile bonus is given by receivePermitTile method
 		player.receivePermitTile(permitTile);
-		permitTile.getBonus().giveTo(player);
 		
 		player.consumeMainAction();
 		

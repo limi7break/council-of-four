@@ -1,16 +1,18 @@
 package it.polimi.ingsw.ps13.model.deck;
 
-import it.polimi.ingsw.ps13.model.player.Player;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-import java.awt.color.*;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static org.junit.Assert.*;
+import it.polimi.ingsw.ps13.model.player.Player;
 
 
 public class PoliticsCardTest {

@@ -39,6 +39,11 @@ public class OfferSelectionAction implements Action {
 		if (player.getTokens().getBuy() == 0)
 			return false;
 		
+		// Check if entry is a valid market entry number
+		if ( (entry > g.getMarket().getEntryList().size()-1)
+			|| (entry < 0) )
+			return false;
+		
 		int price = g.getMarket().getEntryList().get(entry).getPrice();
 		if(player.getCoins() < price)
 			return false;

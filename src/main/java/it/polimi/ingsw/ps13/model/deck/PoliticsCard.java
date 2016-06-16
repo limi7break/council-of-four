@@ -3,7 +3,6 @@ package it.polimi.ingsw.ps13.model.deck;
 import java.awt.Color;
 import java.io.Serializable;
 
-import com.google.common.annotations.VisibleForTesting;
 import it.polimi.ingsw.ps13.model.market.Marketable;
 import it.polimi.ingsw.ps13.model.player.Player;
 

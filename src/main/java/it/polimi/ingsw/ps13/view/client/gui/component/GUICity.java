@@ -16,7 +16,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.region.City;
 
@@ -38,7 +37,7 @@ public class GUICity extends GUIPanel {
 		
 		GUIPanel bonusPane = new GUIPanel(new GridLayout(0, 2));
 		bonusPane.setTransparent(true);
-		GUIBonusFactory.createBonus((ConcreteBonus)city.getBonus(), bonusPane);
+		GUIBonusFactory.createBonus(city.getBonus(), bonusPane);
 		add(bonusPane, BorderLayout.WEST);
 		
 		BufferedImage cityImage = null;

@@ -86,7 +86,7 @@ public class BuildEmporiumAction implements Action {
 		player.consumeAssistants(realCity.getNumberOfEmporiums());
 		
 		PermitTile permitTile = player.getPermitTiles().get(tile);
-		permitTile.setUsed(true);
+		permitTile.setUsable(false);
 		
 		Emporium emporium = player.removeEmporium();
 		realCity.addEmporium(emporium);

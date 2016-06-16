@@ -40,7 +40,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
-	private static final int TIMEOUT = 40;
+	private static final int TIMEOUT = 10;
 	
 	private Document config;
 	

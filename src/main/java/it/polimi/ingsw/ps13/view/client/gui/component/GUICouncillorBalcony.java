@@ -18,7 +18,7 @@ public class GUICouncillorBalcony extends GUIPanel {
 	private static final long serialVersionUID = 0L;
 	private static final Logger LOG = Logger.getLogger(GUICouncillorBalcony.class.getSimpleName());
 
-	public GUICouncillorBalcony(CouncillorBalcony balcony) {
+	protected GUICouncillorBalcony(CouncillorBalcony balcony) {
 		
 		super(new FlowLayout());
 		setTransparent(true);

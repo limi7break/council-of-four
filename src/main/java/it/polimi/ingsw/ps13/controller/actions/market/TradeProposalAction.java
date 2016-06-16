@@ -74,7 +74,7 @@ public class TradeProposalAction implements Action {
 				return false;
 		}
 		
-		// Check if player has the declared cards
+		// Retrieve colors of the selected politics cards from color names
 		for (String card : cards) {
 			if ("jolly".equals(card))
 				cardColors.add(PoliticsCard.jollyColor);
@@ -84,14 +84,25 @@ public class TradeProposalAction implements Action {
 				cardColors.add(g.getColors().get(card));
 		}
 		
+		// Retrieve the colors of the politics cards in the player's hand
 		List<Color> playerCardColors = new ArrayList<>();
-		
 		for (PoliticsCard card : player.getPoliticsCards()) {
 			playerCardColors.add(card.getColor());
 		}
 		
-		if (!playerCardColors.containsAll(cardColors))
-			legal = false;
+		// Check if player has the selected politics cards
+		for (Color c : cardColors) {
+			boolean matchFound = false;
+			for (Iterator<Color> it = playerCardColors.iterator(); it.hasNext() && !matchFound;) {
+				Color color = it.next();
+				if (color.equals(c)) {
+					matchFound = true;
+					it.remove();
+				}
+			}
+			if (!matchFound)
+				return false;
+		}
 		
 		return legal;
 		
@@ -124,6 +135,7 @@ public class TradeProposalAction implements Action {
 		for (Integer i : tiles) {
 			PermitTile current = player.getPermitTiles().get(i);
 			player.getPermitTiles().remove(i.intValue());
+			current.setUsable(true);
 			items.add(current);
 		}
 		

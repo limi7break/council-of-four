@@ -5,7 +5,7 @@
 
 <config name="default">
 
-	<market enabled="false"/>
+	<market enabled="true"/>
 
 	<!-- every color used in this configuration file must be
 		defined here -->

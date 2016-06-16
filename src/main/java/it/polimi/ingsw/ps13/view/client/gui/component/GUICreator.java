@@ -21,7 +21,6 @@ import javax.swing.border.EmptyBorder;
 import it.polimi.ingsw.ps13.message.request.action.PassTurnRequestMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.board.KingRewardTile;
-import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
@@ -101,7 +100,7 @@ public final class GUICreator {
 		for (CityColor c : game.getBoard().getCityColors().values()) {
 			if (!c.getBonus().isEmpty()) {	
 				GUIPanel bonusPanel = new GUIPanel(new GridLayout(1, 0));
-				GUIBonusFactory.createBonus((ConcreteBonus)c.getBonus(), bonusPanel);
+				GUIBonusFactory.createBonus(c.getBonus(), bonusPanel);
 				bonusPanel.setPreferredSize(new Dimension(60, 30));
 				bonusPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 				if (c.isBonusAvailable()) {
@@ -121,7 +120,7 @@ public final class GUICreator {
 			i++;
 			GUIPanel bonusPanel = new GUIPanel(new GridLayout(1, 0));
 			bonusPanel.add(new JLabel(i + "\u00b0"));
-			GUIBonusFactory.createBonus((ConcreteBonus)krt.getBonus(), bonusPanel);
+			GUIBonusFactory.createBonus(krt.getBonus(), bonusPanel);
 			bonusPanel.setPreferredSize(new Dimension(70, 30));
 			bonusPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 			if (krt.isAvailable()) {

@@ -20,6 +20,7 @@ import it.polimi.ingsw.ps13.view.client.ClientView;
 import it.polimi.ingsw.ps13.view.client.cli.CmdInterpreter;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICreator;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIForm;
+import it.polimi.ingsw.ps13.view.client.gui.component.GUIMarket;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -31,6 +32,7 @@ public class ClientGUI extends JFrame implements ClientView {
 	
 	private final GUIForm form;
 	private final transient GUICreator guiCreator;
+	private GUIMarket market;
 
 	private transient ClientConnection connection;
 	
@@ -143,6 +145,15 @@ public class ClientGUI extends JFrame implements ClientView {
 		
 		form.getTextField().requestFocusInWindow();
 		
+		if (game.isSellMarketPhase() && game.getPlayer(playerName).getTokens().getSell() > 0) {
+			market = new GUIMarket(game.getPlayer(playerName), game.getMarket(), connection);
+			market.showSellPhase();
+		}
+		else if (game.isBuyMarketPhase() && game.getPlayer(playerName).getTokens().getBuy() > 0) {
+			market = new GUIMarket(game.getPlayer(playerName), game.getMarket(), connection);
+			market.showBuyPhase();
+		}
+		
 	}
 	
 	/**
@@ -155,6 +166,10 @@ public class ClientGUI extends JFrame implements ClientView {
 			
 			if (this.game == null) {
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
+			}
+			
+			if (market != null && market.isVisible()) {
+				market.dispose();
 			}
 			
 			this.game = updateMsg.getGame();

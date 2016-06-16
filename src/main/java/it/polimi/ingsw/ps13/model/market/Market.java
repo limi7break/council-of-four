@@ -1,10 +1,11 @@
 package it.polimi.ingsw.ps13.model.market;
 
-import java.util.List;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.io.Serializable;
+import java.util.List;
+
 import it.polimi.ingsw.ps13.model.player.Player;
 
 /**

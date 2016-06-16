@@ -127,7 +127,7 @@ public class PlayerSupply implements Serializable  {
 		for (int i=0; i<permitTiles.size(); i++) {
 			sb.append("[" + i + "]")
 			  .append(permitTiles.get(i).toString()).append("\n")
-			  .append("used = " + permitTiles.get(i).isUsed()).append("\n\n");
+			  .append("usable = " + permitTiles.get(i).isUsable()).append("\n\n");
 		}
 		
 		return sb.toString();

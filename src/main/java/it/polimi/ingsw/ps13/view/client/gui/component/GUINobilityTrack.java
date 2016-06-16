@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 
 import it.polimi.ingsw.ps13.model.board.NobilityTrack;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
-import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 
 public class GUINobilityTrack extends GUIPanel {
 
@@ -29,7 +28,7 @@ public class GUINobilityTrack extends GUIPanel {
 			GUIPanel bonusPane = new GUIPanel(new GridLayout(0, 2));
 			bonusPane.setTransparent(true);
 			bonusPane.setBorder(BorderFactory.createLineBorder(Color.black));
-			GUIBonusFactory.createBonus((ConcreteBonus)b, bonusPane);
+			GUIBonusFactory.createBonus(b, bonusPane);
 			add(bonusPane);
 		}
 		

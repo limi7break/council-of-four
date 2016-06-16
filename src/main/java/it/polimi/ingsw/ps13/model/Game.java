@@ -294,14 +294,26 @@ public class Game implements Serializable {
 					getCurrentPlayer().getTokens().setSell();
 				}
 				
+				// If market is not empty,
 				// Transition from sell market phase to buy market phase
-				else {
+				else if (!market.getEntryList().isEmpty()) {
 					sellMarketPhase = false;
 					buyMarketPhase = true;
 					
 					getCurrentPlayer().getTokens().setZeros();
 					currentPlayerID = nextPlayerID;
 					getCurrentPlayer().getTokens().setBuy();
+				}
+				
+				// If market is empty,
+				// Transition from sell market phase to normal game phase
+				else {
+					sellMarketPhase = false;
+					
+					getCurrentPlayer().getTokens().setZeros();
+					currentPlayerID = nextPlayerID;
+					getCurrentPlayer().getTokens().setInitial();
+					getCurrentPlayer().drawPoliticsCards(1);
 				}
 				
 			}

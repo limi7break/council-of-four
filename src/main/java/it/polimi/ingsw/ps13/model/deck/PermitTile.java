@@ -24,8 +24,7 @@ public final class PermitTile implements Marketable, Serializable {
 	private static final long serialVersionUID = 0L;
 	private final Bonus bonus;
 	private final Set<String> cityNames;
-	private boolean used;
-	
+	private boolean usable;
 	
 	/**
 	 * Constructs a new PermitTile, with a given Bonus and a given Collection of city names.
@@ -40,7 +39,7 @@ public final class PermitTile implements Marketable, Serializable {
 		this.cityNames = new TreeSet<>();
 		this.cityNames.addAll(cityNames);
 		
-		this.used = false;
+		this.usable = true;
 		
 	}
 	
@@ -68,22 +67,18 @@ public final class PermitTile implements Marketable, Serializable {
 	 * 
 	 * @return true if the permit tile has already been used
 	 */
-	public boolean isUsed() {
+	public boolean isUsable() {
 		
-		return used;
+		return usable;
 		
 	}
 	
 	/**
 	 * 
 	 */
-	public void setUsed(boolean used) {
+	public void setUsable(boolean usable) {
 		
-		if (this.used && !used) {
-			throw new IllegalArgumentException("An used permit tile cannot be reset to unused");
-		} else {
-			this.used = used;
-		}
+		this.usable = usable;
 		
 	}
 	
@@ -124,7 +119,7 @@ public final class PermitTile implements Marketable, Serializable {
 
 		PermitTile that = (PermitTile) o;
 
-		if (used != that.used)
+		if (usable != that.usable)
 			return false;
 		if (!bonus.equals(that.bonus))
 			return false;
@@ -136,7 +131,7 @@ public final class PermitTile implements Marketable, Serializable {
 	public int hashCode() {
 		int result = bonus.hashCode();
 		result = 31 * result + cityNames.hashCode();
-		result = 31 * result + (used ? 1 :0);
+		result = 31 * result + (usable ? 1 :0);
 		return result;
 	}
 }

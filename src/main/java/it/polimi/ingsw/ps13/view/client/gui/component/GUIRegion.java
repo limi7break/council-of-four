@@ -13,7 +13,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.region.Region;
 
@@ -60,7 +59,7 @@ public class GUIRegion extends GUIPanel {
 		
 		GUIPanel bonusPanel = new GUIPanel(new FlowLayout());
 		GUIPanel bonus = new GUIPanel(new GridLayout(1, 0));
-		GUIBonusFactory.createBonus((ConcreteBonus)region.getBonus(), bonus);
+		GUIBonusFactory.createBonus(region.getBonus(), bonus);
 		bonus.setPreferredSize(new Dimension(60, 30));
 		bonus.setBorder(BorderFactory.createLineBorder(Color.black));
 		if (region.isBonusAvailable()) {

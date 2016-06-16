@@ -9,7 +9,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 
 public class GUIPermitTile extends GUIPanel {
@@ -17,7 +16,7 @@ public class GUIPermitTile extends GUIPanel {
 	private static final long serialVersionUID = 0L;
 	private final int number;
 
-	public GUIPermitTile(PermitTile tile, int number) {
+	protected GUIPermitTile(PermitTile tile, int number) {
 	
 		super(new BorderLayout());
 		this.number = number;
@@ -32,17 +31,17 @@ public class GUIPermitTile extends GUIPanel {
 		
 		GUIPanel bonusPane = new GUIPanel(new GridLayout(1, 0));
 		bonusPane.setTransparent(true);
-		GUIBonusFactory.createBonus((ConcreteBonus)tile.getBonus(), bonusPane);
+		GUIBonusFactory.createBonus(tile.getBonus(), bonusPane);
 		
 		add(cityPane, BorderLayout.CENTER);
 		add(bonusPane, BorderLayout.SOUTH);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setPreferredSize(new Dimension(70, 70));
 		
-		if (tile.isUsed()) {
-			setTransparent(true);
-		} else {
+		if (tile.isUsable()) {
 			setBackground(new Color(139, 69, 19, 96));
+		} else {
+			setTransparent(true);
 		}
 		
 	}
