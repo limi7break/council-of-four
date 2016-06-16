@@ -33,7 +33,7 @@ public class GUIMarket extends JFrame {
 	private final Player player;
 	private final Market market;
 	
-	private final ClientConnection connection;
+	private final transient ClientConnection connection;
 
 	private int assistants = 0;
 	private Collection<Integer> tiles;
