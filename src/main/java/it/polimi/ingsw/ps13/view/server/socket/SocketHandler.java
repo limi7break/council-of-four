@@ -52,7 +52,7 @@ public class SocketHandler extends Handler implements Runnable {
 	 * 
 	 */
 	@Override
-	public void update(ResponseMsg msg) {
+	public synchronized void update(ResponseMsg msg) {
 
 		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
 		// Only the recipient of a UnicastMsg receives it

@@ -126,7 +126,6 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			notifyObserver(new MulticastMsg(name + " entered the room." , name));
 			notifyObserver(new ConnectionUnicastMsg("Welcome " + name + "! Have fun.", name));
 			notifyObserver(otherPlayersMsg);
-			
 		}
 		
 	}
@@ -170,19 +169,23 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			DisconnectRequestMsg disconnectMsg = (DisconnectRequestMsg) msg;
 			
 			String disconnectedPlayer = disconnectMsg.getPlayerName();
-			game.getPlayer(disconnectedPlayer).setConnected(false);
-			if (game.getConnectedPlayers() < 2) {
-				timer.cancel();
-				game.finalizeGame();
-				notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
-				
-				// @TODO: close game
-			} else if (game.getCurrentPlayerName().equals(disconnectedPlayer)) {
-				game.passTurn();
-				notifyCurrentTurn();
-				
-				timer.cancel();
-				setTimer();
+			if (game != null) {
+				game.getPlayer(disconnectedPlayer).setConnected(false);
+				if (game.getConnectedPlayers() < 2) {
+					timer.cancel();
+					game.finalizeGame();
+					notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
+					
+					// @TODO: close game
+				} else if (game.getCurrentPlayerName().equals(disconnectedPlayer)) {
+					game.passTurn();
+					notifyCurrentTurn();
+					
+					timer.cancel();
+					setTimer();
+				}
+			} else {
+				players.remove(disconnectedPlayer);
 			}
 			
 			notifyObserver(new ResponseMsg(disconnectedPlayer + " has disconnected!"));

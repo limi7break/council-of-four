@@ -72,7 +72,7 @@ public class ClientSocket implements ClientConnection {
 	}
 
 	@Override
-	public void sendMessage(RequestMsg msg) {
+	public synchronized void sendMessage(RequestMsg msg) {
 		
 		if (!active) {
 			throw new IllegalStateException("Connection is closed!");
