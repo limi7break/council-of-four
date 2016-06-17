@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.controller.actions.quick;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.player.Player;
 
@@ -26,17 +27,17 @@ public class GainMainActionAction implements Action {
 	 * @return
 	 */
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getQuick() == 0)
-			return false;
+			throw new IllegalActionException("Action is not available");
 		
 		// Check if player has at least 3 assistants
 		if(player.getAssistants() < 3)
-			return false; 
+			throw new IllegalActionException("Not enough assistants, 3 required");
 		
 		return true;
 		

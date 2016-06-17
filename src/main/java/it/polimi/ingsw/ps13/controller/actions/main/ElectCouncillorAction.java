@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.controller.actions.main;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
@@ -32,25 +33,25 @@ public class ElectCouncillorAction implements Action{
 	}
 	
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getMain() == 0)
-			return false;
+			throw new IllegalActionException("Action is not available");
 		
 		// Check if region is a valid region
 		if (!g.getBoard().getRegions().containsKey(region) && !"king".equals(region))
-			return false;
+			throw new IllegalActionException("Selected region is not valid");
 		
 		// Check if color is a valid color
 		if (!g.getColors().containsKey(color))
-			return false;
+			throw new IllegalActionException("Selected color is not valid");
 		
 		// Check if a councillor with the desired color is available
 		if (!g.isCouncillorAvailable(g.getColors().get(color)))
-			return false;
+			throw new IllegalActionException("Selected councillor is not available");
 		
 		return true;
 		

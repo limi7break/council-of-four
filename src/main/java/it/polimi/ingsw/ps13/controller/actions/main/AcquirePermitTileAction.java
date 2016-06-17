@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
@@ -42,30 +43,30 @@ public class AcquirePermitTileAction implements Action {
 	}
 	
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		boolean legal = true;
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getMain() == 0)
-			legal = false;
+			throw new IllegalActionException("Action is not available");
 		
 		// Check if region is a valid region
 		if (!g.getBoard().getRegions().containsKey(region))
-			return false;
+			throw new IllegalActionException("Selected region is not valid");
 		
 		// Check if tile is a valid visible permit tile number
 		if ( (tile > g.getBoard().getRegion(region).getPermitTileDeck().getVisibleTiles().size()-1)
 				|| (tile < 0) )
-			legal = false;
+			throw new IllegalActionException("Selected permit tile is not valid");
 		
 		// Retrieve colors of the selected politics cards from color names
 		for (String card : cards) {
 			if ("jolly".equals(card))
 				cardColors.add(PoliticsCard.jollyColor);
 			else if (!g.getColors().containsKey(card))
-				return false;
+				throw new IllegalActionException("Selected color is not valid");
 			else
 				cardColors.add(g.getColors().get(card));
 		}
@@ -87,12 +88,12 @@ public class AcquirePermitTileAction implements Action {
 				}
 			}
 			if (!matchFound)
-				return false;
+				throw new IllegalActionException("Politics cards mismatch");
 		}
 		
 		// Check if balcony is satisfiable
 		if(!g.getBoard().getRegion(region).getCouncillorBalcony().isSatisfiable(cardColors, player.getCoins()))
-			legal = false;
+			throw new IllegalActionException("Councillor balcony is not satisfiable");
 		
 		return legal;
 	}

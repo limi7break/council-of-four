@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import it.polimi.ingsw.ps13.message.request.action.PassTurnRequestMsg;
@@ -46,9 +47,9 @@ public final class GUICreator {
 	
 	private final Map<String, GUICity> cities = new HashMap<>();
 	private final Map<String, GUIRegion> regions = new HashMap<>();
-	private final List<GUICouncillor> councillors = new ArrayList<>();
-	private final List<GUIPoliticsCard> cards = new ArrayList<>();
-	private final List<GUIPermitTile> tiles = new ArrayList<>();
+	private final List<GUICouncillor> availableCouncillors = new ArrayList<>();
+	private final List<GUIPoliticsCard> playerCards = new ArrayList<>();
+	private final List<GUIPermitTile> playerTiles = new ArrayList<>();
 	private GUICouncillorBalcony kingBalcony;
 	
 	public GUIPanel createMainPane(Game game) {
@@ -57,7 +58,7 @@ public final class GUICreator {
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		mainPane.setLayout(new MigLayout("", "", ""));
 		
-		GUIPanel mapPane = new GUIPanel(new GridLayout(1, 0, 50, 0));
+		GUIPanel mapPane = new GUIPanel(new GridLayout(1, 0, 40, 0));
 		mapPane.setBorder(BorderFactory.createTitledBorder("Map"));
 		mapPane.setTransparent(true);
 		
@@ -162,108 +163,112 @@ public final class GUICreator {
 		for (Councillor c : game.getBoard().getCouncillors()) {
 			GUICouncillor councillor = new GUICouncillor(c);
 			councillorsPanel.add(councillor);
-			councillors.add(councillor);
+			availableCouncillors.add(councillor);
 		}
 		rightPane.add(councillorsPanel, "cell 0 1");
 		
 		// Create and configure action buttons
-		JButton confirmButton = new JButton("confirm");
+		JButton confirmButton = new JButton("Confirm");
 		
 		ActionListener removeListeners = ae -> {
-			for (GUICity c : cities.values()) {
-				for ( MouseListener al : c.getMouseListeners()) {
+			for (GUICity c : cities.values())
+				for ( MouseListener al : c.getMouseListeners())
 					c.removeMouseListener(al);
-				}
-			}
-			for (GUICouncillor c : councillors) {
-				for ( MouseListener al : c.getMouseListeners()) {
+			
+			for (GUICouncillor c : availableCouncillors)
+				for ( MouseListener al : c.getMouseListeners())
 					c.removeMouseListener(al);
-				}
-			}
-			for (GUIPoliticsCard c : cards) {
-				for ( MouseListener al : c.getMouseListeners()) {
+			
+			for (GUIPoliticsCard c : playerCards)
+				for ( MouseListener al : c.getMouseListeners())
 					c.removeMouseListener(al);
-				}
-			}
-			for (GUIPermitTile c : tiles) {
-				for ( MouseListener al : c.getMouseListeners()) {
+					
+			for (GUIPermitTile c : playerTiles)
+				for ( MouseListener al : c.getMouseListeners())
 					c.removeMouseListener(al);
-				}
-			}
+					
 			for (GUIRegion c : regions.values()) {
+				
 				GUICouncillorBalcony balcony = c.getCouncillorBalcony();
-				for ( MouseListener al : balcony.getMouseListeners()) {
+				for ( MouseListener al : balcony.getMouseListeners())
 					balcony.removeMouseListener(al);
-				}
+					
 				List<GUIPermitTile> guitiles = c.getVisibleTiles();
-				for (GUIPermitTile tile : guitiles) {
-					for ( MouseListener al : tile.getMouseListeners()) {
+				for (GUIPermitTile tile : guitiles)
+					for ( MouseListener al : tile.getMouseListeners())
 						tile.removeMouseListener(al);
-					}
-				}
+						
 			}
-			for ( ActionListener al : confirmButton.getActionListeners()) {
+			
+			for ( ActionListener al : confirmButton.getActionListeners())
 				confirmButton.removeActionListener(al);
-			}
+			
 		};
 		
-		JButton corrupt = new JButton("corrupt");
-		corrupt.addActionListener(new AcquirePermitTileListener(regions.values(), cards, form, connection, confirmButton));
+		JButton corrupt = new JButton("Corrupt");
+		corrupt.addActionListener(new AcquirePermitTileListener(regions.values(), playerCards, form, connection, confirmButton));
 		corrupt.addActionListener(removeListeners);
-		JButton build = new JButton("build");
-		build.addActionListener(new BuildEmporiumListener(tiles, cities.values(), form, connection, confirmButton));
+		JButton build = new JButton("Build");
+		build.addActionListener(new BuildEmporiumListener(playerTiles, cities.values(), form, connection, confirmButton));
 		build.addActionListener(removeListeners);
-		JButton elect = new JButton("elect");
-		elect.addActionListener(new ElectCouncillorListener(regions.values(), councillors, kingBalcony, form, connection, confirmButton));
+		JButton elect = new JButton("Elect");
+		elect.addActionListener(new ElectCouncillorListener(regions.values(), availableCouncillors, kingBalcony, form, connection, confirmButton));
 		elect.addActionListener(removeListeners);
-		JButton king = new JButton("king");
-		king.addActionListener(new KingListener(cities.values(), cards, form, connection, confirmButton));
+		JButton king = new JButton("King");
+		king.addActionListener(new KingListener(cities.values(), playerCards, form, connection, confirmButton));
 		king.addActionListener(removeListeners);
-		JButton changetiles = new JButton("changetiles");
+		JButton changetiles = new JButton("Change Tiles");
 		changetiles.addActionListener(new ChangePermitTilesListener(regions.values(), form, connection, confirmButton));
 		changetiles.addActionListener(removeListeners);
-		JButton engageassistant = new JButton("engageassistant");
+		JButton engageassistant = new JButton("Engage Assistant");
 		engageassistant.addActionListener(new EngageAssistantListener(form, connection, confirmButton));
 		engageassistant.addActionListener(removeListeners);
-		JButton gainmainaction = new JButton("gainmainaction");
+		JButton gainmainaction = new JButton("Gain Main Action");
 		gainmainaction.addActionListener(new GainMainActionListener(form, connection, confirmButton));
 		gainmainaction.addActionListener(removeListeners);
-		JButton qelect = new JButton("qelect");
-		qelect.addActionListener(new QuickElectCouncillorListener(regions.values(), councillors, kingBalcony, form, connection, confirmButton));
+		JButton qelect = new JButton("Quick Elect");
+		qelect.addActionListener(new QuickElectCouncillorListener(regions.values(), availableCouncillors, kingBalcony, form, connection, confirmButton));
 		qelect.addActionListener(removeListeners);
-		JButton gettile = new JButton("get tile");
+		JButton gettile = new JButton("Get Tile");
 		gettile.addActionListener(new GainVisiblePermitTileListener(regions.values(), form, connection, confirmButton));
 		gettile.addActionListener(removeListeners);
-		JButton gettb = new JButton("get tb");
-		gettb.addActionListener(new RegainPermitTileBonusListener(tiles, form, connection, confirmButton));
+		JButton gettb = new JButton("Get TB");
+		gettb.addActionListener(new RegainPermitTileBonusListener(playerTiles, form, connection, confirmButton));
 		gettb.addActionListener(removeListeners);
-		JButton getrt = new JButton("get rt");
+		JButton getrt = new JButton("Get RT");
 		getrt.addActionListener(new RegainRewardTokenListener(cities.values(), form, connection, confirmButton));
 		getrt.addActionListener(removeListeners);
 		
+		JButton passButton = new JButton("Pass");
+		passButton.addActionListener(ae ->
+			connection.sendMessage(new PassTurnRequestMsg())
+		);
+		passButton.addActionListener(removeListeners);
+		
 		GUIPanel mainActionButtons = new GUIPanel(new GridLayout(0, 1));
 		mainActionButtons.setBorder(BorderFactory.createTitledBorder("Main (" + game.getPlayer(playerName).getTokens().getMain() + ")"));
-		
-		GUIPanel quickActionButtons = new GUIPanel(new GridLayout(0, 1));
-		quickActionButtons.setBorder(BorderFactory.createTitledBorder("Quick"));
-		
-		GUIPanel bonusActionButtons = new GUIPanel(new GridLayout(0, 1));
-		bonusActionButtons.setBorder(BorderFactory.createTitledBorder("Bonus"));
-		
-		GUIPanel specialActionButtons = new GUIPanel(new GridLayout(0, 1));
-		specialActionButtons.setBorder(BorderFactory.createTitledBorder("Special"));
-		
 		mainActionButtons.add(corrupt);
 		mainActionButtons.add(build);
 		mainActionButtons.add(elect);
 		mainActionButtons.add(king);
+		
+		GUIPanel quickActionButtons = new GUIPanel(new GridLayout(0, 1));
+		quickActionButtons.setBorder(BorderFactory.createTitledBorder("Quick"));
 		quickActionButtons.add(changetiles);
 		quickActionButtons.add(engageassistant);
 		quickActionButtons.add(gainmainaction);
 		quickActionButtons.add(qelect);
+		
+		GUIPanel bonusActionButtons = new GUIPanel(new GridLayout(0, 1));
+		bonusActionButtons.setBorder(BorderFactory.createTitledBorder("Bonus"));
 		bonusActionButtons.add(gettile);
 		bonusActionButtons.add(gettb);
 		bonusActionButtons.add(getrt);
+		
+		GUIPanel specialActionButtons = new GUIPanel(new GridLayout(0, 1));
+		specialActionButtons.setBorder(BorderFactory.createTitledBorder("Special"));
+		specialActionButtons.add(confirmButton);
+		specialActionButtons.add(passButton);
 		
 		if (game.getPlayer(playerName).getTokens().getMain() <= 0) {
 			corrupt.setEnabled(false);
@@ -291,15 +296,6 @@ public final class GUICreator {
 			getrt.setEnabled(false);
 		}
 		
-		specialActionButtons.add(confirmButton);
-		
-		JButton pass = new JButton("pass");
-		pass.addActionListener(ae -> {
-			connection.sendMessage(new PassTurnRequestMsg());
-		});
-		pass.addActionListener(removeListeners);
-		specialActionButtons.add(pass);
-		
 		rightPane.add(mainActionButtons, "cell 0 2, flowx");
 		rightPane.add(quickActionButtons, "cell 0 2");
 		rightPane.add(bonusActionButtons, "cell 0 2");
@@ -308,24 +304,30 @@ public final class GUICreator {
 		// Create panel showing player's politics cards
 		GUIPanel politicsCardsPanel = new GUIPanel(new FlowLayout());
 		politicsCardsPanel.setTransparent(true);
-		politicsCardsPanel.setBorder(BorderFactory.createTitledBorder("Politics Cards"));
+		politicsCardsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 6, 6, 6), "Politics Cards"));
 		for (PoliticsCard c : game.getPlayer(playerName).getPoliticsCards()) {
 			GUIPoliticsCard card = new GUIPoliticsCard(c);
 			politicsCardsPanel.add(card);
-			cards.add(card);
+			playerCards.add(card);
 		}
-		rightPane.add(politicsCardsPanel, "cell 0 3");
+		JScrollPane politicsScrollPane = new JScrollPane(politicsCardsPanel);
+		politicsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		politicsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		rightPane.add(politicsScrollPane, "cell 0 3");
 		
 		// Create panel showing player's permit tiles
-		GUIPanel tilesPanel = new GUIPanel(new GridLayout(0, 5));
-		tilesPanel.setBorder(BorderFactory.createTitledBorder("Permit Tiles"));
+		GUIPanel tilesPanel = new GUIPanel(new FlowLayout());
+		tilesPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(10, 6, 6, 6), "Permit Tiles"));
 		for (int i=0; i<game.getPlayer(playerName).getPermitTiles().size(); i++) {
 			PermitTile tile = game.getPlayer(playerName).getPermitTiles().get(i);
 			GUIPermitTile t = new GUIPermitTile(tile, i);
 			tilesPanel.add(t);
-			tiles.add(t);
+			playerTiles.add(t);
 		}
-		rightPane.add(tilesPanel, "cell 0 4");
+		JScrollPane tilesScrollPane = new JScrollPane(tilesPanel);
+		tilesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		tilesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		rightPane.add(tilesScrollPane, "cell 0 4");
 		
 		return rightPane;
 		

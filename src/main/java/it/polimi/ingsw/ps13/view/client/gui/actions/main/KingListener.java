@@ -57,24 +57,33 @@ public class KingListener extends GUIListener {
 		}
 		
 		for (GUIPoliticsCard c : politicsCards) {
+			c.setSelected(false);
+			
 			c.addMouseListener(new MouseAdapter() {
 				
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					GUIPoliticsCard pol = (GUIPoliticsCard)arg0.getSource();
-					if (cards.size() < CouncillorBalcony.COUNCILLORS_PER_BALCONY) {
+					if (!pol.isSelected() && cards.size() < CouncillorBalcony.COUNCILLORS_PER_BALCONY) {
+						pol.setSelected(true);
 						cards.add(pol.getColorName());
-						form.appendInfo("Selected cards: " + cards.toString());
+					} else if (pol.isSelected()) {
+						pol.setSelected(false);
+						cards.remove(pol.getColorName());
 					}
 				}
 				
 			});
 		}
 		
-		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new KingActionRequestMsg(city, cards));
-		});
+		confirmButton.addActionListener(this::confirmAction);
 
+	}
+	
+	private void confirmAction(ActionEvent ae) {
+		
+		connection.sendMessage(new KingActionRequestMsg(city, cards));
+		
 	}
 
 }

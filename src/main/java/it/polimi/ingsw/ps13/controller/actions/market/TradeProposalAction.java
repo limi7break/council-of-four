@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
@@ -54,24 +55,24 @@ public class TradeProposalAction implements Action {
 	 * @return
 	 */
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		boolean legal = true;
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getSell() == 0)
-			legal = false;
+			throw new IllegalActionException("Action is not available");
 		
 		// Check if player has the declared amount of assistants
 		if (player.getAssistants() < assistants)
-			legal = false;
+			throw new IllegalActionException("Not enough assistants, " + player.getAssistants() + " required");
 		
 		// Check if selected permit tiles are valid
 		for (Integer i : tiles) {
 			if ( (i > g.getPlayer(playerName).getPermitTiles().size()-1)
 					|| (i < 0) )
-				return false;
+				throw new IllegalActionException("Selected permit tile is not valid");
 		}
 		
 		// Retrieve colors of the selected politics cards from color names
@@ -79,7 +80,7 @@ public class TradeProposalAction implements Action {
 			if ("jolly".equals(card))
 				cardColors.add(PoliticsCard.jollyColor);
 			else if (!g.getColors().containsKey(card))
-				return false;
+				throw new IllegalActionException("Selected color is not valid");
 			else
 				cardColors.add(g.getColors().get(card));
 		}
@@ -101,7 +102,7 @@ public class TradeProposalAction implements Action {
 				}
 			}
 			if (!matchFound)
-				return false;
+				throw new IllegalActionException("Politics cards mismatch");
 		}
 		
 		return legal;

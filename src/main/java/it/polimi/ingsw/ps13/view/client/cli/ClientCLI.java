@@ -198,7 +198,9 @@ public class ClientCLI implements ClientView {
 			this.playerName = connMsg.getPlayerName();
 			System.out.println(connMsg.getMessage());
 		}
-		else if (msg instanceof PingResponseMsg) { }
+		else if (msg instanceof PingResponseMsg) {
+			// Ping from the server is ignored
+		}
 		else {
 			System.out.println(msg.getMessage());
 		}

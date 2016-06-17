@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -44,7 +45,8 @@ public class GUIForm extends GUIPanel {
 		SmartScroller ss = new SmartScroller(scrollPane);
 		
 		add(scrollPane, "grow");
-		add(textField, "grow");
+		add(new JLabel("Chat: "), "flowx");
+		add(textField, "cell 0 1, grow");
 		
 	}
 	

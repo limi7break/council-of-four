@@ -35,7 +35,7 @@ public class GUIRegion extends GUIPanel {
 		
 		add(new JLabel(region.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
 		
-		cityPane = new GUIPanel(new GridLayout(0, 2, 50, 35));
+		cityPane = new GUIPanel(new GridLayout(0, 2, 40, 25));
 		cityPane.setTransparent(true);
 		add(cityPane, BorderLayout.CENTER);
 		

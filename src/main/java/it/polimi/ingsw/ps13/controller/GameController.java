@@ -16,6 +16,7 @@ import org.w3c.dom.Document;
 import it.polimi.ingsw.ps13.controller.actions.Action;
 import it.polimi.ingsw.ps13.controller.actions.ActionFactory;
 import it.polimi.ingsw.ps13.controller.actions.ActionVisitor;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.controller.actions.PassTurnAction;
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
 import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
@@ -41,7 +42,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
-	private static final int TIMEOUT = 90;
+	private static final int TURN_TIMEOUT = 90;
 	
 	private Document config;
 	
@@ -205,7 +206,16 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	
 	private void handleAction(Action action, String playerName) {
 		
-		if (action.isLegal(game)) {
+		boolean legal = false;
+		
+		try {
+			legal = action.isLegal(game);
+		} catch(IllegalActionException e) {
+			notifyObserver(new UnicastMsg("ERROR: Action is not legal! (" + e.getMessage() + ")", playerName));
+			return;
+		}
+		
+		if (legal) {
 			
 			action.apply(game);
 			notifyObserver(new UpdateResponseMsg(playerName + " performed " + action.getClass().getSimpleName() + ".", game));
@@ -233,7 +243,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	
 	private void notifyCurrentTurn() {
 		
-		notifyObserver(new UnicastMsg("It\'s YOUR turn, " + game.getCurrentPlayerName() + "! Bring it on!!\n(but move your ass, you only have " + TIMEOUT + " seconds.)", game.getCurrentPlayerName()));
+		notifyObserver(new UnicastMsg("It\'s YOUR turn, " + game.getCurrentPlayerName() + "! Bring it on!!\n(but move your ass, you only have " + TURN_TIMEOUT + " seconds.)", game.getCurrentPlayerName()));
 		notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
 		
 	}
@@ -259,7 +269,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
             }
         };
 		
-		timer.schedule(timerTask, (long) TIMEOUT * 1000);
+		timer.schedule(timerTask, (long) TURN_TIMEOUT * 1000);
 		
 	}
 	

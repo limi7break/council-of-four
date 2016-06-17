@@ -212,6 +212,7 @@ public class GUIMarket extends JFrame {
 		JButton confirmButton = new JButton("SELL");
 		confirmButton.addActionListener(ae -> {
 			connection.sendMessage(new TradeProposalRequestMsg(assistants, tiles, cards, price));
+			connection.sendMessage(new PassTurnRequestMsg());
 			dispose();
 		});
 		
@@ -243,6 +244,7 @@ public class GUIMarket extends JFrame {
 		JButton confirmButton = new JButton("BUY");
 		confirmButton.addActionListener(ae -> {
 			connection.sendMessage(new OfferSelectionRequestMsg(entry));
+			connection.sendMessage(new PassTurnRequestMsg());
 			dispose();
 		});
 		

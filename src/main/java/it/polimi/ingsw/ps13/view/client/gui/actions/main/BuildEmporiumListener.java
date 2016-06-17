@@ -64,10 +64,14 @@ public class BuildEmporiumListener extends GUIListener {
 			});
 		}
 		
-		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new BuildEmporiumRequestMsg(tile, city));
-		});
+		confirmButton.addActionListener(this::confirmAction);
 
+	}
+	
+	private void confirmAction(ActionEvent ae) {
+		
+		connection.sendMessage(new BuildEmporiumRequestMsg(tile, city));
+		
 	}
 
 }

@@ -76,10 +76,14 @@ public class ElectCouncillorListener extends GUIListener {
 			});
 		}
 		
-		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new ElectCouncillorRequestMsg(region, councillor));
-		});
+		confirmButton.addActionListener(this::confirmAction);
 
+	}
+	
+	private void confirmAction(ActionEvent ae) {
+		
+		connection.sendMessage(new ElectCouncillorRequestMsg(region, councillor));
+		
 	}
 
 }

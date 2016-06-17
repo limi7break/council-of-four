@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.controller.actions.quick;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
@@ -34,26 +35,30 @@ public class QuickElectCouncillorAction implements Action {
 	 * @return
 	 */
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		boolean legal = true;
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getQuick() == 0)
-			legal = false;
+			throw new IllegalActionException("Action is not available");
 		
 		// Check if region is a valid region
 		if (!g.getBoard().getRegions().containsKey(region) && !"king".equals(region))
-			return false;
+			throw new IllegalActionException("Selected region is not valid");
 		
 		// Check if color is a valid color
 		if (!g.getColors().containsKey(color))
-			return false;
+			throw new IllegalActionException("Selected color is not valid");
 		
-		// Check if player has at least 1 assistant and a councillor with the desired color is available 
-		if(player.getAssistants() < 1 || !g.isCouncillorAvailable(g.getColors().get(color)))
-			legal = false;
+		// Check if player has at least 1 assistant 
+		if(player.getAssistants() < 1)
+			throw new IllegalActionException("Not enough assistants, 1 required");
+		
+		// Check if a councillor with the desired color is available
+		if (!g.isCouncillorAvailable(g.getColors().get(color)))
+			throw new IllegalActionException("Selected councillor is not available");
 		
 		return legal;
 	}

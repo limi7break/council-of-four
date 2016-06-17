@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.controller.actions.main;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.board.KingRewardTile;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
@@ -35,41 +36,41 @@ public class BuildEmporiumAction implements Action {
 	 * 
 	 */
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		boolean legal = true;
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getMain() == 0)
-			legal = false;
+			throw new IllegalActionException("Action is not available");
 		
 		//Check if player has at least one emporium
 		if(player.getNumberOfEmporiums() == 0)
-			legal = false;
+			throw new IllegalActionException("You have no emporiums left");
 		
 		// Check if city is a valid city
 		if (!g.getBoard().getCities().containsKey(city))
-			return false;
+			throw new IllegalActionException("Selected city is not valid");
 		
 		// Check if tile is a valid permit tile number
 		if ( (tile > player.getPermitTiles().size()-1)
 			|| (tile < 0) )
-			return false;
+			throw new IllegalActionException("Selected permit tile is not valid");
 		
 		// Check if player has already built on the city
 		if(player.hasBuiltOn(city))
-			legal = false;
+			throw new IllegalActionException("You have already built on selected city");
 		
 		PermitTile permitTile = player.getPermitTiles().get(tile);
 		
 		// Check if the city and tile match
 		if(!permitTile.getCityNames().contains(city))
-			legal = false;
+			throw new IllegalActionException("Selected permit tile doesn\'t allow building on selected city");
 		
 		// Check if player has enough assistants (one for every emporium already built on the city)
 		if(player.getAssistants() < g.getBoard().getCity(city).getNumberOfEmporiums())
-			legal = false;
+			throw new IllegalActionException("Not enough assistants, " + g.getBoard().getCity(city).getNumberOfEmporiums() + " required");
 		
 		return legal;
 		

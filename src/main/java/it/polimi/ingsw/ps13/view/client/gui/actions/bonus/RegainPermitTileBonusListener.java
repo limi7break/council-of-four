@@ -46,10 +46,14 @@ public class RegainPermitTileBonusListener extends GUIListener {
 			});
 		}
 		
-		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new RegainPermitTileBonusRequestMsg(tile));
-		});
+		confirmButton.addActionListener(this::confirmAction);
 
+	}
+	
+	private void confirmAction(ActionEvent ae) {
+		
+		connection.sendMessage(new RegainPermitTileBonusRequestMsg(tile));
+		
 	}
 
 }

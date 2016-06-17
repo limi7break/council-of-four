@@ -27,26 +27,26 @@ public class PassTurnAction implements Action {
 	 * 
 	 */
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		Player player = g.getPlayer(playerName);
 		
 		boolean legal = true;
 		
 		if(g.isFinished())
-			legal = false;
+			throw new IllegalActionException("Game is already finished");
 		
-		if(player.getTokens().getMain() != 0)
-			legal = false;
+		else if(player.getTokens().getMain() != 0)
+			throw new IllegalActionException("You can\'t pass with main actions available");
 		
-		if(player.getTokens().getRewardToken() != 0)
-			legal = false;
+		else if(player.getTokens().getRewardToken() != 0)
+			throw new IllegalActionException("You can\'t pass with bonus actions available");
 		
-		if(player.getTokens().getTakeTile() != 0)
-			legal = false;
+		else if(player.getTokens().getTakeTile() != 0)
+			throw new IllegalActionException("You can\'t pass with bonus actions available");
 		
-		if(player.getTokens().getTileBonus() != 0)
-			legal = false;
+		else if(player.getTokens().getTileBonus() != 0)
+			throw new IllegalActionException("You can\'t pass with bonus actions available");
 		
 		return legal;
 		

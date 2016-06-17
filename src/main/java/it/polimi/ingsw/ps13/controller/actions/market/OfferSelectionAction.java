@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.controller.actions.market;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.player.Player;
 
@@ -31,22 +32,22 @@ public class OfferSelectionAction implements Action {
 	 * 
 	 */
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getBuy() == 0)
-			return false;
+			throw new IllegalActionException("Action is not available");
 		
 		// Check if entry is a valid market entry number
 		if ( (entry > g.getMarket().getEntryList().size()-1)
 			|| (entry < 0) )
-			return false;
+			throw new IllegalActionException("Selected market entry is not valid");
 		
 		int price = g.getMarket().getEntryList().get(entry).getPrice();
 		if(player.getCoins() < price)
-			return false;
+			throw new IllegalActionException("Not enough coins, " + price + " required");
 		
 		return true;
 		

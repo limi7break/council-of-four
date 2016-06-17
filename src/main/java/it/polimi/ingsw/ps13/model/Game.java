@@ -90,7 +90,7 @@ public class Game implements Serializable {
 		
 		currentPlayerID = 0;
 		getCurrentPlayer().getTokens().setInitial();
-			
+		
 	}
 	
 	/**

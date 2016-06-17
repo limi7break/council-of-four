@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.controller.actions.bonus;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.player.Player;
 
@@ -19,18 +20,18 @@ public class RegainPermitTileBonusAction implements Action {
 	}
 	
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (g.getPlayer(playerName).getTokens().getTileBonus() == 0)
-			return false;
+			throw new IllegalActionException("Action is not available");
 		
 		// Check if tile is a valid permit tile number
 		if ( (tile > player.getPermitTiles().size()-1)
 			|| (tile < 0) )
-			return false;
+			throw new IllegalActionException("Selected permit tile is not valid");
 		
 		return true;
 		

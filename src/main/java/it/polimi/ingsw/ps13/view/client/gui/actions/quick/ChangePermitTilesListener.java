@@ -49,10 +49,14 @@ public class ChangePermitTilesListener extends GUIListener {
 			}
 		}
 		
-		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new ChangePermitTilesRequestMsg(region));
-		});
+		confirmButton.addActionListener(this::confirmAction);
 
+	}
+	
+	private void confirmAction(ActionEvent ae) {
+		
+		connection.sendMessage(new ChangePermitTilesRequestMsg(region));
+		
 	}
 
 }

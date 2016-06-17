@@ -59,9 +59,13 @@ public class GainVisiblePermitTileListener extends GUIListener {
 			});
 		}
 		
-		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new VisiblePermitTileRequestMsg(region, tile));
-		});
+		confirmButton.addActionListener(this::confirmAction);
+		
+	}
+
+	private void confirmAction(ActionEvent ae) {
+		
+		connection.sendMessage(new VisiblePermitTileRequestMsg(region, tile));
 		
 	}
 	

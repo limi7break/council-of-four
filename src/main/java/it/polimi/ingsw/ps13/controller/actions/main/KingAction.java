@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.polimi.ingsw.ps13.controller.actions.Action;
+import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.board.KingRewardTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
@@ -46,33 +47,33 @@ public class KingAction implements Action {
 	 * @return
 	 */
 	@Override
-	public boolean isLegal(Game g) {
+	public boolean isLegal(Game g) throws IllegalActionException {
 		
 		boolean legal = true;
 		Player player = g.getPlayer(playerName);
 		
 		// Check if player has token
 		if (player.getTokens().getMain() == 0)
-			legal = false;
+			throw new IllegalActionException("Action is not available");
 		
 		//Check if player has at least one emporium
 		if(player.getNumberOfEmporiums() == 0)
-			legal = false;
+			throw new IllegalActionException("You have no emporiums left");
 		
 		// Check if city is a valid city
 		if (!g.getBoard().getCities().containsKey(city))
-			return false;
+			throw new IllegalActionException("Selected city is not valid");
 		
 		// Check if player has already built on the city
 		if(player.hasBuiltOn(city))
-			legal = false;
+			throw new IllegalActionException("You have already built on selected city");
 		
 		// Retrieve colors of the selected politics cards from color names
 		for (String card : cards) {
 			if ("jolly".equals(card))
 				cardColors.add(PoliticsCard.jollyColor);
 			else if (!g.getColors().containsKey(card))
-				return false;
+				throw new IllegalActionException("Selected color is not valid");
 			else
 				cardColors.add(g.getColors().get(card));
 		}
@@ -94,22 +95,21 @@ public class KingAction implements Action {
 				}
 			}
 			if (!matchFound)
-				return false;
+				throw new IllegalActionException("Politics cards mismatch");
 		}
 		
 		// Check if balcony is satisfiable
 		if(!g.getBoard().getKingBalcony().isSatisfiable(cardColors, player.getCoins()))
-			legal = false;
+			throw new IllegalActionException("Councillor balcony is not satisfiable");
 		
 		int corruptionPrice = g.getBoard().getKingBalcony().coinsToPay(cardColors);
 		int kingMovementPrice = g.getBoard().priceToMoveKing(g.getBoard().getCity(city));
-		
 		if(player.getCoins() < (corruptionPrice + kingMovementPrice))
-			legal = false;
+			throw new IllegalActionException("Not enough coins, " + (corruptionPrice + kingMovementPrice) + " required");
 		
 		// Check if player has enough assistants (one for every emporium already built on the city)
 		if(player.getAssistants() < g.getBoard().getCity(city).getNumberOfEmporiums())
-			legal = false;
+			throw new IllegalActionException("Not enough assistants, " + g.getBoard().getCity(city).getNumberOfEmporiums() + "required");
 			
 		return legal;
 		

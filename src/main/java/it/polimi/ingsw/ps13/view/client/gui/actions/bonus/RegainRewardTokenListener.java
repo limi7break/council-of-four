@@ -46,10 +46,14 @@ public class RegainRewardTokenListener extends GUIListener {
 			});
 		}
 		
-		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new RegainRewardTokenRequestMsg(city));
-		});
-
+		confirmButton.addActionListener(this::confirmAction);
+		
+	}
+	
+	private void confirmAction(ActionEvent ae) {
+		
+		connection.sendMessage(new RegainRewardTokenRequestMsg(city));
+		
 	}
 
 }

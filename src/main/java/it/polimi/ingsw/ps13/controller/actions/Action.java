@@ -16,7 +16,7 @@ public interface Action extends Serializable {
 	 * 
 	 * @return true if the atomic action is valid
 	 */
-	public abstract boolean isLegal(Game g);
+	public abstract boolean isLegal(Game g) throws IllegalActionException;
 	
 	/**
 	 * Executes the action on the passed GameState, effectively modifying it.

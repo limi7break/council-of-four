@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
+import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
 import it.polimi.ingsw.ps13.message.response.PingResponseMsg;
@@ -19,7 +20,6 @@ import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import it.polimi.ingsw.ps13.view.client.ClientView;
-import it.polimi.ingsw.ps13.view.client.cli.CmdInterpreter;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUICreator;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIForm;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIMarket;
@@ -55,14 +55,10 @@ public class ClientGUI extends JFrame implements ClientView {
 		form = new GUIForm();
 		form.getTextField().addActionListener(ae -> {
 			
-	        RequestMsg msg = CmdInterpreter.parseCommand(form.getTextField().getText());
+	        RequestMsg msg = new ChatRequestMsg(form.getTextField().getText());
 	        form.getTextField().setText("");
 	        
-	        if (msg != null) {
-	        	connection.sendMessage(msg);
-	        } else {
-	        	form.append("Command not recognized.");
-	        }
+	        connection.sendMessage(msg);
 	        
 	        form.getTextField().requestFocusInWindow();
 			
@@ -82,6 +78,7 @@ public class ClientGUI extends JFrame implements ClientView {
 		try {
 			setUndecorated(true);
 			setVisible(true);
+			form.getTextField().requestFocusInWindow();
 		} catch (Exception e) {
 			LOG.log(Level.WARNING, "There was a problem while initializing the GUI.", e);
 		}
@@ -171,9 +168,7 @@ public class ClientGUI extends JFrame implements ClientView {
 			}
 			
 			if (market != null && market.isVisible()) {
-				SwingUtilities.invokeLater(() -> {
-					market.dispose();
-				});
+				SwingUtilities.invokeLater(market::dispose);
 			}
 			
 			this.game = updateMsg.getGame();
@@ -190,7 +185,9 @@ public class ClientGUI extends JFrame implements ClientView {
 			this.playerName = connMsg.getPlayerName();
 			form.append(connMsg.getMessage());
 		}
-		else if (msg instanceof PingResponseMsg) { }
+		else if (msg instanceof PingResponseMsg) {
+			// Ping from the server is ignored
+		}
 		else {
 			form.append(msg.getMessage());
 		}
