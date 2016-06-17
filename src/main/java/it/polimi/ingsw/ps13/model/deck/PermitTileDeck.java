@@ -31,7 +31,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
      *
      * @param cards a Collection of permit tiles to put inside the deck
      */
-	protected PermitTileDeck(Collection<PermitTile> cards) {
+	public PermitTileDeck(Collection<PermitTile> cards) {
 		
 		super(cards);
 		visibleTiles = new ArrayList<>();

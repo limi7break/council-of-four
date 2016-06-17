@@ -23,7 +23,7 @@ public class ConcreteBonus implements Bonus {
 	 * 
 	 * @param bonusList
 	 */
-	protected ConcreteBonus(List<Bonus> bonusList){
+	public ConcreteBonus(List<Bonus> bonusList){
 		
 		contents = bonusList;
 		

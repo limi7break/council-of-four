@@ -36,7 +36,7 @@ public class CouncillorBalcony implements Serializable {
 	 * 
 	 * @param councillors a collection of councillors to put in the balcony
 	 */
-	protected CouncillorBalcony(List<Councillor> councillors) {
+	public CouncillorBalcony(List<Councillor> councillors) {
 		
 		councillorList = new LinkedList<>();
 		

@@ -232,10 +232,9 @@ public class Player implements Serializable {
 		return nobilityPosition;
 		
 	}
-	
+
 	/**
-	 * 
-	 * @param nobilityPosition
+	 *	add 1 to the nobility position
 	 */
 	public void nobilityAdvance() {
 		
@@ -255,7 +254,7 @@ public class Player implements Serializable {
 	
 	/**
 	 * 
-	 * @param city the city to check whether the player has built on
+	 * @param cityName the city to check whether the player has built on
 	 * @return true if the player has built an emporium on that city
 	 */
 	public boolean hasBuiltOn(String cityName) {
@@ -273,11 +272,11 @@ public class Player implements Serializable {
 		cityNames.add(cityName);
 		
 	}
-	
+
 	/**
-	 * 
+	 * @param
 	 * @return
-	 */
+     */
 	public List<PermitTile> getPermitTiles() {
 		
 		return supply.getPermitTiles();
