@@ -11,6 +11,7 @@ import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.RenameUnicastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.view.server.Handler;
 
@@ -28,7 +29,7 @@ public class SocketHandler extends Handler implements Runnable {
 	private final ObjectInputStream ois;
 	private final ObjectOutputStream oos;
 	
-	private final String playerName;
+	private String playerName;
 	
 	private boolean running;
 	
@@ -60,6 +61,10 @@ public class SocketHandler extends Handler implements Runnable {
 			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
 			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
 			
+			if (msg instanceof RenameUnicastMsg) {
+				this.playerName = ((RenameUnicastMsg)msg).getNewName();
+			}
+			
 			try {
 				oos.reset();
 				oos.writeObject(msg);
@@ -69,7 +74,6 @@ public class SocketHandler extends Handler implements Runnable {
 				LOG.log(Level.WARNING, "A problem was encountered while sending data to the client. (" + playerName + ")", e);
 				stop();
 			}
-			
 		}
 		
 	}

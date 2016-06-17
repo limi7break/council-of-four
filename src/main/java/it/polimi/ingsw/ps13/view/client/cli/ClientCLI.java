@@ -8,6 +8,7 @@ import it.polimi.ingsw.ps13.message.response.PingResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.RenameUnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.board.KingRewardTile;
 import it.polimi.ingsw.ps13.model.council.Councillor;
@@ -197,6 +198,11 @@ public class ClientCLI implements ClientView {
 			ConnectionUnicastMsg connMsg = (ConnectionUnicastMsg) msg;
 			this.playerName = connMsg.getPlayerName();
 			System.out.println(connMsg.getMessage());
+		}
+		else if (msg instanceof RenameUnicastMsg) {
+			RenameUnicastMsg renameMsg = (RenameUnicastMsg) msg;
+			this.playerName = renameMsg.getNewName();
+			System.out.println(renameMsg.getMessage());
 		}
 		else if (msg instanceof PingResponseMsg) {
 			// Ping from the server is ignored

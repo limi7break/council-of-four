@@ -9,6 +9,7 @@ import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.RenameUnicastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.view.client.rmi.ClientRMIRemote;
 import it.polimi.ingsw.ps13.view.server.Handler;
@@ -20,7 +21,7 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 	private static final Logger LOG = Logger.getLogger(RMIHandler.class.getSimpleName());
 	
 	private final transient ClientRMIRemote clientStub;
-	private final String playerName;
+	private String playerName;
 	
 	private boolean running;
 	
@@ -38,9 +39,13 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 		
 		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
 		// Only the recipient of a UnicastMsg receives it
-		if (running && 
+		if (running &&
 			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
 			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
+			
+			if (msg instanceof RenameUnicastMsg) {
+				this.playerName = ((RenameUnicastMsg)msg).getNewName();
+			}
 			
 			try {
 				
@@ -51,7 +56,6 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 				notifyObserver(new DisconnectRequestMsg(playerName));
 				LOG.log(Level.INFO, playerName + " disconnected.", e);
 			}
-			
 		}
 		
 	}

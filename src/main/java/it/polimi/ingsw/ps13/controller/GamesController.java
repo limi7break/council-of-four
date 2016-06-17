@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class GamesController {
 	
 	private static final Logger LOG = Logger.getLogger(GamesController.class.getSimpleName());
-	private static final int COUNTDOWN = 10;
+	private static final int COUNTDOWN = 15;
 	
 	private final Set<GameController> games;
 	

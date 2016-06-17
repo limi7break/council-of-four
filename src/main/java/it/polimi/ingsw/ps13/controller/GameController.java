@@ -20,6 +20,7 @@ import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.controller.actions.PassTurnAction;
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
 import it.polimi.ingsw.ps13.message.request.DisconnectRequestMsg;
+import it.polimi.ingsw.ps13.message.request.RenameRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.ActionRequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
@@ -28,6 +29,7 @@ import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.multicast.MulticastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.RenameUnicastMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.player.Player;
@@ -42,6 +44,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
+	private static final int MAX_USERNAME_CHARACTERS = 14;
 	private static final int TURN_TIMEOUT = 90;
 	
 	private Document config;
@@ -169,10 +172,33 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			}
 		}
 		
+		else if (msg instanceof RenameRequestMsg) {
+			RenameRequestMsg renameMsg = (RenameRequestMsg) msg;
+			
+			if (game == null) {
+				if (renameMsg.getNewName().matches("^[a-zA-Z0-9._-]{1," + MAX_USERNAME_CHARACTERS + "}$")) {
+					if (!players.contains(renameMsg.getNewName())) {
+						players.remove(renameMsg.getPlayerName());
+						players.add(renameMsg.getNewName());
+						notifyObserver(new RenameUnicastMsg("You are now known as " + renameMsg.getNewName() + ".", renameMsg.getPlayerName(), renameMsg.getNewName()));
+						notifyObserver(new MulticastMsg(renameMsg.getPlayerName() + " is now known as " + renameMsg.getNewName() + "." , renameMsg.getNewName()));
+					} else {
+						notifyObserver(new UnicastMsg("ERROR: Username is already in use in current room!", renameMsg.getPlayerName()));
+					}
+				} else {
+					notifyObserver(new UnicastMsg("ERROR: Username is not valid! (max " + MAX_USERNAME_CHARACTERS + " alphanumeric characters, dots, underscores and dashes)", renameMsg.getPlayerName()));
+				}
+			} else {
+				notifyObserver(new UnicastMsg("ERROR: The game is already running!", renameMsg.getPlayerName()));
+			}
+		}
+		
 		else if (msg instanceof DisconnectRequestMsg) {
 			DisconnectRequestMsg disconnectMsg = (DisconnectRequestMsg) msg;
 			
 			String disconnectedPlayer = disconnectMsg.getPlayerName();
+			notifyObserver(new ResponseMsg(disconnectedPlayer + " has disconnected!"));
+			
 			if (game != null) {
 				game.getPlayer(disconnectedPlayer).setConnected(false);
 				if (game.getConnectedPlayers() < 2) {
@@ -180,7 +206,6 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 					game.finalizeGame();
 					notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
 					
-					// @TODO: close game
 				} else if (game.getCurrentPlayerName().equals(disconnectedPlayer)) {
 					game.passTurn();
 					notifyCurrentTurn();
@@ -191,8 +216,6 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			} else {
 				players.remove(disconnectedPlayer);
 			}
-			
-			notifyObserver(new ResponseMsg(disconnectedPlayer + " has disconnected!"));
 		}
 		
 	}
@@ -316,6 +339,16 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			return p2.getName();		// game rules do not clarify how to behave in case of same amount of
 										// assistants and politics cards in addition to victory points draw.
 										// Therefore we choose p2 will be the winner in this case.
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isFinished() {
+		
+		return game.isFinished();
 		
 	}
 	

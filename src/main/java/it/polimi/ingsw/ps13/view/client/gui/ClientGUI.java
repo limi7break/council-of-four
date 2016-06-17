@@ -11,12 +11,14 @@ import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
+import it.polimi.ingsw.ps13.message.request.RenameRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.response.ChatResponseMsg;
 import it.polimi.ingsw.ps13.message.response.PingResponseMsg;
 import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.message.response.UpdateResponseMsg;
 import it.polimi.ingsw.ps13.message.response.unicast.ConnectionUnicastMsg;
+import it.polimi.ingsw.ps13.message.response.unicast.RenameUnicastMsg;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import it.polimi.ingsw.ps13.view.client.ClientView;
@@ -55,12 +57,21 @@ public class ClientGUI extends JFrame implements ClientView {
 		form = new GUIForm();
 		form.getTextField().addActionListener(ae -> {
 			
-	        RequestMsg msg = new ChatRequestMsg(form.getTextField().getText());
-	        form.getTextField().setText("");
-	        
-	        connection.sendMessage(msg);
-	        
-	        form.getTextField().requestFocusInWindow();
+			if (!form.getTextField().getText().isEmpty()) {
+				if (form.getTextField().getText().matches("^rename\\s.*$")) {
+					String cmd = form.getTextField().getText();
+					String newName = cmd.replaceFirst("rename ", "");
+					
+					connection.sendMessage(new RenameRequestMsg(newName));
+				} else {
+			        RequestMsg msg = new ChatRequestMsg(form.getTextField().getText());
+			        
+			        connection.sendMessage(msg);
+				}
+		        
+				form.getTextField().setText("");
+		        form.getTextField().requestFocusInWindow();
+			}
 			
 		});
 		
@@ -184,6 +195,11 @@ public class ClientGUI extends JFrame implements ClientView {
 			ConnectionUnicastMsg connMsg = (ConnectionUnicastMsg) msg;
 			this.playerName = connMsg.getPlayerName();
 			form.append(connMsg.getMessage());
+		}
+		else if (msg instanceof RenameUnicastMsg) {
+			RenameUnicastMsg renameMsg = (RenameUnicastMsg) msg;
+			this.playerName = renameMsg.getNewName();
+			form.append(renameMsg.getMessage());
 		}
 		else if (msg instanceof PingResponseMsg) {
 			// Ping from the server is ignored

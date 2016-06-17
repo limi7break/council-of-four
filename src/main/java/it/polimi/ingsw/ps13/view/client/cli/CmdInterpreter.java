@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import it.polimi.ingsw.ps13.message.request.ChatRequestMsg;
+import it.polimi.ingsw.ps13.message.request.RenameRequestMsg;
 import it.polimi.ingsw.ps13.message.request.RequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.AcquirePermitTileRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.BuildEmporiumRequestMsg;
@@ -44,6 +45,13 @@ public class CmdInterpreter {
             String param = cmd.replaceFirst("chat ", "");
             
             msg = new ChatRequestMsg(param);
+		}
+		
+		// Rename command
+		else if (cmd.matches("^rename\\s.*$")) {
+			String param = cmd.replaceFirst("rename ", "");
+			
+			msg = new RenameRequestMsg(param);
 		}
 		
 		// Main actions
