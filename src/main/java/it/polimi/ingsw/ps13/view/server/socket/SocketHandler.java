@@ -58,8 +58,8 @@ public class SocketHandler extends Handler implements Runnable {
 		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
 		// Only the recipient of a UnicastMsg receives it
 		if (running && 
-			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
-			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
+			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getExcludedPlayer() == playerName)
+			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getRecipient() != playerName))) {
 			
 			if (msg instanceof RenameUnicastMsg) {
 				this.playerName = ((RenameUnicastMsg)msg).getNewName();
@@ -75,16 +75,6 @@ public class SocketHandler extends Handler implements Runnable {
 				stop();
 			}
 		}
-		
-	}
-	
-	/**
-	 * 
-	 */
-	@Override
-	public void update() {
-		
-		// empty update not implemented
 		
 	}
 	

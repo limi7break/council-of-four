@@ -14,6 +14,12 @@ public class UpdateResponseMsg extends ResponseMsg {
 	
 	private final Game game;
 	
+	/**
+	 * Creates a new UpdateResponseMsg with the specified message and game state.
+	 * 
+	 * @param message the content of the message
+	 * @param game the game state wrapped in the message
+	 */
 	public UpdateResponseMsg(String message, Game game) {
 		
 		super(message);
@@ -21,6 +27,11 @@ public class UpdateResponseMsg extends ResponseMsg {
 		
 	}
 
+	/**
+	 * Returns the game state wrapped in the message.
+	 * 
+	 * @return the game state wrapped in the message
+	 */
 	public Game getGame() {
 		
 		return game;

@@ -192,11 +192,11 @@ public class ClientCLI implements ClientView {
 		}
 		else if (msg instanceof ChatResponseMsg) {
 			ChatResponseMsg chatMsg = (ChatResponseMsg) msg;
-			System.out.println("[" + chatMsg.getPlayerName() + "] " + chatMsg.getMessage());
+			System.out.println("[" + chatMsg.getSender() + "] " + chatMsg.getMessage());
 		}
 		else if (msg instanceof ConnectionUnicastMsg) {
 			ConnectionUnicastMsg connMsg = (ConnectionUnicastMsg) msg;
-			this.playerName = connMsg.getPlayerName();
+			this.playerName = connMsg.getRecipient();
 			System.out.println(connMsg.getMessage());
 		}
 		else if (msg instanceof RenameUnicastMsg) {

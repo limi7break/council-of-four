@@ -5,6 +5,12 @@ import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This action is performed when the player wants to spend 3 assistants to gain 1 extra main action.
+ * 
+ * This is a quick action.
+ *
+ */
 public class GainMainActionAction implements Action {
 
 	private static final long serialVersionUID = 0L;
@@ -12,8 +18,9 @@ public class GainMainActionAction implements Action {
 	private final String playerName;
 	
 	/**
+	 * Creates a new GainMainActionAction.
 	 * 
-	 * @param player
+	 * @param playerName unique identifier of the player wanting to perform the action
 	 */
 	public GainMainActionAction(String playerName) {
 		
@@ -22,9 +29,10 @@ public class GainMainActionAction implements Action {
 	}
 	
 	/**
+	 * This action is legal if all these conditions are satisfied:
 	 * 
-	 * @param g
-	 * @return
+	 * 		- Player has got the appropriate action token
+	 * 		- Player has enough assistants
 	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
@@ -44,8 +52,8 @@ public class GainMainActionAction implements Action {
 	}
 
 	/**
+	 * Executes the action on the passed Game, effectively modifying it.
 	 * 
-	 * @param g
 	 */
 	@Override
 	public void apply(Game g) {

@@ -40,8 +40,8 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
 		// Only the recipient of a UnicastMsg receives it
 		if (running &&
-			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getPlayerName() == playerName)
-			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getPlayerName() != playerName))) {
+			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getExcludedPlayer() == playerName)
+			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getRecipient() != playerName))) {
 			
 			if (msg instanceof RenameUnicastMsg) {
 				this.playerName = ((RenameUnicastMsg)msg).getNewName();
@@ -69,13 +69,6 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 		
 		msg.setPlayerName(playerName);
 		notifyObserver(msg);
-		
-	}
-	
-	@Override
-	public void update() {
-
-		// empty update not implemented
 		
 	}
 	

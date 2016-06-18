@@ -38,6 +38,7 @@ import it.polimi.ingsw.ps13.util.observer.Observer;
 
 /**
  * Controller for a single game.
+ * Handles every request coming from a client connected to this controller (actions, chat messages...) 
  *
  */
 public class GameController extends Observable<ResponseMsg> implements Observer<RequestMsg>, Runnable {
@@ -62,7 +63,6 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	/**
 	 * Creates a new game with the default configuration file.
 	 * 
-	 * @param configFilePath
 	 */
 	public GameController() {
 		
@@ -74,6 +74,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	}
 	
 	/**
+	 * Runs the GameController.
 	 * 
 	 */
 	@Override
@@ -84,7 +85,8 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	}
 	
 	/**
-	 * Parses the XML configuration file and initializes the game model.
+	 * Parses the XML configuration file, initializes the game model, notifies the players that the game is
+	 * started, and sets the timer for turn timeout.
 	 * 
 	 */
 	public void initGame() {
@@ -113,9 +115,9 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	}
 	
 	/**
-	 * Adds a player to this game, only if it hasn't started yet.
+	 * If the game hasn't started yet, adds a player to this game and notifies other players in the room.
 	 * 
-	 * @param name
+	 * @param name the name of the player to be added (unique identifier inside a game)
 	 */
 	protected void addPlayer(String name) {
 		
@@ -138,9 +140,9 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	}
 	
 	/**
-	 * Getter for game status.
+	 * Returns the current game model state.
 	 * 
-	 * @return
+	 * @return game the current game model state.
 	 */
 	public Game getGame() {
 		
@@ -149,12 +151,11 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	}
 	
 	/**
+	 * This method handles a request message coming from one of the client views.
 	 * 
 	 */
 	@Override
 	public void update(RequestMsg msg) {
-		
-		// handle request
 		
 		if (msg instanceof ChatRequestMsg) {
 			ChatRequestMsg chatMsg = (ChatRequestMsg) msg;
@@ -219,14 +220,14 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		}
 		
 	}
-
-	@Override
-	public void update() {
-		
-		// empty update not implemented
-		
-	}
 	
+	/**
+	 * Performs legality check on the action, applies it to the current game state and notifies every client view
+	 * with the new game state.
+	 * 
+	 * @param action the action to apply, after a legality check is performed
+	 * @param playerName unique identifier of the player wanting to perform the action
+	 */
 	private void handleAction(Action action, String playerName) {
 		
 		boolean legal = false;
@@ -253,6 +254,10 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 
 	}
 	
+	/**
+	 * Notifies every client view about the current turn.
+	 * 
+	 */
 	private void notifyCurrentTurn() {
 		
 		notifyObserver(new UnicastMsg("It\'s YOUR turn, " + game.getCurrentPlayerName() + "! Bring it on!!\n(but move your ass, you only have " + TURN_TIMEOUT + " seconds.)", game.getCurrentPlayerName()));
@@ -260,6 +265,11 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 	}
 	
+	/**
+	 * Sets the timer for turn timeout.
+	 * This method does not cancel the previously set timer.
+	 * 
+	 */
 	private void setTimer() {
 		
 		timer = new Timer();
@@ -281,6 +291,10 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	}
 	
 	/**
+	 * Checks if game is finished. If that's the case, final operations on the game are performed,
+	 * and every client view is notified of the winner.
+	 * 
+	 * This method is called after a player either performs a PassTurnAction or timer is up.
 	 * 
 	 */
 	private void checkIfGameIsFinished() {
@@ -299,6 +313,11 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 		
 	}
 	
+	/**
+	 * Calculates the winner of the game (player with highest number of victory points).
+	 * 
+	 * @return unique identifier of the player who has won the game
+	 */
 	private String calculateWinner() {
 		
 		String winner = "";
@@ -310,7 +329,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 				winner = p.getName();
 			}
 			
-			//draw contest
+			// draw contest
 			if(p.getVictoryPoints() == maxVictoryPoints && p.getVictoryPoints() != 0) {
 				
 				winner = drawContest(p, game.getPlayer(winner));
@@ -324,7 +343,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	}
 	
 	/**
-	 * Applies draw rules to calculate whose the winner in case of same amount of victory points.
+	 * Applies draw rules to calculate who's the winner in case of same amount of victory points.
 	 * 
 	 * @param p1
 	 * @param p2

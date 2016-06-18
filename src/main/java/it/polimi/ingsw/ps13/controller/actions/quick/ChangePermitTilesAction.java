@@ -6,6 +6,13 @@ import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This action is performed when the player wants to spend 1 assistant to replace the visible permit tiles
+ * of a region with other permit tiles, taken from the permit tile deck of the same region.
+ * 
+ * This is a quick action.
+ *
+ */
 public class ChangePermitTilesAction implements Action {
 
 	private static final long serialVersionUID = 0L;
@@ -13,6 +20,12 @@ public class ChangePermitTilesAction implements Action {
 	private final String playerName;
 	private final String region;
 
+	/**
+	 * Creates a new ChangePermitTilesAction.
+	 * 
+	 * @param playerName unique identifier of the player wanting to perform the action
+	 * @param region the name of the region of which the player wants to change the visible permit tiles
+	 */
 	public ChangePermitTilesAction(String playerName, String region) {
 		
 		this.playerName = playerName;
@@ -21,9 +34,12 @@ public class ChangePermitTilesAction implements Action {
 	}
 	
 	/**
+	 * This action is legal if all these conditions are satisfied:
 	 * 
-	 * @param g
-	 * @return
+	 * 		- Player has got the appropriate action token
+	 * 		- Selected region is valid
+	 * 		- Selected permit tile number is valid
+	 * 		- Player has enough assistants
 	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
@@ -46,6 +62,10 @@ public class ChangePermitTilesAction implements Action {
 		
 	}
 
+	/**
+	 * Executes the action on the passed Game, effectively modifying it.
+	 * 
+	 */
 	@Override
 	public void apply(Game g) {
 		

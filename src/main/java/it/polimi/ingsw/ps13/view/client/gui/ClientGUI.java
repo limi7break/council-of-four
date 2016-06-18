@@ -192,11 +192,11 @@ public class ClientGUI extends JFrame implements ClientView {
 		}
 		else if (msg instanceof ChatResponseMsg) {
 			ChatResponseMsg chatMsg = (ChatResponseMsg) msg;
-			form.appendChat(chatMsg.getPlayerName(), chatMsg.getMessage());
+			form.appendChat(chatMsg.getSender(), chatMsg.getMessage());
 		}
 		else if (msg instanceof ConnectionUnicastMsg) {
 			ConnectionUnicastMsg connMsg = (ConnectionUnicastMsg) msg;
-			this.playerName = connMsg.getPlayerName();
+			this.playerName = connMsg.getRecipient();
 			form.append(connMsg.getMessage());
 		}
 		else if (msg instanceof RenameUnicastMsg) {

@@ -7,25 +7,41 @@ import it.polimi.ingsw.ps13.message.response.ResponseMsg;
  * 
  * When the game controller notifies the handlers with a multicast msg,
  * it is sent to every client connected to a handler, EXCEPT the one
- * whose player name is contained in the message.
+ * whose player name is specified in the message.
+ * 
+ * It is useful when an event occurs such that everyone has to be notified, but
+ * only a specific player should have a custom notify message. In this case,
+ * an unicast message is sent to that player, and a multicast message is sent to
+ * every other. 
  *
  */
 public class MulticastMsg extends ResponseMsg {
 
 	private static final long serialVersionUID = 0L;
 	
-	private final String playerName;
+	private final String excludedPlayer;
 	
-	public MulticastMsg(String message, String playerName) {
+	/**
+	 * Creates a new MulticastMsg with the specified message and excluded player name.
+	 * 
+	 * @param message the content of the message
+	 * @param excludedPlayer unique identifier of the player who should NOT receive the message
+	 */
+	public MulticastMsg(String message, String excludedPlayer) {
 		
 		super(message);
-		this.playerName = playerName;
+		this.excludedPlayer = excludedPlayer;
 		
 	}
 	
-	public String getPlayerName() {
+	/**
+	 * Returns the unique identifier of the player who should NOT receive the message.
+	 * 
+	 * @return unique identifier of the player who should NOT receive the message
+	 */
+	public String getExcludedPlayer() {
 		
-		return playerName;
+		return excludedPlayer;
 		
 	}
 	

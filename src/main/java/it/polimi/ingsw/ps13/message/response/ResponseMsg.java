@@ -15,12 +15,22 @@ public class ResponseMsg implements Serializable {
 	
 	private final String message;
 	
+	/**
+	 * Creates a new ResponseMsg with the specified message content.
+	 * 
+	 * @param message the content of the message
+	 */
 	public ResponseMsg(String message) {
 		
 		this.message = message;
 		
 	}
 	
+	/**
+	 * Returns the content of the message.
+	 * 
+	 * @return the content of the message
+	 */
 	public String getMessage() {
 		
 		return message;

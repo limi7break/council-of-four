@@ -5,6 +5,12 @@ import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This action is performed when the player wants to spend 3 coins to purchase 1 assistant.
+ * 
+ * This is a quick action.
+ *
+ */
 public class EngageAssistantAction implements Action {
 
 	private static final long serialVersionUID = 0L;
@@ -12,8 +18,9 @@ public class EngageAssistantAction implements Action {
 	private final String playerName;
 	
 	/**
+	 * Creates a new EngageAssistantAction.
 	 * 
-	 * @param player
+	 * @param playerName unique identifier of the player wanting to perform the action
 	 */
 	public EngageAssistantAction(String playerName) {
 		
@@ -22,9 +29,10 @@ public class EngageAssistantAction implements Action {
 	}
 	
 	/**
+	 * This action is legal if all these conditions are satisfied:
 	 * 
-	 * @param g
-	 * @return
+	 * 		- Player has got the appropriate action token
+	 * 		- Player has enough coins
 	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
@@ -44,8 +52,8 @@ public class EngageAssistantAction implements Action {
 	}
 
 	/**
+	 * Executes the action on the passed Game, effectively modifying it.
 	 * 
-	 * @param g
 	 */
 	@Override
 	public void apply(Game g) {

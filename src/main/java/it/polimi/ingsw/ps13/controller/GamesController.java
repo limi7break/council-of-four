@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 
 /**
  * This controller handles multiple games.
- * When two players join the waiting game, a countdown is started to start the game.
- * If in the meantime someone else tries to connect the timer resets and starts over.
+ * When two players join the waiting game, a timer is set and the game is started when it reaches zero. 
+ * If in the meantime someone else connects the timer resets and starts over.
  * If the number of waiting players reaches 8 the game starts instantly.
  * 
  */
@@ -44,6 +44,7 @@ public class GamesController {
 	}
 	
 	/**
+	 * Adds a player to the currently waiting game and resets the timer.
 	 * 
 	 */
 	public void addPlayer(String name) {
@@ -88,8 +89,9 @@ public class GamesController {
 	}
 	
 	/**
+	 * Returns the current game, waiting to be started.
 	 * 
-	 * @return
+	 * @return waitingGame the currently waiting game
 	 */
 	public GameController getWaitingGame() {
 		
