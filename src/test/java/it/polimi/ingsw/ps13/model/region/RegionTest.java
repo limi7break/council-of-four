@@ -43,6 +43,7 @@ public class RegionTest {
         Collection<PermitTile> cards = new ArrayList<>();
         Set<String> cityNames = new HashSet<>();
         cityNames.add("ZZZZ");
+        @SuppressWarnings("unused")
         PermitTile permitTile = new PermitTile(bonus,cityNames);
         PermitTileDeck deck = new PermitTileDeck(cards);
 
@@ -130,6 +131,7 @@ public class RegionTest {
         Collection<PermitTile> cards = new ArrayList<>();
         Set<String> cityNames = new HashSet<>();
         cityNames.add("ZZZZ");
+        @SuppressWarnings("unused")
         PermitTile permitTile = new PermitTile(bonus,cityNames);
         PermitTileDeck deck = new PermitTileDeck(cards);
 

@@ -2,10 +2,8 @@ package it.polimi.ingsw.ps13.model.board;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.junit.After;
 import org.junit.Before;
