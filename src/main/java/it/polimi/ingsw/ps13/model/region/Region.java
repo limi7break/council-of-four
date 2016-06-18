@@ -29,7 +29,7 @@ public class Region implements Serializable{
 	/**
 	 * 
 	 */
-	protected Region(String name, Bonus bonus, CouncillorBalcony councillorBalcony, PermitTileDeck permitTileDeck){
+	public Region(String name, Bonus bonus, CouncillorBalcony councillorBalcony, PermitTileDeck permitTileDeck){
 		
 		this.name = name;
 		this.bonus = bonus;

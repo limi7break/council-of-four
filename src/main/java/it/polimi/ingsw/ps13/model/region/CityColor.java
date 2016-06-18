@@ -29,7 +29,7 @@ public class CityColor implements Serializable {
 	 * of a certain color, and the flag will be set to false.
 	 * 
 	 */
-	protected CityColor (Color color, String colorName, Bonus bonus){
+	public CityColor (Color color, String colorName, Bonus bonus){
 		
 		this.color = color;
 		this.colorName = colorName;

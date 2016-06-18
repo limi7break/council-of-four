@@ -24,7 +24,7 @@ public class RegionTest {
     @Before
     public void setUp() throws Exception {
 
-        // creating an ampty bonus
+        // creating an empty bonus
         Bonus bonus = BonusFactory.createEmptyBonus();
 
         //creating a CouncillorBalcony
