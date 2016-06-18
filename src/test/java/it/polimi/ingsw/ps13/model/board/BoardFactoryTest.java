@@ -1,4 +1,4 @@
-package it.polimi.ingsw.ps13.model;
+package it.polimi.ingsw.ps13.model.board;
 
 import java.awt.Color;
 import java.io.File;
@@ -17,11 +17,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import it.polimi.ingsw.ps13.model.ColorFactory;
 import it.polimi.ingsw.ps13.model.region.RegionFactoryTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-public class ColorFactoryTest {
+public class BoardFactoryTest {
 
 	private static final String TESTCONFIG = "configTest.xml";
 	Document config;
@@ -29,6 +30,7 @@ public class ColorFactoryTest {
 	String testFilePath = TESTCONFIG;
 	
 	Map<String, Color> colors;
+	Board board;
 	
 	@Before
 	public void setUp() {
@@ -44,6 +46,7 @@ public class ColorFactoryTest {
 		}
 		
 		colors = new HashMap<>();
+		ColorFactory.createColors(config, colors);
 		
 	}
 	
@@ -51,23 +54,20 @@ public class ColorFactoryTest {
 	public void tearDown() throws Exception {}
 	
 	@Test
-	public void createColors() throws Exception {
+	public void createBoard() throws Exception {
 		
-		ColorFactory.createColors(config, colors);
+		board = BoardFactory.createBoard(config, colors);
 		
-		Element colorsElement = (Element) config.getElementsByTagName("colors").item(0);
-		NodeList colorsNodeList = colorsElement.getElementsByTagName("color");
-		for (int i=0; i<colorsNodeList.getLength(); i++) {
+		Element regionsElement = (Element) config.getElementsByTagName("regions").item(0);
+		NodeList regionElementList = regionsElement.getElementsByTagName("region");
+		for (int i=0; i<regionElementList.getLength(); i++) {
+			Element currentRegion = (Element) regionElementList.item(i);
+			String regionName = currentRegion.getAttribute("name");
 			
-			Element currentColor = (Element) colorsNodeList.item(i);
-			String colorName = currentColor.getAttribute("name");
-			int r = Integer.parseInt(currentColor.getAttribute("r"));
-			int g = Integer.parseInt(currentColor.getAttribute("g"));
-			int b = Integer.parseInt(currentColor.getAttribute("b"));
+			assertTrue(board.getRegions().keySet().contains(regionName));
 			
-			assertTrue(colors.values().contains(new Color(r, g, b)));
-			assertTrue(colors.keySet().contains(colorName));
-			
-		}	
+		}
+		
 	}
+	
 }
