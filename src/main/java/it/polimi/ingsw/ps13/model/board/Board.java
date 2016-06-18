@@ -25,7 +25,18 @@ import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.region.CityColor;
 import it.polimi.ingsw.ps13.model.region.Region;
 
+/**
+ * 
+ *
+ */
 public class Board implements Serializable {
+
+	@Override
+	public String toString() {
+		return "Board [regions=" + regions + ", cityColors=" + cityColors + ", cities=" + cities + ", king=" + king
+				+ ", nobilityTrack=" + nobilityTrack + ", politicsCardDeck=" + politicsCardDeck + ", kingBalcony="
+				+ kingBalcony + ", kingRewardTiles=" + kingRewardTiles + ", councillors=" + councillors + "]";
+	}
 
 	private static final long serialVersionUID = 0L;
 	private static final int PRICE_FOR_KING_STEP = 2;

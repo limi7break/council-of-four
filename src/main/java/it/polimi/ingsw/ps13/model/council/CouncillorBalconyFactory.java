@@ -20,6 +20,14 @@ public final class CouncillorBalconyFactory {
 	
 	private CouncillorBalconyFactory() { }
 	
+	/**
+	 * 
+	 * @param quantity
+	 * @param councillorBalconies
+	 * @param colors
+	 * @param config
+	 * @return
+	 */
 	public static List<Councillor> createCouncillorBalconies(int quantity, List<CouncillorBalcony> councillorBalconies, Map<String, Color> colors, Document config) {
 		
 		// Create councillors

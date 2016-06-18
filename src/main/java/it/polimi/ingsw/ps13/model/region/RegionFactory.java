@@ -17,6 +17,10 @@ import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeckFactory;
 
+/**
+ * 
+ *
+ */
 public final class RegionFactory {
 
 	private RegionFactory() { }
@@ -86,6 +90,11 @@ public final class RegionFactory {
 		
 	}
 	
+	/**
+	 * 
+	 * @param config
+	 * @return
+	 */
 	private static List<Bonus> createRewardTokens(Document config) {
 		
 		List<Bonus> rewardTokens = new ArrayList<>();

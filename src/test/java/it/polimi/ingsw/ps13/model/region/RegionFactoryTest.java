@@ -64,7 +64,7 @@ public class RegionFactoryTest {
 		ColorFactory.createColors(config, colors);
 		cityColors = CityColorFactory.createCityColors(config, colors);
 		balconies = new ArrayList<>();
-		CouncillorBalconyFactory.createCouncillorBalconies(5, balconies, colors, config);
+		CouncillorBalconyFactory.createCouncillorBalconies(4, balconies, colors, config);
 		
 	}
 	
