@@ -58,6 +58,8 @@ public class GUIForm extends GUIPanel {
 		
 		textArea.append("\n");
 		textArea.append(str);
+		revalidate();
+		repaint();
 		
 	}
 	
@@ -69,6 +71,8 @@ public class GUIForm extends GUIPanel {
 		
 		textArea.append("\n");
 		textArea.append("[INFO] " + str);
+		revalidate();
+		repaint();
 		
 	}
 	
@@ -81,6 +85,8 @@ public class GUIForm extends GUIPanel {
 		
 		textArea.append("\n");
 		textArea.append("[" + player + "] " + str);
+		revalidate();
+		repaint();
 		
 	}
 	

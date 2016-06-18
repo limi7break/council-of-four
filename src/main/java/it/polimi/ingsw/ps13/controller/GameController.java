@@ -244,18 +244,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			notifyObserver(new UpdateResponseMsg(playerName + " performed " + action.getClass().getSimpleName() + ".", game));
 			
 			if (action instanceof PassTurnAction) {
-				if (!game.isFinished()) {
-					notifyCurrentTurn();
-					
-					// Reset timer for next turn
-					timer.cancel();
-					setTimer();
-				}
-				else {
-					timer.cancel();
-					game.finalizeGame();
-					notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
-				}
+				checkIfGameIsFinished();
 			}
 			
 		} else {
@@ -283,16 +272,30 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
             	
             	game.passTurn();
             	notifyObserver(new UpdateResponseMsg("Time\'s up for " + slowPlayer + "!", game));
-            	notifyCurrentTurn();
-            	
-            	// Reset timer for next turn
-            	timer.cancel();
-            	setTimer();
-            	
+            	checkIfGameIsFinished();
             }
         };
 		
 		timer.schedule(timerTask, (long) TURN_TIMEOUT * 1000);
+		
+	}
+	
+	/**
+	 * 
+	 */
+	private void checkIfGameIsFinished() {
+		
+		if (!game.isFinished()) {
+    		notifyCurrentTurn();
+    		
+    		// Reset timer for next turn
+        	timer.cancel();
+        	setTimer();
+    	} else {
+    		timer.cancel();
+    		game.finalizeGame();
+			notifyObserver(new UpdateResponseMsg("GAME FINISHED! THE WINNER IS " + calculateWinner() + "! CONGRATULATIONS!!", game));
+    	}
 		
 	}
 	
@@ -339,16 +342,6 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 			return p2.getName();		// game rules do not clarify how to behave in case of same amount of
 										// assistants and politics cards in addition to victory points draw.
 										// Therefore we choose p2 will be the winner in this case.
-		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isFinished() {
-		
-		return game.isFinished();
 		
 	}
 	
