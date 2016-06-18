@@ -26,6 +26,10 @@ import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * This is the GUI representation of the market.
+ *
+ */
 public class GUIMarket extends JFrame {
 
 	private static final long serialVersionUID = 0L;
@@ -43,8 +47,11 @@ public class GUIMarket extends JFrame {
 	private Collection<Integer> entries;
 	
 	/**
+	 * Creates the GUI representation of the market.
 	 * 
-	 * @param market
+	 * @param player unique identifier of the player who is playing on this client
+	 * @param market the market from which the GUI representation is created
+	 * @param connection the client connection used to communicate with the server
 	 */
 	public GUIMarket(Player player, Market market, ClientConnection connection) {
 		
@@ -73,6 +80,7 @@ public class GUIMarket extends JFrame {
 	}
 	
 	/**
+	 * Shows the market sell phase, where the player has the possibility to select marketable items and their overall price.
 	 * 
 	 */
 	public void showSellPhase() {
@@ -235,6 +243,7 @@ public class GUIMarket extends JFrame {
 	}
 	
 	/**
+	 * Shows the market buy phase, where the player has the possibility to select market entries and buy them.
 	 * 
 	 */
 	public void showBuyPhase() {

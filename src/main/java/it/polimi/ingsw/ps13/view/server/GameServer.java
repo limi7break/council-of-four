@@ -34,9 +34,12 @@ public class GameServer implements RMIServerRemote {
 	
 	private boolean running;
 	
-	// player number should reset when current game starts and a new game is created
 	private int playerNumber = 0;
 	
+	/**
+	 * Creates the game server and the games controller.
+	 * 
+	 */
 	public GameServer() {
 		
 		running = true;
@@ -45,6 +48,8 @@ public class GameServer implements RMIServerRemote {
 	}
 	
 	/**
+	 * Creates the RMI registry.
+	 * Exports the server stub and binds it to the RMI registry.
 	 * 
 	 */
 	public void startRMI() {
@@ -64,6 +69,7 @@ public class GameServer implements RMIServerRemote {
 	}
 	
 	/**
+	 * Loop accepting socket connections on the specified port. 
 	 * 
 	 */
 	public void startSocket() {
@@ -96,8 +102,10 @@ public class GameServer implements RMIServerRemote {
 	}
 
 	/**
-	 * Used for RMI connection. Returns a new RMI handler every time the
-	 * method is called.
+	 * Used for RMI connection. Returns a new RMI handler.
+	 * The client should pass itself to this method so the RMI handler can register
+	 * the client stub.
+	 * 
 	 */
 	@Override
 	public RMIHandlerRemote connect(ClientRMIRemote clientStub) throws RemoteException {
@@ -117,6 +125,7 @@ public class GameServer implements RMIServerRemote {
 	}
 	
 	/**
+	 * Starts the server, accepting RMI and Socket connections.
 	 * 
 	 */
 	public static void main(String[] args) {

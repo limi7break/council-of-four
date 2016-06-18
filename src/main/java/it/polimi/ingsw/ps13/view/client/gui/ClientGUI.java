@@ -28,6 +28,13 @@ import it.polimi.ingsw.ps13.view.client.gui.component.GUIMarket;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIPanel;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * This is a Graphical User Interface (GUI) type of view for the client.
+ * Every request message is sent by appropriate listeners attached to the GUI objects that collect user input information.
+ * Every response message received from the server is read by an input thread and handled according
+ * to the type of the message.
+ *
+ */
 public class ClientGUI extends JFrame implements ClientView {
 	
 	private static final long serialVersionUID = 0L;
@@ -44,7 +51,9 @@ public class ClientGUI extends JFrame implements ClientView {
 	private String playerName;
 
 	/**
-	 * Create the frame.
+	 * Creates the frame, the form (text area + text field) and sets up form's text field
+	 * with an action listener that is activated when the Enter key is pressed.
+	 * 
 	 */
 	public ClientGUI() {
 		
@@ -78,7 +87,8 @@ public class ClientGUI extends JFrame implements ClientView {
 	}
 	
 	/**
-	 * Launch the GUI.
+	 * Starts the Graphical User Interface (GUI).
+	 * 
 	 */
 	@Override
 	public void run() {
@@ -97,7 +107,7 @@ public class ClientGUI extends JFrame implements ClientView {
 	}
 	
 	/**
-	 * Create an initial panel without loading any game.
+	 * Creates an initial panel without loading any game.
 	 * At this point, game should be null so there is nothing to show.
 	 * 
 	 */
@@ -123,7 +133,16 @@ public class ClientGUI extends JFrame implements ClientView {
 	}
 	
 	/**
+	 * Creates every GUI object from the local game model and updates the frame's content pane.
+	 * The frame's content pane is a two-layered JLayeredPane:
 	 * 
+	 * 		- Top layer is composed of:
+	 * 			- a main pane which contains map, bonus tiles, nobility track and player stats
+	 * 			- a right pane which contains input form, action buttons, and other player info
+	 *  
+	 * 		- Bottom layer is a pane on which the city connections are drawn.
+	 * 			The bottom layer is the last object to be created, because it needs every other object to
+	 * 			be placed and the frame to be packed in order to get the right center points of the city images.
 	 */
 	@Override
 	public void showModel() {
@@ -167,7 +186,8 @@ public class ClientGUI extends JFrame implements ClientView {
 	}
 	
 	/**
-	 * 
+	 * Handles the received message according to the type of the message.
+	 *
 	 */
 	public void handleMessage(ResponseMsg msg) {
 		
@@ -213,6 +233,11 @@ public class ClientGUI extends JFrame implements ClientView {
 		
 	}
 	
+	/**
+	 * This method starts an input thread, looping while the client connection is active, which listens
+	 * for server messages on the client connection and passes them to handleMessage.
+	 * 
+	 */
 	public void startHandlers() {
 		
 		// This is the input handler
@@ -227,6 +252,10 @@ public class ClientGUI extends JFrame implements ClientView {
 		
 	}
 
+	/**
+	 * Sets the connection for the client.
+	 * 
+	 */
 	@Override
 	public void setConnection(ClientConnection connection) {
 		 

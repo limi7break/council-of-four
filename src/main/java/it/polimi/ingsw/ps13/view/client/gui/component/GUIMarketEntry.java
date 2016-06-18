@@ -14,6 +14,10 @@ import it.polimi.ingsw.ps13.model.market.Marketable;
 import it.polimi.ingsw.ps13.model.resource.Assistants;
 import it.polimi.ingsw.ps13.model.resource.Coins;
 
+/**
+ * This is the GUI representation of a market entry.
+ *
+ */
 public class GUIMarketEntry extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
@@ -21,6 +25,12 @@ public class GUIMarketEntry extends GUIPanel {
 	private final int number;
 	private final JButton selectButton;
 
+	/**
+	 * Creates the GUI representation of the market entry passed as parameter.
+	 * 
+	 * @param entry the market entry from which the GUI representation is created
+	 * @param number the number of the market entry
+	 */
 	protected GUIMarketEntry(MarketEntry entry, int number) {
 		
 		super();
@@ -60,8 +70,9 @@ public class GUIMarketEntry extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the number of the market entry.
 	 * 
-	 * @return
+	 * @return the number of the market entry.
 	 */
 	public int getNumber() {
 		
@@ -70,8 +81,9 @@ public class GUIMarketEntry extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the select button of the market entry.
 	 * 
-	 * @return
+	 * @return the select button of the market entry.
 	 */
 	public JButton getSelectButton() {
 		

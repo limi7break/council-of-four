@@ -43,8 +43,13 @@ import it.polimi.ingsw.ps13.view.client.gui.actions.quick.GainMainActionListener
 import it.polimi.ingsw.ps13.view.client.gui.actions.quick.QuickElectCouncillorListener;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * This class reads data from the game model and creates every object displayed in the GUI.
+ *
+ */
 public final class GUICreator {
 	
+	// These are saved references to every clickable GUI object
 	private final Map<String, GUICity> cities = new HashMap<>();
 	private final Map<String, GUIRegion> regions = new HashMap<>();
 	private final List<GUICouncillor> availableCouncillors = new ArrayList<>();
@@ -52,6 +57,15 @@ public final class GUICreator {
 	private final List<GUIPermitTile> playerTiles = new ArrayList<>();
 	private GUICouncillorBalcony kingBalcony;
 	
+	/**
+	 * Creates the main top layer pane.
+	 * The layout manager for this pane is MigLayout.
+	 * 
+	 * The pane returned by this method contains the map, the bonus tiles, the nobility track and basic public player stats.
+	 * 
+	 * @param game the game model from which GUI objects are created
+	 * @return the created main top layer pane
+	 */
 	public GUIPanel createMainPane(Game game) {
 		
 		GUIPanel mainPane = new GUIPanel();
@@ -143,6 +157,19 @@ public final class GUICreator {
 		
 	}
 	
+	/**
+	 * Creates the right pane, to be added to the main top layer pane.
+	 * The layout manager for this pane is MigLayout with vertical flow.
+	 * 
+	 * The pane returned by this method contains the input form, the king balcony, the available councillors,
+	 * the action buttons, the politics cards and the permit tiles in the player's hand.
+	 * 
+	 * @param game the game model from which GUI objects are created
+	 * @param form the input form to place in the panel
+	 * @param playerName unique identifier of the player who is playing on this client
+	 * @param connection the client connection used to communicate with the server
+	 * @return the created right pane, ready to be added to the main pane
+	 */
 	public GUIPanel createRightPane(Game game, GUIForm form, String playerName, ClientConnection connection) {
 		
 		// Create right pane with another MiGLayout
@@ -333,6 +360,13 @@ public final class GUICreator {
 		
 	}
 	
+	/**
+	 * Creates the city connection pane, to be added as the bottom layer in the layered pane.
+	 * 
+	 * @param component the city center points will be relative to this component
+	 * @param game the game model from which connections are created
+	 * @return the created connection pane, ready to be added as the bottom layer in the layered pane
+	 */
 	public GUIPanel createConnections(Component component, Game game) {
 		
 		for (GUICity city : cities.values()) {

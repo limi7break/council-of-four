@@ -8,10 +8,19 @@ import javax.swing.JLabel;
 
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This is the GUI representation of a player, containing basic player stats.
+ *
+ */
 public class GUIPlayer extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
 
+	/**
+	 * Creates the GUI representation of the player passed as parameter.
+	 * 
+	 * @param player the player from which the GUI representation is created
+	 */
 	protected GUIPlayer(Player player) {
 		
 		super(new BorderLayout());

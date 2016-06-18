@@ -34,6 +34,13 @@ public class CmdInterpreter {
 		
 	}
 	
+	/**
+	 * Parses the command entered by the user trying to match it with regular expressions
+	 * Returns a request message which corresponds to the entered command, ready to be sent to the server.
+	 * 
+	 * @param cmd the input command entered by the user from the command line interface
+	 * @return the created request msg ready to be sent, or null if the command does not match any of the regular expressions
+	 */
 	public static RequestMsg parseCommand(String cmd) {
 		
 		@SuppressWarnings("resource")

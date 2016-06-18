@@ -15,6 +15,10 @@ import it.polimi.ingsw.ps13.view.client.gui.component.GUICouncillorBalcony;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIForm;
 import it.polimi.ingsw.ps13.view.client.gui.component.GUIRegion;
 
+/**
+ * This listener is added to the GUI action button for performing ElectCouncillorAction.
+ *
+ */
 public class ElectCouncillorListener extends GUIListener {
 
 	private String region;
@@ -24,6 +28,16 @@ public class ElectCouncillorListener extends GUIListener {
 	private final Collection<GUICouncillor> councillors;
 	private final GUICouncillorBalcony kingBalcony;
 	
+	/**
+	 * Creates a new ElectCouncillorListener.
+	 * 
+	 * @param regions every GUI region
+	 * @param councillors every GUI councillor that is not in a GUI councillor balcony
+	 * @param kingBalcony the king GUI councillor balcony
+	 * @param form the input form used to display useful info for the player
+	 * @param connection the client connection used to communicate with the server
+	 * @param confirmButton the button used to confirm the action
+	 */
 	public ElectCouncillorListener(Collection<GUIRegion> regions, Collection<GUICouncillor> councillors, GUICouncillorBalcony kingBalcony, GUIForm form, ClientConnection connection, JButton confirmButton) {
 		
 		super(form, connection, confirmButton);
@@ -34,6 +48,12 @@ public class ElectCouncillorListener extends GUIListener {
 		
 	}
 
+	/**
+	 * Adds appropriate MouseListeners to every clickable GUI object involved in the action,
+	 * which collect user input and store it in the class' state, and modifies the behavior
+	 * of the confirm button to send the correct request message to the server.
+	 * 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -80,6 +100,10 @@ public class ElectCouncillorListener extends GUIListener {
 
 	}
 	
+	/**
+	 * Correct behavior of the confirm button for this action. 
+	 * 
+	 */
 	private void confirmAction(ActionEvent ae) {
 		
 		connection.sendMessage(new ElectCouncillorRequestMsg(region, councillor));

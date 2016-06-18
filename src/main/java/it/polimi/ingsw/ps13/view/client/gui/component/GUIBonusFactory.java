@@ -17,6 +17,10 @@ import it.polimi.ingsw.ps13.model.resource.Assistants;
 import it.polimi.ingsw.ps13.model.resource.Coins;
 import it.polimi.ingsw.ps13.model.resource.VictoryPoints;
 
+/**
+ * This class loads the bonus images, converts a bonus into its GUI representation and adds it to the desired panel.
+ *
+ */
 public final class GUIBonusFactory {
 
 	private GUIBonusFactory() { }

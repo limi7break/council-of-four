@@ -38,7 +38,7 @@ public class GameClient {
 	}
 	
 	/**
-	 * Starts the client based on user choice.
+	 * Starts the client based on user's UI and connection choices.
 	 * 
 	 */
 	public static void main(String[] args) {
@@ -51,7 +51,7 @@ public class GameClient {
 	/**
 	 * Makes user choose between RMI and SOCKET and tries to establish a connection with the server.
 	 * 
-	 * @return the initialized chosen connection
+	 * @return the initialized connection object
 	 */
 	public ClientConnection chooseConnection() {
 

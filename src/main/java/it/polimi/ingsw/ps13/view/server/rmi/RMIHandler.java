@@ -14,6 +14,17 @@ import it.polimi.ingsw.ps13.message.response.unicast.UnicastMsg;
 import it.polimi.ingsw.ps13.view.client.rmi.ClientRMIRemote;
 import it.polimi.ingsw.ps13.view.server.Handler;
 
+/**
+ * This class represents a single RMI connection on the server.
+ * 
+ * When a request msg is received, it's passed to the game controller via notify.
+ * The controller then notifies the handler with a response msg, which is sent to the client. 
+ *
+ * This handler sends response messages to the client through the client stub's
+ * updateClient method, and receives request messages through the remote processRequest
+ * method.
+ * 
+ */
 public class RMIHandler extends Handler implements RMIHandlerRemote, Serializable {
 
 	private static final long serialVersionUID = 0L;
@@ -25,6 +36,12 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 	
 	private boolean running;
 	
+	/**
+	 * Creates a new RMIHandler with the specified player name (unique identifier).
+	 * 
+	 * @param clientStub the client stub used for sending response messages
+	 * @param playerName unique identifier of the player using this connection
+	 */
 	public RMIHandler(ClientRMIRemote clientStub, String playerName) {
 		
 		this.clientStub = clientStub;
@@ -34,11 +51,16 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 		
 	}
 	
+	/**
+	 * Response msg coming from the game controller is sent to the client.
+	 * 
+	 * Unicast messages are sent only to the recipient.
+	 * Multicast messages are sent to everyone except the excluded player.
+	 * 
+	 */
 	@Override
 	public void update(ResponseMsg msg) {
-		
-		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
-		// Only the recipient of a UnicastMsg receives it
+
 		if (running &&
 			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getExcludedPlayer() == playerName)
 			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getRecipient() != playerName))) {
@@ -67,11 +89,18 @@ public class RMIHandler extends Handler implements RMIHandlerRemote, Serializabl
 	@Override
 	public void processRequest(RequestMsg msg) throws RemoteException {
 		
-		msg.setPlayerName(playerName);
-		notifyObserver(msg);
+		if (running) {
+			msg.setPlayerName(playerName);
+			notifyObserver(msg);
+		}
 		
 	}
 	
+	/**
+	 * Stops the handler.
+	 * The handler will not be able to send or receive messages.
+	 * 
+	 */
 	public void stop() {
 		
 		running = false;

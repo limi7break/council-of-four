@@ -19,6 +19,10 @@ import javax.swing.SwingUtilities;
 import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.region.City;
 
+/**
+ * This is the GUI representation of a city.
+ *
+ */
 public class GUICity extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
@@ -28,6 +32,11 @@ public class GUICity extends GUIPanel {
 	private final String name;
 	private final JLabel image;
 	
+	/**
+	 * Creates the GUI representation of the city passed as parameter.
+	 * 
+	 * @param city the city from which the GUI representation is created
+	 */
 	protected GUICity(City city) {
 		
 		super(new BorderLayout());
@@ -74,7 +83,9 @@ public class GUICity extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the name of the city.
 	 * 
+	 * @return the name of the city
 	 */
 	@Override
 	public String getName() {
@@ -84,8 +95,9 @@ public class GUICity extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the center point of the city image.
 	 * 
-	 * @return
+	 * @return the center point of the city image
 	 */
 	protected Point getCenterPoint() {
 		
@@ -94,8 +106,9 @@ public class GUICity extends GUIPanel {
 	}
 	
 	/**
+	 * Sets the center point of the city relative to the component passed as parameter.
 	 * 
-	 * @param component
+	 * @param component the city center point will be relative to this component
 	 */
 	protected void setCenterPointRelativeTo(Component component) {
 	
@@ -104,6 +117,7 @@ public class GUICity extends GUIPanel {
 	}
 	
 	/**
+	 * Sets the king to be displayed on the city.
 	 * 
 	 */
 	protected void setKing() {

@@ -16,6 +16,10 @@ import javax.swing.SwingConstants;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.region.Region;
 
+/**
+ * This is the GUI representation of a region.
+ *
+ */
 public class GUIRegion extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
@@ -25,6 +29,11 @@ public class GUIRegion extends GUIPanel {
 	private final List<GUIPermitTile> tiles;
 	private final String name;
 
+	/**
+	 * Creates the GUI representation of the region passed as parameter.
+	 * 
+	 * @param region the region from which the GUI representation is created
+	 */
 	protected GUIRegion(Region region) {
 		
 		super(new BorderLayout());
@@ -75,8 +84,9 @@ public class GUIRegion extends GUIPanel {
 	}
 	
 	/**
+	 * Adds the passed GUI city to the region
 	 * 
-	 * @param city
+	 * @param city the city to be added to the region
 	 */
 	protected void addCity(GUICity city) {
 		
@@ -85,7 +95,9 @@ public class GUIRegion extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the name of the region.
 	 * 
+	 * @return the name of the region
 	 */
 	@Override
 	public String getName() {
@@ -95,8 +107,9 @@ public class GUIRegion extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the GUI councillor balcony of the region.
 	 * 
-	 * @return
+	 * @return the GUI councillor balcony of the region.
 	 */
 	public GUICouncillorBalcony getCouncillorBalcony() {
 		
@@ -105,8 +118,9 @@ public class GUIRegion extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the visible GUI permit tiles of the region.
 	 * 
-	 * @return
+	 * @return the visible GUI permit tiles of the region.
 	 */
 	public List<GUIPermitTile> getVisibleTiles() {
 		

@@ -29,7 +29,7 @@ public class City implements Serializable {
 	/**
 	 * 
 	 */
-	protected City(String name, Region region, CityColor color, Bonus bonus) { 
+	public City(String name, Region region, CityColor color, Bonus bonus) {
 		
 		this.name = name;
 		this.region = region;
