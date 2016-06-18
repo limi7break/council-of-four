@@ -1,8 +1,11 @@
 package it.polimi.ingsw.ps13.model.resource;
 
+import it.polimi.ingsw.ps13.model.player.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.awt.*;
 
 import static org.junit.Assert.*;
 
@@ -54,6 +57,13 @@ public class VictoryPointsTest {
         VictoryPoints empity = new VictoryPoints(0);
         assertTrue(empity.isEmpty());
 
+    }
+
+    @Test
+    public void giveTo(){
+        Player p = new Player("player", Color.green,"green",0,null);
+        victoryPoints.giveTo(p);
+        assertEquals(p.getVictoryPoints(),10);
     }
 
 

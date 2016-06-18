@@ -15,9 +15,7 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Tommy on 15/06/16.
- */
+
 public class PermitTileTest {
 
     PermitTile permitTile;
@@ -60,11 +58,12 @@ public class PermitTileTest {
     @Test
     public void setUsable() throws Exception {
 
-        assertEquals(permitTile.isUsable(), true);
+        assertTrue(permitTile.isUsable());
         permitTile.setUsable(false);
-        assertEquals(permitTile.isUsable(), false);
+        assertFalse(permitTile.isUsable());
 
     }
+
 
     @Test
     public void giveTo() throws Exception {

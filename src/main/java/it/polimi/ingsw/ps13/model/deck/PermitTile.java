@@ -32,7 +32,7 @@ public final class PermitTile implements Marketable, Serializable {
 	 * @param bonus
 	 * @param cityNames
 	 */
-	protected PermitTile(Bonus bonus, Set<String> cityNames) {
+	public PermitTile(Bonus bonus, Set<String> cityNames) {
 		
 		this.bonus = bonus;
 		
