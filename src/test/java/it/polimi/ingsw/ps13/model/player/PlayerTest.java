@@ -1,23 +1,23 @@
 package it.polimi.ingsw.ps13.model.player;
 
-import it.polimi.ingsw.ps13.model.bonus.Bonus;
-import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
-import it.polimi.ingsw.ps13.model.council.Councillor;
-import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
-import it.polimi.ingsw.ps13.model.deck.PermitTile;
-import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
-import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
-import it.polimi.ingsw.ps13.model.region.City;
-import it.polimi.ingsw.ps13.model.region.CityColor;
-import it.polimi.ingsw.ps13.model.region.Region;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-import java.util.*;
-
-import static org.junit.Assert.*;
+import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
+import it.polimi.ingsw.ps13.model.deck.PermitTile;
+import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 
 
 public class PlayerTest {
