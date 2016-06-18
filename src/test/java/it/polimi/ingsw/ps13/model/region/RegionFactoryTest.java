@@ -28,7 +28,7 @@ import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalconyFactory;
 
 /**
- * 
+ * Region factory class tested.
  *
  */
 public class RegionFactoryTest {

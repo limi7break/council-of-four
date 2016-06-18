@@ -345,6 +345,7 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * True if a councillor of the given color is free on the board to be used.
 	 * 
 	 * @param color
 	 * @return
