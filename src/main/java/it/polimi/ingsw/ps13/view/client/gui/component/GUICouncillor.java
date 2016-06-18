@@ -11,6 +11,10 @@ import javax.swing.JLabel;
 
 import it.polimi.ingsw.ps13.model.council.Councillor;
 
+/**
+ * This is the GUI representation of a councillor.
+ *
+ */
 public class GUICouncillor extends JLabel {
 
 	private static final Logger LOG = Logger.getLogger(GUICouncillor.class.getSimpleName());
@@ -20,6 +24,11 @@ public class GUICouncillor extends JLabel {
 	
 	private final String colorName;
 	
+	/**
+	 * Creates the GUI representation of the councillor passed as parameter.
+	 * 
+	 * @param councillor the councillor from which the GUI representation is created
+	 */
 	protected GUICouncillor(Councillor councillor) {
 		
 		super(new ImageIcon(GUIPanel.colorize(councillorImage, councillor.getColor(), 255)));
@@ -30,8 +39,9 @@ public class GUICouncillor extends JLabel {
 	}
 	
 	/**
+	 * Returns the name of this councillor's color.
 	 * 
-	 * @return
+	 * @return the name of this councillor's color
 	 */
 	public String getColorName() {
 		
@@ -40,8 +50,9 @@ public class GUICouncillor extends JLabel {
 	}
 	
 	/**
+	 * Loads the councillor image.
 	 * 
-	 * @return
+	 * @return the councillor image
 	 */
 	private static BufferedImage loadCouncillorImage() {
 		

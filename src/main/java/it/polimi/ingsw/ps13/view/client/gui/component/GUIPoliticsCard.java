@@ -12,6 +12,10 @@ import javax.swing.JLabel;
 
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 
+/**
+ * This is the GUI representation of a politics card.
+ *
+ */
 public class GUIPoliticsCard extends JLabel {
 
 	private static final Logger LOG = Logger.getLogger(GUIPoliticsCard.class.getSimpleName());
@@ -24,6 +28,11 @@ public class GUIPoliticsCard extends JLabel {
 	private final String colorName;
 	private boolean selected;
 	
+	/**
+	 * Creates the GUI representation of the politics card passed as parameter.
+	 * 
+	 * @param card the politics card from which the GUI representation is created
+	 */
 	protected GUIPoliticsCard(PoliticsCard card) {
 		
 		super();
@@ -41,8 +50,9 @@ public class GUIPoliticsCard extends JLabel {
 	}
 
 	/**
+	 * Returns the name of this councillor's color.
 	 * 
-	 * @return
+	 * @return the name of this councillor's color
 	 */
 	public String getColorName() {
 		
@@ -52,7 +62,7 @@ public class GUIPoliticsCard extends JLabel {
 	
 	/**
 	 * 
-	 * @return
+	 * @return true if the card is selected
 	 */
 	public boolean isSelected() {
 		
@@ -61,7 +71,9 @@ public class GUIPoliticsCard extends JLabel {
 	}
 	
 	/**
+	 * Sets the selected status of this card to the passed boolean value 
 	 * 
+	 * @param isSelected the new selected status of the card
 	 */
 	public void setSelected(boolean isSelected) {
 		
@@ -72,6 +84,7 @@ public class GUIPoliticsCard extends JLabel {
 	}
 	
 	/**
+	 * Draws the tick image over the card, if the card is selected.
 	 * 
 	 */
 	@Override
@@ -86,8 +99,9 @@ public class GUIPoliticsCard extends JLabel {
 	}
 	
 	/**
+	 * Loads the politics card image.
 	 * 
-	 * @return
+	 * @return the politics card image
 	 */
 	private static BufferedImage loadPoliticsCardImage() {
 		
@@ -102,8 +116,9 @@ public class GUIPoliticsCard extends JLabel {
 	}
 	
 	/**
+	 * Loads the jolly politics card image.
 	 * 
-	 * @return
+	 * @return the jolly politics card image
 	 */
 	private static BufferedImage loadJollyImage() {
 
@@ -118,8 +133,9 @@ public class GUIPoliticsCard extends JLabel {
 	}
 	
 	/**
+	 * Loads the tick image.
 	 * 
-	 * @return
+	 * @return the tick image
 	 */
 	private static BufferedImage loadTickImage() {
 		

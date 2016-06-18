@@ -19,7 +19,7 @@ import it.polimi.ingsw.ps13.view.server.rmi.RMIHandlerRemote;
 import it.polimi.ingsw.ps13.view.server.rmi.RMIServerRemote;
 
 /**
- * This client is started when the RMI connection type is chosen.
+ * This object is created when the RMI connection type is chosen.
  *
  */
 public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, ClientConnection {
@@ -37,6 +37,17 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	
 	private boolean active;
 
+	/**
+	 * Creates a new RMI connection.
+	 * 
+	 * The constructor of this object tries to connect to the RMI registry and get the server stub via lookup.
+	 * Then a call to the server stub's only method, connect(), returns the handler stub used to send request
+	 * messages to the server.
+	 * 
+	 * @throws RemoteException
+	 * @throws NotBoundException
+	 * @throws AlreadyBoundException
+	 */
 	public ClientRMI() throws RemoteException, NotBoundException, AlreadyBoundException {
 		
 		inbox = new ArrayList<>();
@@ -56,6 +67,14 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 		
 	}
 	
+	/**
+	 * This method is called by a thread which reads response messages from the server.
+	 * If the inbox is empty, this method is blocking.
+	 * 
+	 * The notify is called by updateClient, which is part of the remote interface ClientRMIRemote,
+	 * as soon as a new message has been sent from the server and added to the inbox.
+	 * 
+	 */
 	@Override
 	public synchronized ResponseMsg receiveMessage() {
 		
@@ -72,6 +91,12 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 		
 	}
 
+	/**
+	 * Calls the remote processRequest method on the handler stub.
+	 * If the server has disconnected since the last time this method has been called, shuts
+	 * this connection down by setting the active flag to false.
+	 * 
+	 */
 	@Override
 	public void sendMessage(RequestMsg msg) {
 		
@@ -94,6 +119,11 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 		
 	}
 
+	/**
+	 * This method is called by the server on the RMI client stub. Adds the response message to the inbox
+	 * and notifies the consumer thread, so the message is correctly handled by the client.
+	 * 
+	 */
 	@Override
 	public synchronized void updateClient(ResponseMsg msg) throws RemoteException {
 		
@@ -103,8 +133,9 @@ public class ClientRMI extends UnicastRemoteObject implements ClientRMIRemote, C
 	}
 	
 	/**
+	 * Returns true if the connection is active.
 	 * 
-	 * @return
+	 * @return true if the connection is active
 	 */
 	@Override
 	public boolean isActive() {

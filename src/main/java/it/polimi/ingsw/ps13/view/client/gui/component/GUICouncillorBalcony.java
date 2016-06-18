@@ -13,11 +13,20 @@ import javax.swing.JLabel;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 
+/**
+ * This is the GUI representation of a councillor balcony.
+ *
+ */
 public class GUICouncillorBalcony extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
 	private static final Logger LOG = Logger.getLogger(GUICouncillorBalcony.class.getSimpleName());
 
+	/**
+	 * Creates the GUI representation of the councillor balcony passed as parameter.
+	 * 
+	 * @param balcony the councillor balcony from which the GUI representation is created
+	 */
 	protected GUICouncillorBalcony(CouncillorBalcony balcony) {
 		
 		super(new FlowLayout());

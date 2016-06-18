@@ -12,6 +12,11 @@ import javax.swing.text.DefaultCaret;
 
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * This panel contains a text area wrapped in a scroll pane with a smart scroller,
+ * and a text field for user input.
+ *
+ */
 public class GUIForm extends GUIPanel {
 	
 	private static final long serialVersionUID = 0L;
@@ -19,6 +24,10 @@ public class GUIForm extends GUIPanel {
 	private final JTextArea textArea;
 	private final JTextField textField;
 	
+	/**
+	 * Creates a new GUIForm.
+	 * 
+	 */
 	public GUIForm() {
 		
 		super(new MigLayout("fill, flowy", "", ""));
@@ -51,8 +60,9 @@ public class GUIForm extends GUIPanel {
 	}
 	
 	/**
+	 * Appends the passed string to the text area.
 	 * 
-	 * @param str
+	 * @param str the message to append to the text area
 	 */
 	public void append(String str) {
 		
@@ -64,8 +74,9 @@ public class GUIForm extends GUIPanel {
 	}
 	
 	/**
+	 * Appends the passed string to the text area as an information message.
 	 * 
-	 * @param str
+	 * @param str the information message to append to the text area
 	 */
 	public void appendInfo(String str) {
 		
@@ -77,22 +88,24 @@ public class GUIForm extends GUIPanel {
 	}
 	
 	/**
+	 * Appends the passed string to the text area as a chat message.
 	 * 
-	 * @param player
-	 * @param str
+	 * @param sender the sender of the chat message
+	 * @param str the content of the chat message
 	 */
-	public void appendChat(String player, String str) {
+	public void appendChat(String sender, String str) {
 		
 		textArea.append("\n");
-		textArea.append("[" + player + "] " + str);
+		textArea.append("[" + sender + "] " + str);
 		revalidate();
 		repaint();
 		
 	}
 	
 	/**
+	 * Returns the input form's text field.
 	 * 
-	 * @return
+	 * @return the input form's text field
 	 */
 	public JTextField getTextField() {
 		

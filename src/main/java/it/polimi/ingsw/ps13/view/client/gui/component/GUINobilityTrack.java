@@ -9,13 +9,18 @@ import javax.swing.JLabel;
 import it.polimi.ingsw.ps13.model.board.NobilityTrack;
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 
+/**
+ * This is the GUI representation of the nobility track.
+ *
+ */
 public class GUINobilityTrack extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
 
 	/**
+	 * Creates the GUI representation of the nobility track passed as parameter.
 	 * 
-	 * @param nobilityTrack
+	 * @param nobilityTrack the nobilityTrack from which the GUI representation is created
 	 */
 	protected GUINobilityTrack(NobilityTrack nobilityTrack) {
 		

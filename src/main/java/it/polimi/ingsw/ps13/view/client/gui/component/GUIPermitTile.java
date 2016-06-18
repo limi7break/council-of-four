@@ -11,11 +11,21 @@ import javax.swing.SwingConstants;
 
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 
+/**
+ * This is the GUI representation of a permit tile.
+ *
+ */
 public class GUIPermitTile extends GUIPanel {
 
 	private static final long serialVersionUID = 0L;
 	private final int number;
 
+	/**
+	 * Creates the GUI representation of the permit tile passed as parameter.
+	 * 
+	 * @param tile the permit tile from which the GUI representation is created
+	 * @param number the number of the permit tile
+	 */
 	protected GUIPermitTile(PermitTile tile, int number) {
 	
 		super(new BorderLayout());
@@ -47,8 +57,9 @@ public class GUIPermitTile extends GUIPanel {
 	}
 	
 	/**
+	 * Returns the number of the permit tile.
 	 * 
-	 * @return
+	 * @return the number of the permit tile
 	 */
 	public int getNumber() {
 		

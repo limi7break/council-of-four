@@ -16,6 +16,13 @@ import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 import it.polimi.ingsw.ps13.view.client.ClientView;
 
+/**
+ * This is a Command Line Interface (CLI) type of view for the client.
+ * Every command is read by a scanner on an output thread, parsed and executed.
+ * Every response message received from the server is read by an input thread and handled according
+ * to the type of the message.
+ *
+ */
 public class ClientCLI implements ClientView {
 	
 	private static final Scanner scanner = new Scanner(System.in);
@@ -25,15 +32,20 @@ public class ClientCLI implements ClientView {
 	private Game game;
 	private String playerName;
 	
+	/**
+	 * Starts the Command Line Interface (CLI).
+	 * 
+	 */
 	@Override
 	public void run() {
 		
 		startHandlers();
+		System.out.println("Waiting for the game to start...");
 		
 	}
 	
 	/**
-	 *
+	 * Shows a list of possible commands.
 	 * 
 	 */
 	@Override
@@ -44,7 +56,8 @@ public class ClientCLI implements ClientView {
 	}
 	
 	/**
-	 *
+	 * This method handles user commands that do not send messages to the server, but show some specfic
+	 * information from the local game model instead.
 	 * 
 	 * @param command
 	 */
@@ -172,6 +185,12 @@ public class ClientCLI implements ClientView {
 				System.out.println("get rt <city>");
 				System.out.println("get tb <tile number>");
 				System.out.println();
+				
+				System.out.println("PASS ACTION");
+				System.out.println("pass");
+				break;
+			case "quit":
+				System.exit(0);
 				break;
 			default:
 				System.out.println("Command not recognized.");
@@ -181,6 +200,7 @@ public class ClientCLI implements ClientView {
 	}
 	
 	/**
+	 * Handles the received message according to the type of the message.
 	 *
 	 */
 	public void handleMessage(ResponseMsg msg) {
@@ -213,6 +233,13 @@ public class ClientCLI implements ClientView {
 		
 	}
 	
+	/**
+	 * This method starts two threads, which loop while the client connection is active:
+	 * 
+	 * 		- An output thread, which listens for user input on a scanner and calls methods to elaborate it.
+	 * 		- An input thread, which listens for server messages on the client connection and passes them to handleMessage.
+	 * 
+	 */
 	public void startHandlers() {
 		
 		// This is the output handler
@@ -249,6 +276,10 @@ public class ClientCLI implements ClientView {
 		
 	}
 
+	/**
+	 * Sets the connection for the client.
+	 * 
+	 */
 	@Override
 	public void setConnection(ClientConnection connection) {
 		 

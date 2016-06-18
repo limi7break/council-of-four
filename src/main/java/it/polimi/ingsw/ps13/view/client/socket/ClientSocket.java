@@ -13,7 +13,7 @@ import it.polimi.ingsw.ps13.message.response.ResponseMsg;
 import it.polimi.ingsw.ps13.view.client.ClientConnection;
 
 /**
- * This class is created when the socket connection type is chosen.
+ * This object is created when the socket connection type is chosen.
  *
  */
 public class ClientSocket implements ClientConnection {
@@ -29,7 +29,10 @@ public class ClientSocket implements ClientConnection {
 	private boolean active;
 	
 	/**
-	 * A new socket connection is created.
+	 * Creates a new socket connection.
+	 * 
+	 * The constructor of this object tries to connect to the server socket and get the object input
+	 * and output streams.
 	 * 
 	 * @throws IOException
 	 */
@@ -51,6 +54,13 @@ public class ClientSocket implements ClientConnection {
 		
 	}
 
+	/**
+	 * This method is called by a thread which reads response messages from the server.
+	 * It blocks on readObject, and returns as soon as a new message is received.
+	 * 
+	 * If the server disconnects, shuts this connection down by setting the active flag to false.
+	 * 
+	 */
 	@Override
 	public ResponseMsg receiveMessage() {
 		
@@ -71,6 +81,10 @@ public class ClientSocket implements ClientConnection {
 		
 	}
 
+	/**
+	 * Sends a request message to the server through the object output stream.
+	 * 
+	 */
 	@Override
 	public synchronized void sendMessage(RequestMsg msg) {
 		
@@ -90,8 +104,9 @@ public class ClientSocket implements ClientConnection {
 	}
 	
 	/**
+	 * Returns true if the connection is active.
 	 * 
-	 * @return
+	 * @return true if the connection is active
 	 */
 	@Override
 	public boolean isActive() {

@@ -21,6 +21,9 @@ import it.polimi.ingsw.ps13.view.server.Handler;
  * When a request msg is received, it's passed to the game controller via notify.
  * The controller then notifies the handler with a response msg, which is sent to the client. 
  *
+ * This handler sends response messages to the client through the socket's output stream
+ * and receives request messages through the socket's input stream.
+ *
  */
 public class SocketHandler extends Handler implements Runnable {
 	
@@ -33,6 +36,13 @@ public class SocketHandler extends Handler implements Runnable {
 	
 	private boolean running;
 	
+	/**
+	 * Creates a new SocketHandler with the specified player name (unique identifier).
+	 * 
+	 * @param socket the socket used for communication with the client
+	 * @param playerName unique identifier of the player using this connection
+	 * @throws IOException
+	 */
 	public SocketHandler(Socket socket, String playerName) throws IOException {
 		
 		oos = new ObjectOutputStream(socket.getOutputStream());
@@ -47,16 +57,13 @@ public class SocketHandler extends Handler implements Runnable {
 	/**
 	 * Response msg coming from the game controller is sent to the client.
 	 * 
-	 * If it is an unicast response msg and this IS NOT the recipient's handler, the message is not sent.
-	 * If it is a multicast response msg and this IS the handler of the player name written on the message,
-	 * the message is not sent.
+	 * Unicast messages are sent only to the recipient.
+	 * Multicast messages are sent to everyone except the excluded player.
 	 * 
 	 */
 	@Override
 	public synchronized void update(ResponseMsg msg) {
 
-		// A MulticastMsg is sent to everyone except to the player whose name is written on the message
-		// Only the recipient of a UnicastMsg receives it
 		if (running && 
 			!( (msg instanceof MulticastMsg && ((MulticastMsg) msg).getExcludedPlayer() == playerName)
 			|| (msg instanceof UnicastMsg && ((UnicastMsg) msg).getRecipient() != playerName))) {
@@ -105,6 +112,11 @@ public class SocketHandler extends Handler implements Runnable {
 		
 	}
 	
+	/**
+	 * Stops the handler.
+	 * The handler will not be able to send or receive messages.
+	 * 
+	 */
 	public void stop() {
 		
 		running = false;

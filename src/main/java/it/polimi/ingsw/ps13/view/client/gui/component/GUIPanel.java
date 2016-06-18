@@ -9,28 +9,34 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+/**
+ * This is a JPanel with added methods for setting a truly transparent background and
+ * applying a color overlay to an image.
+ *
+ */
 public class GUIPanel extends JPanel {
 
 	private static final long serialVersionUID = 0L;
 	
+	/**
+	 * Constructor from superclass.
+	 * 
+	 */
 	public GUIPanel() {
 		super();
 	}
 
-	public GUIPanel(boolean arg0) {
-		super(arg0);
-	}
-
-	public GUIPanel(LayoutManager arg0, boolean arg1) {
-		super(arg0, arg1);
-	}
-
+	/**
+	 * Constructor from superclass.
+	 * 
+	 * @param arg0
+	 */
 	public GUIPanel(LayoutManager arg0) {
 		super(arg0);
 	}
 
 	/**
-	 * Sets a transparent background to this panel, letting you see the components underneath.
+	 * Sets a transparent background to this panel, letting the components underneath show through (if any).
 	 * Useful when stacking more than one panel on top of each other. 
 	 * 
 	 * @param isTransparent
@@ -48,12 +54,11 @@ public class GUIPanel extends JPanel {
 	}
 	
 	/**
-	 * This method is used to automatically colorize an image with the passed color and
-	 * the selected level of transparency.
+	 * This method is used to overlay an image with the selected color and level of transparency.
 	 * 
-	 * @param image
-	 * @param color
-	 * @return
+	 * @param image the image to paint
+	 * @param color the color to apply to the image
+	 * @return the colored image
 	 */
 	protected static BufferedImage colorize(BufferedImage image, Color color, int alpha) {
 		
