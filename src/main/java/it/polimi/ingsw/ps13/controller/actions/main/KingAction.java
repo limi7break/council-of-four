@@ -43,7 +43,7 @@ public class KingAction implements Action {
 	public KingAction(String playerName, String city, Collection<String> cards) {
 		
 		this.playerName = playerName;
-		this.city = capitalizeFirstLetter(city);
+		this.city = city;
 		this.cards = cards;
 		
 		cardColors = new ArrayList<>();
@@ -201,13 +201,6 @@ public class KingAction implements Action {
 		
 		player.consumeMainAction();
 		
-	}
-	
-	private String capitalizeFirstLetter(String original) {
-	    if (original == null || original.length() == 0) {
-	        return original;
-	    }
-	    return original.substring(0, 1).toUpperCase() + original.substring(1);
 	}
 		
 }

@@ -227,8 +227,11 @@ public class ClientCLI implements ClientView {
 				}
 				
 				// Some commands are elaborated locally
-				else {
+				else if (game != null) {
 					localCommand(cmd);
+				}
+				else {
+					System.out.println("Command not available until the game is started!");
 				}
 				
 			}
