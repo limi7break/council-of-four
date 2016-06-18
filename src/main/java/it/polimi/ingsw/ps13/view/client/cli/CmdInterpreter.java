@@ -158,11 +158,15 @@ public class CmdInterpreter {
 		}
 		
 		// Buy action
-		else if (cmd.matches("^buy\\s([0-9]+)$")) {
+		else if (cmd.matches("^buy\\s([0-9]+(\\s{1}[0-9]+)*)$")) {
             String param = cmd.replaceFirst("buy ", "");
-            int entry = Integer.parseInt(param);
+            List<Integer> entries = new ArrayList<>();
+            String[] entryParams = param.split(" ");
+            for (int i=0; i<entryParams.length; i++) {
+            	entries.add(Integer.parseInt(entryParams[i]));
+            }
             
-            msg = new OfferSelectionRequestMsg(entry);
+            msg = new OfferSelectionRequestMsg(entries);
 		}
 		
 		// Get visible tile bonus action

@@ -17,7 +17,12 @@ import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.resource.Assistants;
 
 /**
- * The items filling the entry have to be removed from the player supply by this action factory.
+ * This action is performed when a player wants to sell a Marketable item during the sell
+ * market phase. The items filling the entry are removed from the player supply by this action's apply method
+ * and put in the market. If by the end of the sell market phase no one has bought the entry, the items
+ * are returned to the player.
+ * 
+ * This action is a sell action and can only be performed once during the sell market phase.
  *
  */
 public class TradeProposalAction implements Action {
@@ -34,8 +39,11 @@ public class TradeProposalAction implements Action {
 	
 	/**
 	 * 
-	 * @param player
-	 * @param entry
+	 * @param playerName unique identifier of the player wanting to perform the action
+	 * @param assistants the number of assistants the player wants to sell
+	 * @param tiles the number of the permit tiles (in the player's hand) the player wants to sell
+	 * @param cards the colors of the politics cards the player wants to sell
+	 * @param price the price in coins the player has entered for the market entry
 	 */
 	public TradeProposalAction(String playerName, int assistants, Collection<Integer> tiles, Collection<String> cards, int price) {
 		
@@ -50,9 +58,13 @@ public class TradeProposalAction implements Action {
 	}
 	
 	/**
+	 * This action is legal if all these conditions are satisfied:
 	 * 
-	 * @param g
-	 * @return
+	 * 		- Player has got the appropriate action token
+	 * 		- Player has the declared amount of assistants
+	 * 		- Player has selected valid permit tiles from hand
+	 * 		- Player has selected valid politics colors
+	 * 		- Player has the declared politics cards
 	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
@@ -110,8 +122,8 @@ public class TradeProposalAction implements Action {
 	}
 
 	/**
+	 * Executes the action on the passed Game, effectively modifying it.
 	 * 
-	 * @param g
 	 */
 	@Override
 	public void apply(Game g) {

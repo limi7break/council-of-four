@@ -111,7 +111,7 @@ public class ActionFactory implements ActionVisitor {
 	public Action visit(OfferSelectionRequestMsg buy) {
 		
 		String playerName = buy.getPlayerName();
-		int entry = buy.getEntry();
+		Collection<Integer> entry = buy.getEntries();
 		
 		return new OfferSelectionAction(playerName, entry);
 		

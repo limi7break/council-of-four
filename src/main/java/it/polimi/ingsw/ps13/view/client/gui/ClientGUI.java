@@ -174,16 +174,19 @@ public class ClientGUI extends JFrame implements ClientView {
 		if (msg instanceof UpdateResponseMsg) {
 			UpdateResponseMsg updateMsg = (UpdateResponseMsg)msg;
 			
-			if (this.game == null) {
+			if (this.game == null)
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
-			}
 			
-			if (market != null && market.isVisible()) {
+			if (market != null && market.isVisible())
 				SwingUtilities.invokeLater(market::dispose);
-			}
 			
 			this.game = updateMsg.getGame();
 			showModel();
+			
+			if (game.getCurrentPlayerName().equals(playerName)) {
+				toFront();
+				requestFocus();
+			}
 			
 			form.append(updateMsg.getMessage());
 		}
@@ -229,6 +232,21 @@ public class ClientGUI extends JFrame implements ClientView {
 		 
 		this.connection = connection;
 		
+	}
+	
+	/**
+	 * Brings frame to the front in a strange and weird way.
+	 * 
+	 */
+	@Override
+	public void toFront() {
+		int state = super.getExtendedState();
+		state &= ~JFrame.ICONIFIED;
+		super.setExtendedState(state);
+		super.setAlwaysOnTop(true);
+		super.toFront();
+		super.requestFocus();
+		super.setAlwaysOnTop(false);
 	}
 	
 }

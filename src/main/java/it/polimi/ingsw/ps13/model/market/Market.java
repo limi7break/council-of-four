@@ -48,13 +48,13 @@ public class Market implements Serializable {
 	
 	/**
 	 * Manages the transaction when a player selects an entry from the market.
-	 * As a result, the entry is removed from the list.
+	 * The entry is not removed from the market: it needs to be removed after the transaction has ended.
 	 * 
 	 */
 	public void manageTransaction(Player buyer, int selectedEntry) {
 		
 		// Removes selected entry from the market
-		MarketEntry entry = entryList.remove(selectedEntry);
+		MarketEntry entry = entryList.get(selectedEntry);
 		
 		// Subtracts coins from the buyer and adds them to the seller
 		int price = entry.getPrice();
@@ -67,6 +67,19 @@ public class Market implements Serializable {
 			item.giveTo(buyer);
 		}
 		
+	}
+	
+	/**
+	 * Removes the selected entries from the market.
+	 * 
+	 */
+	public void removeEntries(List<Integer> selectedEntries) {
+		
+		Collections.sort(selectedEntries);
+		
+		for (int i=0; i<selectedEntries.size(); i++) {
+			entryList.remove(selectedEntries.get(i) - i);
+		}
 	}
 	
 	/**
@@ -138,7 +151,7 @@ public class Market implements Serializable {
 				sb.append("empty\n");
 			} else {
 				for (int i=0; i<entryList.size(); i++) {
-					sb.append("[" + i + "]");
+					sb.append("\n[" + i + "]");
 					sb.append(entryList.get(i).toString());
 				}
 			}

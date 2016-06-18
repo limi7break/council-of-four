@@ -49,7 +49,7 @@ public class GUIMarketEntry extends GUIPanel {
 		price.add(new JLabel("Price: "));
 		GUIBonusFactory.createBonus(new Coins(entry.getPrice()), price);
 		
-		selectButton = new JButton("select");
+		selectButton = new JButton("Select");
 		
 		add(assistants);
 		add(cards);

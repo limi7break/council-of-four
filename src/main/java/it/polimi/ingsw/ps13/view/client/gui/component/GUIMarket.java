@@ -40,7 +40,7 @@ public class GUIMarket extends JFrame {
 	private Collection<String> cards;
 	private int price = 0;
 	
-	private int entry = -1;
+	private Collection<Integer> entries;
 	
 	/**
 	 * 
@@ -55,6 +55,8 @@ public class GUIMarket extends JFrame {
 		
 		tiles = new ArrayList<>();
 		cards = new ArrayList<>();
+		
+		entries = new ArrayList<>();
 		
 		setResizable(true);
 		setAlwaysOnTop(true);
@@ -243,7 +245,7 @@ public class GUIMarket extends JFrame {
 		
 		JButton confirmButton = new JButton("BUY");
 		confirmButton.addActionListener(ae -> {
-			connection.sendMessage(new OfferSelectionRequestMsg(entry));
+			connection.sendMessage(new OfferSelectionRequestMsg(entries));
 			connection.sendMessage(new PassTurnRequestMsg());
 			dispose();
 		});
@@ -253,8 +255,14 @@ public class GUIMarket extends JFrame {
 			GUIMarketEntry me = new GUIMarketEntry(market.getEntryList().get(i), i);
 			
 			me.getSelectButton().addActionListener(ae -> {
-				entry = me.getNumber();
-				confirmButton.setText("BUY (entry " + entry + ")");
+				if (!entries.contains(me.getNumber())) {
+					entries.add(me.getNumber());
+					me.getSelectButton().setText("Remove");
+				} else {
+					entries.remove(me.getNumber());
+					me.getSelectButton().setText("Select");
+				}
+				confirmButton.setText("BUY " + entries.toString());
 			});
 			
 			entryPanel.add(me);
