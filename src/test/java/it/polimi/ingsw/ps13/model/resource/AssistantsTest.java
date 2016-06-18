@@ -1,14 +1,15 @@
 package it.polimi.ingsw.ps13.model.resource;
 
+import it.polimi.ingsw.ps13.model.player.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
+
 import static org.junit.Assert.*;
 
-/**
- * Created by Tommy on 29/05/16.
- */
+
 public class AssistantsTest {
 
     Assistants assistants;
@@ -54,6 +55,13 @@ public class AssistantsTest {
         Assistants empityAssistants = new Assistants(0);
         assertTrue(empityAssistants.isEmpty());
 
+    }
+
+    @Test
+    public void giveTo(){
+        Player p = new Player("player", Color.green,"green",0,null);
+        assistants.giveTo(p);
+        assertEquals(p.getAssistants(),1 + 10);
     }
 
 }

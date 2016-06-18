@@ -125,7 +125,6 @@ public class PermitTileDeckTest {
 
         //TEST CASE: discard a card to a non-empty deck
         deck.discardCard(t);
-        System.out.println(deck.toString());
         assertEquals(temp.toString(),deck.getDrawPile().toString()); //temporarly use toString() because of an error coming from nowhere
 
     }

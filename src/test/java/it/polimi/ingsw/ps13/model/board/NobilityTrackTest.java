@@ -2,6 +2,8 @@ package it.polimi.ingsw.ps13.model.board;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -25,7 +27,7 @@ public class NobilityTrackTest {
     public void setUp() throws Exception {
 
         Bonus b1 = BonusFactory.createEmptyBonus();
-        Map<Integer, Bonus> bonuses = new TreeMap<>();
+        Map<Integer, Bonus> bonuses = new HashMap<>();
         bonuses.put(new Integer(3),b1);
         bonuses.put(new Integer(6),b1);
         bonuses.put(new Integer(9),b1);
@@ -39,6 +41,20 @@ public class NobilityTrackTest {
 
     }
 
+
+    @Test
+    public void getBonusMap() {
+        Bonus b = BonusFactory.createEmptyBonus();
+        Map<Integer, Bonus> bonusMap;
+        bonusMap = new HashMap<>();
+        bonusMap.put(new Integer(3),b);
+        bonusMap.put(new Integer(6),b);
+        bonusMap.put(new Integer(9),b);
+        bonusMap.put(new Integer(12),b);
+
+        assertEquals(nobilityTrack.getBonusMap().toString(),bonusMap.toString());
+
+    }
 
 
     @Test
