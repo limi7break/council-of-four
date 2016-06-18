@@ -4,7 +4,8 @@ import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
- * 
+ * This action is performed when a player wants to end his turn and pass it to the next player.
+ * Most of the turn logic is handled by the model in the passTurn method.
  *
  */
 public class PassTurnAction implements Action {
@@ -14,8 +15,9 @@ public class PassTurnAction implements Action {
 	private final String playerName;
 	
 	/**
+	 * Creates a new PassTurnAction.
 	 * 
-	 * @param player
+	 * @param playerName unique identifier of the player wanting to perform the action
 	 */
 	public PassTurnAction(String playerName) {
 
@@ -24,7 +26,11 @@ public class PassTurnAction implements Action {
 	}
 
 	/**
+	 * This action is legal if all these conditions are satisfied:
 	 * 
+	 * 		- Game isn't finished yet
+	 * 		- Player has zero main actions available
+	 * 		- Player has zero bonus actions available
 	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
@@ -53,6 +59,7 @@ public class PassTurnAction implements Action {
 	}
 	
 	/**
+	 * Executes the action on the passed Game, effectively modifying it.
 	 * 
 	 */
 	@Override

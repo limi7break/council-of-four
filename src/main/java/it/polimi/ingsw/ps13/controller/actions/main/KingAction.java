@@ -15,6 +15,14 @@ import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
 
+/**
+ * This action is performed when a player wants to build an emporium on the city where the king resides.
+ * To do so, the player must satisfy the king balcony and, if it's the case, pay coins to move the king to the
+ * desired city.
+ * 
+ * This is a main action.
+ *
+ */
 public class KingAction implements Action {
 
 	private static final long serialVersionUID = 0L;
@@ -26,10 +34,11 @@ public class KingAction implements Action {
 	private final List<Color> cardColors;
 	
 	/**
+	 * Creates a new KingAction.
 	 * 
-	 * @param player
-	 * @param cards
-	 * @param city
+	 * @param playerName unique identifier of the player wanting to perform the action
+	 * @param city the name of the city on which the player wants to build the emporium
+	 * @param cards the colors of the politics cards played in order to satisfy king's councillor balcony
 	 */
 	public KingAction(String playerName, String city, Collection<String> cards) {
 		
@@ -42,9 +51,17 @@ public class KingAction implements Action {
 	}
 	
 	/**
+	 * This action is legal if all these conditions are satisfied:
 	 * 
-	 * @param g
-	 * @return
+	 * 		- Player has got the appropriate action token
+	 * 		- Player has got at least one emporium
+	 * 		- Selected city is valid
+	 * 		- Player hasn't built on selected city yet
+	 * 		- Selected colors are valid
+	 * 		- Selected politics cards are actually in the player's hand
+	 * 		- Councillor balcony is satisfiable with selected politics cards and player coins
+	 * 		- Player has enough coins to move king to selected city
+	 * 		- Player has enough assistants to build on selected city
 	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
@@ -116,6 +133,7 @@ public class KingAction implements Action {
 	}
 
 	/**
+	 * Executes the action on the passed Game, effectively modifying it.
 	 * 
 	 */
 	@Override

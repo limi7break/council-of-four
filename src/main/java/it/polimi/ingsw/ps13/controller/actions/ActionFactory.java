@@ -30,15 +30,16 @@ import it.polimi.ingsw.ps13.message.request.action.RegainRewardTokenRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.TradeProposalRequestMsg;
 import it.polimi.ingsw.ps13.message.request.action.VisiblePermitTileRequestMsg;
 
-
 /**
- * This factory class creates all the actions once action request messages are received and validity is checked 
- * (GameController's task)
+ * This factory class creates all the actions once action request messages are received
+ * and preliminary validity checks are performed (e.g. it's the player's turn) 
  *
  */
 public class ActionFactory implements ActionVisitor {
 
-	//PassTurnAction
+	/**
+	 * Creates a new PassTurnAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(PassTurnRequestMsg pass) {
 		
@@ -46,7 +47,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Acquire Permit tile main action
+	/**
+	 * Creates a new AcquirePermitTileAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(AcquirePermitTileRequestMsg acquireTile) {
 		
@@ -59,7 +62,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Build emporium main action
+	/**
+	 * Creates a new BuildEmporiumAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(BuildEmporiumRequestMsg build) {
 		
@@ -71,7 +76,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Elect councillor main action
+	/**
+	 * Creates a new ElectCouncillorAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(ElectCouncillorRequestMsg elect) {
 		
@@ -83,7 +90,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//King main action
+	/**
+	 * Creates a new KingAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(KingActionRequestMsg king) {
 		
@@ -95,7 +104,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Market buy action
+	/**
+	 * Creates a new OfferSelectionAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(OfferSelectionRequestMsg buy) {
 		
@@ -106,7 +117,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Market sell action
+	/**
+	 * Creates a new TradeProposalAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(TradeProposalRequestMsg sell) {
 		
@@ -120,7 +133,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Change permit tiles quick action
+	/**
+	 * Creates a new ChangePermitTilesAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(ChangePermitTilesRequestMsg changeTiles) {
 		
@@ -131,7 +146,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Engage assistant quick action
+	/**
+	 * Creates a new EngageAssistantAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(EngageAssistantRequestMsg engageAssistant) {
 		
@@ -139,7 +156,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	// ------Gain another main action------ quick action
+	/**
+	 * Creates a new GainMainActionAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(GainMainActionRequestMsg gainMain) {
 		
@@ -147,7 +166,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Elect councillor quick action
+	/**
+	 * Creates a new QuickElectCouncillorAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(QuickElectCouncillorRequestMsg quickElect) {
 		
@@ -159,7 +180,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Gain permit tile bonus again bonus action
+	/**
+	 * Creates a new RegainPermitTileBonusAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(RegainPermitTileBonusRequestMsg tileBonus) {
 		
@@ -170,7 +193,9 @@ public class ActionFactory implements ActionVisitor {
 		
 	}
 
-	//Reward token bonus again bonus action
+	/**
+	 * Creates a new RegainRewardTokenAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(RegainRewardTokenRequestMsg rewardToken) {
 		
@@ -180,7 +205,9 @@ public class ActionFactory implements ActionVisitor {
 		return new RegainRewardTokenAction(playerName, city);		
 	}
 
-	//Take a visible permit tile bonus action
+	/**
+	 * Creates a new GainVisiblePermitTileAction from the corresponding request message.
+	 */
 	@Override
 	public Action visit(VisiblePermitTileRequestMsg takeTile) {
 		

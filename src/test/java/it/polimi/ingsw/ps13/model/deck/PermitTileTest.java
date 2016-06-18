@@ -51,27 +51,18 @@ public class PermitTileTest {
     }
 
     @Test
-    public void isUsed() throws Exception {
-        assertFalse(permitTile.isUsable());
-        permitTile.setUsable(true);
+    public void isUsable() throws Exception {
         assertTrue(permitTile.isUsable());
+        permitTile.setUsable(false);
+        assertFalse(permitTile.isUsable());
     }
 
     @Test
-    public void setUsed() throws Exception {
+    public void setUsable() throws Exception {
 
-        assertEquals(permitTile.isUsable(),false);
-        permitTile.setUsable(true);
-        assertEquals(permitTile.isUsable(),true);
-
-    }
-
-    @Test (expected = IllegalArgumentException.class)
-    public void setUsedIllgalChange() throws IllegalArgumentException {
-
-        permitTile.setUsable(true);
+        assertEquals(permitTile.isUsable(), true);
         permitTile.setUsable(false);
-        assertEquals(permitTile.isUsable(),true);
+        assertEquals(permitTile.isUsable(), false);
 
     }
 

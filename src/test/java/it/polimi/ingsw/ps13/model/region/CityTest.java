@@ -1,9 +1,22 @@
 package it.polimi.ingsw.ps13.model.region;
 
+import static org.junit.Assert.assertEquals;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
-import it.polimi.ingsw.ps13.model.bonus.NobilityPointsBonus;
 import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.council.CouncillorBalcony;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
@@ -11,15 +24,6 @@ import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.resource.Coins;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Tommy on 15/06/16.

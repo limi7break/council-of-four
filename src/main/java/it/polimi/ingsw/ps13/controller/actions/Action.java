@@ -12,14 +12,18 @@ import it.polimi.ingsw.ps13.model.Game;
 public interface Action extends Serializable {
 	
 	/**
-	 * Check if the atomic action is valid, according to the rules of the game.
+	 * Check if the action is valid, according to the rules of the game.
 	 * 
-	 * @return true if the atomic action is valid
+	 * @param g the state of the game
+	 * @return true if the action is valid
+	 * @throws IllegalActionException if the action is not valid
 	 */
 	public abstract boolean isLegal(Game g) throws IllegalActionException;
 	
 	/**
-	 * Executes the action on the passed GameState, effectively modifying it.
+	 * Executes the action on the passed Game, effectively modifying it.
+	 * 
+	 * @param g the state of the game
 	 */
 	public abstract void apply(Game g);
 	

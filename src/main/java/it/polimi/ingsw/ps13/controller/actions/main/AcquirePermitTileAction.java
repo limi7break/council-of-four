@@ -13,6 +13,13 @@ import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This action is performed when the player wants to acquire a visible permit tile from a region,
+ * satisfying the region's councillor balcony with politics cards and (if necessary) coins.
+ * 
+ * This is a main action.
+ *
+ */
 public class AcquirePermitTileAction implements Action {
 
 	private static final long serialVersionUID = 0L;
@@ -25,11 +32,12 @@ public class AcquirePermitTileAction implements Action {
 	private final List<Color> cardColors;
 	
 	/**
+	 * Creates a new AcquirePermitTileAction.
 	 * 
-	 * @param player
-	 * @param cards
-	 * @param region
-	 * @param tile
+	 * @param playerName unique identifier of the player wanting to perform the action
+	 * @param region the name of the region to which the selected permit tile belongs
+	 * @param tile the number of the tile in selected region's visible tiles
+	 * @param cards the colors of the politics cards played in order to satisfy region's councillor balcony
 	 */
 	public AcquirePermitTileAction(String playerName, String region, int tile, Collection<String> cards) {
 		
@@ -42,6 +50,16 @@ public class AcquirePermitTileAction implements Action {
 		
 	}
 	
+	/**
+	 * This action is legal if all these conditions are satisfied:
+	 * 
+	 * 		- Player has got the appropriate action token
+	 * 		- Selected region is valid
+	 * 		- Selected permit tile number is valid
+	 * 		- Selected colors are valid
+	 * 		- Selected politics cards are actually in the player's hand
+	 * 		- Councillor balcony is satisfiable with selected politics cards and player coins 
+	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
 		
@@ -98,6 +116,10 @@ public class AcquirePermitTileAction implements Action {
 		return legal;
 	}
 
+	/**
+	 * Executes the action on the passed Game, effectively modifying it.
+	 * 
+	 */
 	@Override
 	public void apply(Game g) {
 		

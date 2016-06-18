@@ -22,32 +22,74 @@ import it.polimi.ingsw.ps13.message.request.action.VisiblePermitTileRequestMsg;
  */
 public interface ActionVisitor {
 
+	/**
+	 * Creates a new PassTurnAction from the corresponding request message.
+	 */
 	public Action visit(PassTurnRequestMsg pass);
 	
+	/**
+	 * Creates a new AcquirePermitTileAction from the corresponding request message.
+	 */
 	public Action visit(AcquirePermitTileRequestMsg acquireTile);
 	
+	/**
+	 * Creates a new BuildEmporiumAction from the corresponding request message.
+	 */
 	public Action visit(BuildEmporiumRequestMsg build);
 	
+	/**
+	 * Creates a new ElectCouncillorAction from the corresponding request message.
+	 */
 	public Action visit(ElectCouncillorRequestMsg elect);
 	
+	/**
+	 * Creates a new KingAction from the corresponding request message.
+	 */
 	public Action visit(KingActionRequestMsg king);
 	
+	/**
+	 * Creates a new OfferSelectionAction from the corresponding request message.
+	 */
 	public Action visit(OfferSelectionRequestMsg buy);
 	
+	/**
+	 * Creates a new TradeProposalAction from the corresponding request message.
+	 */
 	public Action visit(TradeProposalRequestMsg sell);
 	
+	/**
+	 * Creates a new ChangePermitTilesAction from the corresponding request message.
+	 */
 	public Action visit(ChangePermitTilesRequestMsg changeTiles);
 	
+	/**
+	 * Creates a new EngageAssistantAction from the corresponding request message.
+	 */
 	public Action visit(EngageAssistantRequestMsg engageAssistant);
 	
+	/**
+	 * Creates a new GainMainActionAction from the corresponding request message.
+	 */
 	public Action visit(GainMainActionRequestMsg gainMain);
 	
+	/**
+	 * Creates a new QuickElectCouncillorAction from the corresponding request message.
+	 */
 	public Action visit(QuickElectCouncillorRequestMsg quickElect);
 	
+	/**
+	 * Creates a new RegainPermitTileBonusAction from the corresponding request message.
+	 */
 	public Action visit(RegainPermitTileBonusRequestMsg tileBonus);
 	
+	/**
+	 * Creates a new RegainRewardTokenAction from the corresponding request message.
+	 */
 	public Action visit(RegainRewardTokenRequestMsg rewardToken);
 	
+	/**
+	 * Creates a new GainVisiblePermitTileAction from the corresponding request message.
+	 */
 	public Action visit(VisiblePermitTileRequestMsg takeTile);
 	
 }

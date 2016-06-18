@@ -9,6 +9,13 @@ import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
 
+/**
+ * This action is performed when the player wants to build an emporium on a city using
+ * a previously acquired permit tile.
+ * 
+ * This is a main action.
+ *
+ */
 public class BuildEmporiumAction implements Action {
 
 	private static final long serialVersionUID = 0L;
@@ -18,11 +25,11 @@ public class BuildEmporiumAction implements Action {
 	private final String city;
 	
 	/**
+	 * Creates a new BuildEmporiumAction.
 	 * 
-	 * @param player
-	 * @param emporium
-	 * @param tile
-	 * @param city
+	 * @param playerName unique identifier of the player wanting to perform the action
+	 * @param tile the number of the tile in player's hand
+	 * @param city the name of the city on which the player wants to build the emporium
 	 */
 	public BuildEmporiumAction(String playerName, int tile, String city) {
 		
@@ -33,7 +40,15 @@ public class BuildEmporiumAction implements Action {
 	}
 	
 	/**
+	 * This action is legal if all these conditions are satisfied:
 	 * 
+	 * 		- Player has got the appropriate action token
+	 * 		- Player has got at least one emporium
+	 * 		- Selected city is valid
+	 * 		- Selected permit tile number is valid
+	 * 		- Player hasn't built on selected city yet
+	 * 		- Selected permit tile does allow building on selected city
+	 * 		- Player has enough assistants to build on selected city
 	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
@@ -77,6 +92,7 @@ public class BuildEmporiumAction implements Action {
 	}
 	
 	/**
+	 * Executes the action on the passed Game, effectively modifying it.
 	 * 
 	 */
 	@Override

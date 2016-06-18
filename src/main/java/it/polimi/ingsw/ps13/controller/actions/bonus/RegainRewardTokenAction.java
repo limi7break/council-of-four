@@ -8,6 +8,15 @@ import it.polimi.ingsw.ps13.model.bonus.ConcreteBonus;
 import it.polimi.ingsw.ps13.model.bonus.NobilityPointsBonus;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * The ability to perform this action is gained through a special type of bonus.
+ * The player who gains the bonus and can perform this special action, must do so before
+ * passing the turn.
+ * 
+ * This action gives the player the bonus of the city that has been selected,
+ * if an emporium belonging to the player is present on the selected city.
+ *
+ */
 public class RegainRewardTokenAction implements Action {
 
 	private static final long serialVersionUID = 0L;
@@ -15,6 +24,12 @@ public class RegainRewardTokenAction implements Action {
 	private final String playerName;
 	private final String city;
 	
+	/**
+	 * Creates a new RegainRewardTokenAction.
+	 * 
+	 * @param playerName unique identifier of the player wanting to perform the action
+	 * @param city the name of the city whose bonus has to be regained by the player
+	 */
 	public RegainRewardTokenAction(String playerName, String city) {
 		
 		this.playerName = playerName;
@@ -22,6 +37,14 @@ public class RegainRewardTokenAction implements Action {
 		
 	}
 	
+	/**
+	 * This action is legal if all these conditions are satisfied:
+	 * 
+	 * 		- Player has got the appropriate action token
+	 * 		- Selected city is valid
+	 * 		- Player has built an emporium on selected city
+	 * 		- Selected city bonus does not contain a nobility points bonus
+	 */
 	@Override
 	public boolean isLegal(Game g) throws IllegalActionException {
 		
@@ -50,6 +73,10 @@ public class RegainRewardTokenAction implements Action {
 		
 	}
 
+	/**
+	 * Executes the action on the passed Game, effectively modifying it.
+	 * 
+	 */
 	@Override
 	public void apply(Game g) {
 		
