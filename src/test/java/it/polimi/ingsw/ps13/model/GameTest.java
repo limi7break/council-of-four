@@ -187,15 +187,15 @@ public class GameTest {
 		
 	}
 	
-	@Test
+	/**@Test
 	public void playerWhoBuiltLastEmporium() throws Exception {
 		
 		game.setPlayerWhoBuiltLastEmporium(0);
 		assertEquals(game.getPlayerWhoBuiltLastEmporium(), 0);
 		
 	}
-
-	@Test
+	*/
+	/**@Test
 	public void finalizeGame() throws Exception {
 		
 		game.finalizeGame();	
@@ -211,5 +211,90 @@ public class GameTest {
 			
 			}
 	}
+	*/
+	@Test
+	public void doubleSecondPlace() throws Exception {
+		
+		game.getPlayer("player0").nobilityAdvance();
+		game.getPlayer("player0").nobilityAdvance();
+		game.getPlayer("player1").nobilityAdvance();
+		game.getPlayer("player2").nobilityAdvance();
+		
+		int victoryPointsPre0 = game.getPlayer("player0").getVictoryPoints();
+		int victoryPointsPre1 = game.getPlayer("player1").getVictoryPoints();
+		int victoryPointsPre2 = game.getPlayer("player2").getVictoryPoints();
+		int victoryPointsPre3 = game.getPlayer("player3").getVictoryPoints();
+		
+		game.finalizeGame();
+		
+		assertEquals(game.getPlayer("player0").getVictoryPoints(), victoryPointsPre0 + 5 + 3);
+		assertEquals(game.getPlayer("player1").getVictoryPoints(), victoryPointsPre1 + 2 + 3);
+		assertEquals(game.getPlayer("player2").getVictoryPoints(), victoryPointsPre2 + 2 + 3);
+		assertEquals(game.getPlayer("player3").getVictoryPoints(), victoryPointsPre3 + 3);
+		
+	}
+	
+	@Test
+	public void doubleFirstPlace() throws Exception {
+		
+		game.getPlayer("player0").nobilityAdvance();
+		game.getPlayer("player0").nobilityAdvance();
+		game.getPlayer("player1").nobilityAdvance();
+		game.getPlayer("player1").nobilityAdvance();
+		game.getPlayer("player2").nobilityAdvance();
+		
+		int victoryPointsPre0 = game.getPlayer("player0").getVictoryPoints();
+		int victoryPointsPre1 = game.getPlayer("player1").getVictoryPoints();
+		int victoryPointsPre2 = game.getPlayer("player2").getVictoryPoints();
+		int victoryPointsPre3 = game.getPlayer("player3").getVictoryPoints();
+		
+		game.finalizeGame();
+		
+		assertEquals(game.getPlayer("player0").getVictoryPoints(), victoryPointsPre0 + 5 + 3);
+		assertEquals(game.getPlayer("player1").getVictoryPoints(), victoryPointsPre1 + 5 + 3);
+		assertEquals(game.getPlayer("player2").getVictoryPoints(), victoryPointsPre2 + 3);
+		assertEquals(game.getPlayer("player3").getVictoryPoints(), victoryPointsPre3 + 3);
+		
+	}
+	
+	@Test
+	public void overrideSecondPlace() throws Exception{
+		
+		List<Player> sortedPlayersPre = new ArrayList<>();
+		sortedPlayersPre.addAll(game.getPlayers().values()); 
+		
+		int i = 0;
+		for(Player p : sortedPlayersPre){
+			
+			
+			
+			switch(i){
+			
+			case 0: p.nobilityAdvance();	//player whose position is 0 has 4 nobility points
+					p.nobilityAdvance();
+					p.nobilityAdvance();
+					p.nobilityAdvance();
+					
+			break;
+			case 1: p.nobilityAdvance();	//player whose position is 1 has 1 nobility points
+			
+			break;
+			case 2: p.nobilityAdvance();	//player whose position is 2 has 2 nobility points
+					p.nobilityAdvance();
+					
+			break;
+			case 3: p.nobilityAdvance();	//player whose position is 3 has 2 nobility points
+					p.nobilityAdvance();
+					
+			break;
+			
+			}
+			i++;
+		}
+		
+		game.finalizeGame();	
+		
+		
+		}
 	
 }

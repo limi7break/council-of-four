@@ -506,65 +506,44 @@ public class Game implements Serializable {
 	 * Otherwise, all the players who have the second position gain 2 points.
 	 */
 	private void bestNobilityProgress() {
-		
-		List<Player> firstPlace = new ArrayList<>();
-		List<Player> secondPlace = new ArrayList<>();
-		
-		int first = -1;
-		int second = -1;
-		for(Player p : players.values()){
-			
-			if(p.getNobilityPosition() == first){
-				
-				firstPlace.add(p);
-				
-			}
-			else 
-				if(p.getNobilityPosition() > first){
-					
-					first = p.getNobilityPosition();
-					secondPlace.clear();
-					secondPlace.addAll(firstPlace);
-					firstPlace.clear();
-					firstPlace.add(p);
-					
-				}
-				else
-					if(p.getNobilityPosition() == second)
-					
-						secondPlace.add(p);
-					else
-						if(p.getNobilityPosition() > second){
-							
-							second = p.getNobilityPosition();
-							secondPlace.clear();
-							secondPlace.add(p);
-							
-						}
-			}
-		
-		if(firstPlace.size() > 1){
-			
-			for(Player p : firstPlace){
-				
-				p.addVictoryPoints(5);
-				
-			}
-			
-		}
-		else{
-			
-			firstPlace.get(0).addVictoryPoints(5);
-			
-			for(Player p : secondPlace){
-				
-				p.addVictoryPoints(2);
-				
-			}
-			
-		}
-		
-	}
+	       
+        List<Player> firstPlace = new ArrayList<>();
+        List<Player> secondPlace = new ArrayList<>();
+       
+        int first = -1;
+        int second = -1;
+        for(Player p : players.values()){
+            if(p.getNobilityPosition() > first) {
+                second = first;
+                first = p.getNobilityPosition();
+                secondPlace.clear();
+                secondPlace.addAll(firstPlace);
+                firstPlace.clear();
+                firstPlace.add(p);
+            } else if(p.getNobilityPosition() == first) {
+                firstPlace.add(p);
+            } else if(p.getNobilityPosition() > second) {      
+                second = p.getNobilityPosition();
+                secondPlace.clear();
+                secondPlace.add(p);
+            } else if(p.getNobilityPosition() == second) {
+                secondPlace.add(p);
+            }
+        }
+       
+        if(firstPlace.size() > 1) {
+            for(Player p : firstPlace){
+                p.addVictoryPoints(5);
+            }
+        }
+        else {
+            firstPlace.get(0).addVictoryPoints(5);
+            for(Player p : secondPlace){
+                p.addVictoryPoints(2);
+            }
+        }
+       
+    }
 	
 	/**
 	 * The player who owns the highest number of permit tiles gains 3 victory points.
@@ -582,7 +561,7 @@ public class Game implements Serializable {
 			if (p.getPermitTiles().size() == maxTiles){
 				winners.add(p);
 			}
-			else if (p.getNobilityPosition() > maxTiles){
+			else if (p.getPermitTiles().size() > maxTiles){
 				maxTiles = p.getPermitTiles().size();
 				winners.clear();
 				winners.add(p);
