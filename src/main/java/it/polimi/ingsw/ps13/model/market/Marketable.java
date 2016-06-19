@@ -12,6 +12,11 @@ import it.polimi.ingsw.ps13.model.player.Player;
 @FunctionalInterface
 public interface Marketable extends Serializable {
 
+	/**
+	 * Gives the marketable item to the player.
+	 * 
+	 * @param player the player who receives the marketable item
+	 */
 	abstract void giveTo(Player player);
 	
 }

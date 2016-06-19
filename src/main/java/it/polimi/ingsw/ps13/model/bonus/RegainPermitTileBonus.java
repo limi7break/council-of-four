@@ -3,15 +3,15 @@ package it.polimi.ingsw.ps13.model.bonus;
 import java.io.Serializable;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This class represents a regain permit tile bonus.
+ *
+ */
 public class RegainPermitTileBonus implements Bonus, Serializable {
 	
 	private static final long serialVersionUID = 0L;
 
-	public RegainPermitTileBonus(){
-		
-		
-		
-	}
+	protected RegainPermitTileBonus() { }
 	
 	@Override
 	public void giveTo(Player player) {

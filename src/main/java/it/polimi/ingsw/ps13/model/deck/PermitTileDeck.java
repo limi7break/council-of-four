@@ -137,7 +137,7 @@ public class PermitTileDeck extends Deck<PermitTile> implements Serializable {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

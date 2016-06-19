@@ -87,8 +87,8 @@ public abstract class Deck<E extends Serializable> implements Serializable {
 		drawPile.add(card);
 	}
     
-    /**
-	 * Useful for debug.
+	/**
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

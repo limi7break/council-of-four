@@ -3,11 +3,20 @@ package it.polimi.ingsw.ps13.model.bonus;
 import java.io.Serializable;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This class represents a main actions bonus.
+ *
+ */
 public class MainActionsBonus implements Bonus, Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private final int mainActionsAmount;
 	
+	/**
+	 * Creates a new MainActionsBonus with the specified initial amount.
+	 * 
+	 * @param amount the initial amount of the main actions bonus
+	 */
 	public MainActionsBonus(int amount){
 		
 		this.mainActionsAmount = amount;
@@ -22,8 +31,9 @@ public class MainActionsBonus implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns the amount of this main actions bonus.
 	 * 
-	 * @return
+	 * @return the amount of this main actions bonus.
 	 */
 	public int getAmount() {
 		
@@ -32,7 +42,9 @@ public class MainActionsBonus implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns true if the amount of the main actions bonus is zero.
 	 * 
+	 * @return true if the amount of the main actions bonus is zero
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -42,7 +54,7 @@ public class MainActionsBonus implements Bonus, Serializable {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

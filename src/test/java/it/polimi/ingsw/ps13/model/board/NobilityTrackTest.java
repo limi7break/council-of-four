@@ -58,8 +58,8 @@ public class NobilityTrackTest {
     @Test
     public void getBonus() throws Exception {
 
-        assertEquals(nobilityTrack.getBonus(1),null);
-        assertEquals(nobilityTrack.getBonus(-1),null);
+        assertEquals(nobilityTrack.getBonus(1), BonusFactory.createEmptyBonus());
+        assertEquals(nobilityTrack.getBonus(-1), BonusFactory.createEmptyBonus());
         assertTrue(nobilityTrack.getBonus(3).isEmpty());
         assertTrue(nobilityTrack.getBonus(12).isEmpty());
 

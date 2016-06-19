@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
 
+/**
+ * This class represents a king reward tile.
+ * The first available king reward tile is gained by a player whenever that player gains
+ * a region bonus or a city color bonus. 
+ *
+ */
 public class KingRewardTile implements Serializable {	
 
 	private static final long serialVersionUID = 0L;
@@ -19,8 +25,9 @@ public class KingRewardTile implements Serializable {
 	}
 	
 	/**
+	 * Returns the bonus contained in the king reward tile.
 	 * 
-	 * @return
+	 * @return the bonus contained in the king reward tile
 	 */
 	public Bonus getBonus() {
 		
@@ -29,8 +36,9 @@ public class KingRewardTile implements Serializable {
 	}
 	
 	/**
+	 * Returns true if the king reward tile is available.
 	 * 
-	 * @return
+	 * @return true if the king reward tile is available
 	 */
 	public boolean isAvailable() {
 		
@@ -39,8 +47,11 @@ public class KingRewardTile implements Serializable {
 	}
 	
 	/**
+	 * Sets the availability for the king reward tile.
+	 * The king reward tile is available by default upon instantiation, and once its availability
+	 * has been set to false it cannot be reset to true.
 	 * 
-	 * @param isAvailable
+	 * @param isAvailable false for making the king reward tile not available
 	 */
 	public void setAvailable(boolean isAvailable) {
 		

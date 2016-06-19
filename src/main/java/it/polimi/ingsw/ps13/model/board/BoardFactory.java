@@ -22,14 +22,21 @@ import it.polimi.ingsw.ps13.model.region.Region;
 import it.polimi.ingsw.ps13.model.region.RegionFactory;
 
 /**
- * 
- * @author irons
+ * This class has a static method which creates the board from the configuration file,
+ * using other factory classes.
  *
  */
 public final class BoardFactory {
 	
 	private BoardFactory() { }
 	
+	/**
+	 * Creates the board from the configuration file.
+	 * 
+	 * @param config the configuration document
+	 * @param colors a map associating strings to colors
+	 * @return the created board
+	 */
 	public static Board createBoard(Document config, Map<String, Color> colors) {
 		
 		Map<String, CityColor> cityColors = CityColorFactory.createCityColors(config, colors);
@@ -48,7 +55,7 @@ public final class BoardFactory {
 		
 		cities = RegionFactory.createCities(regions, cityColors, councillorBalconies, colors, config);
 		
-		return Board.create(regions, cityColors, cities, politicsCardDeck, councillorBalconies.remove(0), councillors, config);
+		return new Board(regions, cityColors, cities, politicsCardDeck, councillorBalconies.remove(0), councillors, config);
 		
 	}
 	

@@ -181,7 +181,9 @@ public class CouncillorBalcony implements Serializable {
 	}
 	
 	/**
-	 * @return a list of councillors belonging to this balcony.
+	 * Returns an unmodifiable list view of councillors belonging to this balcony.
+	 * 
+	 * @return an unmodifiable list view of councillors belonging to this balcony
 	 */
 	public Collection<Councillor> getCouncillors(){
 		
@@ -190,7 +192,7 @@ public class CouncillorBalcony implements Serializable {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override
@@ -225,7 +227,7 @@ public class CouncillorBalcony implements Serializable {
 		
 	}
 	
-	public int coinsToPay(List<? extends PoliticsCard> cards) {
+	protected int coinsToPay(List<? extends PoliticsCard> cards) {
 		
 		Collection<Color> colors = cardsToColors(cards);
 		
@@ -233,7 +235,7 @@ public class CouncillorBalcony implements Serializable {
 		
 	}
 	
-	public boolean isSatisfiable(List<? extends PoliticsCard> cards, int playerCoins) {
+	protected boolean isSatisfiable(List<? extends PoliticsCard> cards, int playerCoins) {
 		
 		Collection<Color> colors = cardsToColors(cards);
 		

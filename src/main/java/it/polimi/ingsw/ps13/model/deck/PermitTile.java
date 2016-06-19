@@ -96,7 +96,7 @@ public final class PermitTile implements Marketable, Serializable {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

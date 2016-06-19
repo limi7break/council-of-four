@@ -28,7 +28,6 @@ import it.polimi.ingsw.ps13.model.player.Player;
  * a player successfully performs an action that modifies the game state.
  * 
  */
-
 public class Game implements Serializable {
 
 	private static final long serialVersionUID = 0L;
@@ -44,6 +43,14 @@ public class Game implements Serializable {
 	private boolean sellMarketPhase;
 	private boolean buyMarketPhase;
 	
+	/**
+	 * Creates a new Game from the specified configuration document.
+	 * The players are created starting from their names.
+	 * The position of the players in the turn order is random.
+	 * 
+	 * @param config the configuration document
+	 * @param players a list of the player names
+	 */
 	public Game(Document config, List<String> players) { 
 		
 		market = new Market();
@@ -130,6 +137,7 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns a map with every color imported for the game.
 	 * 
 	 * @return a map with every color imported for the game
 	 */
@@ -140,8 +148,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the game board.
 	 * 
-	 * @return
+	 * @return the game board
 	 */
 	public Board getBoard() {
 		
@@ -150,8 +159,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns an unmodifiable map view of the players with their position in the turn order.
 	 * 
-	 * @return
+	 * @return an unmodifiable map view of the players with their position in the turn order
 	 */
 	public Map<Integer, Player> getPlayers() {
 		
@@ -160,8 +170,11 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Gets a player given its name.
+	 * Assumes players don't have duplicate names in the same game.
 	 * 
-	 * @return
+	 * @param playerName the selected name
+	 * @return the player with the specified name.
 	 */
 	public Player getPlayer(String playerName) {
 		
@@ -178,8 +191,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the game's market.
 	 * 
-	 * @return
+	 * @return the game's market
 	 */
 	public Market getMarket() {
 		
@@ -188,8 +202,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the ID (position in the turn order) of the current player of the game.
 	 * 
-	 * @return
+	 * @return the ID of the current player of the game.
 	 */
 	public int getCurrentPlayerID() {
 		
@@ -198,8 +213,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the current player of this game.
 	 * 
-	 * @return
+	 * @return the current player of this game
 	 */
 	public Player getCurrentPlayer() {
 		
@@ -208,8 +224,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the name of the current player of this game.
 	 * 
-	 * @return
+	 * @return the name of the current player of this game
 	 */
 	public String getCurrentPlayerName() {
 
@@ -218,8 +235,10 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the first connected player after the passed currentPlayerID, following the turn order.
 	 * 
-	 * @return
+	 * @param currentPlayerID the current player's ID
+	 * @return the first connected player after the passed currentPlayerID 
 	 */
 	public int getNextPlayerID(int currentPlayerID) {
 		
@@ -238,8 +257,16 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * This method handles the logic for when a player ends the turn, either by performing a PassTurnAction,
+	 * or when the time for the turn expires and the controller ends the turn automatically.
 	 * 
-	 * @return
+	 * It also handles the three game phases (normal game phase, sell market phase, and buy market phase).
+	 * The sell and buy market phases are skipped if the market is disabled.
+	 * The buy market phase is skipped if during the sell market phase no one sold anything.
+	 * 
+	 * When a player places his last emporium, market phases are skipped and every other player has the last turn before
+	 * the game is finished.
+	 * 
 	 */
 	public void passTurn() {
 		
@@ -368,8 +395,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the number of players in the game.
 	 * 
-	 * @return
+	 * @return the number of players in the game
 	 */
 	public int getNumberOfPlayers() {
 		
@@ -378,8 +406,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns true if the game is currently in the sell market phase.
 	 * 
-	 * @return
+	 * @return true if the game is currently in the sell market phase
 	 */
 	public boolean isSellMarketPhase() {
 		
@@ -388,8 +417,9 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns true if the game is currently in the buy market phase.
 	 * 
-	 * @return
+	 * @return true if the game is currently in the buy market phase
 	 */
 	public boolean isBuyMarketPhase() {
 		
@@ -398,8 +428,10 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the ID of the player who first built his last emporium, or -1 if no one has
+	 * built his last emporium yet.
 	 * 
-	 * @return
+	 * @return the ID of the player who first built his last emporium, or -1 if no one has built his last emporium yet
 	 */
 	public int getPlayerWhoBuiltLastEmporium() {
 		
@@ -408,8 +440,12 @@ public class Game implements Serializable {
 	}
 
 	/**
+	 * Sets the ID of the player who first built his last emporium. After this value is set, every
+	 * other player can play his last turn and after that the game is finished.
 	 * 
-	 * @param playerWhoBuiltLastEmporium
+	 * This value needs to be set in order to know when the game is really finished.
+	 * 
+	 * @param playerWhoBuiltLastEmporium the ID of the player who first build his last emporium
 	 */
 	public void setPlayerWhoBuiltLastEmporium(int playerWhoBuiltLastEmporium) {
 		
@@ -418,8 +454,9 @@ public class Game implements Serializable {
 	}
 
 	/**
+	 * Returns true if the game is finished.
 	 * 
-	 * @return
+	 * @return true if the game is finished
 	 */
 	public boolean isFinished() {
 		
@@ -428,8 +465,10 @@ public class Game implements Serializable {
 	}
 	
 	/**
+	 * Returns the number of connected players in this game.
+	 * It is used to terminate the game early if everyone disconnects and only one players remains in a game.
 	 * 
-	 * @return
+	 * @return the number of connected players
 	 */
 	public int getConnectedPlayers() {
 		

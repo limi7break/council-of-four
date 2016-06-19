@@ -125,7 +125,7 @@ public class Region implements Serializable{
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

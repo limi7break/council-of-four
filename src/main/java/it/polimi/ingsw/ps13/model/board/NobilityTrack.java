@@ -6,9 +6,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import it.polimi.ingsw.ps13.model.bonus.Bonus;
+import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 
 /**
- * 
+ * This class represents the nobility track as a map that associates
+ * an integer (the position) to a bonus.
  *
  */
 public class NobilityTrack implements Serializable {
@@ -17,8 +19,9 @@ public class NobilityTrack implements Serializable {
     private final Map<Integer, Bonus> bonusMap;
     
     /**
+     * Creates a new Nobility Track containing the passed map of bonuses
      * 
-     * @param bonuses
+     * @param bonuses the map of bonuses
      */
     public NobilityTrack (Map<Integer, Bonus> bonuses) {
     	
@@ -28,8 +31,9 @@ public class NobilityTrack implements Serializable {
     }
     
     /**
+     * Returns an unmodifiable map view of the nobility track bonuses.
      * 
-     * @return
+     * @returnan unmodifiable map view of the nobility track bonuses
      */
     public Map<Integer, Bonus> getBonusMap() {
     	
@@ -38,18 +42,23 @@ public class NobilityTrack implements Serializable {
     }
 
     /**
+     * Returns the nobility track bonus at the specified position.
+     * If the position is not valid (out of bounds), returns an empty bonus.
      * 
-     * @param position
-     * @return
+     * @param position the position of the nobility track
+     * @return the bonus at the specified position, null if the position is not valid 
      */
     public Bonus getBonus(int position) {
     	
-    	return bonusMap.get(position);
+    	if (bonusMap.containsKey(position))
+    		return bonusMap.get(position);
+    	else 
+    		return BonusFactory.createEmptyBonus();
     	
     }
     
-    /*
-     * Useful for debug.
+    /**
+     * Used for Command Line Interface (CLI).
      * 
      */
     @Override

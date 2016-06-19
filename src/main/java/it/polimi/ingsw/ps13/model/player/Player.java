@@ -13,7 +13,13 @@ import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import it.polimi.ingsw.ps13.model.deck.PoliticsCardDeck;
 
 /**
+ * This class represents a player in a game.
+ * A player has a unique identifier, which is the name, and other game-related data, such as the position on the
+ * nobility track, the action tokens, the color, and the amount of victory points, coins and other statistics stored
+ * in the player supply.
  * 
+ * The connected flag is set to true by default upon player creation.
+ * When said flag is set to false, the game goes on, skipping the player's turns.
  *
  */
 public class Player implements Serializable {
@@ -32,7 +38,15 @@ public class Player implements Serializable {
 	
 	private final Board board;
 	
-	
+	/**
+	 * Creates a new Player with the specified parameters.
+	 * 
+	 * @param name the name of the player
+	 * @param color the color of the player
+	 * @param colorName the name of the player's color
+	 * @param position the position of the player in the turn order (0 = first player, 1 = second player...)
+	 * @param board the game board
+	 */
 	public Player(String name, Color color, String colorName, int position, Board board) {
 		
 		this.name = name;
@@ -52,8 +66,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the amount of victory points of the player.
 	 * 
-	 * @return
+	 * @return the amount of victory points of the player
 	 */
 	public int getVictoryPoints(){
 		
@@ -62,8 +77,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds the specified amount of victory points to the player.
 	 * 
-	 * @param amount
+	 * @param amount the amount of victory points to add to the player
 	 */
 	public void addVictoryPoints(int amount){
 		
@@ -72,8 +88,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the amount of coins of the player.
 	 * 
-	 * @return
+	 * @return the amount of coins of the player
 	 */
 	public int getCoins(){
 		
@@ -82,8 +99,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds the specified amount of coins to the player.
 	 * 
-	 * @param amount
+	 * @param amount the amount of coins to add to the player
 	 */
 	public void addCoins(int amount){
 		
@@ -92,8 +110,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes the specified amount of coins from the player.
 	 * 
-	 * @param amount
+	 * @param amount the amount of coins to remove from the player
 	 */
 	public void consumeCoins(int amount){
 		
@@ -102,8 +121,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the amount of assistants of the player.
 	 * 
-	 * @return
+	 * @return the amount of assistants of the player
 	 */
 	public int getAssistants(){
 		
@@ -112,8 +132,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds the specified amount of assistants to the player.
 	 * 
-	 * @param 
+	 * @param amount the amount of assistants to add to the player
 	 */
 	public void addAssistants(int amount){
 		
@@ -122,8 +143,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes the specified amount of assistants from the player.
 	 * 
-	 * @param 
+	 * @param amount the amount of assistants to remove from the player
 	 */
 	public void consumeAssistants(int amount){
 		
@@ -132,8 +154,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the number of emporiums the player has (and can still build).
 	 * 
-	 * @return
+	 * @return the number of emporiums the player has
 	 */
 	public int getNumberOfEmporiums() {
 		
@@ -142,8 +165,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes an emporium from the player and returns it.
 	 * 
-	 * @return
+	 * @return the removed emporium
 	 */
 	public Emporium removeEmporium() {
 		
@@ -152,8 +176,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns a list view of the politics cards of the player.
 	 * 
-	 * @return
+	 * @return a list view of the politics cards of the player
 	 */
 	public List<PoliticsCard> getPoliticsCards() {
 		
@@ -191,11 +216,12 @@ public class Player implements Serializable {
 		
 	}
 	
-	//getter and setter
+	// Getters and setters
 	
 	/**
+	 * Returns the player's ID, which corresponds to the position in the turn order (0 = first player, 1 = second player ... ).
 	 * 
-	 * @return
+	 * @return the player's ID
 	 */
 	public int getID() {
 		
@@ -204,6 +230,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the name of the player.
 	 * 
 	 * @return the name of the player
 	 */
@@ -214,6 +241,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the color of the player.
 	 * 
 	 * @return the color of the player
 	 */
@@ -224,8 +252,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the nobility position of the player.
 	 * 
-	 * @return
+	 * @return the nobility position of the player
 	 */
 	public int getNobilityPosition() {
 		
@@ -234,7 +263,8 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 *	add 1 to the nobility position
+	 * Adds 1 to the nobility position of the player.
+	 * 
 	 */
 	public void nobilityAdvance() {
 		
@@ -243,8 +273,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns a set view containing the names of the cities upon which the player has built an emporium.
 	 * 
-	 * @return
+	 * @return a set view containing the names of the cities upon which the player has built an emporium
 	 */
 	public Set<String> getCityNames() {
 		
@@ -253,6 +284,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns true if the player has built an emporium on the city.
 	 * 
 	 * @param cityName the city to check whether the player has built on
 	 * @return true if the player has built an emporium on that city
@@ -264,8 +296,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds a city to the set of cities upon which the player has built an emporium.
 	 * 
-	 * @param cityName
+	 * @param cityName the name of the city upon which the player has built an emporium
 	 */
 	public void addCity(String cityName) {
 		
@@ -274,8 +307,9 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @param
-	 * @return
+	 * Returns a list view of the permit tiles of the player.
+	 * 
+	 * @return a list view of the permit tiles of the player
      */
 	public List<PermitTile> getPermitTiles() {
 		
@@ -284,8 +318,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the action tokens of the player.
 	 * 
-	 * @return
+	 * @return the action tokens of the player
 	 */
 	public ActionTokens getTokens() {
 		
@@ -294,8 +329,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns the game board.
 	 * 
-	 * @return
+	 * @return the game board
 	 */
 	public Board getBoard() {
 		
@@ -304,8 +340,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds the specified amount of main action tokens to the player.
 	 * 
-	 * @param amount
+	 * @param amount the amount of main actions tokens to add
 	 */
 	public void addMainActions(int amount){
 		
@@ -314,6 +351,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes a main action token from the player.
 	 * 
 	 */
 	public void consumeMainAction(){
@@ -326,6 +364,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes a quick action token from the player.
 	 * 
 	 */
 	public void consumeQuickAction(){
@@ -338,6 +377,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes a sell action token from the player.
 	 * 
 	 */
 	public void consumeSellAction() {
@@ -350,6 +390,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes a buy action token from the player.
 	 * 
 	 */
 	public void consumeBuyAction() {
@@ -362,8 +403,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds the specified amount of "get tb" tokens to the player.
 	 * 
-	 * @param amount
+	 * @param amount the amount of "get tb" actions to add
 	 */
 	public void addTileBonusToken(int amount){
 		
@@ -372,6 +414,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes a "get tb" action token from the player.
 	 * 
 	 */
 	public void consumeTileBonusToken(){
@@ -384,8 +427,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds the specified amount of "get rt" tokens to the player.
 	 * 
-	 * @param amount
+	 * @param amount the amount of "get rt" actions to add
 	 */
 	public void addRewardTokenToken(int amount){
 		
@@ -394,6 +438,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes a "get rt" action token from the player.
 	 * 
 	 */
 	public void consumeRewardTokenToken(){
@@ -406,8 +451,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Adds the specified amount of "get tile" tokens to the player.
 	 * 
-	 * @param amount
+	 * @param amount the amount of "get tile" actions to add
 	 */
 	public void addTakeTileToken(int amount){
 		
@@ -416,6 +462,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Removes a "get tile" action token from the player.
 	 * 
 	 */
 	public void consumeTakeTileToken(){
@@ -428,8 +475,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Returns true if the player is connected.
 	 * 
-	 * @return
+	 * @return true if the player is connected
 	 */
 	public boolean isConnected() {
 		
@@ -438,8 +486,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Sets the connection status for the player.
 	 * 
-	 * @param isConnected
+	 * @param isConnected the connection status for the player (true = connected, false = not connected).
 	 */
 	public void setConnected(boolean isConnected) {
 		
@@ -452,8 +501,9 @@ public class Player implements Serializable {
 	}
 	
 	/**
+	 * Draws the specified amount of politics cards from the board's politics cards deck.
 	 * 
-	 * @param amount
+	 * @param amount the amount of politics cards to draw
 	 */
 	public void drawPoliticsCards(int amount) {
 		
@@ -468,7 +518,7 @@ public class Player implements Serializable {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

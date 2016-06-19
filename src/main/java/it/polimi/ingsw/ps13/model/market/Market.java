@@ -135,6 +135,7 @@ public class Market implements Serializable {
 	}
 	
 	/**
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

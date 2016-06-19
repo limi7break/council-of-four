@@ -4,11 +4,20 @@ import java.io.Serializable;
 import it.polimi.ingsw.ps13.model.board.NobilityTrack;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This class represents a nobility points bonus.
+ *
+ */
 public class NobilityPointsBonus implements Bonus, Serializable {
 	
 	private static final long serialVersionUID = 0L;
 	private final int nobilityPointsAmount;
 	
+	/**
+	 * Creates a new NobilityPointsBonus with the specified initial amount.
+	 * 
+	 * @param amount the initial amount of the nobility points bonus
+	 */
 	public NobilityPointsBonus(int amount){
 		
 		this.nobilityPointsAmount = amount;
@@ -37,8 +46,9 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns the amount of this nobility points bonus.
 	 * 
-	 * @return
+	 * @return the amount of this nobility points bonus.
 	 */
 	public int getAmount() {
 		
@@ -47,7 +57,9 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns true if the amount of the nobility points bonus is zero.
 	 * 
+	 * @return true if the amount of the nobility points bonus is zero
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -57,7 +69,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

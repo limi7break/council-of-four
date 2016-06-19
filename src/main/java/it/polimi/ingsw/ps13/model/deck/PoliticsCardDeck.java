@@ -83,7 +83,7 @@ public class PoliticsCardDeck extends Deck<PoliticsCard> implements Serializable
     }
     
     /**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

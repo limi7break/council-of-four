@@ -27,7 +27,10 @@ import it.polimi.ingsw.ps13.model.region.CityColor;
 import it.polimi.ingsw.ps13.model.region.Region;
 
 /**
- * 
+ * This class represents the game board.
+ * It constitutes a large part of the whole game model, the remaining data is stored
+ * in the Game class, for example the market, the player data, and information relative
+ * to current turn/phase of the game. 
  *
  */
 public class Board implements Serializable {
@@ -44,6 +47,19 @@ public class Board implements Serializable {
 	private final List<KingRewardTile> kingRewardTiles;
 	private final List<Councillor> councillors;
 
+	/**
+	 * Creates a new Board setting all the created objects passed as parameters.
+	 * The Board constructor creates the King and sets it onto the capital (which is the only city with no bonus),
+	 * and also creates the nobility track and the king reward tiles. 
+	 * 
+	 * @param regions
+	 * @param cityColors
+	 * @param cities
+	 * @param politicsCardDeck
+	 * @param kingBalcony
+	 * @param councillors
+	 * @param config
+	 */
 	public Board(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
 		
 		this.regions = regions;
@@ -68,15 +84,15 @@ public class Board implements Serializable {
 		kingRewardTiles = createKingRewardTiles(config);
 		
 	}
-
-	public static Board create(Map<String, Region> regions, Map<String, CityColor> cityColors, Map<String, City> cities, PoliticsCardDeck politicsCardDeck, CouncillorBalcony kingBalcony, List<Councillor> councillors, Document config) {
-		
-		return new Board(regions, cityColors, cities, politicsCardDeck, kingBalcony, councillors, config);
-		
-	}
 	
 	// === GETTER METHODS ===
 
+	/**
+	 * Returns a region object by name.
+	 * 
+	 * @param name the name of the region
+	 * @return the region object with the desired name
+	 */
 	public Region getRegion(String name) {
 		
 		return regions.get(name);
@@ -84,9 +100,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns a map view of the regions.
 	 * 
-	 * @param name
-	 * @return
+	 * @return a map view of the regions
 	 */
 	public Map<String, Region> getRegions() {
 		
@@ -95,9 +111,10 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns a city color object by name.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name the name of the city color
+	 * @return the city color object with the desired name
 	 */
 	public CityColor getCityColor(String name) {
 		
@@ -106,9 +123,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns a map view of the city colors.
 	 * 
-	 * @param name
-	 * @return
+	 * @return a map view of the city colors
 	 */
 	public Map<String, CityColor> getCityColors() {
 		
@@ -117,9 +134,10 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns a city object by name.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name the name of the city
+	 * @return the city object with the desired name
 	 */
 	public City getCity(String name) {
 		
@@ -128,9 +146,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns a map view of the cities.
 	 * 
-	 * @param name
-	 * @return
+	 * @return a map view of the cities
 	 */
 	public Map<String, City> getCities() {
 		
@@ -139,8 +157,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns the king object.
 	 * 
-	 * @return
+	 * @return the king object
 	 */
 	public King getKing() {
 		
@@ -149,8 +168,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns the nobility track.
 	 * 
-	 * @return
+	 * @return the nobility track
 	 */
 	public NobilityTrack getNobilityTrack() {
 		
@@ -159,8 +179,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns the politics cards deck.
 	 * 
-	 * @return
+	 * @return the politics cards deck
 	 */
 	public PoliticsCardDeck getPoliticsCardDeck() {
 		
@@ -169,8 +190,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns the king's councillor balcony.
 	 * 
-	 * @return
+	 * @return the king's councillor balcony
 	 */
 	public CouncillorBalcony getKingBalcony() {
 		
@@ -179,9 +201,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns a list view of the king reward tiles.
 	 * 
-	 * 
-	 * @return
+	 * @return a list view of the king reward tiles
 	 */
 	public List<KingRewardTile> getKingRewardTiles() {
 		
@@ -193,7 +215,7 @@ public class Board implements Serializable {
 	 * Gets the first available king reward tile.
 	 * If the list of king reward tiles is empty, returns null.
 	 * 
-	 * @return
+	 * @return the first available king reward tile, null if no one is available
 	 */
 	public KingRewardTile getNextAvailableKingRewardTile() {
 		
@@ -207,8 +229,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns a list view of the available councillors on the board.
 	 * 
-	 * @return
+	 * @return a list view of the available councillors on the board
 	 */
 	public List<Councillor> getCouncillors() {
 		
@@ -217,9 +240,10 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Creates the king reward tiles from the configuration document.
 	 * 
-	 * @param config
-	 * @return
+	 * @param config the configuration document
+	 * @return a list of the imported king reward tiles
 	 */
 	private List<KingRewardTile> createKingRewardTiles(Document config) {
 		
@@ -237,9 +261,10 @@ public class Board implements Serializable {
 	}
 
 	/**
+	 * Creates the nobility track from the configuration document.
 	 * 
-	 * @param config
-	 * @return
+	 * @param config the configuration document
+	 * @return the imported nobility track
 	 */
 	private NobilityTrack createNobilityTrack(Document config) {
 		
@@ -267,8 +292,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Inserts a councillor among the available ones on the board.
 	 * 
-	 * @param councillor
+	 * @param councillor the councillor to insert among the available ones on the board
 	 */
 	public void insertCouncillor(Councillor councillor){
 		
@@ -280,8 +306,8 @@ public class Board implements Serializable {
 	 * Removes and returns the first councillor with the given color belonging to the free councillors of the board.
 	 * If there are none, returns null.
 	 * 
-	 * @param color
-	 * @return
+	 * @param color the color of the councillor
+	 * @return the councillor of the selected color, null if no councillor of the selected color is available
 	 */
 	public Councillor getCouncillor(Color color) {
 		
@@ -301,10 +327,10 @@ public class Board implements Serializable {
 	}
 	
 	/**
-	 * True if a councillor of the given color is free on the board to be used.
+	 * Returns true if a councillor of the given color is available on the board to be used.
 	 * 
-	 * @param color
-	 * @return
+	 * @param color the color of the councillor
+	 * @return true if a councillor of the selected color is available on the board to be used
 	 */
 	public boolean isCouncillorAvailable(Color color){
 		
@@ -320,10 +346,11 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Calculates the shortest path between the two selected cities.
 	 * 
-	 * @param start
-	 * @param destination
-	 * @return
+	 * @param start the starting city
+	 * @param destination the destination city
+	 * @return how many steps are necessary to go from the starting city to the destination city
 	 */
 	private int calculateDistance(City start, City destination) {
 		
@@ -354,9 +381,10 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Returns how many coins are necessary to move the king from the current city to the specified destination city.
 	 * 
-	 * @param city
-	 * @return
+	 * @param city the destination city
+	 * @return how many coins are necessary to move the king from the current city to the specified destination city
 	 */
 	public int priceToMoveKing(City destination) {
 		
@@ -365,8 +393,9 @@ public class Board implements Serializable {
 	}
 	
 	/**
+	 * Sets a new king city.
 	 * 
-	 * @param c
+	 * @param c the new king city
 	 */
 	public void setKingCity(City c) {
 		

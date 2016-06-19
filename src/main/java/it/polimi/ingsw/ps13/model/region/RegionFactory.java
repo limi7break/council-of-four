@@ -18,13 +18,24 @@ import it.polimi.ingsw.ps13.model.deck.PermitTileDeck;
 import it.polimi.ingsw.ps13.model.deck.PermitTileDeckFactory;
 
 /**
- * 
+ * This class has a static method which imports the regions, the cities, the permit tiles, and the
+ * reward tokens from the configuration file.
  *
  */
 public final class RegionFactory {
 
 	private RegionFactory() { }
 	
+	/**
+	 * Imports the regions, the cities, the permit tiles, and the reward tokens from the configuration file.
+	 * 
+	 * @param regions an EMPTY map associating strings to region objects
+	 * @param cityColors an EMPTY map associating strings to city colors objects
+	 * @param councillorBalconies a list of councillor balcony (the size of the list must at least be equal to number of regions plus one)
+	 * @param colors a map associating strings to colors
+	 * @param config the configuration document
+	 * @return a map associating strings to city objects
+	 */
 	public static Map<String, City> createCities(Map<String, Region> regions, Map<String, CityColor> cityColors, List<CouncillorBalcony> councillorBalconies, Map<String, Color> colors, Document config) {
 		
 		Map<String, City> cities = new LinkedHashMap<>();
@@ -91,9 +102,10 @@ public final class RegionFactory {
 	}
 	
 	/**
+	 * Creates the reward tokens (city bonuses) from the configuration document.
 	 * 
-	 * @param config
-	 * @return
+	 * @param config the configuration document
+	 * @return a list of the imported bonuses
 	 */
 	private static List<Bonus> createRewardTokens(Document config) {
 		

@@ -3,11 +3,20 @@ package it.polimi.ingsw.ps13.model.bonus;
 import java.io.Serializable;
 import it.polimi.ingsw.ps13.model.player.Player;
 
+/**
+ * This class represents a politics cards bonus.
+ *
+ */
 public class PoliticsCardsBonus implements Bonus, Serializable {
 
 	private static final long serialVersionUID = 0L;
 	private int politicsCardsAmount;
 	
+	/**
+	 * Creates a new PoliticsCardsBonus with the specified initial amount.
+	 * 
+	 * @param amount the initial amount of the politics cards bonus
+	 */
 	public PoliticsCardsBonus(int amount){
 		
 		this.politicsCardsAmount = amount;
@@ -22,8 +31,9 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns the amount of this politics cards bonus.
 	 * 
-	 * @return
+	 * @return the amount of this politics cards bonus.
 	 */
 	public int getAmount() {
 		
@@ -32,7 +42,9 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns true if the amount of the politics cards bonus is zero.
 	 * 
+	 * @return true if the amount of the politics cards bonus is zero
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -42,7 +54,7 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

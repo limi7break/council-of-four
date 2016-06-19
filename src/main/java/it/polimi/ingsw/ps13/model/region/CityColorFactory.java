@@ -12,13 +12,20 @@ import it.polimi.ingsw.ps13.model.bonus.Bonus;
 import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 
 /**
- * 
+ * This class has a static method which imports the city colors from the configuration file.
  *
  */
 public final class CityColorFactory {
 
 	private CityColorFactory() { }
 	
+	/**
+	 * Imports the city colors from the configuration file.
+	 * 
+	 * @param config the configuration document
+	 * @param colors a map associating strings to colors
+	 * @return a map associating strings to city color objects
+	 */
 	public static Map<String, CityColor> createCityColors(Document config, Map<String, Color> colors) {
 		
 		Map<String, CityColor> cityColors = new HashMap<>();

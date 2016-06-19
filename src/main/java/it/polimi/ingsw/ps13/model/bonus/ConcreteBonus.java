@@ -9,8 +9,7 @@ import it.polimi.ingsw.ps13.model.player.Player;
 
 /**
  * This class represents a concrete bonus.
- * It is instantiated only by the BonusFactory class, whenever a new bonus
- * needs to be created.
+ * It is instantiated only by the BonusFactory class, whenever a new bonus needs to be created.
  *
  */
 public class ConcreteBonus implements Bonus {
@@ -40,8 +39,9 @@ public class ConcreteBonus implements Bonus {
 	}
 	
 	/**
+	 * Returns true if the concrete bonus has an empty content list.
 	 * 
-	 * @return
+	 * @return true if the concrete bonus has an empty content list
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -69,8 +69,9 @@ public class ConcreteBonus implements Bonus {
 	}
 	
 	/**
+	 * Returns an unmodifiable list view of the bonuses in the contents.
 	 * 
-	 * @return the list of bonuses 
+	 * @return an unmodifiable list view of the bonuses in the contents
 	 */
 	public List<Bonus> getContents() {
 		
@@ -79,7 +80,7 @@ public class ConcreteBonus implements Bonus {
 	}
 	
 	/**
-	 * Useful for debug.
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override

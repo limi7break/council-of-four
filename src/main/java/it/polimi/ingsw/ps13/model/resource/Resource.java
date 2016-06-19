@@ -14,7 +14,9 @@ public abstract class Resource implements Bonus, Serializable {
 	protected int amount;
 	
 	/**
-	 * Constructs a resource given its amount.
+	 * Constructs a resource with the specified initial amount.
+	 * 
+	 * @param amount the initial amount of the resource
 	 */
 	public Resource(int amount){
 		
@@ -47,6 +49,7 @@ public abstract class Resource implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns the amount of this resource.
 	 * 
 	 * @return the amount of this resource.
 	 */
@@ -57,8 +60,9 @@ public abstract class Resource implements Bonus, Serializable {
 	}
 	
 	/**
+	 * Returns true if the amount of the resource is zero.
 	 * 
-	 * @return
+	 * @return true if the amount of the resource is zero
 	 */
 	@Override
 	public boolean isEmpty() {

@@ -22,6 +22,13 @@ public class MarketEntry implements Serializable {
 	private final List<Marketable> itemList;
 	private final int price;
 	
+	/**
+	 * Creates a new market entry with the specified parameters.
+	 * 
+	 * @param seller the player who is selling the items
+	 * @param items the items the player wants to sell
+	 * @param price the price in coins chosen by the seller
+	 */
 	public MarketEntry(Player seller, Collection<Marketable> items, int price) {
 		
 		this.seller = seller;
@@ -32,6 +39,7 @@ public class MarketEntry implements Serializable {
 	}
 	
 	/**
+	 * Returns the player who created the market entry.
 	 * 
 	 * @return the player who created the market entry
 	 */
@@ -42,6 +50,7 @@ public class MarketEntry implements Serializable {
 	}
 	
 	/**
+	 * Returns an unmodifiable list of the items in the market entry.
 	 * 
 	 * @return an unmodifiable list of the items in the market entry
 	 */
@@ -52,6 +61,7 @@ public class MarketEntry implements Serializable {
 	}
 	
 	/**
+	 * Returns the price of the items.
 	 * 
 	 * @return the price of the items
 	 */
@@ -62,6 +72,7 @@ public class MarketEntry implements Serializable {
 	}
 	
 	/**
+	 * Used for Command Line Interface (CLI).
 	 * 
 	 */
 	@Override
