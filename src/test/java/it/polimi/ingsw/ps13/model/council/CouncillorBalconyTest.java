@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,9 +13,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-
-import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 
 /**
  * Created by Tommy on 26/05/16.
@@ -68,14 +66,14 @@ public class CouncillorBalconyTest {
     public void calculateNumberOfMatches() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
-        PoliticsCardForTesting black = new PoliticsCardForTesting(Color.BLACK, "black");
-        PoliticsCardForTesting w = new PoliticsCardForTesting(Color.WHITE, "white");
-        PoliticsCardForTesting p = new PoliticsCardForTesting(Color.PINK, "pink");
-        PoliticsCardForTesting g = new PoliticsCardForTesting(Color.GREEN, "green");
-        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCardForTesting.jollyColor, "JOLLY");
+        PoliticsCard b = new PoliticsCard(Color.BLUE, "blue");
+        PoliticsCard black = new PoliticsCard(Color.BLACK, "black");
+        PoliticsCard w = new PoliticsCard(Color.WHITE, "white");
+        PoliticsCard p = new PoliticsCard(Color.PINK, "pink");
+        PoliticsCard g = new PoliticsCard(Color.GREEN, "green");
+        PoliticsCard multi = new PoliticsCard(PoliticsCard.jollyColor, "JOLLY");
 
-        List<PoliticsCardForTesting> c = new ArrayList<>();
+        List<PoliticsCard> c = new ArrayList<>();
         
         //TEST CASE: 0 cards
         assertEquals(councillorBalcony.calculateNumberOfMatches(c),0);
@@ -152,10 +150,10 @@ public class CouncillorBalconyTest {
     public void calculateNumberOfMulticoloredCards() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
-        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCard.jollyColor, "JOLLY");
+        PoliticsCard b = new PoliticsCard(Color.BLUE, "blue");
+        PoliticsCard multi = new PoliticsCard(it.polimi.ingsw.ps13.model.deck.PoliticsCard.jollyColor, "JOLLY");
 
-        List<PoliticsCardForTesting> c = new ArrayList<>();
+        List<PoliticsCard> c = new ArrayList<>();
 
         //TEST CASE: 0 cards
         assertEquals(councillorBalcony.calculateNumberOfMulticoloredCards(c),0);
@@ -183,14 +181,14 @@ public class CouncillorBalconyTest {
     public void isSatisfiable() {
 
         //create some politics cards for the testing
-        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
-        PoliticsCardForTesting black = new PoliticsCardForTesting(Color.BLACK, "black");
-        PoliticsCardForTesting w = new PoliticsCardForTesting(Color.WHITE, "white");
-        PoliticsCardForTesting p = new PoliticsCardForTesting(Color.PINK, "pink");
-        PoliticsCardForTesting g = new PoliticsCardForTesting(Color.GREEN, "green");
-        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCard.jollyColor, "JOLLY");
+        PoliticsCard b = new PoliticsCard(Color.BLUE, "blue");
+        PoliticsCard black = new PoliticsCard(Color.BLACK, "black");
+        PoliticsCard w = new PoliticsCard(Color.WHITE, "white");
+        PoliticsCard p = new PoliticsCard(Color.PINK, "pink");
+        PoliticsCard g = new PoliticsCard(Color.GREEN, "green");
+        PoliticsCard multi = new PoliticsCard(it.polimi.ingsw.ps13.model.deck.PoliticsCard.jollyColor, "JOLLY");
 
-        List<PoliticsCardForTesting> c = new ArrayList<>();
+        List<PoliticsCard> c = new ArrayList<>();
 
         c.add(b);
         //TEST CASE: 0 matching cards 0 coins
@@ -242,9 +240,9 @@ public class CouncillorBalconyTest {
 
         //create some politics cards for the testing
     	@SuppressWarnings("unused")
-        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
+        PoliticsCard b = new PoliticsCard(Color.BLUE, "blue");
 
-        List<PoliticsCardForTesting> c = new ArrayList<>();
+        List<PoliticsCard> c = new ArrayList<>();
 
         //TEST CASE: 0 cards
         assertFalse(councillorBalcony.isSatisfiable(c,0));
@@ -258,15 +256,15 @@ public class CouncillorBalconyTest {
     public void coinsToPay() throws Exception {
 
         //create some politics cards for the testing
-        PoliticsCardForTesting b = new PoliticsCardForTesting(Color.BLUE, "blue");
-        PoliticsCardForTesting black = new PoliticsCardForTesting(Color.BLACK, "black");
-        PoliticsCardForTesting w = new PoliticsCardForTesting(Color.WHITE, "white");
+        PoliticsCard b = new PoliticsCard(Color.BLUE, "blue");
+        PoliticsCard black = new PoliticsCard(Color.BLACK, "black");
+        PoliticsCard w = new PoliticsCard(Color.WHITE, "white");
         @SuppressWarnings("unused")
-        PoliticsCardForTesting p = new PoliticsCardForTesting(Color.PINK, "pink");
-        PoliticsCardForTesting g = new PoliticsCardForTesting(Color.GREEN, "green");
-        PoliticsCardForTesting multi = new PoliticsCardForTesting(PoliticsCard.jollyColor, "JOLLY");
+        PoliticsCard p = new PoliticsCard(Color.PINK, "pink");
+        PoliticsCard g = new PoliticsCard(Color.GREEN, "green");
+        PoliticsCard multi = new PoliticsCard(it.polimi.ingsw.ps13.model.deck.PoliticsCard.jollyColor, "JOLLY");
 
-        List<PoliticsCardForTesting> c = new ArrayList<>();
+        List<PoliticsCard> c = new ArrayList<>();
 
         c.add(g);
         //TEST CASE: 1 matching card
