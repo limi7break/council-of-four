@@ -46,7 +46,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	private static final Logger LOG = Logger.getLogger(GameController.class.getName());
 	private static final String DEFAULT_CONFIG = "config.xml";
 	private static final int MAX_USERNAME_CHARACTERS = 14;
-	private static final int TURN_TIMEOUT = 90;
+	private static final int TURN_TIMEOUT = 60;
 	
 	private Document config;
 	
@@ -260,7 +260,7 @@ public class GameController extends Observable<ResponseMsg> implements Observer<
 	 */
 	private void notifyCurrentTurn() {
 		
-		notifyObserver(new UnicastMsg("It\'s YOUR turn, " + game.getCurrentPlayerName() + "! Bring it on!!\n(but move your ass, you only have " + TURN_TIMEOUT + " seconds.)", game.getCurrentPlayerName()));
+		notifyObserver(new UnicastMsg("It\'s YOUR turn, " + game.getCurrentPlayerName() + "! Bring it on!!\n(and look alive! you only have " + TURN_TIMEOUT + " seconds.)", game.getCurrentPlayerName()));
 		notifyObserver(new MulticastMsg(game.getCurrentPlayerName() + "\'s turn.", game.getCurrentPlayerName()));
 		
 	}
