@@ -211,4 +211,14 @@ public class BoardTest {
 		
 	}
 	
+	@Test
+	public void getCouncillorByColor() throws Exception {
+	
+		Color firstCouncillorColor = board.getCouncillors().get(0).getColor();
+		Councillor returnedCouncillor = board.getCouncillor(firstCouncillorColor);
+		
+		assertEquals(firstCouncillorColor, returnedCouncillor.getColor());
+		
+	}
+	
 }

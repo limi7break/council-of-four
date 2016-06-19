@@ -243,6 +243,10 @@ public class Game implements Serializable {
 	 */
 	public void passTurn() {
 		
+		if (finished) {
+			throw new IllegalStateException("Can\'t pass turn when game is finished!");
+		}
+		
 		int nextPlayerID = getNextPlayerID(currentPlayerID);
 		
 		// if a player has already built his last emporium, every other player has the last turn

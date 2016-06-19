@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
@@ -24,10 +25,13 @@ import org.w3c.dom.Document;
 import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
 import it.polimi.ingsw.ps13.model.council.Councillor;
+import it.polimi.ingsw.ps13.model.market.MarketEntry;
+import it.polimi.ingsw.ps13.model.market.Marketable;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.region.Region;
 import it.polimi.ingsw.ps13.model.region.RegionFactoryTest;
+import it.polimi.ingsw.ps13.model.resource.Assistants;
 
 /**
  * Test for the class Game. 
@@ -43,7 +47,8 @@ public class GameTest {
 	Map<String, Color> colors;
 	Board board;
 	
-	Game game;
+	Game fourPlayerGame;
+	Game threePlayerGame;
 	Game twoPlayerGame;
 	
 	@Before
@@ -75,13 +80,22 @@ public class GameTest {
 		fourPlayers.add(player2.getName());
 		fourPlayers.add(player3.getName());
 		
+		List<String> threePlayers = new ArrayList<>();
+		threePlayers.add(player0.getName());
+		threePlayers.add(player1.getName());
+		threePlayers.add(player2.getName());
+		
 		List<String> twoPlayers = new ArrayList<>();
 		twoPlayers.add(player0.getName());
 		twoPlayers.add(player1.getName());
 
-		
-		game = new Game(config, fourPlayers);
+		fourPlayerGame = new Game(config, fourPlayers);
+		threePlayerGame = new Game(config, threePlayers);
 		twoPlayerGame = new Game(config, twoPlayers);
+		
+		assertTrue(fourPlayerGame.getMarket().isEnabled());
+	    assertEquals(fourPlayerGame.getNumberOfPlayers(), 4);
+	    assertEquals(twoPlayerGame.getNumberOfPlayers(), 2);
 		
 	}
 	
@@ -91,7 +105,7 @@ public class GameTest {
 	@Test
 	public void getConnectedPlayers() throws Exception {
 		
-		assertEquals(game.getConnectedPlayers(), 4);
+		assertEquals(fourPlayerGame.getConnectedPlayers(), 4);
 		
 	}
 	
@@ -100,20 +114,20 @@ public class GameTest {
 	public void getBoard() throws Exception {
 			
 		for(String city : board.getCities().keySet()){
-			assertTrue(game.getBoard().getCities().keySet().contains(city));
+			assertTrue(fourPlayerGame.getBoard().getCities().keySet().contains(city));
 			}
 		
-		assertTrue(game.getBoard().getCouncillors().size() == board.getCouncillors().size());
+		assertTrue(fourPlayerGame.getBoard().getCouncillors().size() == board.getCouncillors().size());
 		
 		for(String region : board.getRegions().keySet()){
-				assertTrue(game.getBoard().getRegions().keySet().contains(region));
+				assertTrue(fourPlayerGame.getBoard().getRegions().keySet().contains(region));
 			}
 		
-		assertEquals(board.getKingRewardTiles().size(), game.getBoard().getKingRewardTiles().size());
-		assertEquals(board.getKingBalcony().getCouncillors().size(), game.getBoard().getKingBalcony().getCouncillors().size());
+		assertEquals(board.getKingRewardTiles().size(), fourPlayerGame.getBoard().getKingRewardTiles().size());
+		assertEquals(board.getKingBalcony().getCouncillors().size(), fourPlayerGame.getBoard().getKingBalcony().getCouncillors().size());
 		
 		for(Region r : board.getRegions().values()){
-				for(Region rg : game.getBoard().getRegions().values()){
+				for(Region rg : fourPlayerGame.getBoard().getRegions().values()){
 				
 				assertEquals(r.getCouncillorBalcony().getCouncillors().size(), rg.getCouncillorBalcony().getCouncillors().size());
 				
@@ -149,34 +163,135 @@ public class GameTest {
 	@Test
 	public void passTurn() throws Exception {
 		
-		Player preCurrentPlayer = game.getCurrentPlayer();
-		int preCurrentPlayerID = game.getCurrentPlayerID();
-		int preNextPlayerID = game.getNextPlayerID(preCurrentPlayerID);
-		game.passTurn();
-		assertEquals(game.getCurrentPlayerID(), preNextPlayerID);
-		assertEquals(preCurrentPlayer.getTokens().getBuy(), 0);
-		assertEquals(preCurrentPlayer.getTokens().getMain(), 0);
-		assertEquals(preCurrentPlayer.getTokens().getQuick(), 0);
-		assertEquals(preCurrentPlayer.getTokens().getRewardToken(), 0);
-		assertEquals(preCurrentPlayer.getTokens().getSell(), 0);
-		assertEquals(preCurrentPlayer.getTokens().getTakeTile(), 0);
-		assertEquals(preCurrentPlayer.getTokens().getTileBonus(), 0);
+		int firstPlayerID = threePlayerGame.getCurrentPlayerID();
+		Player firstPlayer = threePlayerGame.getCurrentPlayer();
+		int secondPlayerID = threePlayerGame.getNextPlayerID(firstPlayerID);
+		Player secondPlayer = threePlayerGame.getPlayers().get(secondPlayerID);
+		int thirdPlayerID = threePlayerGame.getNextPlayerID(secondPlayerID);
+		Player thirdPlayer = threePlayerGame.getPlayers().get(thirdPlayerID);
+        
+		assertEquals(threePlayerGame.getCurrentPlayerName(), firstPlayer.getName());
+        
+        threePlayerGame.passTurn(); // Second player's turn, normal game phase
+        assertEquals(threePlayerGame.getCurrentPlayerID(), secondPlayerID);
+		assertTrue(firstPlayer.getTokens().isEmpty());
+		assertTrue(thirdPlayer.getTokens().isEmpty());
+		assertFalse(threePlayerGame.isSellMarketPhase());
+		assertFalse(threePlayerGame.isBuyMarketPhase());
+		
+		threePlayerGame.passTurn(); // Third player's turn, normal game phase
+		assertEquals(threePlayerGame.getCurrentPlayerID(), thirdPlayerID);
+		assertTrue(firstPlayer.getTokens().isEmpty());
+		assertTrue(secondPlayer.getTokens().isEmpty());
+		assertFalse(threePlayerGame.isSellMarketPhase());
+		assertFalse(threePlayerGame.isBuyMarketPhase());
+		
+		threePlayerGame.passTurn(); // First player's turn, sell market phase
+		assertEquals(threePlayerGame.getCurrentPlayerID(), firstPlayerID);
+		assertEquals(firstPlayer.getTokens().getSell(), 1);
+		assertTrue(secondPlayer.getTokens().isEmpty());
+		assertTrue(thirdPlayer.getTokens().isEmpty());
+		assertTrue(threePlayerGame.isSellMarketPhase());
+		assertFalse(threePlayerGame.isBuyMarketPhase());
+		
+		threePlayerGame.passTurn(); // Second player's turn, sell market phase
+		threePlayerGame.passTurn(); // Third player's turn, sell market phase
+		threePlayerGame.passTurn(); // First player's turn, normal game phase
+									// No buy market phase because market is empty,
+									// there is nothing to buy
+		assertEquals(threePlayerGame.getCurrentPlayerID(), firstPlayerID);
+		assertTrue(secondPlayer.getTokens().isEmpty());
+		assertTrue(thirdPlayer.getTokens().isEmpty());
+		assertFalse(threePlayerGame.isSellMarketPhase());
+		assertFalse(threePlayerGame.isBuyMarketPhase());
+		
+		threePlayerGame.passTurn(); // Second player's turn, normal game phase
+		threePlayerGame.passTurn(); // Third player's turn, normal game phase
+		threePlayerGame.passTurn(); // First player's turn, sell market phase
+		threePlayerGame.passTurn(); // Second player's turn, sell market phase
+		threePlayerGame.passTurn(); // Third player's turn, sell market phase
+		
+		List<Marketable> items = new ArrayList<>();
+		items.add(new Assistants(2));
+		MarketEntry entry = new MarketEntry(firstPlayer, items, 5);
+		threePlayerGame.getMarket().addEntry(entry);
+		
+		threePlayerGame.passTurn(); // First player's turn, buy market phase
+									// Now market is not empty
+		assertEquals(threePlayerGame.getCurrentPlayerID(), firstPlayerID);
+		assertEquals(firstPlayer.getTokens().getBuy(), 1);
+		assertTrue(secondPlayer.getTokens().isEmpty());
+		assertTrue(thirdPlayer.getTokens().isEmpty());
+		assertFalse(threePlayerGame.isSellMarketPhase());
+		assertTrue(threePlayerGame.isBuyMarketPhase());
+		
+		threePlayerGame.passTurn(); // Second player's turn, buy market phase
+		threePlayerGame.passTurn(); // Third player's turn, buy market phase
+		threePlayerGame.passTurn(); // First player's turn, normal game phase
+		threePlayerGame.passTurn(); // Second player's turn, normal game phase
+		
+		threePlayerGame.setPlayerWhoBuiltLastEmporium(secondPlayerID);
+		assertEquals(threePlayerGame.getPlayerWhoBuiltLastEmporium(), secondPlayerID);
+		threePlayerGame.passTurn(); // Third player's turn, normal game phase
+		threePlayerGame.passTurn(); // First player's turn, normal game phase
+									// If a player has built the last emporium,
+									// market phases are skipped.
+									// Check if we are in the normal game phase
+		assertEquals(threePlayerGame.getCurrentPlayerID(), firstPlayerID);
+		assertTrue(secondPlayer.getTokens().isEmpty());
+		assertTrue(thirdPlayer.getTokens().isEmpty());
+		assertFalse(threePlayerGame.isSellMarketPhase());
+		assertFalse(threePlayerGame.isBuyMarketPhase());
+		// Check if the game is not finished yet
+		assertFalse(threePlayerGame.isFinished());
+		
+		threePlayerGame.passTurn();
+		// Now the game should be finished. Second player built the last emporium
+		// and every other player (third, first) played its last turn.
+		assertTrue(threePlayerGame.isFinished());
+		
+		boolean illegalPassTurn = false;
+		try {
+			threePlayerGame.passTurn();
+		} catch (IllegalStateException e) {
+			illegalPassTurn = true;
+		}
+		assertTrue(illegalPassTurn);
+		
+	}
+	
+	@Test
+	public void getNextPlayerIDWithDisconnection() {
+		
+		int firstPlayerID = 0;
+		int secondPlayerID = 1;
+		int thirdPlayerID = 2;
+		
+		// Everyone connected
+		assertEquals(threePlayerGame.getNextPlayerID(firstPlayerID), secondPlayerID); // First -> Second
+		assertEquals(threePlayerGame.getNextPlayerID(secondPlayerID), thirdPlayerID); // Second -> Third
+		assertEquals(threePlayerGame.getNextPlayerID(thirdPlayerID), firstPlayerID); // Third -> First
+		
+		threePlayerGame.getPlayers().get(secondPlayerID).setConnected(false);
+		
+		// Player two disconnected
+		assertEquals(threePlayerGame.getNextPlayerID(firstPlayerID), thirdPlayerID); // First -> Third
 		
 	}
 	
 	@Test
 	public void isCouncillorAvailable() throws Exception {
 		
-		for(Councillor c : game.getBoard().getCouncillors()){	
-			assertTrue(game.getBoard().isCouncillorAvailable(c.getColor()));	
+		for(Councillor c : fourPlayerGame.getBoard().getCouncillors()){	
+			assertTrue(fourPlayerGame.getBoard().isCouncillorAvailable(c.getColor()));	
 		}	
 	}
 	
 	@Test
 	public void getColorName() throws Exception {
 		
-		for(Map.Entry<String, Color> entry : game.getColors().entrySet()){	
-			assertEquals(game.getColorName(entry.getValue()), entry.getKey());	
+		for(Map.Entry<String, Color> entry : fourPlayerGame.getColors().entrySet()){	
+			assertEquals(fourPlayerGame.getColorName(entry.getValue()), entry.getKey());	
 		}	
 	}
 	
@@ -187,18 +302,19 @@ public class GameTest {
 		
 	}
 	
-	
+	@Test
 	public void playerWhoBuiltLastEmporium() throws Exception {
 		
-		game.setPlayerWhoBuiltLastEmporium(0);
-		assertEquals(game.getPlayerWhoBuiltLastEmporium(), 0);
+		fourPlayerGame.setPlayerWhoBuiltLastEmporium(0);
+		assertEquals(fourPlayerGame.getPlayerWhoBuiltLastEmporium(), 0);
 		
 	}
 	
+	@Test
 	public void finalizeGame() throws Exception {
 		
-		game.finalizeGame();	
-		for(Player p : game.getPlayers().values()){
+		fourPlayerGame.finalizeGame();	
+		for(Player p : fourPlayerGame.getPlayers().values()){
 			
 			assertEquals(p.getTokens().getBuy(), 0);
 			assertEquals(p.getTokens().getMain(), 0);
@@ -214,45 +330,45 @@ public class GameTest {
 	@Test
 	public void doubleSecondPlace() throws Exception {
 		
-		game.getPlayer("player0").nobilityAdvance();
-		game.getPlayer("player0").nobilityAdvance();
-		game.getPlayer("player1").nobilityAdvance();
-		game.getPlayer("player2").nobilityAdvance();
+		fourPlayerGame.getPlayer("player0").nobilityAdvance();
+		fourPlayerGame.getPlayer("player0").nobilityAdvance();
+		fourPlayerGame.getPlayer("player1").nobilityAdvance();
+		fourPlayerGame.getPlayer("player2").nobilityAdvance();
 		
-		int victoryPointsPre0 = game.getPlayer("player0").getVictoryPoints();
-		int victoryPointsPre1 = game.getPlayer("player1").getVictoryPoints();
-		int victoryPointsPre2 = game.getPlayer("player2").getVictoryPoints();
-		int victoryPointsPre3 = game.getPlayer("player3").getVictoryPoints();
+		int victoryPointsPre0 = fourPlayerGame.getPlayer("player0").getVictoryPoints();
+		int victoryPointsPre1 = fourPlayerGame.getPlayer("player1").getVictoryPoints();
+		int victoryPointsPre2 = fourPlayerGame.getPlayer("player2").getVictoryPoints();
+		int victoryPointsPre3 = fourPlayerGame.getPlayer("player3").getVictoryPoints();
 		
-		game.finalizeGame();
+		fourPlayerGame.finalizeGame();
 		
-		assertEquals(game.getPlayer("player0").getVictoryPoints(), victoryPointsPre0 + 5 + 3);
-		assertEquals(game.getPlayer("player1").getVictoryPoints(), victoryPointsPre1 + 2 + 3);
-		assertEquals(game.getPlayer("player2").getVictoryPoints(), victoryPointsPre2 + 2 + 3);
-		assertEquals(game.getPlayer("player3").getVictoryPoints(), victoryPointsPre3 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player0").getVictoryPoints(), victoryPointsPre0 + 5 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player1").getVictoryPoints(), victoryPointsPre1 + 2 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player2").getVictoryPoints(), victoryPointsPre2 + 2 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player3").getVictoryPoints(), victoryPointsPre3 + 3);
 		
 	}
 	
 	@Test
 	public void doubleFirstPlace() throws Exception {
 		
-		game.getPlayer("player0").nobilityAdvance();
-		game.getPlayer("player0").nobilityAdvance();
-		game.getPlayer("player1").nobilityAdvance();
-		game.getPlayer("player1").nobilityAdvance();
-		game.getPlayer("player2").nobilityAdvance();
+		fourPlayerGame.getPlayer("player0").nobilityAdvance();
+		fourPlayerGame.getPlayer("player0").nobilityAdvance();
+		fourPlayerGame.getPlayer("player1").nobilityAdvance();
+		fourPlayerGame.getPlayer("player1").nobilityAdvance();
+		fourPlayerGame.getPlayer("player2").nobilityAdvance();
 		
-		int victoryPointsPre0 = game.getPlayer("player0").getVictoryPoints();
-		int victoryPointsPre1 = game.getPlayer("player1").getVictoryPoints();
-		int victoryPointsPre2 = game.getPlayer("player2").getVictoryPoints();
-		int victoryPointsPre3 = game.getPlayer("player3").getVictoryPoints();
+		int victoryPointsPre0 = fourPlayerGame.getPlayer("player0").getVictoryPoints();
+		int victoryPointsPre1 = fourPlayerGame.getPlayer("player1").getVictoryPoints();
+		int victoryPointsPre2 = fourPlayerGame.getPlayer("player2").getVictoryPoints();
+		int victoryPointsPre3 = fourPlayerGame.getPlayer("player3").getVictoryPoints();
 		
-		game.finalizeGame();
+		fourPlayerGame.finalizeGame();
 		
-		assertEquals(game.getPlayer("player0").getVictoryPoints(), victoryPointsPre0 + 5 + 3);
-		assertEquals(game.getPlayer("player1").getVictoryPoints(), victoryPointsPre1 + 5 + 3);
-		assertEquals(game.getPlayer("player2").getVictoryPoints(), victoryPointsPre2 + 3);
-		assertEquals(game.getPlayer("player3").getVictoryPoints(), victoryPointsPre3 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player0").getVictoryPoints(), victoryPointsPre0 + 5 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player1").getVictoryPoints(), victoryPointsPre1 + 5 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player2").getVictoryPoints(), victoryPointsPre2 + 3);
+		assertEquals(fourPlayerGame.getPlayer("player3").getVictoryPoints(), victoryPointsPre3 + 3);
 		
 	}
 	
@@ -260,7 +376,7 @@ public class GameTest {
 	public void overrideSecondPlace() throws Exception{
 		
 		List<Player> sortedPlayersPre = new ArrayList<>();
-		sortedPlayersPre.addAll(game.getPlayers().values()); 
+		sortedPlayersPre.addAll(fourPlayerGame.getPlayers().values()); 
 		
 		int i = 0;
 		for(Player p : sortedPlayersPre){
@@ -291,13 +407,13 @@ public class GameTest {
 			i++;
 		}
 		
-		game.finalizeGame();	
+		fourPlayerGame.finalizeGame();	
 		
 		boolean singleFirst = false;
 		boolean doubleSecond = false;
 		
 		int seconds = 0;
-		for(Player p : game.getPlayers().values()){
+		for(Player p : fourPlayerGame.getPlayers().values()){
 			
 			if(p.getVictoryPoints() == 8 && singleFirst == false)
 				singleFirst = true;
@@ -316,6 +432,6 @@ public class GameTest {
 			
 		}}}}}
 		
-		}
+	}
 	
 }
