@@ -294,6 +294,28 @@ public class GameTest {
 		
 		game.finalizeGame();	
 		
+		boolean singleFirst = false;
+		boolean doubleSecond = false;
+		
+		int seconds = 0;
+		for(Player p : game.getPlayers().values()){
+			
+			if(p.getVictoryPoints() == 8 && singleFirst == false)
+				singleFirst = true;
+			else{
+			if(p.getVictoryPoints() == 8 && singleFirst == true)
+				singleFirst = false;
+			else{
+			if(p.getVictoryPoints() == 5 && seconds == 0 && doubleSecond == false)
+				seconds++;
+			else{
+			if(p.getVictoryPoints() == 5 && seconds == 1 && doubleSecond == false)
+				doubleSecond = true;
+			else{
+			if(p.getVictoryPoints() == 5 && doubleSecond == true)
+				doubleSecond = false;
+			
+		}}}}}
 		
 		}
 	
