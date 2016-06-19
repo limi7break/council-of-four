@@ -28,31 +28,6 @@ public class ConcreteBonus implements Bonus {
 		contents = bonusList;
 		
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((contents == null) ? 0 : contents.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ConcreteBonus other = (ConcreteBonus) obj;
-		if (contents == null) {
-			if (other.contents != null)
-				return false;
-		} else if (!contents.equals(other.contents))
-			return false;
-		return true;
-	}
 
 	/**
 	 * No-arg constructor for an empty bonus.
@@ -121,5 +96,30 @@ public class ConcreteBonus implements Bonus {
 		
 		return sb.toString();
 		
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((contents == null) ? 0 : contents.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConcreteBonus other = (ConcreteBonus) obj;
+		if (contents == null) {
+			if (other.contents != null)
+				return false;
+		} else if (!contents.equals(other.contents))
+			return false;
+		return true;
 	}
 }

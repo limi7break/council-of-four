@@ -222,6 +222,17 @@ public class ActionTokens implements Serializable {
 	}
 	
 	/**
+	 * Returns true if the player has zero action tokens.
+	 * 
+	 * @return true if the player has zero action tokens
+	 */
+	public boolean isEmpty() {
+		
+		return main==0 && quick==0 && sell==0 && buy==0 && tileBonus==0 && rewardToken==0 && takeTile==0;
+		
+	}
+	
+	/**
 	 * 
 	 */
 	@Override

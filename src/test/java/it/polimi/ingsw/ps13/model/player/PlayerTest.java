@@ -103,8 +103,9 @@ public class PlayerTest {
 
     @Test
     public void removeEmporium() throws Exception {
-        player.removeEmporium();
+        Emporium e = player.removeEmporium();
         assertEquals(player.getNumberOfEmporiums(),10 - 1);
+        assertEquals(e.getColor(), player.getColor());
     }
 
     @Test
@@ -165,9 +166,9 @@ public class PlayerTest {
 
     @Test
     public void getNobilityPosition() throws Exception {
-        //initial situation
+        // initial situation
         assertEquals(player.getNobilityPosition(),0);
-        //further cases  are tested in nobilityAdvance()
+        // further cases are tested in nobilityAdvance()
 
     }
 
@@ -251,18 +252,18 @@ public class PlayerTest {
         assertEquals(player.getTokens().toString(),t.toString());
     }
 
-    @Test (expected =  IndexOutOfBoundsException.class)
-    public void consumeQuickAction() throws  IndexOutOfBoundsException {
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void consumeQuickAction() throws IndexOutOfBoundsException {
         player.consumeQuickAction();
     }
 
-    @Test (expected =  IndexOutOfBoundsException.class)
+    @Test (expected = IndexOutOfBoundsException.class)
     public void consumeSellAction() throws IndexOutOfBoundsException {
         player.consumeSellAction();
 
     }
 
-    @Test (expected =  IndexOutOfBoundsException.class)
+    @Test (expected = IndexOutOfBoundsException.class)
     public void consumeBuyAction() throws IndexOutOfBoundsException {
         player.consumeBuyAction();
     }
@@ -353,10 +354,78 @@ public class PlayerTest {
         player.setConnected(false);
         player.setConnected(true);
     }
-
+    
     @Test
-    public void drawPoliticsCards() throws Exception {
-        // hard to test because player.board is null and instantiating a new board needs everything in the model
+    public void tokensTest() throws Exception {
+    	
+    	player.getTokens().setQuick(1);
+    	player.getTokens().setSell(1);
+    	player.getTokens().setBuy(1);
+    	player.consumeQuickAction();
+    	player.consumeSellAction();
+    	player.consumeBuyAction();
+    	assertEquals(player.getTokens().getQuick(), 0);
+    	assertEquals(player.getTokens().getSell(), 0);
+    	assertEquals(player.getTokens().getBuy(), 0);
+    	
+    	// Testing sell token configuration (only one sell token)
+    	player.getTokens().setSell();
+    	assertEquals(player.getTokens().getMain(), 0);
+    	assertEquals(player.getTokens().getQuick(), 0);
+    	assertEquals(player.getTokens().getSell(), 1);
+    	assertEquals(player.getTokens().getBuy(), 0);
+    	assertEquals(player.getTokens().getTileBonus(), 0);
+    	assertEquals(player.getTokens().getRewardToken(), 0);
+    	assertEquals(player.getTokens().getTakeTile(), 0);
+    	
+    	// Testing buy token configuration (only one buy token)
+    	player.getTokens().setBuy();
+    	assertEquals(player.getTokens().getMain(), 0);
+    	assertEquals(player.getTokens().getQuick(), 0);
+    	assertEquals(player.getTokens().getSell(), 0);
+    	assertEquals(player.getTokens().getBuy(), 1);
+    	assertEquals(player.getTokens().getTileBonus(), 0);
+    	assertEquals(player.getTokens().getRewardToken(), 0);
+    	assertEquals(player.getTokens().getTakeTile(), 0);
+    	
+    	player.getTokens().setMain(0);
+    	boolean negativeMainActions = false;
+    	try {
+    		player.consumeMainAction();
+    	} catch (IndexOutOfBoundsException e) {
+    		negativeMainActions = true;
+    	}
+    	assertTrue(negativeMainActions);
+    	
+    	player.getTokens().setTakeTile(0);
+    	boolean negativeTakeTileActions = false;
+    	try {
+    		player.consumeTakeTileToken();
+    	} catch (IndexOutOfBoundsException e) {
+    		negativeTakeTileActions = true;
+    	}
+    	assertTrue(negativeTakeTileActions);
+    	
+    	player.getTokens().setZeros();
+    	assertTrue(player.getTokens().isEmpty());
+    	
+    }
+    
+    @Test
+    public void toStringTest() throws Exception {
+    	
+    	Player firstPlayer = new Player("player", Color.green,"green",0,null);
+    	Player secondPlayer = new Player("player", Color.green,"green",0,null);
+    	
+    	Bonus bonus = BonusFactory.createEmptyBonus();
+        Set<String> cityNames = new HashSet<>();
+        cityNames.add("AA");
+        PermitTile permitTile = new PermitTile(bonus,cityNames);
+    	
+    	firstPlayer.receivePermitTile(permitTile);
+    	secondPlayer.receivePermitTile(permitTile);
+    	assertEquals(firstPlayer.toString(), secondPlayer.toString());
+    	
     }
 
 }

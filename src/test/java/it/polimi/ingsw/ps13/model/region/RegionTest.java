@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 public class RegionTest {
 
     Region region;
+    Region equalRegion;
 
     @Before
     public void setUp() throws Exception {
@@ -48,6 +49,8 @@ public class RegionTest {
         PermitTileDeck deck = new PermitTileDeck(cards);
 
         region = new Region("hill",bonus,councillorBalcony,deck);
+        equalRegion = new Region("hill",bonus,councillorBalcony,deck);
+        
     }
 
     @After
@@ -136,6 +139,15 @@ public class RegionTest {
         PermitTileDeck deck = new PermitTileDeck(cards);
 
         assertEquals(region.getPermitTileDeck().toString(),deck.toString());
+    }
+    
+    @Test
+    public void toStringTest() throws Exception {
+    	
+    	region.getPermitTileDeck().changeTiles();
+    	equalRegion.getPermitTileDeck().changeTiles();
+        assertEquals(region.toString(), equalRegion.toString());
+    	
     }
 
 }

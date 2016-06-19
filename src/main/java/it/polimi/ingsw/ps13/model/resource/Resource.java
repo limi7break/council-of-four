@@ -9,28 +9,6 @@ import it.polimi.ingsw.ps13.model.bonus.Bonus;
  *
  */
 public abstract class Resource implements Bonus, Serializable {
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + amount;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Resource other = (Resource) obj;
-		if (amount != other.amount)
-			return false;
-		return true;
-	}
 
 	public static final long serialVersionUID = 0L;
 	protected int amount;
@@ -87,6 +65,28 @@ public abstract class Resource implements Bonus, Serializable {
 		
 		return amount == 0;
 		
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + amount;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Resource other = (Resource) obj;
+		if (amount != other.amount)
+			return false;
+		return true;
 	}
 	
 }

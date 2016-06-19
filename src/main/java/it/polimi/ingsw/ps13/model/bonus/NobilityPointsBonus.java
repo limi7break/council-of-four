@@ -6,34 +6,12 @@ import it.polimi.ingsw.ps13.model.player.Player;
 
 public class NobilityPointsBonus implements Bonus, Serializable {
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + amount;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		NobilityPointsBonus other = (NobilityPointsBonus) obj;
-		if (amount != other.amount)
-			return false;
-		return true;
-	}
-
 	private static final long serialVersionUID = 0L;
-	private final int amount;
+	private final int nobilityPointsAmount;
 	
 	public NobilityPointsBonus(int amount){
 		
-		this.amount = amount;
+		this.nobilityPointsAmount = amount;
 		
 	}
 	
@@ -47,7 +25,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 		
 		NobilityTrack nobilityTrack = player.getBoard().getNobilityTrack();
 		
-		for(int i=0; i<amount; i++){
+		for(int i=0; i<nobilityPointsAmount; i++){
 			
 			player.nobilityAdvance();
 			
@@ -64,7 +42,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	 */
 	public int getAmount() {
 		
-		return amount;
+		return nobilityPointsAmount;
 		
 	}
 	
@@ -74,7 +52,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	@Override
 	public boolean isEmpty() {
 		
-		return amount == 0;
+		return nobilityPointsAmount == 0;
 		
 	}
 	
@@ -85,8 +63,31 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	@Override
 	public String toString() {
 		
-		return "NPx" + amount;
+		return "NPx" + nobilityPointsAmount;
 		
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + nobilityPointsAmount;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NobilityPointsBonus other = (NobilityPointsBonus) obj;
+		if (nobilityPointsAmount != other.nobilityPointsAmount)
+			return false;
+		return true;
+	}
+
 
 }

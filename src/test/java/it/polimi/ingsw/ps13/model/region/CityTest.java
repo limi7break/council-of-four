@@ -63,6 +63,7 @@ public class CityTest {
         CityColor cityColor = new CityColor(Color.green,"green",bonus);
 
         city = new City("AA",region,cityColor,bonus);
+        
     }
 
     @After
@@ -120,6 +121,11 @@ public class CityTest {
         city.addNeighbor(neighbor2);
         neighbors.add(neighbor2);
         assertEquals(city.getNeighbors(),neighbors);
+        
+        City equalCity = new City("AA",region,cityColor,bonus);
+        equalCity.addNeighbor(neighbor1);
+        equalCity.addNeighbor(neighbor2);
+        assertEquals(city.toString(), equalCity.toString());
     }
 
     @Test

@@ -20,7 +20,16 @@ public class PlayerSupplyTest {
 
     @Before
     public void setUp() throws Exception {
-        supply = new PlayerSupply(0, Color.green);
+        
+    	supply = new PlayerSupply(0, Color.green);
+        
+        boolean negativePosition = false;
+        try {
+        	supply = new PlayerSupply(-1, Color.green);
+        } catch(IllegalArgumentException e) {
+        	negativePosition = true;
+        }
+        assertTrue(negativePosition);
 
     }
 
@@ -72,6 +81,14 @@ public class PlayerSupplyTest {
         List<PermitTile> permitTiles = new ArrayList<>();
         //initial situation
         assertEquals(supply.getPermitTiles(),permitTiles);
+    }
+    
+    @Test
+    public void toStringTest() {
+    	
+    	PlayerSupply equalSupply = new PlayerSupply(0, Color.green);
+    	assertEquals(supply.toString(), equalSupply.toString());
+    	
     }
 
 }

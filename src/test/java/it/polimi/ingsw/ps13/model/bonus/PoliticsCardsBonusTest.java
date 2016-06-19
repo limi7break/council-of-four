@@ -91,4 +91,16 @@ public class PoliticsCardsBonusTest {
 		
 	}
 	
+	@Test
+    public void hashCodeAndEquals() {
+    	
+		PoliticsCardsBonus equalPoliticsCardsBonus = new PoliticsCardsBonus(5);
+    	assertEquals(politicsCardsBonus.hashCode(), equalPoliticsCardsBonus.hashCode());
+    	assertEquals(politicsCardsBonus, politicsCardsBonus);
+    	
+    	boolean equalToNull = politicsCardsBonus.equals(null);
+    	assertFalse(equalToNull);
+    	
+    }
+	
 }

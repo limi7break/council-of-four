@@ -91,4 +91,16 @@ public class NobilityPointsBonusTest {
 		
 	}
 	
+	@Test
+    public void hashCodeAndEquals() {
+    	
+    	NobilityPointsBonus equalNobilityBonus = new NobilityPointsBonus(7);
+    	assertEquals(nobilityBonus.hashCode(), equalNobilityBonus.hashCode());
+    	assertEquals(nobilityBonus, nobilityBonus);
+    	
+    	boolean equalToNull = nobilityBonus.equals(null);
+    	assertFalse(equalToNull);
+    	
+    }
+	
 }

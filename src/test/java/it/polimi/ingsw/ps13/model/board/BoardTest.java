@@ -2,6 +2,7 @@ package it.polimi.ingsw.ps13.model.board;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.awt.Color;
 import java.io.File;
@@ -85,6 +86,11 @@ public class BoardTest {
 		
 		board = new Board(regions, cityColors, cities, pcDeck, balconies.get(0), freeCouncillors, config);
 		
+		assertEquals(board.getCityColors(), cityColors);
+		
+		CityColor arkonCityColor = board.getCity("Arkon").getCityColor();
+		assertEquals(arkonCityColor, board.getCityColor(arkonCityColor.getColorName()));
+		
 	}
 	
 	@After
@@ -113,8 +119,26 @@ public class BoardTest {
 			
 			Element currentBonusElement = (Element) bonusElementList.item(i);
 			assertTrue(board.getKingRewardTiles().contains(new KingRewardTile(BonusFactory.createBonus(currentBonusElement))));
+			assertTrue(board.getKingRewardTiles().get(i).isAvailable());
+			assertEquals(board.getKingRewardTiles().get(i).getBonus(), BonusFactory.createBonus(currentBonusElement));
 			
+			KingRewardTile equalRewardTile = new KingRewardTile(BonusFactory.createBonus(currentBonusElement));
+			assertTrue(board.getKingRewardTiles().get(i).equals(equalRewardTile));
+			assertEquals(board.getKingRewardTiles().get(i).hashCode(), equalRewardTile.hashCode());
 		}
+		
+		board.getKingRewardTiles().get(0).setAvailable(false);
+		assertFalse(board.getKingRewardTiles().get(0).isAvailable());
+		
+		boolean illegalStateChange = false;
+		try {
+			board.getKingRewardTiles().get(0).setAvailable(true);
+		} catch (IllegalArgumentException e) {
+			illegalStateChange = true;
+		}
+		assertTrue(illegalStateChange);
+		
+		assertEquals(board.getNextKingRewardTile(), board.getKingRewardTiles().get(1));
 		
 	}
 	
@@ -180,6 +204,10 @@ public class BoardTest {
 		board.setKingCity(merkatim);
 		
 		assertTrue(board.getKing().getCity().getName().equals("Merkatim"));
+		
+		King king = new King();
+		king.setCity(merkatim);
+		assertEquals(board.getKing().toString(), king.toString());
 		
 	}
 	

@@ -73,6 +73,10 @@ public class ConcreteBonusTest {
 		
 		assertFalse(concreteBonus.isEmpty());
 		
+		// Test default isEmpty method from Bonus interface
+		RegainPermitTileBonus rptBonus = new RegainPermitTileBonus();
+		assertFalse(rptBonus.isEmpty());
+		
 	}
 	
 	@Test
@@ -103,6 +107,19 @@ public class ConcreteBonusTest {
 			assertTrue(contents.contains(b));
 			
 		}
+		
+	}
+	
+	@Test
+	public void equalsAndHashCode() {
+		
+		ConcreteBonus emptyConcreteBonus = new ConcreteBonus();
+		
+		boolean areEquals = emptyConcreteBonus.equals(concreteBonus);
+		boolean sameHashCode = emptyConcreteBonus.hashCode() == concreteBonus.hashCode();
+		
+		assertFalse(areEquals);
+		assertFalse(sameHashCode);
 		
 	}
 	

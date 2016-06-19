@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.model.board;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,15 +18,14 @@ import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
  */
 public class NobilityTrackTest {
 
-    NobilityTrack nobilityTrack;
-
-
+	Map<Integer, Bonus> bonuses;
+	NobilityTrack nobilityTrack;
 
     @Before
     public void setUp() throws Exception {
 
         Bonus b1 = BonusFactory.createEmptyBonus();
-        Map<Integer, Bonus> bonuses = new HashMap<>();
+        bonuses = new HashMap<>();
         bonuses.put(new Integer(3),b1);
         bonuses.put(new Integer(6),b1);
         bonuses.put(new Integer(9),b1);
@@ -60,9 +60,17 @@ public class NobilityTrackTest {
 
         assertEquals(nobilityTrack.getBonus(1),null);
         assertEquals(nobilityTrack.getBonus(-1),null);
-        assertEquals(nobilityTrack.getBonus(3).toString(),"Wow! It's fucking nothing!\n");
-        assertEquals(nobilityTrack.getBonus(12).toString(),"Wow! It's fucking nothing!\n");
+        assertTrue(nobilityTrack.getBonus(3).isEmpty());
+        assertTrue(nobilityTrack.getBonus(12).isEmpty());
 
+    }
+    
+    @Test
+    public void toStringTest() throws Exception {
+    	
+    	NobilityTrack equalNobilityTrack = new NobilityTrack(bonuses);
+    	assertEquals(nobilityTrack.toString(), equalNobilityTrack.toString());
+    	
     }
 
 }

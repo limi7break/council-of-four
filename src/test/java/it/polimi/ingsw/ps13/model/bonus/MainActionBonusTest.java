@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps13.model.bonus;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.io.File;
@@ -88,5 +90,17 @@ public class MainActionBonusTest {
 		assertEquals("MAx1", mainActionsBonus.toString());
 		
 	}
+	
+	@Test
+    public void hashCodeAndEquals() {
+    	
+    	MainActionsBonus equalMainActionsBonus = new MainActionsBonus(1);
+    	assertEquals(mainActionsBonus.hashCode(), equalMainActionsBonus.hashCode());
+    	assertEquals(mainActionsBonus, mainActionsBonus);
+    	
+    	boolean equalToNull = mainActionsBonus.equals(null);
+    	assertFalse(equalToNull);
+    	
+    }
 	
 }

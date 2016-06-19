@@ -1,13 +1,16 @@
 package it.polimi.ingsw.ps13.model.resource;
 
-import it.polimi.ingsw.ps13.model.player.Player;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Color;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-
-import static org.junit.Assert.*;
+import it.polimi.ingsw.ps13.model.player.Player;
 
 
 public class AssistantsTest {
@@ -37,6 +40,14 @@ public class AssistantsTest {
 
         assistants.consume(1);
         assertEquals(assistants.getAmount(),9);
+        
+        boolean negativeAmount = false;
+        try {
+        	assistants.consume(10);
+        } catch (IllegalStateException e) {
+        	negativeAmount = true;
+    	}
+    	assertTrue(negativeAmount);
 
     }
 
@@ -62,6 +73,18 @@ public class AssistantsTest {
         Player p = new Player("player", Color.green,"green",0,null);
         assistants.giveTo(p);
         assertEquals(p.getAssistants(),1 + 10);
+    }
+    
+    @Test
+    public void hashCodeAndEquals() {
+    	
+    	Assistants equalAssistants = new Assistants(10);
+    	assertEquals(assistants.hashCode(), equalAssistants.hashCode());
+    	assertEquals(assistants, assistants);
+    	
+    	boolean equalToNull = assistants.equals(null);
+    	assertFalse(equalToNull);
+    	
     }
 
 }
