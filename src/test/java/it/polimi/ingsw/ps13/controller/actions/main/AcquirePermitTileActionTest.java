@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -185,12 +186,27 @@ public class AcquirePermitTileActionTest {
 		p0.getTokens().setMain(1);
 		
 		cards = new ArrayList<>(); 
-		for(Councillor c : game.getBoard().getRegion("hill").getCouncillorBalcony().getCouncillors()){
-			
-			cards.add(c.getColorName());
-			
-		}
 		
+		String colorNotPresent = null;
+		
+		boolean isNotIn = false;
+		Iterator<String> it = colors.keySet().iterator();
+		
+			while(it.hasNext() && isNotIn==false){
+				
+				isNotIn = true;
+				String currentColor = it.next();
+				for(Councillor c : game.getBoard().getRegion("hill").getCouncillorBalcony().getCouncillors()){
+					
+					if(c.getColorName().equals(currentColor))
+						isNotIn = false;
+					
+				}
+				colorNotPresent=currentColor;
+			}
+		
+		cards.add(colorNotPresent);	
+			
 		action = new AcquirePermitTileAction("player0", "hill", 0, cards);
 		
 		boolean thrown = false;
