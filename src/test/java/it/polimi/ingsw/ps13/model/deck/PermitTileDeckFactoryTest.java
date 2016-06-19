@@ -82,7 +82,7 @@ public class PermitTileDeckFactoryTest {
 			
 		}
 		
-		for(PermitTile pt : deck.getVisibleTiles()){
+		for(PermitTile pt : deck.getDrawPile()){
 			
 			assertTrue(tileBonusesFile.contains(pt.getBonus()));
 			assertTrue(tileCitiesFile.containsAll(pt.getCityNames()));
