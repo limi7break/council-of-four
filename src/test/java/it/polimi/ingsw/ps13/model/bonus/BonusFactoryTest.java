@@ -51,7 +51,7 @@ public class BonusFactoryTest {
 	public void tearDown() throws Exception {}
 	
 	@Test
-	public void methodName() throws Exception {
+	public void createBonus() throws Exception {
 		
 		for (int i=0; i<rewardTokensNodeList.getLength(); i++) {
 			Element currentBonusElement = (Element) rewardTokensNodeList.item(i);
