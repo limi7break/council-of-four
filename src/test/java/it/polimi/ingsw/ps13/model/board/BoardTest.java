@@ -1,6 +1,7 @@
 package it.polimi.ingsw.ps13.model.board;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.io.File;
@@ -92,16 +93,14 @@ public class BoardTest {
 	@Test
 	public void getRegion() throws Exception {
 		
-		Region picked = board.getRegion("coast");
-		assertEquals(picked.getName(), "coast");
+		assertEquals(board.getRegion("coast").getName(), "coast");
 		
 	}
 
 	@Test
 	public void getCity() throws Exception {
 		
-		City picked = board.getCity("Juvelar");
-		assertEquals(picked.getName(), "Juvelar");
+		assertEquals(board.getCity("Juvelar").getName(), "Juvelar");
 		
 	}
 	
@@ -136,28 +135,27 @@ public class BoardTest {
 	}
 	
 	@Test
+	public void insertCouncillor() throws Exception {
+		
+		int councillorsPre = board.getCouncillors().size();
+		
+		Councillor c = new Councillor(Color.BLACK, "black");
+		board.insertCouncillor(c);
+		
+		assertTrue(board.getCouncillors().size() == councillorsPre + 1);
+		assertTrue(board.getCouncillors().contains(c));
+		
+	}
+	
+	@Test
 	public void removeCouncillor() throws Exception {
 		
-		Councillor c = board.getCouncillors().get(0);
-		int cColorPre = 1;
-		for(Councillor co : board.getCouncillors()){
-			
-			if(co.getColor().equals(c.getColor()))
-				cColorPre++;
-			
-		}
+		int councillorsPre = board.getCouncillors().size();
 		
+		Councillor c = board.getCouncillors().get(1);
 		board.removeCouncillor(c);
 		
-		int cColorPost = 0;
-		for(Councillor co : board.getCouncillors()){
-			
-			if(co.getColor().equals(c.getColor()))
-				cColorPost++;
-			
-		}
-		
-		assertTrue(cColorPost == cColorPre -1);
+		assertTrue(board.getCouncillors().size() == councillorsPre - 1);
 		
 	}
 	
