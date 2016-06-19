@@ -523,6 +523,8 @@ public class Game implements Serializable {
 				if(p.getNobilityPosition() > first){
 					
 					first = p.getNobilityPosition();
+					secondPlace.clear();
+					secondPlace.addAll(firstPlace);
 					firstPlace.clear();
 					firstPlace.add(p);
 					
@@ -581,7 +583,7 @@ public class Game implements Serializable {
 				winners.add(p);
 			}
 			else if (p.getNobilityPosition() > maxTiles){
-				maxTiles = p.getNobilityPosition();
+				maxTiles = p.getPermitTiles().size();
 				winners.clear();
 				winners.add(p);
 			}
