@@ -1,5 +1,25 @@
 package it.polimi.ingsw.ps13.controller.actions.quick;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Color;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+
 import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.ColorFactory;
 import it.polimi.ingsw.ps13.model.Game;
@@ -7,21 +27,6 @@ import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.player.Player;
-import it.polimi.ingsw.ps13.model.region.RegionFactoryTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.*;
-import java.io.File;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.junit.Assert.*;
 
 public class ChangePermitTilesActionTest {
 
@@ -40,7 +45,7 @@ public class ChangePermitTilesActionTest {
     public void setUp() throws Exception {
         final String TESTCONFIG = "configTest.xml";
 
-        final Logger LOG = Logger.getLogger(RegionFactoryTest.class.getName());
+        final Logger LOG = Logger.getLogger(ChangePermitTilesActionTest.class.getName());
         String testFilePath = TESTCONFIG;
 
         try {

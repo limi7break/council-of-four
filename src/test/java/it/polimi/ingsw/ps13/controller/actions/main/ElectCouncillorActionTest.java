@@ -1,6 +1,8 @@
 package it.polimi.ingsw.ps13.controller.actions.main;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.io.File;
@@ -26,13 +28,12 @@ import it.polimi.ingsw.ps13.model.Game;
 import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
 import it.polimi.ingsw.ps13.model.council.Councillor;
-import it.polimi.ingsw.ps13.model.region.RegionFactoryTest;
 
 public class ElectCouncillorActionTest {
 
 	private static final String TESTCONFIG = "configTest.xml";
 	Document config;
-	final Logger LOG = Logger.getLogger(RegionFactoryTest.class.getName());
+	final Logger LOG = Logger.getLogger(ElectCouncillorActionTest.class.getName());
 	String testFilePath = TESTCONFIG;
 	
 	List<String> cards;

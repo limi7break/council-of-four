@@ -1,5 +1,28 @@
 package it.polimi.ingsw.ps13.controller.actions.main;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Color;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+
 import it.polimi.ingsw.ps13.controller.actions.IllegalActionException;
 import it.polimi.ingsw.ps13.model.ColorFactory;
 import it.polimi.ingsw.ps13.model.Game;
@@ -12,22 +35,6 @@ import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
 import it.polimi.ingsw.ps13.model.region.City;
 import it.polimi.ingsw.ps13.model.region.CityColor;
-import it.polimi.ingsw.ps13.model.region.RegionFactoryTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.awt.*;
-import java.io.File;
-import java.util.*;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.junit.Assert.*;
 
 public class BuildEmporiumActionTest {
 
@@ -48,7 +55,7 @@ public class BuildEmporiumActionTest {
 
         final String TESTCONFIG = "configTest.xml";
 
-        final Logger LOG = Logger.getLogger(RegionFactoryTest.class.getName());
+        final Logger LOG = Logger.getLogger(BuildEmporiumActionTest.class.getName());
         String testFilePath = TESTCONFIG;
 
         try {
