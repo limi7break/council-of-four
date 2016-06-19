@@ -187,5 +187,24 @@ public class PoliticsCardDeckTest  {
 
     }
 
-
+    @Test
+    public void toStringTest() throws Exception {
+    	
+    	PoliticsCard c1 = new PoliticsCard(Color.BLACK, "black");
+    	PoliticsCard c2 = new PoliticsCard(Color.GREEN, "green");
+    	PoliticsCard c3 = new PoliticsCard(Color.PINK, "pink");
+    	
+    	Collection<PoliticsCard> cards = new ArrayList<>();
+    	cards.add(c1);
+    	cards.add(c2);
+    	cards.add(c3);
+    	
+    	PoliticsCardDeck deck1 = new PoliticsCardDeck(cards);
+    	
+    	PoliticsCardDeck deck2 = new PoliticsCardDeck(cards);
+    	
+    	assertEquals(deck1.toString(), deck2.toString());
+    	
+    }
+    
 }

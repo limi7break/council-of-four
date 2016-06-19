@@ -187,15 +187,14 @@ public class GameTest {
 		
 	}
 	
-	/**@Test
+	
 	public void playerWhoBuiltLastEmporium() throws Exception {
 		
 		game.setPlayerWhoBuiltLastEmporium(0);
 		assertEquals(game.getPlayerWhoBuiltLastEmporium(), 0);
 		
 	}
-	*/
-	/**@Test
+	
 	public void finalizeGame() throws Exception {
 		
 		game.finalizeGame();	
@@ -211,7 +210,7 @@ public class GameTest {
 			
 			}
 	}
-	*/
+	
 	@Test
 	public void doubleSecondPlace() throws Exception {
 		

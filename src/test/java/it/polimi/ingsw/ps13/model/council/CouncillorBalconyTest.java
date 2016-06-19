@@ -4,15 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import it.polimi.ingsw.ps13.model.deck.PoliticsCard;
 
 /**
  * Created by Tommy on 26/05/16.
@@ -321,4 +323,45 @@ public class CouncillorBalconyTest {
 
     }
 
+    @Test
+    public void satisfyWithNoCards() throws Exception {
+    	
+    	boolean thrown = false;
+    	Collection<Color> cards = new ArrayList<>();
+    	
+    	try{
+    		
+    		councillorBalcony.coinsToPay(cards);
+    		
+    	}
+    	catch(IllegalArgumentException e){
+    		
+    		thrown = true;
+    		
+    	}
+    	
+    	assertTrue(thrown);
+    	
+    }
+    
+    @Test
+    public void toStringTest() throws Exception {
+    	
+    	Councillor councillorBlack = new Councillor(Color.BLACK, "black");
+        Councillor councillorWhite = new Councillor(Color.WHITE, "white");
+        Councillor councillorPink = new Councillor(Color.PINK, "pink");
+        Councillor councillorGreen = new Councillor(Color.GREEN, "green");
+    	
+    	List<Councillor> councillors = new LinkedList<>();
+        councillors.add(councillorBlack);
+        councillors.add(councillorWhite);
+        councillors.add(councillorPink);
+        councillors.add(councillorGreen);
+
+        CouncillorBalcony equalCouncillorBalcony = new CouncillorBalcony(councillors);
+    	
+        assertEquals(councillorBalcony.toString(), equalCouncillorBalcony.toString());
+        
+    }
+    
 }
