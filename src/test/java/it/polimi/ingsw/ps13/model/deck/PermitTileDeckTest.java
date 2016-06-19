@@ -18,18 +18,16 @@ public class PermitTileDeckTest {
     private PermitTileDeck deck;
     private PermitTileDeck emptyDeck;
 
-    private Set <String> cityNames1;
-    private Set <String> cityNames2;
-    private Set <String> cityNames3;
-    private Set <String> cityNames4;
+    private Set<String> cityNames1;
+    private Set<String> cityNames2;
+    private Set<String> cityNames3;
+    private Set<String> cityNames4;
     private Bonus bonus;
     private PermitTile t1;
     private PermitTile t2;
     private PermitTile t3;
     private PermitTile t4;
     private Collection<PermitTile> cards = new ArrayList<>();
-
-
 
     @Before
     public void setUp() throws Exception {
@@ -81,8 +79,6 @@ public class PermitTileDeckTest {
 
         //now the deck should be empty
         assertTrue(deck.isEmpty());
-
-        //System.out.println(deck.toString());
 
     }
 

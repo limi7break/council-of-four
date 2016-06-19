@@ -174,7 +174,7 @@ public class KingAction implements Action {
 			realCity.getRegion().setBonusAvailable(false);
 			realCity.getRegion().getBonus().giveTo(player);
 			
-			KingRewardTile krt = g.getBoard().getNextKingRewardTile();
+			KingRewardTile krt = g.getBoard().getNextAvailableKingRewardTile();
 			if (krt != null) {
 				krt.getBonus().giveTo(player);
 				krt.setAvailable(false);
@@ -187,7 +187,7 @@ public class KingAction implements Action {
 			realCity.getCityColor().setBonusAvailable(false);
 			realCity.getCityColor().getBonus().giveTo(player);
 			
-			KingRewardTile krt = g.getBoard().getNextKingRewardTile();
+			KingRewardTile krt = g.getBoard().getNextAvailableKingRewardTile();
 			if (krt != null) {
 				krt.getBonus().giveTo(player);
 				krt.setAvailable(false);

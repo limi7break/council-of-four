@@ -33,6 +33,7 @@ public class PoliticsCardsBonusTest {
 	String testFilePath = TESTCONFIG;
 	
 	PoliticsCardsBonus politicsCardsBonus;
+	PoliticsCardsBonus emptyPoliticsCardsBonus;
 	
 	@Before
 	public void setUp() {
@@ -48,6 +49,7 @@ public class PoliticsCardsBonusTest {
 		}
 		
 		politicsCardsBonus = new PoliticsCardsBonus(5);
+		emptyPoliticsCardsBonus = new PoliticsCardsBonus(0);
 		
 	}
 	
@@ -81,6 +83,7 @@ public class PoliticsCardsBonusTest {
 	public void isEmpty() throws Exception {
 		
 		assertFalse(politicsCardsBonus.isEmpty());
+		assertTrue(emptyPoliticsCardsBonus.isEmpty());
 		
 	}
 	
@@ -100,6 +103,8 @@ public class PoliticsCardsBonusTest {
     	
     	boolean equalToNull = politicsCardsBonus.equals(null);
     	assertFalse(equalToNull);
+    	
+    	assertFalse(politicsCardsBonus.equals(emptyPoliticsCardsBonus));
     	
     }
 	

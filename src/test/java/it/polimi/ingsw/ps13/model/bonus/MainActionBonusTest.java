@@ -33,6 +33,7 @@ public class MainActionBonusTest {
 	String testFilePath = TESTCONFIG;
 	
 	MainActionsBonus mainActionsBonus;
+	MainActionsBonus emptyMainActionsBonus;
 	
 	@Before
 	public void setUp() {
@@ -48,6 +49,7 @@ public class MainActionBonusTest {
 		}
 		
 		mainActionsBonus = new MainActionsBonus(1);
+		emptyMainActionsBonus = new MainActionsBonus(0);
 		
 	}
 	
@@ -81,6 +83,7 @@ public class MainActionBonusTest {
 	public void isEmpty() throws Exception {
 		
 		assertFalse(mainActionsBonus.isEmpty());
+		assertTrue(emptyMainActionsBonus.isEmpty());
 		
 	}
 	
@@ -100,6 +103,8 @@ public class MainActionBonusTest {
     	
     	boolean equalToNull = mainActionsBonus.equals(null);
     	assertFalse(equalToNull);
+    	
+    	assertFalse(mainActionsBonus.equals(emptyMainActionsBonus));
     	
     }
 	

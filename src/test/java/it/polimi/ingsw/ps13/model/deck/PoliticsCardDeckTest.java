@@ -200,8 +200,10 @@ public class PoliticsCardDeckTest  {
     	cards.add(c3);
     	
     	PoliticsCardDeck deck1 = new PoliticsCardDeck(cards);
+    	deck1.addCardToDiscardPile(c1);
     	
     	PoliticsCardDeck deck2 = new PoliticsCardDeck(cards);
+    	deck2.addCardToDiscardPile(c1);
     	
     	assertEquals(deck1.toString(), deck2.toString());
     	

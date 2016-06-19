@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -138,7 +139,13 @@ public class BoardTest {
 		}
 		assertTrue(illegalStateChange);
 		
-		assertEquals(board.getNextKingRewardTile(), board.getKingRewardTiles().get(1));
+		assertEquals(board.getNextAvailableKingRewardTile(), board.getKingRewardTiles().get(1));
+		
+		// When every king reward tile is not available, getNextAvailableKingRewardTile should return null 
+		for (KingRewardTile krt : board.getKingRewardTiles()) {
+			krt.setAvailable(false);
+		}
+		assertEquals(board.getNextAvailableKingRewardTile(), null);
 		
 	}
 	
@@ -168,18 +175,6 @@ public class BoardTest {
 		
 		assertTrue(board.getCouncillors().size() == councillorsPre + 1);
 		assertTrue(board.getCouncillors().contains(c));
-		
-	}
-	
-	@Test
-	public void removeCouncillor() throws Exception {
-		
-		int councillorsPre = board.getCouncillors().size();
-		
-		Councillor c = board.getCouncillors().get(1);
-		board.removeCouncillor(c);
-		
-		assertTrue(board.getCouncillors().size() == councillorsPre - 1);
 		
 	}
 	
@@ -218,6 +213,25 @@ public class BoardTest {
 		Councillor returnedCouncillor = board.getCouncillor(firstCouncillorColor);
 		
 		assertEquals(firstCouncillorColor, returnedCouncillor.getColor());
+		
+	}
+	
+	@Test
+	public void councillorNotAvailable() throws Exception {
+		
+		// Remove every black councillor from the available councillors (if any)
+		for (Iterator<Councillor> it = board.getCouncillors().iterator(); it.hasNext();) {
+			Councillor councillor = it.next();
+			if (councillor.getColor().equals(Color.black)) {
+				it.remove();
+			}
+		}
+		
+		// Now getCouncillor should return null when called with Color.black
+		assertEquals(board.getCouncillor(Color.black), null);
+		
+		// Now isCouncillorAvailable should return false when called with Color.black
+		assertFalse(board.isCouncillorAvailable(Color.black));
 		
 	}
 	

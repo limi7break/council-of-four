@@ -195,7 +195,7 @@ public class Board implements Serializable {
 	 * 
 	 * @return
 	 */
-	public KingRewardTile getNextKingRewardTile() {
+	public KingRewardTile getNextAvailableKingRewardTile() {
 		
 		for (KingRewardTile krt : kingRewardTiles) {
 			if (krt.isAvailable())
@@ -316,33 +316,6 @@ public class Board implements Serializable {
 		}
 		
 		return false;
-		
-	}
-	
-	/**
-	 * Removes and returns a councillor from the free councillor list.
-	 * 
-	 * @param councillor
-	 * @return
-	 */
-	public Councillor removeCouncillor(Councillor councillor){
-		
-		Councillor removed = null;
-		
-		Iterator<Councillor> it = councillors.iterator();
-		
-		while(it.hasNext() && removed == null){
-			
-			if(it.next().equals(councillor)){
-				
-				removed = it.next();
-				councillors.remove(it.next());
-				
-			}
-			
-		}
-		
-		return removed;
 		
 	}
 	

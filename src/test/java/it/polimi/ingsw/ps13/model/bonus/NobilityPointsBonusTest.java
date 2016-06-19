@@ -33,6 +33,7 @@ public class NobilityPointsBonusTest {
 	String testFilePath = TESTCONFIG;
 	
 	NobilityPointsBonus nobilityBonus;
+	NobilityPointsBonus emptyNobilityBonus;
 	
 	@Before
 	public void setUp() {
@@ -48,6 +49,7 @@ public class NobilityPointsBonusTest {
 		}
 		
 		nobilityBonus = new NobilityPointsBonus(7);
+		emptyNobilityBonus = new NobilityPointsBonus(0);
 		
 	}
 	
@@ -81,6 +83,7 @@ public class NobilityPointsBonusTest {
 	public void isEmpty() throws Exception {
 		
 		assertFalse(nobilityBonus.isEmpty());
+		assertTrue(emptyNobilityBonus.isEmpty());
 		
 	}
 	
@@ -100,6 +103,8 @@ public class NobilityPointsBonusTest {
     	
     	boolean equalToNull = nobilityBonus.equals(null);
     	assertFalse(equalToNull);
+    	
+    	assertFalse(nobilityBonus.equals(emptyNobilityBonus));
     	
     }
 	

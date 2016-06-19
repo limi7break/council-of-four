@@ -96,6 +96,8 @@ public class GameTest {
 		assertTrue(fourPlayerGame.getMarket().isEnabled());
 	    assertEquals(fourPlayerGame.getNumberOfPlayers(), 4);
 	    assertEquals(twoPlayerGame.getNumberOfPlayers(), 2);
+	    
+	    assertEquals(fourPlayerGame.getColorName(new Color(1, 2, 3)), null);
 		
 	}
 	
