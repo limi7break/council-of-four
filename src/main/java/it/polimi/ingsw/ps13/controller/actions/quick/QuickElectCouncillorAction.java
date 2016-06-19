@@ -71,7 +71,7 @@ public class QuickElectCouncillorAction implements Action {
 			throw new IllegalActionException("Not enough assistants, 1 required");
 		
 		// Check if a councillor with the desired color is available
-		if (!g.isCouncillorAvailable(g.getColors().get(color)))
+		if (!g.getBoard().isCouncillorAvailable(g.getColors().get(color)))
 			throw new IllegalActionException("Selected councillor is not available");
 		
 		return legal;
@@ -88,7 +88,7 @@ public class QuickElectCouncillorAction implements Action {
 		
 		player.consumeAssistants(1);
 		
-		Councillor chosen = g.getCouncillor(g.getColors().get(color));
+		Councillor chosen = g.getBoard().getCouncillor(g.getColors().get(color));
 		
 		CouncillorBalcony balcony;
 		if ("king".equals(region)) {

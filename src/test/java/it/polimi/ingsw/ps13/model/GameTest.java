@@ -168,7 +168,7 @@ public class GameTest {
 	public void isCouncillorAvailable() throws Exception {
 		
 		for(Councillor c : game.getBoard().getCouncillors()){	
-			assertTrue(game.isCouncillorAvailable(c.getColor()));	
+			assertTrue(game.getBoard().isCouncillorAvailable(c.getColor()));	
 		}	
 	}
 	

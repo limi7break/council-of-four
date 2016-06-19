@@ -16,7 +16,6 @@ import org.w3c.dom.Element;
 
 import it.polimi.ingsw.ps13.model.board.Board;
 import it.polimi.ingsw.ps13.model.board.BoardFactory;
-import it.polimi.ingsw.ps13.model.council.Councillor;
 import it.polimi.ingsw.ps13.model.market.Market;
 import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
@@ -345,25 +344,6 @@ public class Game implements Serializable {
 	}
 	
 	/**
-	 * True if a councillor of the given color is free on the board to be used.
-	 * 
-	 * @param color
-	 * @return
-	 */
-	public boolean isCouncillorAvailable(Color color){
-		
-		for(Councillor c: board.getCouncillors()){
-			
-			if(c.getColor().equals(color)) 
-				return true;
-
-		}
-		
-		return false;
-		
-	}
-	
-	/**
 	 * This method assumes there are no duplicate keys in the colors map.
 	 * 
 	 * @param color
@@ -377,30 +357,6 @@ public class Game implements Serializable {
 				return entry.getKey();
 			}
 			
-		}
-		
-		return null;
-		
-	}
-	
-	/**
-	 * Removes and returns the first councillor with the given color belonging to the free councillors of the board.
-	 * If there are none, returns null.
-	 * 
-	 * @param color
-	 * @return
-	 */
-	public Councillor getCouncillor(Color color) {
-		
-		Iterator<Councillor> it = board.getCouncillors().iterator();
-		
-		while(it.hasNext()) {
-			Councillor current = it.next();
-			
-			if(current.getColor().equals(color)) {
-				it.remove();
-				return current;
-			}
 		}
 		
 		return null;

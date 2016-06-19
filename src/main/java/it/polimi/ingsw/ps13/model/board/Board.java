@@ -1,5 +1,6 @@
 package it.polimi.ingsw.ps13.model.board;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -272,6 +273,49 @@ public class Board implements Serializable {
 	public void insertCouncillor(Councillor councillor){
 		
 		councillors.add(councillor);
+		
+	}
+	
+	/**
+	 * Removes and returns the first councillor with the given color belonging to the free councillors of the board.
+	 * If there are none, returns null.
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public Councillor getCouncillor(Color color) {
+		
+		Iterator<Councillor> it = councillors.iterator();
+		
+		while(it.hasNext()) {
+			Councillor current = it.next();
+			
+			if(current.getColor().equals(color)) {
+				it.remove();
+				return current;
+			}
+		}
+		
+		return null;
+		
+	}
+	
+	/**
+	 * True if a councillor of the given color is free on the board to be used.
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public boolean isCouncillorAvailable(Color color){
+		
+		for(Councillor c : councillors){
+			
+			if(c.getColor().equals(color)) 
+				return true;
+
+		}
+		
+		return false;
 		
 	}
 	
