@@ -31,7 +31,7 @@ public class NobilityPointsBonus implements Bonus, Serializable {
 	private static final long serialVersionUID = 0L;
 	private final int amount;
 	
-	protected NobilityPointsBonus(int amount){
+	public NobilityPointsBonus(int amount){
 		
 		this.amount = amount;
 		

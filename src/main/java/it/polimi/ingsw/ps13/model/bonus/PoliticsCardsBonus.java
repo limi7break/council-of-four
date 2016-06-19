@@ -30,7 +30,7 @@ public class PoliticsCardsBonus implements Bonus, Serializable {
 	private static final long serialVersionUID = 0L;
 	private int amount;
 	
-	protected PoliticsCardsBonus(int amount){
+	public PoliticsCardsBonus(int amount){
 		
 		this.amount = amount;
 		

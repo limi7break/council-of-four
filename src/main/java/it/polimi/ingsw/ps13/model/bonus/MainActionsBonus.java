@@ -30,7 +30,7 @@ public class MainActionsBonus implements Bonus, Serializable {
 	private static final long serialVersionUID = 0L;
 	private final int amount;
 	
-	protected MainActionsBonus(int amount){
+	public MainActionsBonus(int amount){
 		
 		this.amount = amount;
 		

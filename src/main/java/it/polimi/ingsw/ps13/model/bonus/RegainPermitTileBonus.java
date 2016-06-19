@@ -7,7 +7,7 @@ public class RegainPermitTileBonus implements Bonus, Serializable {
 	
 	private static final long serialVersionUID = 0L;
 
-	protected RegainPermitTileBonus(){
+	public RegainPermitTileBonus(){
 		
 		
 		

@@ -7,7 +7,7 @@ public class RegainRewardTokenBonus implements Bonus, Serializable {
 	
 	private static final long serialVersionUID = 0L;
 
-	protected RegainRewardTokenBonus () {
+	public RegainRewardTokenBonus () {
 		
 		
 		
