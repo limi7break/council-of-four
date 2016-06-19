@@ -10,6 +10,8 @@ import it.polimi.ingsw.ps13.model.bonus.BonusFactory;
 import it.polimi.ingsw.ps13.model.deck.PermitTile;
 import it.polimi.ingsw.ps13.model.player.Emporium;
 import it.polimi.ingsw.ps13.model.player.Player;
+import it.polimi.ingsw.ps13.model.region.City;
+import it.polimi.ingsw.ps13.model.region.CityColor;
 import it.polimi.ingsw.ps13.model.region.RegionFactoryTest;
 import org.junit.After;
 import org.junit.Before;
@@ -317,15 +319,88 @@ public class BuildEmporiumActionTest {
 
         game.getCurrentPlayer().addAssistants(1);
 
-        //System.out.println(game.getCurrentPlayer().getAssistants());
-
         assertEquals(game.getCurrentPlayer().getAssistants(),2);
 
         buildEmporiumAction.apply(game);
 
         assertEquals(game.getBoard().getCity("Osium").getEmporiums().size(),3);
-        assertEquals(game.getCurrentPlayer().getAssistants(),0);                //paid 2 assistants
 
     }
 
-}
+    @Test
+    public void completeRegion() throws Exception {
+    	
+    	Bonus bonus = BonusFactory.createEmptyBonus();
+        Set<String> cityNames = new HashSet<>();
+        cityNames.add("Osium");
+        PermitTile permitTile = new PermitTile(bonus,cityNames);
+
+        game.getCurrentPlayer().receivePermitTile(permitTile);
+
+        buildEmporiumAction = new BuildEmporiumAction(game.getCurrentPlayer().getName(),0,"Osium");
+        
+        for(City c : game.getBoard().getCities().values()){
+			
+			if(c.getRegion().getName().equals("mountain") && !c.getName().equals("Osium")){
+				c.addEmporium(game.getCurrentPlayer().removeEmporium());
+				game.getCurrentPlayer().addCity(c.getName());
+			}
+				
+		}
+        
+        assertTrue(game.getBoard().getRegion("mountain").isBonusAvailable());
+        buildEmporiumAction.apply(game);
+        assertFalse(game.getBoard().getRegion("mountain").isBonusAvailable());
+          
+    }
+        
+    @Test
+    public void completeCityColor() throws Exception {
+    	
+    	Bonus bonus = BonusFactory.createEmptyBonus();
+        Set<String> cityNames = new HashSet<>();
+        cityNames.add("Osium");
+        PermitTile permitTile = new PermitTile(bonus,cityNames);
+
+        game.getCurrentPlayer().receivePermitTile(permitTile);
+
+        buildEmporiumAction = new BuildEmporiumAction(game.getCurrentPlayer().getName(),0,"Osium");
+        
+        CityColor osiums = game.getBoard().getCity("Osium").getCityColor();
+        for(City c : game.getBoard().getCities().values()){
+			
+			if(c.getCityColor().equals(osiums) && !c.getName().equals("Osium")){
+				c.addEmporium(game.getCurrentPlayer().removeEmporium());
+				game.getCurrentPlayer().addCity(c.getName());
+			}
+				
+		}
+        
+        assertTrue(game.getBoard().getCityColor(osiums.getColorName()).isBonusAvailable());
+        buildEmporiumAction.apply(game);
+        assertFalse(game.getBoard().getCityColor(osiums.getColorName()).isBonusAvailable());
+          
+    }
+    
+    @Test
+	public void buildLastEmporium() throws Exception {
+		
+    	Bonus bonus = BonusFactory.createEmptyBonus();
+        Set<String> cityNames = new HashSet<>();
+        cityNames.add("Osium");
+        PermitTile permitTile = new PermitTile(bonus,cityNames);
+
+        game.getCurrentPlayer().receivePermitTile(permitTile);
+
+        buildEmporiumAction = new BuildEmporiumAction(game.getCurrentPlayer().getName(),0,"Osium");
+        
+        while(game.getCurrentPlayer().getNumberOfEmporiums()!=1){	
+			game.getCurrentPlayer().removeEmporium();
+		}
+    	
+        buildEmporiumAction.apply(game);
+        assertEquals(game.getPlayerWhoBuiltLastEmporium(), game.getCurrentPlayerID());
+        
+	}
+    
+}  
