@@ -10,6 +10,7 @@ The game must be ran from Command Line Interface (CLI) in order to select the co
 To do so, you can run GameServer.jar and GameClient.jar, which are located into the repository root, with the following commands:
 
 `java -jar GameClient.jar`
+
 `java -jar GameServer.jar`
 
 While waiting for the game to start you can (both in CLI and GUI) rename yourself with the `rename <name>` command.
